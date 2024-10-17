@@ -13,14 +13,14 @@ import src.utils.stateMachine.*;
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class Player extends Actor {
-    private Texture texture;
-    private World world;
-    private Body body;
-    private Fixture fixture;
+    private final Texture texture;
+    private final World world;
+    private final Body body;
+    private final Fixture fixture;
 
-    private StateMachine stateMachine;
-    private IdleState idleState;
-    private JumpState jumpState;
+    private final StateMachine stateMachine;
+    private final IdleState idleState;
+    private final JumpState jumpState;
 
     public Player(World world, Texture texture, Vector2 position){
         this.world = world;

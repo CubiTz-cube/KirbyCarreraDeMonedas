@@ -5,17 +5,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.entities.player.Player;
-import src.entities.player.states.IdleState;
-import src.entities.player.states.JumpState;
 import src.main.Main;
 import src.world.Floor;
 
 public class GameScreen extends BaseScreen{
-    private Stage stage;
-    private World world;
+    private final Stage stage;
+    private final World world;
 
     private Player player;
     private Floor floor;

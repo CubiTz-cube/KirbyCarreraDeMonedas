@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class Floor extends Actor {
-    private Texture texture;
-    private World world;
-    private Body body;
-    private Fixture fixture;
+    private final Texture texture;
+    private final World world;
+    private final Body body;
+    private final Fixture fixture;
 
     public Floor(World world, Texture texture, Vector2 position, Vector2 size){
         this.world = world;
