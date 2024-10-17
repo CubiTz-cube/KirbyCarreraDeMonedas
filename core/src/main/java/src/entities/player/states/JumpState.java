@@ -10,7 +10,7 @@ public class JumpState extends StatePlayer{
 
     @Override
     public void start() {
-
+        player.jump();
     }
 
     @Override

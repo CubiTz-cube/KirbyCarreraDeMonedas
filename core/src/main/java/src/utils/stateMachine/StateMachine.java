@@ -18,7 +18,7 @@ public class StateMachine {
         currentState.end();
     }
 
-    public void changeState(State newState) {
+    public void setState(State newState) {
         if (currentState != null) currentState.end();
         currentState = newState;
         currentState.start();

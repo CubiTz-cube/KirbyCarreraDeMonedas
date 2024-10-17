@@ -1,13 +1,13 @@
-package src.pages;
+package src.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import src.main.Main;
 
 public class BaseScreen implements Screen {
-    protected Game mainGame;
+    protected Main game;
 
-    public BaseScreen(Game mainGame) {
-        this.mainGame = mainGame;
+    public BaseScreen(Main game) {
+        this.game = game;
     }
 
     @Override
