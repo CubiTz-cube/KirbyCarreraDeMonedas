@@ -10,8 +10,8 @@ public class StateMachine {
         currentState.start();
     }
 
-    public void update() {
-        currentState.update();
+    public void update(Float delta) {
+        currentState.update(delta);
     }
 
     public void end() {

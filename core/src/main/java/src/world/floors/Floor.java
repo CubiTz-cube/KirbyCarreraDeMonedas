@@ -1,7 +1,8 @@
-package src.world;
+package src.world.floors;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,28 +15,28 @@ public class Floor extends Actor {
     private final Body body;
     private final Fixture fixture;
 
-    public Floor(World world, Texture texture, Vector2 position, Vector2 size){
+    public Floor(World world, Texture texture, Rectangle shape){
         this.world = world;
         this.texture = texture;
 
         BodyDef def = new BodyDef();
-        def.position.set(position.x + (size.x-1) / 2, position.y + (size.y-1)/ 2);
+        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
         def.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(size.x / 2, size.y / 2);
+        box.setAsBox(shape.width / 2, shape.height / 2);
         fixture = body.createFixture(box, 1);
         fixture.setUserData("floor");
         box.dispose();
 
-        setSize(PIXELS_IN_METER * size.x, PIXELS_IN_METER * size.y);
-        setPosition(position.x * PIXELS_IN_METER, position.y * PIXELS_IN_METER);
+        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
+        setPosition(shape.x * PIXELS_IN_METER, shape.y * PIXELS_IN_METER);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+        //batch.draw(texture, getX(), getY(), getWidth(), getHeight());
     }
 
     @Override

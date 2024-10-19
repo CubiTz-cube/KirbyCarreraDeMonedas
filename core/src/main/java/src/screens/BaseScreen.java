@@ -4,10 +4,10 @@ import com.badlogic.gdx.Screen;
 import src.main.Main;
 
 public class BaseScreen implements Screen {
-    protected Main game;
+    public Main main;
 
-    public BaseScreen(Main game) {
-        this.game = game;
+    public BaseScreen(Main main) {
+        this.main = main;
     }
 
     @Override

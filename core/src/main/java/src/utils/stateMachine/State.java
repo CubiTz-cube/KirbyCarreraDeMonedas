@@ -8,6 +8,6 @@ public abstract class State {
     }
 
     public abstract void start();
-    public abstract void update();
+    public abstract void update(Float delta);
     public abstract void end();
 }

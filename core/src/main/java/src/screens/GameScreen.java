@@ -2,33 +2,52 @@ package src.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import src.entities.player.Player;
+import src.utils.TiledManager;
+import src.world.ActorFactory;
+import src.world.entities.player.Player;
 import src.main.Main;
-import src.world.Floor;
+import src.world.floors.Floor;
+import java.util.ArrayList;
 
 public class GameScreen extends BaseScreen{
     private final Stage stage;
-    private final World world;
+    public final World world;
+    private final OrthogonalTiledMapRenderer tiledRenderer;
+    private final TiledManager tiledManager;
+    private final ActorFactory actorFactory;
 
     private Player player;
-    private Floor floor;
+    private ArrayList<Floor> floors;
 
-    public GameScreen(Main game){
-        super(game);
+    public GameScreen(Main main){
+        super(main);
+        actorFactory = new ActorFactory(main);
+        floors = new ArrayList<>();
+
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new GameContactListener());
+
+        tiledManager = new TiledManager(this);
+        tiledRenderer = tiledManager.setupMap();
     }
 
     @Override
     public void show() {
-        player = new Player(world, game.getAssetManager().get("yoshi.jpg"), new Vector2(1, 3));
+        player = (Player) actorFactory.createActor(ActorFactory.ActorType.PLAYER, world, new Rectangle(0, 10, 0.5f, 0.5f));
         stage.addActor(player);
-        floor = new Floor(world, game.getAssetManager().get("floor.png"), new Vector2(0, 0), new Vector2(20, 2));
+        floors = new ArrayList<>();
+    }
+
+    public void addFloor(Floor floor){
+        floors.add(floor);
         stage.addActor(floor);
     }
 
@@ -36,8 +55,10 @@ public class GameScreen extends BaseScreen{
     public void hide() {
         player.detach();
         player.remove();
-        floor.detach();
-        floor.remove();
+        for (Floor floor : floors){
+            floor.detach();
+            floor.remove();
+        }
     }
 
     @Override
@@ -45,17 +66,26 @@ public class GameScreen extends BaseScreen{
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.getCamera().position.set(player.getX(), player.getY(), 0);
+        ((OrthographicCamera) stage.getCamera()).zoom = 1.2f;
+
+        OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
+        camera.position.set(player.getX(), player.getY(), 0);
+        tiledRenderer.setView(camera);
+        tiledRenderer.render();
+
+        ((OrthographicCamera) stage.getCamera()).zoom = 1f;
 
         stage.act();
         world.step(delta, 6, 2);
         stage.draw();
+
     }
 
     @Override
     public void dispose() {
         stage.dispose();
         world.dispose();
+        tiledManager.dispose();
     }
 
     private class GameContactListener implements ContactListener {

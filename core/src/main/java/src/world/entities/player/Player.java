@@ -1,18 +1,28 @@
-package src.entities.player;
+package src.world.entities.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector4;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import src.entities.player.states.*;
+import src.world.entities.player.states.*;
 import src.utils.stateMachine.*;
+import src.world.entities.player.states.IdleState;
+import src.world.entities.player.states.JumpState;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class Player extends Actor {
+    private static final float SPEED = 2;
+    private static final float MAX_SPEED = 4;
+    public static final float MAX_JUMP_TIME = 0.2f; // Maximum time the jump key can be held
+    public static final float JUMP_IMPULSE = 5f;
+    public static final float JUMP_INAIR = 0.3f;
+
     private final Texture texture;
     private final World world;
     private final Body body;
@@ -22,20 +32,21 @@ public class Player extends Actor {
     private final IdleState idleState;
     private final JumpState jumpState;
 
-    public Player(World world, Texture texture, Vector2 position){
+    public Player(World world, Texture texture, Rectangle shape){
         this.world = world;
         this.texture = texture;
 
         BodyDef def = new BodyDef();
-        def.position.set(position);
+        def.position.set(shape.x, shape.y);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(0.5f, 0.5f);
-        fixture = body.createFixture(box, 3);
+        box.setAsBox(shape.width, shape.height);
+        fixture = body.createFixture(box, 1);
         fixture.setUserData("player");
         box.dispose();
+        body.setFixedRotation(true);
 
         setSize(PIXELS_IN_METER, PIXELS_IN_METER);
 
@@ -55,6 +66,10 @@ public class Player extends Actor {
 
     public JumpState getJumpState() {
         return jumpState;
+    }
+
+    public Body getBody() {
+        return body;
     }
 
     @Override
@@ -80,20 +95,22 @@ public class Player extends Actor {
     @Override
     public void act(float delta) {
         controller();
-        stateMachine.update();
+        stateMachine.update(delta);
     }
 
     public void controller(){
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            body.applyLinearImpulse(1, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        Vector2 velocity = body.getLinearVelocity();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x < MAX_SPEED){
+            body.applyLinearImpulse(SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            body.applyLinearImpulse(-1, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > -MAX_SPEED){
+            body.applyLinearImpulse(-SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
     }
 
     public void jump(){
-        body.applyLinearImpulse(0, 10, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        body.applyLinearImpulse(0, 6, body.getWorldCenter().x, body.getWorldCenter().y, true);
     }
 
     public void detach(){

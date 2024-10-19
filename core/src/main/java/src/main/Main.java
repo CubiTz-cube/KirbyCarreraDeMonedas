@@ -7,7 +7,7 @@ import src.screens.*;
 
 public class Main extends Game {
 
-    public AssetManager assetManager;
+    private AssetManager assetManager;
 
     public AssetManager getAssetManager() {
         return assetManager;

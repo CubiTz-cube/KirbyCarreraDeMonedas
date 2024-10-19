@@ -1,8 +1,8 @@
-package src.entities.player.states;
+package src.world.entities.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import src.entities.player.Player;
+import src.world.entities.player.Player;
 import src.utils.stateMachine.StateMachine;
 
 public class IdleState extends StatePlayer{
@@ -16,7 +16,7 @@ public class IdleState extends StatePlayer{
     }
 
     @Override
-    public void update() {
+    public void update(Float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)){
             stateMachine.setState(player.getJumpState());
         }
