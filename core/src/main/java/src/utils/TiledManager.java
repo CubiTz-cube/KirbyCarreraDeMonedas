@@ -7,21 +7,19 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import src.screens.GameScreen;
-import src.world.ActorFactory;
-import src.world.floors.Floor;
+import src.world.ActorBox2dFactory;
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class TiledManager {
     private TiledMap tiledmap;
     private GameScreen game;
     private Integer tiledSize;
-    private ActorFactory actorFactory;
+    private ActorBox2dFactory actorFactory;
 
     public TiledManager(GameScreen game) {
         this.game = game;
-        actorFactory = new ActorFactory(game.main);
+        actorFactory = new ActorBox2dFactory(game.main);
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -40,8 +38,8 @@ public class TiledManager {
             Float Y = (Float) object.getProperties().get("y");
             Float W = (Float) object.getProperties().get("width");
             Float H = (Float) object.getProperties().get("height");
-            actorFactory.createActor(ActorFactory.ActorType.FLOOR, game.world,
-                new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize));
+            game.addActor(actorFactory.createActor(ActorBox2dFactory.ActorType.FLOOR, game.world,
+                new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize)));
         }
     }
 

@@ -10,10 +10,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.utils.TiledManager;
-import src.world.ActorFactory;
+import src.world.ActorBox2d;
+import src.world.ActorBox2dFactory;
 import src.world.entities.player.Player;
 import src.main.Main;
-import src.world.floors.Floor;
 import java.util.ArrayList;
 
 public class GameScreen extends BaseScreen{
@@ -21,15 +21,17 @@ public class GameScreen extends BaseScreen{
     public final World world;
     private final OrthogonalTiledMapRenderer tiledRenderer;
     private final TiledManager tiledManager;
-    private final ActorFactory actorFactory;
+    private final ActorBox2dFactory actorFactory;
 
     private Player player;
-    private ArrayList<Floor> floors;
+    private ArrayList<ActorBox2d> actors = new ArrayList<>();
 
+    /*
+     *   JavaDoc
+     */
     public GameScreen(Main main){
         super(main);
-        actorFactory = new ActorFactory(main);
-        floors = new ArrayList<>();
+        actorFactory = new ActorBox2dFactory(main);
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         world = new World(new Vector2(0, -10), true);
@@ -39,25 +41,24 @@ public class GameScreen extends BaseScreen{
         tiledRenderer = tiledManager.setupMap();
     }
 
-    @Override
-    public void show() {
-        player = (Player) actorFactory.createActor(ActorFactory.ActorType.PLAYER, world, new Rectangle(0, 10, 0.5f, 0.5f));
-        stage.addActor(player);
-        floors = new ArrayList<>();
+    public void addActor(ActorBox2d actor){
+        actors.add(actor);
+        stage.addActor(actor);
     }
 
-    public void addFloor(Floor floor){
-        floors.add(floor);
-        stage.addActor(floor);
+    @Override
+    public void show() {
+        player = (Player) actorFactory.createActor(ActorBox2dFactory.ActorType.PLAYER, world, new Rectangle(0, 10, 0.5f, 0.5f));
+        stage.addActor(player);
     }
 
     @Override
     public void hide() {
         player.detach();
         player.remove();
-        for (Floor floor : floors){
-            floor.detach();
-            floor.remove();
+        for (ActorBox2d actor : actors) {
+            actor.detach();
+            actor.remove();
         }
     }
 

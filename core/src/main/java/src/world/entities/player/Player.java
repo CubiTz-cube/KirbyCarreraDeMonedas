@@ -6,17 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector4;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import src.world.entities.player.states.*;
+import src.world.ActorBox2d;
 import src.utils.stateMachine.*;
-import src.world.entities.player.states.IdleState;
-import src.world.entities.player.states.JumpState;
+import src.world.entities.player.states.*;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class Player extends Actor {
+public class Player extends ActorBox2d {
     private static final float SPEED = 2;
     private static final float MAX_SPEED = 4;
     public static final float MAX_JUMP_TIME = 0.2f; // Maximum time the jump key can be held

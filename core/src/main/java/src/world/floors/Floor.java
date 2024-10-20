@@ -3,13 +3,13 @@ package src.world.floors;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import src.world.ActorBox2d;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class Floor extends Actor {
+public class Floor extends ActorBox2d {
     private final Texture texture;
     private final World world;
     private final Body body;
