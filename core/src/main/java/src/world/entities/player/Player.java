@@ -14,7 +14,7 @@ import src.world.entities.player.states.*;
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class Player extends ActorBox2d {
-    private static final float SPEED = 2;
+    private static final float SPEED = 10;
     private static final float MAX_SPEED = 4;
     public static final float MAX_JUMP_TIME = 0.2f; // Maximum time the jump key can be held
     public static final float JUMP_IMPULSE = 5f;
@@ -99,10 +99,10 @@ public class Player extends ActorBox2d {
         Vector2 velocity = body.getLinearVelocity();
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x < MAX_SPEED){
-            body.applyLinearImpulse(SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+            body.applyForce(SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > -MAX_SPEED){
-            body.applyLinearImpulse(-SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+            body.applyForce(-SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
     }
 

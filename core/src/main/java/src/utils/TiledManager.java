@@ -1,29 +1,28 @@
 package src.utils;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import src.screens.GameScreen;
+import src.screens.worldScreens.WorldScreen;
 import src.world.ActorBox2dFactory;
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class TiledManager {
+    private WorldScreen game;
     private TiledMap tiledmap;
-    private GameScreen game;
     private Integer tiledSize;
     private ActorBox2dFactory actorFactory;
 
-    public TiledManager(GameScreen game) {
+    public TiledManager(WorldScreen game) {
         this.game = game;
         actorFactory = new ActorBox2dFactory(game.main);
     }
 
-    public OrthogonalTiledMapRenderer setupMap() {
-        tiledmap = new TmxMapLoader().load("maps/kirbyPrueba.tmx");
+    public OrthogonalTiledMapRenderer setupMap(String map) {
+        tiledmap = new TmxMapLoader().load(map);
         tiledSize = tiledmap.getProperties().get("tilewidth", Integer.class);
 
         //parsedEntityMap(tiledmap.getLayers().get("objects").getObjects());
@@ -38,7 +37,7 @@ public class TiledManager {
             Float Y = (Float) object.getProperties().get("y");
             Float W = (Float) object.getProperties().get("width");
             Float H = (Float) object.getProperties().get("height");
-            game.addActor(actorFactory.createActor(ActorBox2dFactory.ActorType.FLOOR, game.world,
+            game.addActor(actorFactory.createActor(ActorBox2dFactory.ActorType.FLOOR, game.getWorld(),
                 new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize)));
         }
     }
@@ -73,7 +72,7 @@ public class TiledManager {
     }
 
     public void reMakeMap() {
-        parsedEntityMap(tiledmap.getLayers().get("objects").getObjects());
+        //parsedEntityMap(tiledmap.getLayers().get("objects").getObjects());
         parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
     }
 }

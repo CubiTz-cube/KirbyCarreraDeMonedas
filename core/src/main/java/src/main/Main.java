@@ -1,13 +1,21 @@
 package src.main;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import src.screens.*;
+import src.screens.worldScreens.GameScreen;
+
+import java.util.ArrayList;
 
 public class Main extends Game {
-
     private AssetManager assetManager;
+    private ArrayList<Screen> screensList;
+    public enum Screens {
+        MENU,
+        GAME
+    }
 
     public AssetManager getAssetManager() {
         return assetManager;
@@ -23,7 +31,15 @@ public class Main extends Game {
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
 
-        setScreen(new GameScreen(this));
+        screensList  = new ArrayList<>();
+        screensList.add(new MenuScreen(this));
+        screensList.add(new GameScreen(this));
+
+        setScreen(screensList.get(Screens.MENU.ordinal()));
+    }
+
+    public void changeScreen(Screens screen){
+        setScreen(screensList.get(screen.ordinal()));
     }
 
     @Override
@@ -33,5 +49,9 @@ public class Main extends Game {
 
     @Override
     public void dispose() {
+        assetManager.dispose();
+        for (Screen screen : screensList) {
+            screen.dispose();
+        }
     }
 }

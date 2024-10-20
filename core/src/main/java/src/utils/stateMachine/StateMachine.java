@@ -6,6 +6,16 @@ public class StateMachine {
     public StateMachine() {
     }
 
+    public void setState(State newState) {
+        if (currentState != null) currentState.end();
+        currentState = newState;
+        currentState.start();
+    }
+
+    public State getState(){
+        return currentState;
+    }
+
     public void start() {
         currentState.start();
     }
@@ -16,11 +26,5 @@ public class StateMachine {
 
     public void end() {
         currentState.end();
-    }
-
-    public void setState(State newState) {
-        if (currentState != null) currentState.end();
-        currentState = newState;
-        currentState.start();
     }
 }
