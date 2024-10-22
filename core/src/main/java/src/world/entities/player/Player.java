@@ -101,8 +101,12 @@ public class Player extends ActorBox2d {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x < MAX_SPEED){
             body.applyForce(SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > -MAX_SPEED){
+        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > -MAX_SPEED){
             body.applyForce(-SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        } else {
+            // Apply braking force when no key is pressed
+            float brakeForce = 10f; // Adjust this value to increase/decrease braking force
+            body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
     }
 

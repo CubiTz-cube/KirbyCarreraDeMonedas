@@ -35,7 +35,7 @@ public class Main extends Game {
         screensList.add(new MenuScreen(this));
         screensList.add(new GameScreen(this));
 
-        setScreen(screensList.get(Screens.MENU.ordinal()));
+        setScreen(screensList.get(Screens.GAME.ordinal()));
     }
 
     public void changeScreen(Screens screen){
