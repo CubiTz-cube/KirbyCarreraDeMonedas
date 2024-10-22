@@ -2,10 +2,9 @@ package src.world;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import src.main.Main;
 import src.world.entities.player.Player;
-import src.world.floors.Floor;
+import src.world.staticEntities.Floor;
 
 public class ActorBox2dFactory {
     private final Main game;

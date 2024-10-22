@@ -14,6 +14,7 @@ public class JumpState extends StatePlayer{
 
     @Override
     public void start() {
+        player.
         jumpTime = 0f;
         player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }

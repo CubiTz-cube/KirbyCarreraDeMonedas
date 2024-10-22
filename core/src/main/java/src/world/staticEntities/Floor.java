@@ -1,10 +1,9 @@
-package src.world.floors;
+package src.world.staticEntities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import src.world.ActorBox2d;
 
 import static src.utils.Constants.PIXELS_IN_METER;

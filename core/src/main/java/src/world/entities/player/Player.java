@@ -2,8 +2,10 @@ package src.world.entities.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -20,7 +22,7 @@ public class Player extends ActorBox2d {
     public static final float JUMP_IMPULSE = 5f;
     public static final float JUMP_INAIR = 0.3f;
 
-    private final Texture texture;
+    private final Sprite texture;
     private final World world;
     private final Body body;
     private final Fixture fixture;
@@ -29,7 +31,7 @@ public class Player extends ActorBox2d {
     private final IdleState idleState;
     private final JumpState jumpState;
 
-    public Player(World world, Texture texture, Rectangle shape){
+    public Player(World world, Sprite texture, Rectangle shape){
         this.world = world;
         this.texture = texture;
 
@@ -69,6 +71,10 @@ public class Player extends ActorBox2d {
         return body;
     }
 
+    public void setColor(Color color){
+        texture.setColor(color);
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         setPosition(
@@ -77,14 +83,14 @@ public class Player extends ActorBox2d {
         );
         float rotation = (float) Math.toDegrees(body.getAngle());
         batch.draw(
-            texture,
+            texture.getTexture(),
             getX(), getY(),
             getWidth() / 2, getHeight() / 2,
             getWidth(), getHeight(),
             1, 1,
             rotation,
             0, 0,
-            texture.getWidth(), texture.getHeight(),
+            texture.getTexture().getWidth(), texture.getTexture().getHeight(),
             false, false
         );
     }
