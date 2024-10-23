@@ -79,10 +79,10 @@ public class GameScreen extends WorldScreen {
 
         @Override
         public void beginContact(Contact contact) {
-            // The player has collided with the floor.
-            if (areCollided(contact, "player", "floor")) {
+            System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
+            /*if (areCollided(contact, "playerBottomSensor", "floor") && player.getStateMachine().getState().equals(player.getJumpState())) {
                 player.getStateMachine().setState(player.getIdleState());
-            }
+            }*/
         }
 
         @Override
