@@ -65,7 +65,7 @@ public class GameScreen extends WorldScreen {
         tiledManager.dispose();
     }
 
-    private class GameContactListener implements ContactListener {
+    private static class GameContactListener implements ContactListener {
 
         private boolean areCollided(Contact contact, Object userA, Object userB) {
             Object userDataA = contact.getFixtureA().getUserData();

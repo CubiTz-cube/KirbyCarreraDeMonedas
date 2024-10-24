@@ -1,5 +1,7 @@
 package src.net;
 
+import src.net.packets.Packet;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -48,14 +50,21 @@ public class ClientListener implements Runnable{
             out = new ObjectOutputStream(socket.getOutputStream());
             running = true;
             while (running) {
-
-
+                Object[] pack = (Object[]) in.readObject();
+                Packet.Types type = (Packet.Types) pack[0];
+                switch (type){
+                    case POSITION:
+                        Integer packId = (Integer) pack[1];
+                        Float packX = (Float) pack[2];
+                        Float packY= (Float) pack[3];
+                        server.game.changePosition(packId, packX, packY);
+                }
             }
         } catch (IOException e) {
             System.out.println("Error al leer/escribir mensaje: " + e.getMessage());
-        }/* catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.out.println("Error al leer/escribir mensaje (clase no encontrada): " + e.getMessage());
-        } */finally {
+        } finally {
             close();
         }
     }

@@ -1,5 +1,6 @@
 package src.net;
 
+import src.screens.worldScreens.GameScreen;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,8 +15,10 @@ public class Server implements Runnable{
     private Boolean running;
     private final CopyOnWriteArrayList<ClientListener> users;
     private final ExecutorService pool = Executors.newFixedThreadPool(4);
+    public final GameScreen game;
 
-    public Server(String ip, Integer port){
+    public Server(GameScreen game, String ip, Integer port){
+        this.game = game;
         this.ip = ip;
         this.port = port;
         this.users = new CopyOnWriteArrayList<>();

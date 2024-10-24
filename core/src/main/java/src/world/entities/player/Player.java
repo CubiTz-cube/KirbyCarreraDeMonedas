@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import src.world.ActorBox2d;
+import src.world.entities.Entity;
 import src.utils.stateMachine.*;
 import src.world.entities.player.states.*;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class Player extends ActorBox2d {
+public class Player extends Entity {
     private static final float SPEED = 10;
     private static final float MAX_SPEED = 4;
     public static final float MAX_JUMP_TIME = 0.2f;
@@ -28,7 +28,7 @@ public class Player extends ActorBox2d {
     private final Fixture fixture;
     private final Fixture sensorFixture;
 
-    private final StateMachine stateMachine;
+    protected final StateMachine stateMachine;
     private final IdleState idleState;
     private final JumpState jumpState;
     private final FlyState flyState;
@@ -121,7 +121,7 @@ public class Player extends ActorBox2d {
         stateMachine.update(delta);
     }
 
-    public void controller(){
+    private void controller(){
         Vector2 velocity = body.getLinearVelocity();
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x < MAX_SPEED){
@@ -134,10 +134,6 @@ public class Player extends ActorBox2d {
             float brakeForce = 10f;
             body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
-    }
-
-    public void jump(){
-        body.applyLinearImpulse(0, 6, body.getWorldCenter().x, body.getWorldCenter().y, true);
     }
 
     public void detach(){
