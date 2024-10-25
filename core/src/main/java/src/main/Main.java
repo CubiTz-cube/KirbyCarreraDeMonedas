@@ -13,6 +13,7 @@ public class Main extends Game {
     private AssetManager assetManager;
     private ArrayList<Screen> screensList;
     public enum Screens {
+        INTRO,
         MENU,
         GAME
     }
@@ -32,10 +33,11 @@ public class Main extends Game {
         System.out.println("Assets loaded.");
 
         screensList  = new ArrayList<>();
+        screensList.add(new IntroScreen(this));
         screensList.add(new MenuScreen(this));
         screensList.add(new GameScreen(this));
 
-        setScreen(screensList.get(Screens.GAME.ordinal()));
+        setScreen(screensList.get(Screens.INTRO.ordinal()));
     }
 
     public void changeScreen(Screens screen){

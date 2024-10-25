@@ -57,7 +57,7 @@ public class ClientListener implements Runnable{
                         Integer packId = (Integer) pack[1];
                         Float packX = (Float) pack[2];
                         Float packY= (Float) pack[3];
-                        server.game.changePosition(packId, packX, packY);
+                        //server.game.changePosition(packId, packX, packY);
                 }
             }
         } catch (IOException e) {
