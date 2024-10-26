@@ -21,7 +21,9 @@ public class MultiplayerScreen extends UIScreen {
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                main.startClient("Daniel");
+                main.changeScreen(Main.Screens.CONNECTING);
+                System.out.println("Unirse");
             }
         });
 
@@ -29,7 +31,9 @@ public class MultiplayerScreen extends UIScreen {
         createButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                main.startServer();
+                main.startClient("Daniel");
+                main.changeScreen(Main.Screens.LOBBYSERVER);
             }
         });
 

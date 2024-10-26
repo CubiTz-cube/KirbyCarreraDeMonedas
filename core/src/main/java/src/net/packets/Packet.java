@@ -2,17 +2,22 @@ package src.net.packets;
 
 public class Packet {
     public static enum Types{
-        CONNECT, DISCONNECT, POSITION
+        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER
     }
 
-    public static Object[] connect(){
-        return new Object[]{Types.CONNECT};
+    public static Object[] connect(String name){
+        return new Object[]{Types.CONNECT, name};
     }
-    public static Object[] disconnect(Integer id){
-        return new Object[]{Types.DISCONNECT, id};
+    public static Object[] disconnectPlayer(Integer id){
+        return new Object[]{Types.DISCONNECTPLAYER, id};
     }
 
-    public static Object[] vector2(Integer id,Float x, Float y){
+    public static Object[] position(Integer id,Float x, Float y){
         return new Object[]{Types.POSITION, id, x, y};
     }
+
+    public static Object[] newPlayer(Integer id,String name){
+        return new Object[]{Types.NEWPLAYER, id, name};
+    }
+
 }
