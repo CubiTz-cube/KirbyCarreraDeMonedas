@@ -44,6 +44,10 @@ public class ClientListener implements Runnable{
                     case CONNECT:
                         name = (String) pack[1];
                         server.sendAll(Packet.newPlayer(id, name), id);
+                        for (ClientListener u : server.getUsers()){
+                            if (u.id.equals(id)) continue;
+                            send(Packet.newPlayer(u.id, u.name));
+                        }
                         break;
 
                     case POSITION:
@@ -60,6 +64,8 @@ public class ClientListener implements Runnable{
             Gdx.app.log("User", "Error al leer paquete", e);
         } catch (ClassNotFoundException e) {
             Gdx.app.log("User", "Error al convertir paquete", e);
+        }finally {
+            close();
         }
     }
 
@@ -79,7 +85,7 @@ public class ClientListener implements Runnable{
     public void close(){
         if (!running) return;
         System.out.println("[USER] Usuario desconectado " + name + " "+ id);
-        //server.sendAll(Packet.disconnect(id), id);
+        server.sendAll(Packet.disconnectPlayer(id), id);
         running = false;
         server.removeUser(this);
         try {

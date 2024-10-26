@@ -37,6 +37,10 @@ public class Server implements Runnable{
         running = true;
     }
 
+    public CopyOnWriteArrayList<ClientListener> getUsers() {
+        return users;
+    }
+
     public void sendAll(Object[] data, Integer id){
         synchronized (users) {
             for (ClientListener user : users) {
@@ -70,14 +74,7 @@ public class Server implements Runnable{
     public void close(){
         running = false;
 
-        synchronized (users) {
-            for (ClientListener user : users) {
-                user.close();
-                //user.send(Packet.serverClose());
-            }
-        }
         serverSocket.dispose();
-
         pool.shutdown();
     }
 }
