@@ -2,10 +2,12 @@ package src.net;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
 import src.screens.worldScreens.GameScreen;
+import src.world.entities.EntityFactory;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -14,7 +16,7 @@ import java.io.ObjectOutputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
+import java.util.concurrent.TransferQueue;
 
 public class Client implements Runnable{
     private final GameScreen game;
@@ -22,6 +24,7 @@ public class Client implements Runnable{
     private final Integer port;
     private Boolean running = false;
 
+    public Boolean gameStart = false;
     private final String name;
     private final HashMap<Integer, String> playersConnected;
 
@@ -73,19 +76,24 @@ public class Client implements Runnable{
                         id = (Integer) pack[1];
                         String name = (String) pack[2];
                         playersConnected.put(id, name);
+                        game.addEntity(EntityFactory.Type.OTHERPLAYER,new Rectangle(0, 10, 0.5f, 0.5f), id);
                         break;
 
                     case DISCONNECTPLAYER:
                         id = (Integer) pack[1];
                         playersConnected.remove(id);
+                        game.removeEntity(id);
+                        break;
 
+                    case GAMESTART:
+                        gameStart = true;
                         break;
 
                     case POSITION:
                         Integer packId = (Integer) pack[1];
                         Float packX = (Float) pack[2];
                         Float packY= (Float) pack[3];
-                        //server.game.changePosition(packId, packX, packY);
+                        game.actEntity(packId, packX, packY);
                         break;
                 }
             }

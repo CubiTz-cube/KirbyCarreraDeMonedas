@@ -7,18 +7,19 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import src.screens.worldScreens.WorldScreen;
-import src.world.ActorBox2dFactory;
+import src.world.statics.StaticFactory;
+
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class TiledManager {
     private WorldScreen game;
     private TiledMap tiledmap;
     private Integer tiledSize;
-    private ActorBox2dFactory actorFactory;
+    private StaticFactory staticFactory;
 
     public TiledManager(WorldScreen game) {
         this.game = game;
-        actorFactory = new ActorBox2dFactory(game.main);
+        staticFactory = new StaticFactory(game.main);
     }
 
     public OrthogonalTiledMapRenderer setupMap(String map) {
@@ -37,7 +38,7 @@ public class TiledManager {
             Float Y = (Float) object.getProperties().get("y");
             Float W = (Float) object.getProperties().get("width");
             Float H = (Float) object.getProperties().get("height");
-            game.addActor(actorFactory.createActor(ActorBox2dFactory.ActorType.FLOOR, game.getWorld(),
+            game.addActor(staticFactory.create(StaticFactory.Type.FLOOR, game.getWorld(),
                 new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize)));
         }
     }

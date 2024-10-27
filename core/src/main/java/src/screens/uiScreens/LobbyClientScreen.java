@@ -55,6 +55,9 @@ public class LobbyClientScreen extends UIScreen {
             numPlayersConnected = main.client.getPlayersConnected().size();
             updatePlayersTable();
         }
+        if (main.client.gameStart){
+            main.changeScreen(Main.Screens.GAME);
+        }
     }
 
     private void updatePlayersTable() {

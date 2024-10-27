@@ -51,10 +51,13 @@ public class ClientListener implements Runnable{
                         break;
 
                     case POSITION:
-                        Integer packId = (Integer) pack[1];
-                        Float packX = (Float) pack[2];
-                        Float packY= (Float) pack[3];
-                        //server.game.changePosition(packId, packX, packY);
+                        //Integer id = (Integer) pack[1];
+                        Float x = (Float) pack[2];
+                        Float y = (Float) pack[3];
+                        server.sendAll(Packet.position(this.id, x, y), this.id);
+                        break;
+                    case GAMESTART:
+                        server.sendAll(Packet.gameStart(), id);
                         break;
                 }
             }

@@ -10,7 +10,8 @@ import src.main.Main;
 import src.screens.BaseScreen;
 import src.utils.TiledManager;
 import src.world.ActorBox2d;
-import src.world.ActorBox2dFactory;
+import src.world.entities.EntityFactory;
+import src.world.statics.StaticFactory;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,8 @@ public class WorldScreen extends BaseScreen {
     protected World world;
     protected OrthogonalTiledMapRenderer tiledRenderer;
     protected TiledManager tiledManager;
-    protected ActorBox2dFactory actorFactory;
+    protected EntityFactory entityFactory;
+    protected StaticFactory staticFactory;
     protected ArrayList<ActorBox2d> actors;
 
     /**
@@ -31,7 +33,7 @@ public class WorldScreen extends BaseScreen {
     public WorldScreen(Main main, Float gravity, String map){
         super(main);
         actors = new ArrayList<>();
-        actorFactory = new ActorBox2dFactory(main);
+        entityFactory = new EntityFactory(main);
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 

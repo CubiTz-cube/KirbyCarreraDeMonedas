@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
+import src.net.packets.Packet;
 
 public class LobbyServerScreen extends UIScreen {
     private Table playersTable;
@@ -30,6 +31,7 @@ public class LobbyServerScreen extends UIScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.changeScreen(Main.Screens.GAME);
+                main.client.send(Packet.gameStart());
             }
         });
 

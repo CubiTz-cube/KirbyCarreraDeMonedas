@@ -17,8 +17,9 @@ public class SleepingEnemy extends Entity
     private final Body body;
     private final Fixture fixture;
 
-    public SleepingEnemy(World world, Texture texture, Rectangle shape)
+    public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id)
     {
+        super(id);
         this.world = world;
         this.sprite = new Sprite(texture);
 

@@ -1,4 +1,4 @@
-package src.world.staticEntities;
+package src.world.statics;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

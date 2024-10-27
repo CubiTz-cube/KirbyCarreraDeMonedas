@@ -1,6 +1,6 @@
-package src.world.entities.player.states;
+package src.world.player.states;
 
-import src.world.entities.player.Player;
+import src.world.player.Player;
 import src.utils.stateMachine.State;
 import src.utils.stateMachine.StateMachine;
 

@@ -1,21 +1,20 @@
-package src.world.entities.player;
+package src.world.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import src.world.entities.Entity;
+import src.world.ActorBox2d;
 import src.utils.stateMachine.*;
-import src.world.entities.player.states.*;
+import src.world.player.states.*;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class Player extends Entity {
+public class Player extends ActorBox2d {
     private static final float SPEED = 10;
     private static final float MAX_SPEED = 4;
     public static final float MAX_JUMP_TIME = 0.2f;

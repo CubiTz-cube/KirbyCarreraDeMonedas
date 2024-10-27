@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import src.net.packets.Packet;
 import src.world.ActorBox2d;
-import src.world.ActorBox2dFactory;
-import src.world.entities.player.Player;
+import src.world.entities.Entity;
+import src.world.entities.EntityFactory;
+import src.world.player.Player;
 import src.main.Main;
 
 public class GameScreen extends WorldScreen {
@@ -21,7 +23,7 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void show() {
-        player = (Player) actorFactory.createActor(ActorBox2dFactory.ActorType.PLAYER, world, new Rectangle(0, 10, 0.5f, 0.5f));
+        player = new Player(world, main.getAssetManager().get("yoshi.jpg"), new Rectangle(8, 10, 0.5f, 0.5f));
         stage.addActor(player);
         tiledManager.reMakeMap();
     }
@@ -63,6 +65,36 @@ public class GameScreen extends WorldScreen {
         stage.dispose();
         world.dispose();
         tiledManager.dispose();
+    }
+
+    public void addEntity(EntityFactory.Type actor, Rectangle shape, Integer id){
+        ActorBox2d actorBox2d = entityFactory.create(actor, world, shape, id);
+        actors.add(actorBox2d);
+        stage.addActor(actorBox2d);
+    }
+
+    public void removeEntity(Integer id){
+        for (ActorBox2d actor : actors) {
+            if (!(actor instanceof Entity entity)) continue;
+            if (entity.getId().equals(id)) {
+                System.out.println("Eliminado " + id);
+                entity.detach();
+                actors.remove(actor);
+                break;
+            }
+        }
+
+    }
+
+    public void actEntity(Integer id, Float x, Float y){
+        for (ActorBox2d actor : actors) {
+            if (!(actor instanceof Entity entity)) continue;
+            System.out.println(entity.getId() + " " + id);
+            if (entity.getId().equals(id)) {
+                entity.getBody().setTransform(x, y, 0);
+                break;
+            }
+        }
     }
 
     private static class GameContactListener implements ContactListener {
