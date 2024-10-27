@@ -3,6 +3,7 @@ package src.net;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
@@ -39,15 +40,6 @@ public class Client implements Runnable{
         this.name = name;
         playersConnected = new HashMap<>();
         playersConnected.put(-1, name);
-        try {
-            SocketHints hints = new SocketHints();
-            socket = Gdx.net.newClientSocket(Net.Protocol.TCP, ip, port, hints);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-            running = true;
-        } catch (IOException e){
-            System.out.println("Error al crear cliente: " + e.getMessage());
-        }
     }
 
     public ArrayList<String> getPlayersConnected() {
@@ -64,10 +56,21 @@ public class Client implements Runnable{
 
     @Override
     public void run() {
+        try {
+            SocketHints hints = new SocketHints();
+            socket = Gdx.net.newClientSocket(Net.Protocol.TCP, ip, port, hints);
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
+            running = true;
+        } catch (IOException e){
+            System.out.println("Error al conectar cliente: " + e.getMessage());
+        }
+
         Integer id;
         send(Packet.connect(name));
         try {
             while (running) {
+
                 Object[] pack = (Object[])in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
                 System.out.println("[Client] Recibido: " + type);

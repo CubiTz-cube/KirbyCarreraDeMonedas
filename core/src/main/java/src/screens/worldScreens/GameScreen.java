@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.net.packets.Packet;
 import src.world.ActorBox2d;
@@ -13,12 +14,19 @@ import src.world.entities.EntityFactory;
 import src.world.player.Player;
 import src.main.Main;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class GameScreen extends WorldScreen {
-    private Player player;
+    private static Player player;
+    private final Vector2 lastPosition;
+    private final Queue<Runnable> pendingActions;
 
     public GameScreen(Main main){
         super(main, -15f, "maps/kirbyPrueba.tmx");
         world.setContactListener(new GameContactListener());
+        lastPosition = new Vector2();
+        pendingActions = new LinkedList<>();
     }
 
     @Override
@@ -55,8 +63,21 @@ public class GameScreen extends WorldScreen {
         world.step(delta, 6, 2);
         stage.draw();
 
+        while (!pendingActions.isEmpty()) {
+            pendingActions.poll().run();
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(Main.Screens.MENU);
+            main.client.send(Packet.disconnectPlayer(-1));
+        }
+
+        if (main.client == null) return;
+
+        Vector2 currentPosition = player.getBody().getPosition();
+        if (!currentPosition.epsilonEquals(lastPosition, 0.1f)) { // Check for significant change
+            main.client.send(Packet.position(-1,currentPosition.x, currentPosition.y));
+            lastPosition.set(currentPosition);
         }
     }
 
@@ -67,34 +88,42 @@ public class GameScreen extends WorldScreen {
         tiledManager.dispose();
     }
 
-    public void addEntity(EntityFactory.Type actor, Rectangle shape, Integer id){
-        ActorBox2d actorBox2d = entityFactory.create(actor, world, shape, id);
-        actors.add(actorBox2d);
-        stage.addActor(actorBox2d);
+    public synchronized void addEntity(EntityFactory.Type actor, Rectangle shape, Integer id){
+        pendingActions.add(() -> {
+            ActorBox2d actorBox2d = entityFactory.create(actor, world, shape, id);
+            actors.add(actorBox2d);
+            stage.addActor(actorBox2d);
+        });
     }
 
-    public void removeEntity(Integer id){
-        for (ActorBox2d actor : actors) {
-            if (!(actor instanceof Entity entity)) continue;
-            if (entity.getId().equals(id)) {
-                System.out.println("Eliminado " + id);
-                entity.detach();
-                actors.remove(actor);
-                break;
+    public synchronized void removeEntity(Integer id){
+        pendingActions.add(() -> {
+            for (ActorBox2d actor : actors) {
+                if (!(actor instanceof Entity entity)) continue;
+                if (entity.getId().equals(id)) {
+                    entity.detach();
+                    actors.remove(actor);
+                    stage.getActors().removeValue(actor, true);
+                    break;
+                }
             }
-        }
-
+        });
     }
 
-    public void actEntity(Integer id, Float x, Float y){
-        for (ActorBox2d actor : actors) {
-            if (!(actor instanceof Entity entity)) continue;
-            System.out.println(entity.getId() + " " + id);
-            if (entity.getId().equals(id)) {
-                entity.getBody().setTransform(x, y, 0);
-                break;
+    public synchronized void actEntity(Integer id, Float x, Float y){
+        pendingActions.add(() -> {
+            for (ActorBox2d actor : actors) {
+                if (!(actor instanceof Entity entity)) continue;
+                if (entity.getId().equals(id)) {
+                    entity.getBody().setTransform(x, y, 0);
+                    break;
+                }
             }
-        }
+        });
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     private static class GameContactListener implements ContactListener {
@@ -111,10 +140,10 @@ public class GameScreen extends WorldScreen {
 
         @Override
         public void beginContact(Contact contact) {
-            System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
-            /*if (areCollided(contact, "playerBottomSensor", "floor") && player.getStateMachine().getState().equals(player.getJumpState())) {
+            //System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
+            if (areCollided(contact, "playerBottomSensor", "floor") && player.getStateMachine().getState().equals(player.getFallState())) {
                 player.getStateMachine().setState(player.getIdleState());
-            }*/
+            }
         }
 
         @Override

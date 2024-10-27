@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import src.utils.CollisionFilters;
 import src.world.ActorBox2d;
 import src.utils.stateMachine.*;
 import src.world.player.states.*;
@@ -17,7 +18,7 @@ import static src.utils.Constants.PIXELS_IN_METER;
 public class Player extends ActorBox2d {
     private static final float SPEED = 10;
     private static final float MAX_SPEED = 4;
-    public static final float MAX_JUMP_TIME = 0.2f;
+    public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 5f;
     public static final float JUMP_INAIR = 0.3f;
 
@@ -58,6 +59,11 @@ public class Player extends ActorBox2d {
         sensorFixture = body.createFixture(sensorDef);
         sensorFixture.setUserData("playerBottomSensor");
         sensorShape.dispose();
+
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;
+        filter.maskBits = ~CollisionFilters.MASK_PLAYER;
+        fixture.setFilterData(filter);
 
         setSize(PIXELS_IN_METER, PIXELS_IN_METER);
 

@@ -50,11 +50,16 @@ public class ClientListener implements Runnable{
                         }
                         break;
 
+                    case DISCONNECTPLAYER:
+                        //Integer packId = (Integer) pack[1]; Devuelve -1
+                        server.sendAll(Packet.disconnectPlayer(id), id);
+                        break;
+
                     case POSITION:
-                        //Integer id = (Integer) pack[1];
+                        //Integer packId = (Integer) pack[1]; Devuelve -1
                         Float x = (Float) pack[2];
                         Float y = (Float) pack[3];
-                        server.sendAll(Packet.position(this.id, x, y), this.id);
+                        server.sendAll(Packet.position(id, x, y), id);
                         break;
                     case GAMESTART:
                         server.sendAll(Packet.gameStart(), id);
