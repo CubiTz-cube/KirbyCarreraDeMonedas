@@ -78,7 +78,7 @@ public class Main extends Game {
 
     public void startServer(){
         if (server != null) closeServer();
-        server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 1234);
+        server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 38746);
         serverThread.execute(server);
     }
 
@@ -92,7 +92,7 @@ public class Main extends Game {
 
     public void startClient(String name){
         if (client != null) closeClient();
-        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 1234, name);
+        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), "bin-hansen.gl.at.ply.gg", 38746, name);
         clientThread.execute(client);
     }
 
