@@ -44,6 +44,9 @@ public class Main extends Game {
         assetManager = new AssetManager();
         assetManager.load("libgdx.png", Texture.class);
         assetManager.load("yoshi.jpg", Texture.class);
+        assetManager.load("perro.jpg", Texture.class);
+        assetManager.load("poshi.jpg", Texture.class);
+        assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("floor.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();

@@ -33,6 +33,7 @@ public class GameScreen extends WorldScreen {
     public void show() {
         player = new Player(world, main.getAssetManager().get("yoshi.jpg"), new Rectangle(8, 10, 0.5f, 0.5f));
         stage.addActor(player);
+        addEntity(EntityFactory.Type.BASIC, new Rectangle(10, 10, 0.5f, 0.5f), 1);
         tiledManager.reMakeMap();
     }
 
@@ -141,9 +142,9 @@ public class GameScreen extends WorldScreen {
         @Override
         public void beginContact(Contact contact) {
             //System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
-            if (areCollided(contact, "playerBottomSensor", "floor") && player.getStateMachine().getState().equals(player.getFallState())) {
+            /*if (areCollided(contact, "playerBottomSensor", "floor") && player.getStateMachine().getState().equals(player.getFallState())) {
                 player.getStateMachine().setState(player.getIdleState());
-            }
+            }*/
         }
 
         @Override

@@ -21,11 +21,11 @@ public class RunState extends StatePlayer{
 
     @Override
     public void update(Float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             stateMachine.setState(player.getJumpState());
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x == 0){
+        if (velocity.x == 0 && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             stateMachine.setState(player.getIdleState());
         }
         if (velocity.y < 0){

@@ -18,6 +18,9 @@ public class FallState extends StatePlayer{
 
     @Override
     public void update(Float delta) {
+        if (player.getBody().getLinearVelocity().y == 0){
+            stateMachine.setState(player.getIdleState());
+        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             stateMachine.setState(player.getFlyState());
         }
@@ -25,5 +28,6 @@ public class FallState extends StatePlayer{
 
     @Override
     public void end() {
+
     }
 }

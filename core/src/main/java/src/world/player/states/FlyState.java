@@ -14,6 +14,8 @@ public class FlyState extends StatePlayer{
 
     @Override
     public void start() {
+        player.speed = 10;
+        player.maxSpeed = 4;
         player.getSprite().setColor(Color.RED);
         player.getSprite().setScale(1.1f);
         player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
