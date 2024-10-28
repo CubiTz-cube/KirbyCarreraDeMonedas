@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
-public class WalkState extends StatePlayer{
+public class WalkState extends RunState{
     public WalkState(StateMachine stateMachine, Player player){
         super(stateMachine, player);
     }
@@ -15,24 +15,18 @@ public class WalkState extends StatePlayer{
     @Override
     public void start() {
         player.getSprite().setColor(Color.GREEN);
+        player.speed = 10;
+        player.maxSpeed = 4;
+        if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) stateMachine.setState(player.getRunState());
     }
 
     @Override
     public void update(Float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-            stateMachine.setState(player.getJumpState());
-        }
+        super.update(delta);
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x == 0){
-            stateMachine.setState(player.getIdleState());
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && velocity.x < 0)
+            || (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) && velocity.x > 0){
+            stateMachine.setState(player.getRunState());
         }
-        if (velocity.y < 0){
-            stateMachine.setState(player.getFallState());
-        }
-    }
-
-    @Override
-    public void end() {
-
     }
 }

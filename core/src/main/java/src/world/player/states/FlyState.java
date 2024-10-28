@@ -17,8 +17,8 @@ public class FlyState extends StatePlayer{
         player.getSprite().setColor(Color.RED);
         player.getSprite().setScale(1.1f);
         player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
-        player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         player.getBody().setGravityScale(0.6f);
+        player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
 
     @Override

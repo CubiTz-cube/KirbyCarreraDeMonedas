@@ -16,8 +16,8 @@ import src.world.player.states.*;
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class Player extends ActorBox2d {
-    private static final float SPEED = 10;
-    private static final float MAX_SPEED = 4;
+    public float speed = 10;
+    public float maxSpeed = 4;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 5f;
     public static final float JUMP_INAIR = 0.3f;
@@ -34,6 +34,8 @@ public class Player extends ActorBox2d {
     private final FlyState flyState;
     private final WalkState walkState;
     private final FallState fallState;
+    private final DashState dashState;
+    private final RunState runState;
 
     public Player(World world, Texture texture, Rectangle shape){
         this.world = world;
@@ -73,6 +75,8 @@ public class Player extends ActorBox2d {
         flyState = new FlyState(stateMachine, this);
         walkState = new WalkState(stateMachine, this);
         fallState = new FallState(stateMachine, this);
+        dashState = new DashState(stateMachine, this);
+        runState = new RunState(stateMachine, this);
         stateMachine.setState(idleState);
     }
 
@@ -98,6 +102,14 @@ public class Player extends ActorBox2d {
 
     public FallState getFallState() {
         return fallState;
+    }
+
+    public RunState getRunState() {
+        return runState;
+    }
+
+    public DashState getDashState() {
+        return dashState;
     }
 
     public Body getBody() {
@@ -129,11 +141,11 @@ public class Player extends ActorBox2d {
     private void controller(){
         Vector2 velocity = body.getLinearVelocity();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x < MAX_SPEED){
-            body.applyForce(SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x < maxSpeed){
+            body.applyForce(speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > -MAX_SPEED){
-            body.applyForce(-SPEED, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > -maxSpeed){
+            body.applyForce(-speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
         if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)){
             float brakeForce = 10f;
