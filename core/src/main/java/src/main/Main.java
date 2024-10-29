@@ -48,6 +48,7 @@ public class Main extends Game {
         assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("floor.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
@@ -63,7 +64,7 @@ public class Main extends Game {
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
 
-        changeScreen(Screens.MENU);
+        changeScreen(Screens.GAME);
     }
 
     public AssetManager getAssetManager() {

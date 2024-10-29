@@ -28,7 +28,7 @@ public class RunState extends StatePlayer{
         if (velocity.x == 0 && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             stateMachine.setState(player.getIdleState());
         }
-        if (velocity.y < 0){
+        if (velocity.y < -1){
             stateMachine.setState(player.getFallState());
         }
     }

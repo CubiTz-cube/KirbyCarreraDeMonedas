@@ -12,16 +12,10 @@ import src.world.entities.Entity;
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class OtherPlayer extends Entity {
-    private final Sprite sprite;
-    private final World world;
-
-    private final Fixture fixture;
-
     //protected final StateMachine stateMachine;
 
     public OtherPlayer(World world, Texture texture, Rectangle shape, Integer id){
-        super(id);
-        this.world = world;
+        super(world, id);
         this.sprite = new Sprite(texture);
 
         BodyDef def = new BodyDef();
@@ -44,22 +38,6 @@ public class OtherPlayer extends Entity {
 
         //stateMachine = new StateMachine();
         //stateMachine.setState(idleState);
-    }
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        setPosition(
-            body.getPosition().x * PIXELS_IN_METER,
-            body.getPosition().y * PIXELS_IN_METER
-        );
-        sprite.setPosition(getX(), getY());
-        sprite.setSize(getWidth(), getHeight());
-        sprite.setOriginCenter();
-        sprite.draw(batch);
     }
 
     @Override

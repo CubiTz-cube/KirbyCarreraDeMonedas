@@ -79,7 +79,7 @@ public class Client implements Runnable{
                         id = (Integer) pack[1];
                         String name = (String) pack[2];
                         playersConnected.put(id, name);
-                        game.addEntity(EntityFactory.Type.OTHERPLAYER,new Rectangle(0, 10, 0.5f, 0.5f), id);
+                        game.addEntity(EntityFactory.Type.OTHERPLAYER,new Vector2(0, 10), id);
                         break;
 
                     case DISCONNECTPLAYER:

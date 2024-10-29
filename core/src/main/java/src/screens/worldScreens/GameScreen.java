@@ -31,9 +31,9 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void show() {
-        player = new Player(world, main.getAssetManager().get("yoshi.jpg"), new Rectangle(8, 10, 0.5f, 0.5f));
+        player = new Player(world, main.getAssetManager(), new Rectangle(12, 10, 1f, 1f));
         stage.addActor(player);
-        addEntity(EntityFactory.Type.BASIC, new Rectangle(10, 10, 0.5f, 0.5f), 1);
+        addEntity(EntityFactory.Type.BASIC, new Vector2(10,10), 1);
         tiledManager.reMakeMap();
     }
 
@@ -70,7 +70,7 @@ public class GameScreen extends WorldScreen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(Main.Screens.MENU);
-            main.client.send(Packet.disconnectPlayer(-1));
+            if (main.client != null) main.client.send(Packet.disconnectPlayer(-1));
         }
 
         if (main.client == null) return;
@@ -89,9 +89,9 @@ public class GameScreen extends WorldScreen {
         tiledManager.dispose();
     }
 
-    public synchronized void addEntity(EntityFactory.Type actor, Rectangle shape, Integer id){
+    public synchronized void addEntity(EntityFactory.Type actor, Vector2 position, Integer id){
         pendingActions.add(() -> {
-            ActorBox2d actorBox2d = entityFactory.create(actor, world, shape, id);
+            ActorBox2d actorBox2d = entityFactory.create(actor, world, position, id);
             actors.add(actorBox2d);
             stage.addActor(actorBox2d);
         });

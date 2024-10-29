@@ -23,9 +23,8 @@ public class IdleState extends StatePlayer{
             stateMachine.setState(player.getJumpState());
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x != 0){
-            stateMachine.setState(player.getWalkState());
-        }
+        if (velocity.x != 0) stateMachine.setState(player.getWalkState());
+        if(velocity.y < -1f) stateMachine.setState(player.getFallState());
     }
 
     @Override

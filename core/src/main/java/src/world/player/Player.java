@@ -2,31 +2,31 @@ package src.world.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
 import src.world.ActorBox2d;
 import src.utils.stateMachine.*;
+import src.world.SpriteActorBox2d;
 import src.world.player.states.*;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class Player extends ActorBox2d {
+public class Player extends SpriteActorBox2d {
     public float speed = 10;
     public float maxSpeed = 4;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 5f;
     public static final float JUMP_INAIR = 0.3f;
 
-    private final Sprite sprite;
-    private final World world;
-    private final Body body;
-    private final Fixture fixture;
-    private final Fixture sensorFixture;
+    //private final Fixture sensorFixture;
 
     protected final StateMachine stateMachine;
     private final IdleState idleState;
@@ -37,37 +37,41 @@ public class Player extends ActorBox2d {
     private final DashState dashState;
     private final RunState runState;
 
-    public Player(World world, Texture texture, Rectangle shape){
-        this.world = world;
-        this.sprite = new Sprite(texture);
+    Animation<TextureRegion> walkAnimation;
+
+    public Player(World world, AssetManager assetManager, Rectangle shape){
+        super(world);
+        setDebug(true);
+        sprite = new Sprite(assetManager.get("yoshi.jpg", Texture.class));
+        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
-        def.position.set(shape.x, shape.y);
+        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width, shape.height);
-        fixture = body.createFixture(box, 1);
+        box.setAsBox(shape.width/2, shape.height/2);
+        fixture = body.createFixture(box, 1f);
         fixture.setUserData("player");
         box.dispose();
         body.setFixedRotation(true);
 
-        PolygonShape sensorShape = new PolygonShape();
+        /*PolygonShape sensorShape = new PolygonShape();
         sensorShape.setAsBox(shape.width/2, 0.2f, new Vector2(0, -0.4f), 0);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.shape = sensorShape;
         sensorDef.isSensor = true;
         sensorFixture = body.createFixture(sensorDef);
         sensorFixture.setUserData("playerBottomSensor");
-        sensorShape.dispose();
+        sensorShape.dispose();*/
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;
         filter.maskBits = ~CollisionFilters.MASK_PLAYER;
         fixture.setFilterData(filter);
 
-        setSize(PIXELS_IN_METER, PIXELS_IN_METER);
+        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
         stateMachine = new StateMachine();
         idleState = new IdleState(stateMachine, this);
@@ -78,6 +82,16 @@ public class Player extends ActorBox2d {
         dashState = new DashState(stateMachine, this);
         runState = new RunState(stateMachine, this);
         stateMachine.setState(idleState);
+
+        Texture walkSheet = assetManager.get("world/entities/kirby/kirbyWalk.png");
+        TextureRegion[][] tmp = TextureRegion.split(walkSheet,
+            walkSheet.getWidth() / 10,
+            walkSheet.getHeight());
+        TextureRegion[] walkFrames = new TextureRegion[10];
+        System.arraycopy(tmp[0], 0, walkFrames, 0, 10);
+        walkAnimation = new Animation<TextureRegion>(0.025f, walkFrames);
+
+        currentAnimation = walkAnimation;
     }
 
     public StateMachine getStateMachine() {
@@ -112,26 +126,6 @@ public class Player extends ActorBox2d {
         return dashState;
     }
 
-    public Body getBody() {
-        return body;
-    }
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        setPosition(
-            body.getPosition().x * PIXELS_IN_METER,
-            body.getPosition().y * PIXELS_IN_METER
-        );
-        sprite.setPosition(getX(), getY());
-        sprite.setSize(getWidth(), getHeight());
-        sprite.setOriginCenter();
-        sprite.draw(batch);
-    }
-
     @Override
     public void act(float delta) {
         controller();
@@ -155,7 +149,7 @@ public class Player extends ActorBox2d {
 
     public void detach(){
         body.destroyFixture(fixture);
-        body.destroyFixture(sensorFixture);
+        //body.destroyFixture(sensorFixture);
         world.destroyBody(body);
     }
 }

@@ -17,7 +17,7 @@ public class StaticFactory {
 
     public ActorBox2d create(Type actor, World world, Rectangle shape){
         return switch (actor) {
-            case FLOOR -> new Floor(world, game.getAssetManager().get("floor.png"), shape);
+            case FLOOR -> new Floor(world, shape);
             default -> null;
         };
     }

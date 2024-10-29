@@ -1,6 +1,7 @@
 package src.world.entities;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import src.main.Main;
 import src.world.ActorBox2d;
@@ -19,10 +20,10 @@ public class EntityFactory{
         this.game = game;
     }
 
-    public ActorBox2d create(EntityFactory.Type actor, World world, Rectangle shape, Integer id){
+    public ActorBox2d create(EntityFactory.Type actor, World world, Vector2 position, Integer id){
         return switch (actor) {
-            case OTHERPLAYER -> new OtherPlayer(world, game.getAssetManager().get("yoshi.jpg"), shape, id);
-            case BASIC -> new BasicEnemy(world, game.getAssetManager().get("perro.jpg"), shape, id);
+            case OTHERPLAYER -> new OtherPlayer(world, game.getAssetManager().get("yoshi.jpg"), new Rectangle(position.x, position.y, 1f, 1f), id);
+            case BASIC -> new BasicEnemy(world, game.getAssetManager().get("perro.jpg"), new Rectangle(position.x, position.y, 1f, 1f), id);
             default -> null;
         };
     }
