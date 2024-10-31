@@ -64,7 +64,7 @@ public class Main extends Game {
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
 
-        changeScreen(Screens.GAME);
+        changeScreen(Screens.MENU);
     }
 
     public AssetManager getAssetManager() {

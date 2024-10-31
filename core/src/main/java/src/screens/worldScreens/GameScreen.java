@@ -34,6 +34,7 @@ public class GameScreen extends WorldScreen {
         player = new Player(world, main.getAssetManager(), new Rectangle(12, 10, 1.5f, 1.5f));
         stage.addActor(player);
         addEntity(EntityFactory.Type.BASIC, new Vector2(10,10), 1);
+        addEntity(EntityFactory.Type.SLEEPY, new Vector2(10,12), 1);
         tiledManager.reMakeMap();
     }
 
