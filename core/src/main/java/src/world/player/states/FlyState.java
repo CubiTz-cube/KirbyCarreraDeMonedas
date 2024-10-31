@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
-public class FlyState extends StatePlayer{
+public class FlyState extends CanMoveState{
     public FlyState(StateMachine stateMachine, Player player) {
         super(stateMachine, player);
     }
@@ -25,6 +25,7 @@ public class FlyState extends StatePlayer{
 
     @Override
     public void update(Float delta) {
+        super.update(delta);
         if (Gdx.input.isKeyPressed(Input.Keys.UP)){
             player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
             player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);

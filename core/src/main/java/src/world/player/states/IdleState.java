@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import src.world.player.Player;
 import src.utils.stateMachine.StateMachine;
 
-public class IdleState extends StatePlayer{
+public class IdleState extends CanMoveState{
     public IdleState(StateMachine stateMachine, Player player){
         super(stateMachine, player);
     }
@@ -15,10 +15,15 @@ public class IdleState extends StatePlayer{
     @Override
     public void start() {
         player.getSprite().setColor(Color.WHITE);
+        player.setCurrentAnimation(player.getIdleAnimation());
     }
 
     @Override
     public void update(Float delta) {
+        super.update(delta);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            stateMachine.setState(player.getDownState());
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)){
             stateMachine.setState(player.getJumpState());
         }

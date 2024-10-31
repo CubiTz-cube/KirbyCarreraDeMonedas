@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
-public class RunState extends StatePlayer{
+public class RunState extends CanMoveState{
     public RunState(StateMachine stateMachine, Player player) {
         super(stateMachine, player);
     }
@@ -21,6 +21,10 @@ public class RunState extends StatePlayer{
 
     @Override
     public void update(Float delta) {
+        super.update(delta);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            stateMachine.setState(player.getDownState());
+        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             stateMachine.setState(player.getJumpState());
         }

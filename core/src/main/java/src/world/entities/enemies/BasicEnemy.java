@@ -1,8 +1,6 @@
 package src.world.entities.enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
@@ -39,9 +37,10 @@ public class BasicEnemy extends Entity {
 
         if (timeAct < 3) {
             body.setLinearVelocity(-3,body.getLinearVelocity().y);
+            setFlipX(true);
         }else if(timeAct < 6){
             body.setLinearVelocity(3,body.getLinearVelocity().y);
-            //body.applyForce(-5f, 0, body.getPosition().x, body.getPosition().y, true);
+            setFlipX(false);
         }else if (timeAct > 9){
             timeAct = 0f;
         }

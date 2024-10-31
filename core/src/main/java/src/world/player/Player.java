@@ -25,6 +25,7 @@ public class Player extends SpriteActorBox2d {
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 5f;
     public static final float JUMP_INAIR = 0.3f;
+    public static final float DASH_IMPULSE = 10f;
 
     //private final Fixture sensorFixture;
 
@@ -35,9 +36,11 @@ public class Player extends SpriteActorBox2d {
     private final WalkState walkState;
     private final FallState fallState;
     private final DashState dashState;
+    private final DownState downState;
     private final RunState runState;
 
-    Animation<TextureRegion> walkAnimation;
+    private Animation<TextureRegion> walkAnimation;
+    private Animation<TextureRegion> idleAnimation;
 
     public Player(World world, AssetManager assetManager, Rectangle shape){
         super(world);
@@ -51,8 +54,8 @@ public class Player extends SpriteActorBox2d {
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width/2, shape.height/2);
-        fixture = body.createFixture(box, 1f);
+        box.setAsBox(shape.width/4, shape.height/4);
+        fixture = body.createFixture(box, 1.5f);
         fixture.setUserData("player");
         box.dispose();
         body.setFixedRotation(true);
@@ -72,6 +75,7 @@ public class Player extends SpriteActorBox2d {
         fixture.setFilterData(filter);
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
+        setSpritePosModification(0f, getHeight()/4);
 
         stateMachine = new StateMachine();
         idleState = new IdleState(stateMachine, this);
@@ -80,18 +84,22 @@ public class Player extends SpriteActorBox2d {
         walkState = new WalkState(stateMachine, this);
         fallState = new FallState(stateMachine, this);
         dashState = new DashState(stateMachine, this);
+        downState = new DownState(stateMachine, this);
         runState = new RunState(stateMachine, this);
         stateMachine.setState(idleState);
 
-        Texture walkSheet = assetManager.get("world/entities/kirby/kirbyWalk.png");
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-            walkSheet.getWidth() / 10,
-            walkSheet.getHeight());
+        Texture sheet = assetManager.get("world/entities/kirby/kirbyWalk.png");
+        TextureRegion[][] tmp = TextureRegion.split(sheet,
+            sheet.getWidth() / 10,
+            sheet.getHeight());
         TextureRegion[] walkFrames = new TextureRegion[10];
         System.arraycopy(tmp[0], 0, walkFrames, 0, 10);
-        walkAnimation = new Animation<TextureRegion>(0.025f, walkFrames);
+        walkAnimation = new Animation<>(0.05f, walkFrames);
 
-        currentAnimation = walkAnimation;
+        TextureRegion idleFrames = new TextureRegion((Texture) assetManager.get("yoshi.jpg"));
+        idleAnimation = new Animation<>(0.05f, idleFrames);
+
+        currentAnimation = idleAnimation;
     }
 
     public StateMachine getStateMachine() {
@@ -118,33 +126,29 @@ public class Player extends SpriteActorBox2d {
         return fallState;
     }
 
-    public RunState getRunState() {
-        return runState;
-    }
-
     public DashState getDashState() {
         return dashState;
     }
 
-    @Override
-    public void act(float delta) {
-        controller();
-        stateMachine.update(delta);
+    public DownState getDownState() {
+        return downState;
     }
 
-    private void controller(){
-        Vector2 velocity = body.getLinearVelocity();
+    public RunState getRunState() {
+        return runState;
+    }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x < maxSpeed){
-            body.applyForce(speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > -maxSpeed){
-            body.applyForce(-speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
-        }
-        if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)){
-            float brakeForce = 10f;
-            body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
-        }
+    public Animation<TextureRegion> getIdleAnimation() {
+        return idleAnimation;
+    }
+
+    public Animation<TextureRegion> getWalkAnimation() {
+        return walkAnimation;
+    }
+
+    @Override
+    public void act(float delta) {
+        stateMachine.update(delta);
     }
 
     public void detach(){

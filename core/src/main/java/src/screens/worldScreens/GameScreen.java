@@ -31,7 +31,7 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void show() {
-        player = new Player(world, main.getAssetManager(), new Rectangle(12, 10, 1f, 1f));
+        player = new Player(world, main.getAssetManager(), new Rectangle(12, 10, 1.5f, 1.5f));
         stage.addActor(player);
         addEntity(EntityFactory.Type.BASIC, new Vector2(10,10), 1);
         tiledManager.reMakeMap();

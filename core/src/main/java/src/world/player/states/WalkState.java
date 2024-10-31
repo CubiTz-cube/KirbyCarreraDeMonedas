@@ -15,6 +15,7 @@ public class WalkState extends RunState{
     @Override
     public void start() {
         player.getSprite().setColor(Color.GREEN);
+        player.setCurrentAnimation(player.getWalkAnimation());
         player.speed = 10;
         player.maxSpeed = 4;
         if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) stateMachine.setState(player.getRunState());
@@ -24,8 +25,8 @@ public class WalkState extends RunState{
     public void update(Float delta) {
         super.update(delta);
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && velocity.x < 0)
-            || (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) && velocity.x > 0){
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && velocity.x < 0) ||
+                (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) && velocity.x > 0){
             stateMachine.setState(player.getRunState());
         }
     }
