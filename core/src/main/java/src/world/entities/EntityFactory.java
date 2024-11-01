@@ -15,6 +15,7 @@ public class EntityFactory{
         OTHERPLAYER,
         BASIC,
         SLEEPY
+
     }
 
     public EntityFactory(Main game){

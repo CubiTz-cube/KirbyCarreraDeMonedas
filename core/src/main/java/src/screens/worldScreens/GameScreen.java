@@ -23,7 +23,7 @@ public class GameScreen extends WorldScreen {
     private final Queue<Runnable> pendingActions;
 
     public GameScreen(Main main){
-        super(main, -15f, "maps/kirbyPrueba.tmx");
+        super(main, -15f, "tiled/maps/kirbyPrueba.tmx");
         world.setContactListener(new GameContactListener());
         lastPosition = new Vector2();
         pendingActions = new LinkedList<>();
@@ -31,10 +31,8 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void show() {
-        player = new Player(world, main.getAssetManager(), new Rectangle(12, 10, 1.5f, 1.5f));
+        player = new Player(world, main.getAssetManager(), new Rectangle(5, 8, 1.5f, 1.5f));
         stage.addActor(player);
-        addEntity(EntityFactory.Type.BASIC, new Vector2(10,10), 1);
-        addEntity(EntityFactory.Type.SLEEPY, new Vector2(10,12), 1);
         tiledManager.reMakeMap();
     }
 
@@ -123,6 +121,10 @@ public class GameScreen extends WorldScreen {
             }
         });
     }
+
+    /*public void addMainPlayer(Vector2 position){
+        player = new Player(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1.5f, 1.5f));
+    }*/
 
     public Player getPlayer() {
         return player;

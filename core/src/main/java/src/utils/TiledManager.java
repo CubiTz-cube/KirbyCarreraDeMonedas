@@ -6,31 +6,42 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import src.screens.worldScreens.WorldScreen;
+import src.world.entities.EntityFactory;
+import src.world.player.Player;
 import src.world.statics.StaticFactory;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class TiledManager {
-    private WorldScreen game;
+    private final WorldScreen game;
     private TiledMap tiledmap;
     private Integer tiledSize;
-    private StaticFactory staticFactory;
+    private final StaticFactory staticFactory;
+    private final EntityFactory entityFactory;
 
     public TiledManager(WorldScreen game) {
         this.game = game;
         staticFactory = new StaticFactory(game.main);
+        entityFactory = new EntityFactory(game.main);
     }
 
     public OrthogonalTiledMapRenderer setupMap(String map) {
         tiledmap = new TmxMapLoader().load(map);
         tiledSize = tiledmap.getProperties().get("tilewidth", Integer.class);
 
-        //parsedEntityMap(tiledmap.getLayers().get("objects").getObjects());
+        parsedEntityMap(tiledmap.getLayers().get("entity").getObjects());
         parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
 
         return new OrthogonalTiledMapRenderer(tiledmap, PIXELS_IN_METER/tiledSize);
     }
+
+    /*public void parsedPlayer(MapObjects objects) {
+        for (MapObject object : objects) {
+
+        }
+    }*/
 
     public void parsedColisionMap(MapObjects objects) {
         for (MapObject object : objects) {
@@ -45,14 +56,12 @@ public class TiledManager {
 
     public void parsedEntityMap(MapObjects objects) {
 
-        for (MapObject object : objects) {
-            String type = object.getName();
-            if (type.equals("player")){
-                createMainPlayer(object);
-            }else{
-                createEntity(type, object);
-            }
-        }
+        /*for (MapObject object : objects) {
+            String type = object.getProperties().get("type", String.class);
+            game.addActor(entityFactory.create(EntityFactory.Type.valueOf(type), game.getWorld(),
+                new Vector2((Float) object.getProperties().get("x")/tiledSize, (Float) object.getProperties().get("y")/tiledSize),
+                (Integer) object.getProperties().get("id")));
+        }*/
 
     }
 

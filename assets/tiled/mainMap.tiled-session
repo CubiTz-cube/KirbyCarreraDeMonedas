@@ -1,0 +1,28 @@
+{
+    "activeFile": "maps/kirbyPrueba.tmx",
+    "expandedProjectPaths": [
+        "maps",
+        "."
+    ],
+    "fileStates": {
+        "maps/kirbyPrueba.tmx": {
+            "scale": 1.6070833333333332,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 240.18667358050297,
+                "y": 159.9170339642209
+            }
+        },
+        "maps/kirbyPrueba.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "last.objectTemplatePath": "C:/Users/German Carreño/Documents/CODE/KB-92/assets/tiled/maps/templates",
+    "openFiles": [
+        "maps/kirbyPrueba.tmx"
+    ],
+    "project": "mainMap.tiled-project",
+    "recentFiles": [
+        "maps/kirbyPrueba.tmx"
+    ]
+}
