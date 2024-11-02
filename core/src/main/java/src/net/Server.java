@@ -5,12 +5,8 @@ import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.screens.worldScreens.GameScreen;
-import java.io.IOException;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.Socket;
-
-import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +18,7 @@ public class Server implements Runnable{
     private Boolean running;
     private final CopyOnWriteArrayList<ClientListener> users;
     private final ExecutorService pool = Executors.newFixedThreadPool(4);
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
 
     public Server(GameScreen game, String ip, Integer port){
         this.game = game;
@@ -61,7 +57,7 @@ public class Server implements Runnable{
         try {
             while (running) {
                 Socket clientSocket = serverSocket.accept(null);
-                ClientListener newUser = new ClientListener(this,clientSocket, users.size()+1);
+                ClientListener newUser = new ClientListener(this,clientSocket, game.main.getIds());
                 pool.execute(newUser);
                 users.add(newUser);
             }

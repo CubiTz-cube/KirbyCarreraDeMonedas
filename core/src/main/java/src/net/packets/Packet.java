@@ -1,8 +1,10 @@
 package src.net.packets;
 
+import src.world.entities.enemies.Enemy;
+
 public class Packet {
     public static enum Types{
-        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART
+        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY
     }
 
     public static Object[] connect(String name){
@@ -23,6 +25,10 @@ public class Packet {
 
     public static Object[] gameStart(){
         return new Object[]{Types.GAMESTART};
+    }
+
+    public static Object[] newEnemy(Integer id, Enemy.Type type, Float x, Float y){
+        return new Object[]{Types.NEWENTITY, id, type, x, y};
     }
 
 }

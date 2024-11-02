@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import src.net.packets.Packet;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
-import src.world.entities.EntityFactory;
+import src.world.entities.enemies.Enemy;
+import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 import src.main.Main;
 
@@ -20,17 +21,26 @@ import java.util.Queue;
 public class GameScreen extends WorldScreen {
     private final Vector2 lastPosition;
     private final Queue<Runnable> pendingActions;
+    private Float sendTime = 0f;
+    private final Label cronolabel;
 
     public GameScreen(Main main){
         super(main, -15f, "tiled/maps/kirbyPrueba.tmx");
         world.setContactListener(new GameContactListener());
         lastPosition = new Vector2();
         pendingActions = new LinkedList<>();
+        cronolabel = new Label(crono.toString(), main.getSkin());
+        cronolabel.setPosition(20, 20);
     }
 
     @Override
     public void show() {
-        tiledManager.reMakeMap();
+        crono = 0f;
+        stage.addActor(cronolabel);
+        if (main.server != null || main.client == null) tiledManager.makeMap();
+        if (main.server != null){
+            main.client.send(Packet.newEnemy(null, null, null, null));
+        }
     }
 
     @Override
@@ -44,6 +54,8 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
+        cronolabel.setText(crono.toString());
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -60,8 +72,6 @@ public class GameScreen extends WorldScreen {
         stage.draw();
         camera.zoom = 1f;
 
-
-
         while (!pendingActions.isEmpty()) {
             pendingActions.poll().run();
         }
@@ -72,26 +82,30 @@ public class GameScreen extends WorldScreen {
         }
 
         if (main.client == null) return;
+        sendTime += delta;
 
         Vector2 currentPosition = player.getBody().getPosition();
         if (!currentPosition.epsilonEquals(lastPosition, 0.1f)) { // Check for significant change
             main.client.send(Packet.position(-1,currentPosition.x, currentPosition.y));
             lastPosition.set(currentPosition);
         }
+
+        if (main.server == null) return;
+
+        if (sendTime >= 3f) {
+            for (Entity e: entities.values()){
+                if (e instanceof OtherPlayer) continue;
+                main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
+            }
+            sendTime = 0f;
+        }
+
     }
 
-    @Override
-    public void dispose() {
-        stage.dispose();
-        world.dispose();
-        tiledManager.dispose();
-    }
-
-    public synchronized void addEntity(EntityFactory.Type actor, Vector2 position, Integer id){
+    public synchronized void addEnemy(Enemy.Type actor, Vector2 position, Integer id){
         pendingActions.add(() -> {
-            ActorBox2d actorBox2d = entityFactory.create(actor, world, position, id);
-            actors.add(actorBox2d);
-            stage.addActor(actorBox2d);
+            ActorBox2d actorBox2d = enemyFactory.create(actor, world, position, id, crono);
+            addActor(actorBox2d);
         });
     }
 
@@ -111,13 +125,7 @@ public class GameScreen extends WorldScreen {
 
     public synchronized void actEntity(Integer id, Float x, Float y){
         pendingActions.add(() -> {
-            for (ActorBox2d actor : actors) {
-                if (!(actor instanceof Entity entity)) continue;
-                if (entity.getId().equals(id)) {
-                    entity.getBody().setTransform(x, y, 0);
-                    break;
-                }
-            }
+            entities.get(id).getBody().setTransform(x, y, 0);
         });
     }
 

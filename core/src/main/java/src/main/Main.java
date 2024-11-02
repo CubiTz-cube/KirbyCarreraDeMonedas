@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import src.net.Client;
 import src.net.Server;
@@ -20,6 +21,7 @@ public class Main extends Game {
     private AssetManager assetManager;
     private ArrayList<Screen> screensList;
     private Skin skin;
+    private Integer ids = 0;
     public enum Screens {
         INTRO,
         MENU,
@@ -48,6 +50,7 @@ public class Main extends Game {
         assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("floor.png", Texture.class);
+        assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
@@ -71,18 +74,22 @@ public class Main extends Game {
         return assetManager;
     }
 
+    public Integer getIds() {
+        ids++;
+        return ids-1;
+    }
+
     public Skin getSkin() {
         return skin;
     }
 
     public void changeScreen(Screens screen){
         setScreen(screensList.get(screen.ordinal()));
-        //System.out.println("Screen changed to: " + screen);
     }
 
     public void startServer(){
         if (server != null) closeServer();
-        server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 38746);
+        server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 1234);
         serverThread.execute(server);
     }
 
@@ -96,7 +103,7 @@ public class Main extends Game {
 
     public void startClient(String name){
         if (client != null) closeClient();
-        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), "bin-hansen.gl.at.ply.gg", 38746, name);
+        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 1234, name);
         clientThread.execute(client);
     }
 

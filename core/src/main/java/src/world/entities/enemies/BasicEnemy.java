@@ -1,6 +1,10 @@
 package src.world.entities.enemies;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
@@ -8,13 +12,17 @@ import src.world.entities.Entity;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class BasicEnemy extends Entity {
-    private Float timeAct = 0f;
+public class BasicEnemy extends Enemy {
+    private final BitmapFont font;
+    private final GlyphLayout layout;
 
-    public BasicEnemy(World world, Texture texture, Rectangle shape, Integer id) {
-        super(world, id);
-        this.sprite = new Sprite(texture);
+    public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id, Float crono) {
+        super(world, id, crono);
+        type = Type.BASIC;
+        sprite = new Sprite(assetManager.get("perro.jpg", Texture.class));
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
+        this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
+        this.layout = new GlyphLayout();
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -33,17 +41,25 @@ public class BasicEnemy extends Entity {
 
     @Override
     public void act(float delta) {
-        timeAct += delta;
+        super.act(delta);
 
-        if (timeAct < 3) {
+        if (actCrono < 3) {
             body.setLinearVelocity(-3,body.getLinearVelocity().y);
             setFlipX(true);
-        }else if(timeAct < 6){
+        }else if(actCrono < 6){
             body.setLinearVelocity(3,body.getLinearVelocity().y);
             setFlipX(false);
-        }else if (timeAct > 9){
-            timeAct = 0f;
+        }else if (actCrono > 9){
+            actCrono = 0f;
         }
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+
+        layout.setText(font, "ID " + getId() + " TIME " + actCrono);
+        font.draw(batch, layout, getX() + layout.width / 2, getY() + sprite.getHeight() + layout.height);
     }
 
     public void detach() {

@@ -8,7 +8,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import src.screens.worldScreens.WorldScreen;
-import src.world.entities.EntityFactory;
+import src.world.entities.Entity;
+import src.world.entities.EnemyFactory;
+import src.world.entities.enemies.Enemy;
 import src.world.player.Player;
 import src.world.statics.StaticFactory;
 
@@ -19,19 +21,18 @@ public class TiledManager {
     private TiledMap tiledmap;
     private Integer tiledSize;
     private final StaticFactory staticFactory;
-    private final EntityFactory entityFactory;
+    private final EnemyFactory enemyFactory;
 
     public TiledManager(WorldScreen game) {
         this.game = game;
         staticFactory = new StaticFactory(game.main);
-        entityFactory = new EntityFactory(game.main);
+        enemyFactory = new EnemyFactory(game.main);
     }
 
     public OrthogonalTiledMapRenderer setupMap(String map) {
         tiledmap = new TmxMapLoader().load(map);
         tiledSize = tiledmap.getProperties().get("tilewidth", Integer.class);
 
-        parsedEntityMap(tiledmap.getLayers().get("entity").getObjects());
         parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
         parsedPlayer(tiledmap.getLayers().get("player").getObjects());
 
@@ -63,11 +64,9 @@ public class TiledManager {
             String type = object.getProperties().get("type", String.class);
             float X = object.getProperties().get("x", Float.class) / tiledSize;
             float Y = object.getProperties().get("y", Float.class )/ tiledSize;
-            int id = object.getProperties().get("id", Integer.class);
 
-            System.out.println("Crear entidad: " + type);
-            game.addActor(entityFactory.create(EntityFactory.Type.valueOf(type), game.getWorld(),
-                new Vector2(X, Y), id));
+            game.addActor(enemyFactory.create(Enemy.Type.valueOf(type), game.getWorld(),
+                new Vector2(X, Y), game.main.getIds(), game.getCrono()));
         }
 
     }
@@ -76,8 +75,9 @@ public class TiledManager {
         tiledmap.dispose();
     }
 
-    public void reMakeMap() {
-        //parsedEntityMap(tiledmap.getLayers().get("objects").getObjects());
+    public void makeMap() {
+        parsedEntityMap(tiledmap.getLayers().get("entity").getObjects());
         parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
+        parsedPlayer(tiledmap.getLayers().get("player").getObjects());
     }
 }

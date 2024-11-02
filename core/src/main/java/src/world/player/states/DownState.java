@@ -13,7 +13,6 @@ public class DownState  extends StatePlayer{
 
     @Override
     public void start() {
-        System.out.println("down");
         player.getSprite().setColor(Color.CHARTREUSE);
     }
 

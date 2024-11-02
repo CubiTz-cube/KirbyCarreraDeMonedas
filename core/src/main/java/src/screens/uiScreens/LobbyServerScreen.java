@@ -30,7 +30,6 @@ public class LobbyServerScreen extends UIScreen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.changeScreen(Main.Screens.GAME);
                 main.client.send(Packet.gameStart());
             }
         });
@@ -67,11 +66,14 @@ public class LobbyServerScreen extends UIScreen {
             numPlayersConnected = main.client.getPlayersConnected().size();
             updatePlayersTable();
         }
+        if (main.client.gameStart){
+            main.changeScreen(Main.Screens.GAME);
+        }
     }
 
     private void updatePlayersTable() {
         playersTable.clear();
-        for (String player : main.client.getPlayersConnected()) {
+        for (String player : main.client.getPlayersConnected().values()) {
             playersTable.add(new Label(player, main.getSkin())).pad(25);
             playersTable.row();
         }

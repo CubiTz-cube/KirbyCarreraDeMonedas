@@ -7,12 +7,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
+import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.sleeping.states.SleepingState;
 import src.world.entities.enemies.sleeping.states.WalkingState;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class SleepingEnemy extends Entity
+public class SleepingEnemy extends Enemy
 {
     private Float timeAct = 0f;
     private final Sprite sprite;
@@ -20,9 +21,9 @@ public class SleepingEnemy extends Entity
     private final SleepingState sleepingState;
     private final WalkingState walkingState;
 
-    public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id)
+    public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id, Float crono)
     {
-        super(world, id);
+        super(world, id, crono);
 
         this.sprite = new Sprite(texture);
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);

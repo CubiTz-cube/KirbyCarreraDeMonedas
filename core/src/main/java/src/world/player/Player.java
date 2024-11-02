@@ -39,8 +39,8 @@ public class Player extends SpriteActorBox2d {
     private final DownState downState;
     private final RunState runState;
 
-    private Animation<TextureRegion> walkAnimation;
-    private Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> walkAnimation;
+    private final Animation<TextureRegion> idleAnimation;
 
     public Player(World world, AssetManager assetManager, Rectangle shape){
         super(world);

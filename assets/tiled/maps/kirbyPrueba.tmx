@@ -11,7 +11,6 @@
  </layer>
  <objectgroup id="3" name="entity">
   <object id="14" template="templates/Enemigo basico.tx" type="BASIC" x="88" y="248"/>
-  <object id="18" template="templates/Enemigo Durmiente.tx" type="SLEEPY" x="208" y="176"/>
   <object id="19" template="templates/Enemigo basico.tx" name="Enemigo basico" type="BASIC" x="200" y="240"/>
  </objectgroup>
  <objectgroup id="4" name="player">

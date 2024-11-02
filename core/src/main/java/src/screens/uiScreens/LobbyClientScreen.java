@@ -62,7 +62,7 @@ public class LobbyClientScreen extends UIScreen {
 
     private void updatePlayersTable() {
         playersTable.clear();
-        for (String player : main.client.getPlayersConnected()) {
+        for (String player : main.client.getPlayersConnected().values()) {
             playersTable.add(new Label(player, main.getSkin())).pad(25);
             playersTable.row();
         }

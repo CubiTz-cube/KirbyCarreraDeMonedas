@@ -10,6 +10,9 @@ import java.io.ObjectOutputStream;
 import java.net.SocketException;
 
 import com.badlogic.gdx.net.Socket;
+import src.world.entities.Entity;
+import src.world.entities.enemies.Enemy;
+import src.world.entities.otherPlayer.OtherPlayer;
 
 public class ClientListener implements Runnable{
     private final Server server;
@@ -36,10 +39,11 @@ public class ClientListener implements Runnable{
     public void run() {
         System.out.println("[User] Nuevo usuario conectado " + id);
         try {
+            float x, y;
             while (running) {
                 Object[] pack = (Object[]) in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
-                System.out.println("[User] Recibido: " + type);
+                if (!type.equals(Packet.Types.POSITION)) System.out.println("[User " + id + "] Recibido: " + type);
                 switch (type){
                     case CONNECT:
                         name = (String) pack[1];
@@ -56,13 +60,25 @@ public class ClientListener implements Runnable{
                         break;
 
                     case POSITION:
-                        //Integer packId = (Integer) pack[1]; Devuelve -1
-                        Float x = (Float) pack[2];
-                        Float y = (Float) pack[3];
-                        server.sendAll(Packet.position(id, x, y), id);
+                        Integer packId = (Integer) pack[1]; //Devuelve -1 si es la pos de un player
+                        x = (Float) pack[2];
+                        y = (Float) pack[3];
+                        if (packId == -1) server.sendAll(Packet.position(id, x, y), id);
+                        else server.sendAll(Packet.position(packId, x, y), id);
                         break;
                     case GAMESTART:
-                        server.sendAll(Packet.gameStart(), id);
+                        server.sendAll(Packet.gameStart(), -1);
+                        break;
+
+                    case NEWENTITY:
+                        // Cuando recibe el paquete newEntity del cliente que creao el servidor recorre su lista de entidades
+                        // por eso no hace falta revisar lso valores del paquete
+                        for (Entity e : server.game.getEntities().values()){
+                            if (!(e instanceof Enemy enemy)) continue;
+                            x = e.getBody().getPosition().x;
+                            y = e.getBody().getPosition().y;
+                            server.sendAll(Packet.newEnemy(e.getId(), enemy.getType(), x, y), id);
+                        }
                         break;
                 }
             }

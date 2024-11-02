@@ -8,7 +8,8 @@ import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
 import src.screens.worldScreens.GameScreen;
-import src.world.entities.EntityFactory;
+import src.world.entities.enemies.Enemy;
+import src.world.entities.otherPlayer.OtherPlayer;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -23,15 +24,15 @@ public class Client implements Runnable{
     private final GameScreen game;
     private final String ip;
     private final Integer port;
-    private Boolean running = false;
 
-    public Boolean gameStart = false;
     private final String name;
     private final HashMap<Integer, String> playersConnected;
+    public Boolean gameStart = false;
 
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private Boolean running = false;
 
     public Client(GameScreen game, String ip, int port, String name){
         this.game = game;
@@ -42,8 +43,8 @@ public class Client implements Runnable{
         playersConnected.put(-1, name);
     }
 
-    public ArrayList<String> getPlayersConnected() {
-        return new ArrayList<>(this.playersConnected.values());
+    public HashMap<Integer, String> getPlayersConnected() {
+        return this.playersConnected;
     }
 
     public String getName() {
@@ -66,26 +67,35 @@ public class Client implements Runnable{
             System.out.println("Error al conectar cliente: " + e.getMessage());
         }
 
-        Integer id;
+        int packId;
+        float x,y;
         send(Packet.connect(name));
         try {
             while (running) {
 
                 Object[] pack = (Object[])in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
-                System.out.println("[Client] Recibido: " + type);
+                if (!type.equals(Packet.Types.POSITION)) System.out.println("[Client] Recibido: " + type);
                 switch (type){
                     case NEWPLAYER:
-                        id = (Integer) pack[1];
+                        packId = (Integer) pack[1];
                         String name = (String) pack[2];
-                        playersConnected.put(id, name);
-                        game.addEntity(EntityFactory.Type.OTHERPLAYER,new Vector2(0, 10), id);
+                        playersConnected.put(packId, name);
+                        game.addActor(new OtherPlayer(game.getWorld(), game.main.getAssetManager(), new Rectangle(0, 10, 1.5f, 1.5f), packId, name));
+                        break;
+
+                    case NEWENTITY:
+                        packId = (Integer) pack[1];
+                        Enemy.Type packType = (Enemy.Type) pack[2];
+                        x = (Float) pack[3];
+                        y = (Float) pack[4];
+                        game.addEnemy(packType, new Vector2(x,y), packId);
                         break;
 
                     case DISCONNECTPLAYER:
-                        id = (Integer) pack[1];
-                        playersConnected.remove(id);
-                        game.removeEntity(id);
+                        packId = (Integer) pack[1];
+                        playersConnected.remove(packId);
+                        game.removeEntity(packId);
                         break;
 
                     case GAMESTART:
@@ -93,10 +103,10 @@ public class Client implements Runnable{
                         break;
 
                     case POSITION:
-                        Integer packId = (Integer) pack[1];
-                        Float packX = (Float) pack[2];
-                        Float packY= (Float) pack[3];
-                        game.actEntity(packId, packX, packY);
+                        packId = (Integer) pack[1];
+                        x = (Float) pack[2];
+                        y= (Float) pack[3];
+                        game.actEntity(packId, x, y);
                         break;
                 }
             }
