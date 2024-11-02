@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class GameScreen extends WorldScreen {
-    private static Player player;
     private final Vector2 lastPosition;
     private final Queue<Runnable> pendingActions;
 
@@ -31,8 +30,6 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void show() {
-        player = new Player(world, main.getAssetManager(), new Rectangle(5, 8, 1.5f, 1.5f));
-        stage.addActor(player);
         tiledManager.reMakeMap();
     }
 
@@ -121,10 +118,6 @@ public class GameScreen extends WorldScreen {
             }
         });
     }
-
-    /*public void addMainPlayer(Vector2 position){
-        player = new Player(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1.5f, 1.5f));
-    }*/
 
     public Player getPlayer() {
         return player;

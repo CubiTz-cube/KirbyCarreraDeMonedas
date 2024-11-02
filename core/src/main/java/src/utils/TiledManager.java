@@ -33,15 +33,18 @@ public class TiledManager {
 
         parsedEntityMap(tiledmap.getLayers().get("entity").getObjects());
         parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
+        parsedPlayer(tiledmap.getLayers().get("player").getObjects());
 
         return new OrthogonalTiledMapRenderer(tiledmap, PIXELS_IN_METER/tiledSize);
     }
 
-    /*public void parsedPlayer(MapObjects objects) {
+    public void parsedPlayer(MapObjects objects) {
         for (MapObject object : objects) {
-
+            float X = object.getProperties().get("x", Float.class) / tiledSize;
+            float Y = object.getProperties().get("y", Float.class )/ tiledSize;
+            game.addMainPlayer(new Vector2(X, Y));
         }
-    }*/
+    }
 
     public void parsedColisionMap(MapObjects objects) {
         for (MapObject object : objects) {
@@ -56,25 +59,17 @@ public class TiledManager {
 
     public void parsedEntityMap(MapObjects objects) {
 
-        /*for (MapObject object : objects) {
+        for (MapObject object : objects) {
             String type = object.getProperties().get("type", String.class);
+            float X = object.getProperties().get("x", Float.class) / tiledSize;
+            float Y = object.getProperties().get("y", Float.class )/ tiledSize;
+            int id = object.getProperties().get("id", Integer.class);
+
+            System.out.println("Crear entidad: " + type);
             game.addActor(entityFactory.create(EntityFactory.Type.valueOf(type), game.getWorld(),
-                new Vector2((Float) object.getProperties().get("x")/tiledSize, (Float) object.getProperties().get("y")/tiledSize),
-                (Integer) object.getProperties().get("id")));
-        }*/
+                new Vector2(X, Y), id));
+        }
 
-    }
-
-    public void createMainPlayer(MapObject object) {
-        Float X = (Float) object.getProperties().get("x");
-        Float Y = (Float) object.getProperties().get("y");
-        //game.createMainPlayer( X, Y);
-    }
-
-    public void createEntity(String type, MapObject object) {
-        Float X = (Float) object.getProperties().get("x");
-        Float Y = (Float) object.getProperties().get("y");
-        //game.entityManager.addEntity(EntityFactory.createEntity(type, X, Y));
     }
 
     public void dispose() {

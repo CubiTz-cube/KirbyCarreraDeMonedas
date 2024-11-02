@@ -1,20 +1,21 @@
 {
     "activeFile": "maps/kirbyPrueba.tmx",
     "expandedProjectPaths": [
+        "maps/templates",
         "maps",
         "."
     ],
     "fileStates": {
         "maps/kirbyPrueba.tmx": {
-            "scale": 1.6070833333333332,
-            "selectedLayer": 0,
+            "scale": 11,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 240.18667358050297,
-                "y": 159.9170339642209
+                "x": 52.00000000000001,
+                "y": 252
             }
         },
         "maps/kirbyPrueba.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 3
         }
     },
     "last.objectTemplatePath": "C:/Users/German Carreño/Documents/CODE/KB-92/assets/tiled/maps/templates",
