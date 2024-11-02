@@ -2,16 +2,16 @@
     "activeFile": "maps/kirbyPrueba.tmx",
     "expandedProjectPaths": [
         "maps/templates",
-        "maps",
-        "."
+        ".",
+        "maps"
     ],
     "fileStates": {
         "maps/kirbyPrueba.tmx": {
-            "scale": 11,
-            "selectedLayer": 1,
+            "scale": 4,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 52.00000000000001,
-                "y": 252
+                "x": 120.75,
+                "y": 242
             }
         },
         "maps/kirbyPrueba.tsx": {

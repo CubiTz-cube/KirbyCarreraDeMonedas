@@ -47,18 +47,20 @@ public class GameScreen extends WorldScreen {
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        ((OrthographicCamera) stage.getCamera()).zoom = 1.3f;
-
-        OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
-        camera.position.set(player.getX(), player.getY(), 0);
-        tiledRenderer.setView(camera);
-        tiledRenderer.render();
-
-        ((OrthographicCamera) stage.getCamera()).zoom = 1f;
-
         stage.act();
         world.step(delta, 6, 2);
+
+        OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
+
+        camera.zoom = 1.3f;
+        camera.position.set(player.getX(), player.getY(), 0);
+        camera.update();
+        tiledRenderer.setView(camera);
+        tiledRenderer.render();
         stage.draw();
+        camera.zoom = 1f;
+
+
 
         while (!pendingActions.isEmpty()) {
             pendingActions.poll().run();
