@@ -7,6 +7,7 @@ import src.world.entities.enemies.sleeping.SleepingEnemy;
 public class SleepingState extends State
 {
     private final SleepingEnemy enemy;
+    private final float wakeUpTime = 5f;
 
     public SleepingState(StateMachine stateMachine, SleepingEnemy enemy)
     {
@@ -18,8 +19,8 @@ public class SleepingState extends State
     public void start()
     {
         // Dormir
+        float sleepTimer = 0f;
     }
-
 
     @Override
     public void update(Float delta)
@@ -35,5 +36,6 @@ public class SleepingState extends State
     public void end()
     {
         // Despertar y comenzar a caminar un poco antes de volver a dormir
+        enemy.walk(0.5f);
     }
 }

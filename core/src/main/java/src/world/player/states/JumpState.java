@@ -2,41 +2,66 @@ package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import src.world.player.Player;
+import com.badlogic.gdx.math.Vector2;
+import src.utils.stateMachine.State;
 import src.utils.stateMachine.StateMachine;
+import src.world.player.Player;
 
-public class JumpState extends CanMoveState{
-    private Float jumpTime = 0f;
+public class JumpState extends State
+{
+    private final Player player;
+    private float jumpTimeCounter = 0f;
+    private boolean isJumping = false;
 
-    public JumpState(StateMachine stateMachine, Player player){
-        super(stateMachine, player);
+    public JumpState(StateMachine stateMachine, Player player)
+    {
+        super(stateMachine);
+        this.player = player;
     }
 
     @Override
-    public void start() {
-        player.getSprite().setColor(Color.BLUE);
-        jumpTime = 0f;
-        player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
+    public void start()
+    {
+        isJumping = true;
+        jumpTimeCounter = 0f;
+        player.getBody().applyLinearImpulse(new Vector2(0, Player.JUMP_IMPULSE), player.getBody().getWorldCenter(), true);
     }
 
     @Override
-    public void update(Float delta) {
-        super.update(delta);
-        if (jumpTime < Player.MAX_JUMP_TIME && Gdx.input.isKeyPressed(Input.Keys.UP)){
-            jumpTime += delta;
-            player.getBody().applyLinearImpulse(0, Player.JUMP_INAIR, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
+    public void update(Float delta)
+    {
+        jumpTimeCounter += delta;
+
+        float horizontalForce = 0f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+        {
+            horizontalForce = -player.speed;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        {
+            horizontalForce = player.speed;
+        }
+        player.getBody().setLinearVelocity(horizontalForce, player.getBody().getLinearVelocity().y);
+
+        if (isJumping && Gdx.input.isKeyPressed(Input.Keys.UP) && jumpTimeCounter < Player.MAX_JUMP_TIME)
+        {
+            player.getBody().applyLinearImpulse(new Vector2(0, Player.JUMP_IMPULSE * delta), player.getBody().getWorldCenter(), true);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+        {
             stateMachine.setState(player.getFlyState());
         }
-        if (player.getBody().getLinearVelocity().y < 0){
+        else
+        {
+            isJumping = false;
             stateMachine.setState(player.getFallState());
         }
     }
 
     @Override
-    public void end() {
-
+    public void end()
+    {
+        player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
     }
 }

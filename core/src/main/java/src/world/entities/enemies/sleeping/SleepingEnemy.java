@@ -1,5 +1,6 @@
 package src.world.entities.enemies.sleeping;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,6 +17,8 @@ import static src.utils.Constants.PIXELS_IN_METER;
 public class SleepingEnemy extends Enemy
 {
     private Float timeAct = 0f;
+    private final float wakeUpTime = 5f;
+    private float sleepTimer = 0f;
     private final Sprite sprite;
     private final StateMachine stateMachine;
     private final SleepingState sleepingState;
@@ -24,7 +27,6 @@ public class SleepingEnemy extends Enemy
     public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id, Float crono)
     {
         super(world, id, crono);
-
         this.sprite = new Sprite(texture);
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
@@ -71,36 +73,26 @@ public class SleepingEnemy extends Enemy
 
     public void walk(float delta)
     {
-        timeAct += delta;
-
-        if (timeAct < 3)
+        //Mueve al enemigo y luego vuelve a caminar
+        body.setLinearVelocity(3, body.getLinearVelocity().y);
+        if (shouldSleep())
         {
-            body.setLinearVelocity(-3,body.getLinearVelocity().y);
-            setFlipX(true);
-        }
-        else if(timeAct < 6)
-        {
-            body.setLinearVelocity(3,body.getLinearVelocity().y);
-            setFlipX(false);
-        }
-        else if (timeAct > 9)
-        {
-            timeAct = 0f;
+            stateMachine.setState(sleepingState);
         }
     }
 
     public boolean shouldWakeUp()
     {
         //Despierta tras unos segundos
-
-        return false;
+        sleepTimer += Gdx.graphics.getDeltaTime();
+        return sleepTimer >= wakeUpTime;
     }
 
     public boolean shouldSleep()
     {
         //Duerme tras unos segundos
-
-        return false;
+        sleepTimer += Gdx.graphics.getDeltaTime();
+        return sleepTimer >= wakeUpTime;
     }
 
     @Override

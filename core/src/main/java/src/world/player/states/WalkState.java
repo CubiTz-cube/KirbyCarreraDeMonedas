@@ -2,32 +2,55 @@ package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
+import src.utils.stateMachine.State;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
-public class WalkState extends RunState{
-    public WalkState(StateMachine stateMachine, Player player){
-        super(stateMachine, player);
+public class WalkState extends State
+{
+    private final Player player;
+
+    public WalkState(StateMachine stateMachine, Player player)
+    {
+        super(stateMachine);
+        this.player = player;
     }
 
     @Override
-    public void start() {
-        player.getSprite().setColor(Color.GREEN);
-        player.setCurrentAnimation(player.getWalkAnimation());
-        player.speed = 10;
-        player.maxSpeed = 4;
-        if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) stateMachine.setState(player.getRunState());
-    }
+    public void start()
+    {}
 
     @Override
-    public void update(Float delta) {
-        super.update(delta);
-        Vector2 velocity = player.getBody().getLinearVelocity();
-        if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && velocity.x < 0) ||
-                (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) && velocity.x > 0){
-            stateMachine.setState(player.getRunState());
+    public void update(Float delta)
+    {
+        float horizontalForce = 0f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+        {
+            horizontalForce = -player.speed;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        {
+            horizontalForce = player.speed;
+        }
+
+        player.getBody().setLinearVelocity(horizontalForce, player.getBody().getLinearVelocity().y);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
+        {
+            stateMachine.setState(player.getFlyState());
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+        {
+            stateMachine.setState(player.getJumpState());
+        }
+        else if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        {
+            stateMachine.setState(player.getIdleState());
         }
     }
+
+    @Override
+    public void end()
+    {}
 }

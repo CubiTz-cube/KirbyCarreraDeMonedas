@@ -2,36 +2,47 @@ package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
+import src.utils.stateMachine.State;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
-public class FallState extends CanMoveState{
-    public FallState(StateMachine stateMachine, Player player){
-        super(stateMachine, player);
+public class FallState extends State
+{
+    private final Player player;
+
+    public FallState(StateMachine stateMachine, Player player)
+    {
+        super(stateMachine);
+        this.player = player;
     }
 
     @Override
-    public void start() {
-        player.getSprite().setColor(Color.PURPLE);
-    }
+    public void start()
+    {}
 
     @Override
-    public void update(Float delta) {
-        super.update(delta);
-        Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.y == 0){
-            if (velocity.x == 0)  stateMachine.setState(player.getIdleState());
-            else stateMachine.setState(player.getWalkState());
+    public void update(Float delta)
+    {
+        float horizontalForce = 0f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            horizontalForce = -player.speed;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            horizontalForce = player.speed;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            stateMachine.setState(player.getFlyState());
+        player.getBody().setLinearVelocity(horizontalForce, player.getBody().getLinearVelocity().y);
+
+        if (player.isOnGround())
+        {
+            stateMachine.setState(player.getIdleState());
+        }
+        else if (player.getBody().getLinearVelocity().y > 0)
+        {
+            stateMachine.setState(player.getJumpState());
         }
     }
 
     @Override
-    public void end() {
-
-    }
+    public void end()
+    {}
 }

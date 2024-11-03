@@ -19,7 +19,8 @@ import src.world.player.states.*;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
-public class Player extends SpriteActorBox2d {
+public class Player extends SpriteActorBox2d
+{
     public float speed = 10;
     public float maxSpeed = 4;
     public static final float MAX_JUMP_TIME = 0.3f;
@@ -27,22 +28,18 @@ public class Player extends SpriteActorBox2d {
     public static final float JUMP_INAIR = 0.3f;
     public static final float DASH_IMPULSE = 10f;
 
-    //private final Fixture sensorFixture;
-
     protected final StateMachine stateMachine;
     private final IdleState idleState;
     private final JumpState jumpState;
-    private final FlyState flyState;
     private final WalkState walkState;
     private final FallState fallState;
-    private final DashState dashState;
-    private final DownState downState;
-    private final RunState runState;
+    private final FlyState flyState;
 
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
 
-    public Player(World world, AssetManager assetManager, Rectangle shape){
+    public Player(World world, AssetManager assetManager, Rectangle shape)
+    {
         super(world);
         setDebug(true);
         sprite = new Sprite(assetManager.get("yoshi.jpg", Texture.class));
@@ -60,15 +57,6 @@ public class Player extends SpriteActorBox2d {
         box.dispose();
         body.setFixedRotation(true);
 
-        /*PolygonShape sensorShape = new PolygonShape();
-        sensorShape.setAsBox(shape.width/2, 0.2f, new Vector2(0, -0.4f), 0);
-        FixtureDef sensorDef = new FixtureDef();
-        sensorDef.shape = sensorShape;
-        sensorDef.isSensor = true;
-        sensorFixture = body.createFixture(sensorDef);
-        sensorFixture.setUserData("playerBottomSensor");
-        sensorShape.dispose();*/
-
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;
         filter.maskBits = ~CollisionFilters.MASK_PLAYER;
@@ -80,12 +68,9 @@ public class Player extends SpriteActorBox2d {
         stateMachine = new StateMachine();
         idleState = new IdleState(stateMachine, this);
         jumpState = new JumpState(stateMachine, this);
-        flyState = new FlyState(stateMachine, this);
         walkState = new WalkState(stateMachine, this);
         fallState = new FallState(stateMachine, this);
-        dashState = new DashState(stateMachine, this);
-        downState = new DownState(stateMachine, this);
-        runState = new RunState(stateMachine, this);
+        flyState = new FlyState(stateMachine, this);
         stateMachine.setState(idleState);
 
         Texture sheet = assetManager.get("world/entities/kirby/kirbyWalk.png");
@@ -102,58 +87,75 @@ public class Player extends SpriteActorBox2d {
         currentAnimation = idleAnimation;
     }
 
-    public StateMachine getStateMachine() {
+    public StateMachine getStateMachine()
+    {
         return stateMachine;
     }
 
-    public IdleState getIdleState() {
+    public IdleState getIdleState()
+    {
         return idleState;
     }
 
-    public JumpState getJumpState() {
+    public State getRunState()
+    {
+        return new RunState(stateMachine, this);
+    }
+
+    public JumpState getJumpState()
+    {
         return jumpState;
     }
 
-    public FlyState getFlyState() {
-        return flyState;
-    }
-
-    public WalkState getWalkState() {
+    public WalkState getWalkState()
+    {
         return walkState;
     }
 
-    public FallState getFallState() {
+    public FallState getFallState()
+    {
         return fallState;
     }
 
-    public DashState getDashState() {
-        return dashState;
+    public FlyState getFlyState()
+    {
+        return flyState;
     }
 
-    public DownState getDownState() {
-        return downState;
-    }
-
-    public RunState getRunState() {
-        return runState;
-    }
-
-    public Animation<TextureRegion> getIdleAnimation() {
+    public Animation<TextureRegion> getIdleAnimation()
+    {
         return idleAnimation;
     }
 
-    public Animation<TextureRegion> getWalkAnimation() {
+    public Animation<TextureRegion> getWalkAnimation()
+    {
         return walkAnimation;
     }
 
+    public boolean isOnGround()
+    {
+        return Math.abs(body.getLinearVelocity().y) < 0.01f;
+    }
+
+    public State getDashState()
+    {
+        return new DashState(stateMachine, this);
+    }
+
+    public State getDownState()
+    {
+        return new DownState(stateMachine, this);
+    }
+
     @Override
-    public void act(float delta) {
+    public void act(float delta)
+    {
         stateMachine.update(delta);
     }
 
-    public void detach(){
+    public void detach()
+    {
         body.destroyFixture(fixture);
-        //body.destroyFixture(sensorFixture);
         world.destroyBody(body);
     }
 }
