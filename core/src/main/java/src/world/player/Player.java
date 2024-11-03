@@ -48,10 +48,10 @@ public class Player extends SpriteActorBox2d {
     private final Animation<TextureRegion> jumpAnimation;
     private final Animation<TextureRegion> fallAnimation;
     private final Animation<TextureRegion> downAnimation;
-    private final Animation<TextureRegion> dashAnimation;
-    private final Animation<TextureRegion> flyAnimation;
     private final Animation<TextureRegion> runAnimation;
-    private final Animation<TextureRegion> absorbAnimation;
+    /*private final Animation<TextureRegion> dashAnimation;
+    private final Animation<TextureRegion> flyAnimation;
+    private final Animation<TextureRegion> absorbAnimation;*/
 
     private PowerUp powerUp;
 
@@ -130,17 +130,17 @@ public class Player extends SpriteActorBox2d {
         fallAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 22));
 
-        dashAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 22));
-
         runAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 22));
+
+        /*dashAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 22));
 
         flyAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 22));
 
         absorbAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 22));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 22));*/
 
         currentAnimation = idleAnimation;
     }
@@ -205,7 +205,11 @@ public class Player extends SpriteActorBox2d {
         return downAnimation;
     }
 
-    public Animation<TextureRegion> getFlyAnimation() {
+    public Animation<TextureRegion> getRunAnimation() {
+        return runAnimation;
+    }
+
+    /*public Animation<TextureRegion> getFlyAnimation() {
         return flyAnimation;
     }
 
@@ -213,13 +217,9 @@ public class Player extends SpriteActorBox2d {
         return dashAnimation;
     }
 
-    public Animation<TextureRegion> getRunAnimation() {
-        return runAnimation;
-    }
-
     public Animation<TextureRegion> getAbsorbAnimation() {
         return absorbAnimation;
-    }
+    }*/
 
     @Override
     public void act(float delta) {
