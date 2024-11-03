@@ -13,9 +13,8 @@ public class DownState  extends StatePlayer{
     }
 
     @Override
-    public void start()
-    {
-        player.getSprite().setColor(Color.CHARTREUSE);
+    public void start() {
+        player.setCurrentAnimation(player.getDownAnimation());
     }
 
     @Override

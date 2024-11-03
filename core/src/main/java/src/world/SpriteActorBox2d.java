@@ -14,13 +14,11 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
     protected Sprite sprite;
     protected Float animateTime;
     protected Animation<TextureRegion> currentAnimation;
-    private Boolean loopingAnimation;
     private Boolean flipX;
     private Vector2 spritePosModification;
 
     public SpriteActorBox2d(World world) {
         super(world);
-        loopingAnimation = true;
         animateTime = 0f;
         flipX = false;
         spritePosModification = new Vector2(0, 0);
@@ -32,15 +30,12 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
 
     public void setCurrentAnimation(Animation<TextureRegion> currentAnimation) {
         this.currentAnimation = currentAnimation;
+        animateTime = 0f;
     }
 
     public void setFlipX(Boolean flipX) {
         sprite.setFlip(flipX, false);
         this.flipX = flipX;
-    }
-
-    public void setLoopingAnimation(Boolean loopingAnimation) {
-        this.loopingAnimation = loopingAnimation;
     }
 
     public void setSpritePosModification(Float x, Float y) {
@@ -54,7 +49,7 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
             body.getPosition().x * PIXELS_IN_METER - (getHeight()-PIXELS_IN_METER) / 2 + spritePosModification.x,
             body.getPosition().y * PIXELS_IN_METER - (getWidth()-PIXELS_IN_METER) / 2 + spritePosModification.y
         );
-        if (currentAnimation != null) sprite.setRegion(currentAnimation.getKeyFrame(animateTime, loopingAnimation));
+        if (currentAnimation != null) sprite.setRegion(currentAnimation.getKeyFrame(animateTime, false));
         sprite.setFlip(flipX, false);
         sprite.setPosition(getX(), getY());
         sprite.setOriginCenter();

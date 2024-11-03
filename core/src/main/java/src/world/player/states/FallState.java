@@ -17,8 +17,9 @@ public class FallState extends State
     }
 
     @Override
-    public void start()
-    {}
+    public void start() {
+        player.setCurrentAnimation(player.getFallAnimation());
+    }
 
     @Override
     public void update(Float delta)

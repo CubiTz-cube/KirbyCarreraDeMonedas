@@ -20,11 +20,10 @@ public class JumpState extends State
     }
 
     @Override
-    public void start()
-    {
-        isJumping = true;
-        jumpTimeCounter = 0f;
-        player.getBody().applyLinearImpulse(new Vector2(0, Player.JUMP_IMPULSE), player.getBody().getWorldCenter(), true);
+    public void start() {
+        player.setCurrentAnimation(player.getJumpAnimation());
+        jumpTime = 0f;
+        player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
 
     @Override

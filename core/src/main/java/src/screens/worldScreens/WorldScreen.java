@@ -30,7 +30,7 @@ public class WorldScreen extends BaseScreen {
     protected StaticFactory staticFactory;
     protected ArrayList<ActorBox2d> actors;
     protected HashMap<Integer, Entity> entities;
-    protected Player player;
+    protected static Player player;
     protected Float crono = 0f;
 
     /**
@@ -67,12 +67,6 @@ public class WorldScreen extends BaseScreen {
 
     public HashMap<Integer, Entity> getEntities() {
         return entities;
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-        crono += delta;
     }
 
     public void addMainPlayer(Vector2 position){

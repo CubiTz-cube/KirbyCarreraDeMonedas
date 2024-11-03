@@ -17,8 +17,12 @@ public class WalkState extends State
     }
 
     @Override
-    public void start()
-    {}
+    public void start() {
+        player.setCurrentAnimation(player.getWalkAnimation());
+        player.speed = 10;
+        player.maxSpeed = 4;
+        if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) stateMachine.setState(player.getRunState());
+    }
 
     @Override
     public void update(Float delta)
