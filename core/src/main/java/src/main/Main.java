@@ -52,6 +52,14 @@ public class Main extends Game {
         assetManager.load("floor.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyIdle.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyJump.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyFall.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyDown.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyRun.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyFly.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyDash.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyAbsorb.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
@@ -67,7 +75,7 @@ public class Main extends Game {
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
 
-        changeScreen(Screens.MENU);
+        changeScreen(Screens.GAME);
     }
 
     public AssetManager getAssetManager() {

@@ -14,7 +14,7 @@ public class FallState extends CanMoveState{
 
     @Override
     public void start() {
-        player.getSprite().setColor(Color.PURPLE);
+        player.setCurrentAnimation(player.getFallAnimation());
     }
 
     @Override

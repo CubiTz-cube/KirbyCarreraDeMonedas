@@ -3,19 +3,20 @@ package src.world.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
-import src.world.ActorBox2d;
+import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.*;
 import src.world.SpriteActorBox2d;
+import src.world.player.powers.PowerUp;
 import src.world.player.states.*;
+
+import java.util.Random;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
@@ -27,7 +28,8 @@ public class Player extends SpriteActorBox2d {
     public static final float JUMP_INAIR = 0.3f;
     public static final float DASH_IMPULSE = 10f;
 
-    //private final Fixture sensorFixture;
+    private final Fixture absorbRFixture;
+    private final Fixture absorbLFixture;
 
     protected final StateMachine stateMachine;
     private final IdleState idleState;
@@ -38,14 +40,25 @@ public class Player extends SpriteActorBox2d {
     private final DashState dashState;
     private final DownState downState;
     private final RunState runState;
+    private final AbsorbState absorbState;
 
+    private final Random random;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> jumpAnimation;
+    private final Animation<TextureRegion> fallAnimation;
+    private final Animation<TextureRegion> downAnimation;
+    private final Animation<TextureRegion> dashAnimation;
+    private final Animation<TextureRegion> flyAnimation;
+    private final Animation<TextureRegion> runAnimation;
+    private final Animation<TextureRegion> absorbAnimation;
+
+    private PowerUp powerUp;
 
     public Player(World world, AssetManager assetManager, Rectangle shape){
         super(world);
         setDebug(true);
-        sprite = new Sprite(assetManager.get("yoshi.jpg", Texture.class));
+        sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
@@ -60,14 +73,23 @@ public class Player extends SpriteActorBox2d {
         box.dispose();
         body.setFixedRotation(true);
 
-        /*PolygonShape sensorShape = new PolygonShape();
-        sensorShape.setAsBox(shape.width/2, 0.2f, new Vector2(0, -0.4f), 0);
-        FixtureDef sensorDef = new FixtureDef();
-        sensorDef.shape = sensorShape;
-        sensorDef.isSensor = true;
-        sensorFixture = body.createFixture(sensorDef);
-        sensorFixture.setUserData("playerBottomSensor");
-        sensorShape.dispose();*/
+        PolygonShape absorbShapeR = new PolygonShape();
+        absorbShapeR.setAsBox(shape.width/4, shape.height/4, new Vector2(shape.width/8, 0), 0);
+        FixtureDef absorbRDef = new FixtureDef();
+        absorbRDef.shape = absorbShapeR;
+        absorbRDef.isSensor = true;
+        absorbRFixture = body.createFixture(absorbRDef);
+        absorbRFixture.setUserData("playerAbsorbRSensor");
+        absorbShapeR.dispose();
+
+        PolygonShape absorbShapeL = new PolygonShape();
+        absorbShapeL.setAsBox(shape.width/4, shape.height/4, new Vector2(-shape.width/8, 0), 0);
+        FixtureDef absorbLDef = new FixtureDef();
+        absorbLDef.shape = absorbShapeL;
+        absorbLDef.isSensor = true;
+        absorbLFixture = body.createFixture(absorbLDef);
+        absorbLFixture.setUserData("playerAbsorbLSensor");
+        absorbShapeL.dispose();
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;
@@ -86,18 +108,39 @@ public class Player extends SpriteActorBox2d {
         dashState = new DashState(stateMachine, this);
         downState = new DownState(stateMachine, this);
         runState = new RunState(stateMachine, this);
+        absorbState = new AbsorbState(stateMachine, this);
         stateMachine.setState(idleState);
 
-        Texture sheet = assetManager.get("world/entities/kirby/kirbyWalk.png");
-        TextureRegion[][] tmp = TextureRegion.split(sheet,
-            sheet.getWidth() / 10,
-            sheet.getHeight());
-        TextureRegion[] walkFrames = new TextureRegion[10];
-        System.arraycopy(tmp[0], 0, walkFrames, 0, 10);
-        walkAnimation = new Animation<>(0.05f, walkFrames);
+        random = new Random();
+        walkAnimation = new Animation<>(0.12f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyWalk.png"), 10));
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        TextureRegion idleFrames = new TextureRegion((Texture) assetManager.get("yoshi.jpg"));
-        idleAnimation = new Animation<>(0.05f, idleFrames);
+        idleAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyIdle.png"), 31));
+        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        downAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDown.png"), 31));
+        downAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        jumpAnimation = new Animation<>(1,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyJump.png"), 1));
+
+        fallAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 22));
+
+        dashAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 22));
+
+        runAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 22));
+
+        flyAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 22));
+
+        absorbAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 22));
 
         currentAnimation = idleAnimation;
     }
@@ -138,6 +181,10 @@ public class Player extends SpriteActorBox2d {
         return runState;
     }
 
+    public AbsorbState getAbsorbState() {
+        return absorbState;
+    }
+
     public Animation<TextureRegion> getIdleAnimation() {
         return idleAnimation;
     }
@@ -146,14 +193,49 @@ public class Player extends SpriteActorBox2d {
         return walkAnimation;
     }
 
+    public Animation<TextureRegion> getJumpAnimation() {
+        return jumpAnimation;
+    }
+
+    public Animation<TextureRegion> getFallAnimation() {
+        return fallAnimation;
+    }
+
+    public Animation<TextureRegion> getDownAnimation() {
+        return downAnimation;
+    }
+
+    public Animation<TextureRegion> getFlyAnimation() {
+        return flyAnimation;
+    }
+
+    public Animation<TextureRegion> getDashAnimation() {
+        return dashAnimation;
+    }
+
+    public Animation<TextureRegion> getRunAnimation() {
+        return runAnimation;
+    }
+
+    public Animation<TextureRegion> getAbsorbAnimation() {
+        return absorbAnimation;
+    }
+
     @Override
     public void act(float delta) {
         stateMachine.update(delta);
+        Vector2 velocity = body.getLinearVelocity();
+
+        if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            float brakeForce = 10f;
+            body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        }
     }
 
     public void detach(){
         body.destroyFixture(fixture);
-        //body.destroyFixture(sensorFixture);
+        body.destroyFixture(absorbRFixture);
+        body.destroyFixture(absorbLFixture);
         world.destroyBody(body);
     }
 }

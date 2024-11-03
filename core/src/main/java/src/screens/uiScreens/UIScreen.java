@@ -15,12 +15,14 @@ public abstract class UIScreen extends BaseScreen {
         stage = new Stage(new ScreenViewport());
     }
 
-    /**
-     * Se llama cuando se muestra la pantalla en el juegp y ademas establece el input processor
-     */
     @Override
     public void show(){
         Gdx.input.setInputProcessor(stage);
+    }
+
+    @Override
+    public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

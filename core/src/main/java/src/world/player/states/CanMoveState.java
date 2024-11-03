@@ -18,6 +18,10 @@ public abstract class CanMoveState extends StatePlayer{
         Body body = player.getBody();
         Vector2 velocity = body.getLinearVelocity();
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.X)){
+            stateMachine.setState(player.getAbsorbState());
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x <  player.maxSpeed){
             body.applyForce( player.speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
             player.setFlipX(false);
@@ -25,10 +29,6 @@ public abstract class CanMoveState extends StatePlayer{
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > - player.maxSpeed){
             body.applyForce(- player.speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
             player.setFlipX(true);
-        }
-        if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            float brakeForce = 10f;
-            body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
     }
 

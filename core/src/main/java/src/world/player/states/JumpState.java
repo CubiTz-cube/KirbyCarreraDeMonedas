@@ -15,7 +15,7 @@ public class JumpState extends CanMoveState{
 
     @Override
     public void start() {
-        player.getSprite().setColor(Color.BLUE);
+        player.setCurrentAnimation(player.getJumpAnimation());
         jumpTime = 0f;
         player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }

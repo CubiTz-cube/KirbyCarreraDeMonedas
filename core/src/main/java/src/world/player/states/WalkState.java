@@ -14,7 +14,6 @@ public class WalkState extends RunState{
 
     @Override
     public void start() {
-        player.getSprite().setColor(Color.GREEN);
         player.setCurrentAnimation(player.getWalkAnimation());
         player.speed = 10;
         player.maxSpeed = 4;

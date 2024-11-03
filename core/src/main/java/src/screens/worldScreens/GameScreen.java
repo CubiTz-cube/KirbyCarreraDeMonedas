@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import src.net.packets.Packet;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
@@ -22,21 +21,17 @@ public class GameScreen extends WorldScreen {
     private final Vector2 lastPosition;
     private final Queue<Runnable> pendingActions;
     private Float sendTime = 0f;
-    private final Label cronolabel;
 
     public GameScreen(Main main){
-        super(main, -15f, "tiled/maps/kirbyPrueba.tmx");
+        super(main, -20f, "tiled/maps/kirbyPrueba.tmx");
         world.setContactListener(new GameContactListener());
         lastPosition = new Vector2();
         pendingActions = new LinkedList<>();
-        cronolabel = new Label(crono.toString(), main.getSkin());
-        cronolabel.setPosition(20, 20);
     }
 
     @Override
     public void show() {
         crono = 0f;
-        stage.addActor(cronolabel);
         if (main.server != null || main.client == null) tiledManager.makeMap();
         if (main.server != null){
             main.client.send(Packet.newEnemy(null, null, null, null));
@@ -54,8 +49,6 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
-        cronolabel.setText(crono.toString());
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -147,10 +140,20 @@ public class GameScreen extends WorldScreen {
 
         @Override
         public void beginContact(Contact contact) {
-            //System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
-            /*if (areCollided(contact, "playerBottomSensor", "floor") && player.getStateMachine().getState().equals(player.getFallState())) {
-                player.getStateMachine().setState(player.getIdleState());
-            }*/
+            Fixture A = contact.getFixtureA();
+            Fixture B = contact.getFixtureB();
+
+            //System.out.println(A.getUserData() + " " + B.getUserData());
+
+            if (player.getStateMachine().getState().equals(player.getAbsorbState()) ) {
+                if (!player.getSprite().isFlipX()){
+                    if (A.getUserData().equals("enemy") && B.getUserData().equals("playerAbsorbRSensor")){
+                        A.getBody().setLinearVelocity(0,5);
+                    }else if (B.getUserData().equals("enemy") && A.getUserData().equals("playerAbsorbRSensor")){
+                        B.getBody().setLinearVelocity(0,5);
+                    }
+                }
+            }
         }
 
         @Override
