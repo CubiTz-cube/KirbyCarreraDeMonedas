@@ -25,7 +25,7 @@ public class Player extends SpriteActorBox2d
     public float speed = 10;
     public float maxSpeed = 4;
     public static final float MAX_JUMP_TIME = 0.3f;
-    public static final float JUMP_IMPULSE = 5f;
+    public static final float JUMP_IMPULSE = 6f;
     public static final float JUMP_INAIR = 0.3f;
     public static final float DASH_IMPULSE = 10f;
 
@@ -38,12 +38,11 @@ public class Player extends SpriteActorBox2d
     private final WalkState walkState;
     private final FallState fallState;
     private final FlyState flyState;
-    private final DashState dashState;
     private final DownState downState;
-    private final RunState runState;
     private final AbsorbState absorbState;
+    //private final DashState dashState;
+    //private final RunState runState;
 
-    private final Random random;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> jumpAnimation;
@@ -59,7 +58,6 @@ public class Player extends SpriteActorBox2d
     public Player(World world, AssetManager assetManager, Rectangle shape)
     {
         super(world);
-        setDebug(true);
         sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
@@ -179,42 +177,29 @@ public class Player extends SpriteActorBox2d
         return flyState;
     }
 
-    public Animation<TextureRegion> getIdleAnimation()
-    {
     public DownState getDownState() {
         return downState;
-    }
-
-    public RunState getRunState() {
-        return runState;
     }
 
     public AbsorbState getAbsorbState() {
         return absorbState;
     }
 
-    public Animation<TextureRegion> getIdleAnimation() {
+    public boolean isOnGround(){
+        return body.getLinearVelocity().y == 0;
+    }
+
+    public State getDashState(){
+        return new DashState(stateMachine, this);
+    }
+
+    public Animation<TextureRegion> getIdleAnimation(){
         return idleAnimation;
     }
 
     public Animation<TextureRegion> getWalkAnimation()
     {
         return walkAnimation;
-    }
-
-    public boolean isOnGround()
-    {
-        return Math.abs(body.getLinearVelocity().y) < 0.01f;
-    }
-
-    public State getDashState()
-    {
-        return new DashState(stateMachine, this);
-    }
-
-    public State getDownState()
-    {
-        return new DownState(stateMachine, this);
     }
 
     public Animation<TextureRegion> getJumpAnimation() {

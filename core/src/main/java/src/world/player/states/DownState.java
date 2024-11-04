@@ -42,8 +42,6 @@ public class DownState  extends StatePlayer{
     }
 
     @Override
-    public void end()
-    {
-        player.getSprite().setColor(Color.WHITE);
+    public void end() {
     }
 }

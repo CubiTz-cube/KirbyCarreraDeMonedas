@@ -32,7 +32,7 @@ public class SleepingEnemy extends Enemy
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
-        def.type = BodyDef.BodyType.DynamicBody;
+        def.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();

@@ -8,50 +8,37 @@ import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
 public class RunState extends CanMoveState{
-    public RunState(StateMachine stateMachine, Player player)
-    {
+    public RunState(StateMachine stateMachine, Player player) {
         super(stateMachine, player);
     }
 
     @Override
-    public void start()
-    {
+    public void start() {
         player.getSprite().setColor(Color.YELLOW);
         player.speed = 15;
         player.maxSpeed = 6;
     }
 
     @Override
-    public void update(Float delta)
-    {
+    public void update(Float delta) {
         super.update(delta);
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-        {
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             stateMachine.setState(player.getDownState());
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-        {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             stateMachine.setState(player.getJumpState());
         }
-        else if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
-        {
-            stateMachine.setState(player.getFlyState());
-        }
-        
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x == 0 && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-        {
+        if (velocity.x == 0 && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             stateMachine.setState(player.getIdleState());
         }
-        if (velocity.y < -1)
-        {
+        if (velocity.y < -1){
             stateMachine.setState(player.getFallState());
         }
     }
 
     @Override
-    public void end()
-    {
-        player.getSprite().setColor(Color.WHITE);
+    public void end() {
+
     }
 }

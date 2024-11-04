@@ -2,18 +2,14 @@ package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import src.utils.stateMachine.State;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
-public class WalkState extends State
-{
-    private final Player player;
-
-    public WalkState(StateMachine stateMachine, Player player)
-    {
-        super(stateMachine);
-        this.player = player;
+public class WalkState extends RunState{
+    public WalkState(StateMachine stateMachine, Player player){
+        super(stateMachine, player);
     }
 
     @Override
@@ -25,36 +21,12 @@ public class WalkState extends State
     }
 
     @Override
-    public void update(Float delta)
-    {
-        float horizontalForce = 0f;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-        {
-            horizontalForce = -player.speed;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-        {
-            horizontalForce = player.speed;
-        }
-
-        player.getBody().setLinearVelocity(horizontalForce, player.getBody().getLinearVelocity().y);
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE))
-        {
-            stateMachine.setState(player.getFlyState());
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
-        {
-            stateMachine.setState(player.getJumpState());
-        }
-        else if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-        {
-            stateMachine.setState(player.getIdleState());
+    public void update(Float delta) {
+        super.update(delta);
+        Vector2 velocity = player.getBody().getLinearVelocity();
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && velocity.x < 0) ||
+            (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) && velocity.x > 0){
+            stateMachine.setState(player.getRunState());
         }
     }
-
-    @Override
-    public void end()
-    {}
 }
