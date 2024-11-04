@@ -14,6 +14,7 @@ import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 import src.main.Main;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -72,6 +73,21 @@ public class GameScreen extends WorldScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(Main.Screens.MENU);
             if (main.client != null) main.client.send(Packet.disconnectPlayer(-1));
+        }
+
+        Iterator<ActorBox2d> iterator = actors.iterator();
+        while (iterator.hasNext()) {
+            ActorBox2d actor = iterator.next();
+            if (actor instanceof Enemy enemy) {
+                if (player.getStateMachine().getState().equals(player.getAbsorbState())) {
+                    if (player.getSprite().getBoundingRectangle().overlaps(enemy.getSprite().getBoundingRectangle())) {
+                        player.setPowerUp(enemy);
+                        enemy.detach();
+                        iterator.remove();
+                        stage.getActors().removeValue(actor, true);
+                    }
+                }
+            }
         }
 
         if (main.client == null) return;
@@ -142,18 +158,7 @@ public class GameScreen extends WorldScreen {
         public void beginContact(Contact contact) {
             Fixture A = contact.getFixtureA();
             Fixture B = contact.getFixtureB();
-
             //System.out.println(A.getUserData() + " " + B.getUserData());
-
-            if (player.getStateMachine().getState().equals(player.getAbsorbState()) ) {
-                if (!player.getSprite().isFlipX()){
-                    if (A.getUserData().equals("enemy") && B.getUserData().equals("playerAbsorbRSensor")){
-                        A.getBody().setLinearVelocity(0,5);
-                    }else if (B.getUserData().equals("enemy") && A.getUserData().equals("playerAbsorbRSensor")){
-                        B.getBody().setLinearVelocity(0,5);
-                    }
-                }
-            }
         }
 
         @Override

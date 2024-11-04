@@ -14,9 +14,9 @@ public class FlyState extends CanMoveState{
 
     @Override
     public void start() {
+        player.setCurrentAnimation(player.getFlyAnimation());
         player.speed = 10;
         player.maxSpeed = 4;
-        player.getSprite().setColor(Color.RED);
         player.getSprite().setScale(1.1f);
         player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
         player.getBody().setGravityScale(0.6f);

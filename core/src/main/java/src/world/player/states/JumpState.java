@@ -2,7 +2,6 @@ package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import src.world.player.Player;
 import src.utils.stateMachine.StateMachine;
 

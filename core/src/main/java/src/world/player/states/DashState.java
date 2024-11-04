@@ -11,7 +11,7 @@ public class DashState extends StatePlayer{
 
     @Override
     public void start() {
-        player.getSprite().setColor(Color.GOLDENROD);
+        player.setCurrentAnimation(player.getDashAnimation());
         player.getBody().applyLinearImpulse(
             player.getSprite().isFlipX() ? -Player.DASH_IMPULSE : Player.DASH_IMPULSE,
             0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);

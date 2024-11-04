@@ -14,7 +14,7 @@ public class RunState extends CanMoveState{
 
     @Override
     public void start() {
-        player.getSprite().setColor(Color.YELLOW);
+        player.setCurrentAnimation(player.getRunAnimation());
         player.speed = 15;
         player.maxSpeed = 6;
     }

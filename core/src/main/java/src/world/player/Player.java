@@ -10,13 +10,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
+import src.utils.FrontRayCastCallback;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.*;
 import src.world.SpriteActorBox2d;
+import src.world.entities.enemies.Enemy;
 import src.world.player.powers.PowerUp;
 import src.world.player.states.*;
-
-import java.util.Random;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
@@ -26,11 +26,8 @@ public class Player extends SpriteActorBox2d
     public float maxSpeed = 4;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 6f;
-    public static final float JUMP_INAIR = 0.3f;
+    public static final float JUMP_INAIR = 0.1f;
     public static final float DASH_IMPULSE = 10f;
-
-    private final Fixture absorbRFixture;
-    private final Fixture absorbLFixture;
 
     protected final StateMachine stateMachine;
     private final IdleState idleState;
@@ -49,9 +46,9 @@ public class Player extends SpriteActorBox2d
     private final Animation<TextureRegion> fallAnimation;
     private final Animation<TextureRegion> downAnimation;
     private final Animation<TextureRegion> runAnimation;
-    /*private final Animation<TextureRegion> dashAnimation;
+    private final Animation<TextureRegion> dashAnimation;
     private final Animation<TextureRegion> flyAnimation;
-    private final Animation<TextureRegion> absorbAnimation;*/
+    private final Animation<TextureRegion> absorbAnimation;
 
     private PowerUp powerUp;
 
@@ -73,27 +70,9 @@ public class Player extends SpriteActorBox2d
         box.dispose();
         body.setFixedRotation(true);
 
-        PolygonShape absorbShapeR = new PolygonShape();
-        absorbShapeR.setAsBox(shape.width/4, shape.height/4, new Vector2(shape.width/8, 0), 0);
-        FixtureDef absorbRDef = new FixtureDef();
-        absorbRDef.shape = absorbShapeR;
-        absorbRDef.isSensor = true;
-        absorbRFixture = body.createFixture(absorbRDef);
-        absorbRFixture.setUserData("playerAbsorbRSensor");
-        absorbShapeR.dispose();
-
-        PolygonShape absorbShapeL = new PolygonShape();
-        absorbShapeL.setAsBox(shape.width/4, shape.height/4, new Vector2(-shape.width/8, 0), 0);
-        FixtureDef absorbLDef = new FixtureDef();
-        absorbLDef.shape = absorbShapeL;
-        absorbLDef.isSensor = true;
-        absorbLFixture = body.createFixture(absorbLDef);
-        absorbLFixture.setUserData("playerAbsorbLSensor");
-        absorbShapeL.dispose();
-
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;
-        filter.maskBits = ~CollisionFilters.MASK_PLAYER;
+        filter.maskBits = ~CollisionFilters.MASK_NO_COLISION_PLAYER;
         fixture.setFilterData(filter);
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
@@ -128,18 +107,27 @@ public class Player extends SpriteActorBox2d
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 22));
 
         runAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 22));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 8));
+        runAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        /*dashAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 22));
+        dashAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 2));
 
         flyAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 22));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 4));
 
         absorbAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 22));*/
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
 
         currentAnimation = idleAnimation;
+    }
+
+    public void setPowerUp(Enemy enemy) {
+
+        /*this.powerUp = switch (enemy.getPowerUp()){
+            case NULL -> null;
+            case SLEEP ->
+        }*/
     }
 
     public StateMachine getStateMachine()
@@ -218,7 +206,7 @@ public class Player extends SpriteActorBox2d
         return runAnimation;
     }
 
-    /*public Animation<TextureRegion> getFlyAnimation() {
+    public Animation<TextureRegion> getFlyAnimation() {
         return flyAnimation;
     }
 
@@ -228,7 +216,7 @@ public class Player extends SpriteActorBox2d
 
     public Animation<TextureRegion> getAbsorbAnimation() {
         return absorbAnimation;
-    }*/
+    }
 
     @Override
     public void act(float delta)
@@ -242,11 +230,30 @@ public class Player extends SpriteActorBox2d
         }
     }
 
+    public Fixture detectFrontFixture(float distance) {
+        Vector2 startPoint = body.getPosition();
+        Vector2 endPoint = new Vector2(startPoint.x + distance, startPoint.y);
+
+        FrontRayCastCallback callback = new FrontRayCastCallback();
+        world.rayCast(callback, startPoint, endPoint);
+
+        return callback.getHitFixture();
+    }
+
+    public void attractFixture(Fixture fixture) {
+        Vector2 playerPosition = body.getPosition();
+        Vector2 fixturePosition = fixture.getBody().getPosition();
+
+        Vector2 direction = playerPosition.cpy().sub(fixturePosition).nor();
+        float distance = playerPosition.dst(fixturePosition);
+        float forceMagnitude = 10.0f;
+        Vector2 force = direction.scl(forceMagnitude * distance);
+        fixture.getBody().applyForceToCenter(force, true);
+    }
+
     public void detach()
     {
         body.destroyFixture(fixture);
-        body.destroyFixture(absorbRFixture);
-        body.destroyFixture(absorbLFixture);
         world.destroyBody(body);
     }
 }
