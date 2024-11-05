@@ -1,4 +1,4 @@
-package src.world.entities.enemies;
+package src.world.entities.enemies.basic;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,17 +7,19 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
-import src.world.entities.Entity;
-import src.world.player.Player;
+import src.world.entities.enemies.Enemy;
+import src.world.entities.enemies.basic.states.*;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class BasicEnemy extends Enemy {
     private final BitmapFont font;
     private final GlyphLayout layout;
+
+    private final IdleState idleState;
+    private final WalkState walkState;
 
     public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id, Float crono) {
         super(world, id, crono);
@@ -45,30 +47,30 @@ public class BasicEnemy extends Enemy {
         fixture.setFilterData(filter);
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
+
+        idleState = new IdleState(stateMachine, this);
+        walkState = new WalkState(stateMachine, this);
+        stateMachine.setState(idleState);
+    }
+
+    public IdleState getIdleState() {
+        return idleState;
+    }
+
+    public WalkState getWalkState() {
+        return walkState;
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        Vector2 velocity = body.getLinearVelocity();
-
-        if (actCrono < 3 && velocity.x > -3) {
-            body.applyForce(-5, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
-            setFlipX(true);
-        }else if(actCrono < 6 && velocity.x < 3){
-            body.applyForce(5, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
-            //body.setLinearVelocity(3,body.getLinearVelocity().y);
-            setFlipX(false);
-        }else if (actCrono > 9){
-            actCrono = 0f;
-        }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        layout.setText(font, "ID " + getId() + " TIME " + actCrono);
+        layout.setText(font, "ID " + getId() + " TIME " + getActCrono());
         font.draw(batch, layout, getX() + layout.width / 2, getY() + sprite.getHeight() + layout.height);
     }
 

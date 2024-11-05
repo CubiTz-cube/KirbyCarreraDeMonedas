@@ -16,11 +16,9 @@ import static src.utils.Constants.PIXELS_IN_METER;
 
 public class SleepingEnemy extends Enemy
 {
-    private Float timeAct = 0f;
     private final float wakeUpTime = 5f;
     private float sleepTimer = 0f;
     private final Sprite sprite;
-    private final StateMachine stateMachine;
     private final SleepingState sleepingState;
     private final WalkingState walkingState;
 
@@ -44,15 +42,9 @@ public class SleepingEnemy extends Enemy
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
-        stateMachine = new StateMachine();
         sleepingState = new SleepingState(stateMachine, this);
         walkingState = new WalkingState(stateMachine, this);
         stateMachine.setState(sleepingState);
-    }
-
-    public StateMachine getStateMachine()
-    {
-        return stateMachine;
     }
 
     public SleepingState getSleepingState()

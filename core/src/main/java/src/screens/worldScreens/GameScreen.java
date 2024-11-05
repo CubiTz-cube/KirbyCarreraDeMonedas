@@ -34,9 +34,7 @@ public class GameScreen extends WorldScreen {
     public void show() {
         crono = 0f;
         if (main.server != null || main.client == null) tiledManager.makeMap();
-        if (main.server != null){
-            main.client.send(Packet.newEnemy(null, null, null, null));
-        }
+        if (main.server != null) main.client.send(Packet.newEnemy(null, null, null, null));
     }
 
     @Override
