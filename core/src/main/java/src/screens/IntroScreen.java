@@ -1,6 +1,7 @@
 package src.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,7 +33,7 @@ public class IntroScreen extends BaseScreen {
         batch.draw(image, (Gdx.graphics.getWidth() - image.getWidth())/2f,(Gdx.graphics.getHeight() - image.getHeight())/2f);
         batch.end();
 
-        if (time > 6) main.changeScreen(Main.Screens.MENU);
+        if (time > 6 || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.justTouched()) main.changeScreen(Main.Screens.MENU);
     }
 
     @Override

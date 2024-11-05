@@ -12,13 +12,14 @@ import static src.utils.Constants.PIXELS_IN_METER;
 
 public abstract class SpriteActorBox2d extends ActorBox2d{
     protected Sprite sprite;
-    protected Float animateTime;
-    protected Animation<TextureRegion> currentAnimation;
+    private Float animateTime;
+    private Animation<TextureRegion> currentAnimation;
     private Boolean flipX;
-    private Vector2 spritePosModification;
+    private final Vector2 spritePosModification;
 
     public SpriteActorBox2d(World world) {
         super(world);
+        //sprite = new Sprite();
         animateTime = 0f;
         flipX = false;
         spritePosModification = new Vector2(0, 0);
@@ -36,6 +37,10 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
     public void setFlipX(Boolean flipX) {
         sprite.setFlip(flipX, false);
         this.flipX = flipX;
+    }
+
+    public Boolean isFlipX() {
+        return flipX;
     }
 
     public void setSpritePosModification(Float x, Float y) {

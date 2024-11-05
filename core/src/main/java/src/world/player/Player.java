@@ -26,7 +26,7 @@ public class Player extends SpriteActorBox2d
     public float maxSpeed = 4;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 6f;
-    public static final float JUMP_INAIR = 0.1f;
+    public static final float JUMP_INAIR = 0.3f;
     public static final float DASH_IMPULSE = 10f;
 
     protected final StateMachine stateMachine;
@@ -37,8 +37,8 @@ public class Player extends SpriteActorBox2d
     private final FlyState flyState;
     private final DownState downState;
     private final AbsorbState absorbState;
-    //private final DashState dashState;
-    //private final RunState runState;
+    private final DashState dashState;
+    private final RunState runState;
 
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
@@ -57,7 +57,6 @@ public class Player extends SpriteActorBox2d
         super(world);
         sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
-
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
         def.type = BodyDef.BodyType.DynamicBody;
@@ -86,6 +85,8 @@ public class Player extends SpriteActorBox2d
         flyState = new FlyState(stateMachine, this);
         downState = new DownState(stateMachine, this);
         absorbState = new AbsorbState(stateMachine, this);
+        dashState = new DashState(stateMachine, this);
+        runState = new RunState(stateMachine, this);
         stateMachine.setState(idleState);
 
         walkAnimation = new Animation<>(0.12f,
@@ -119,7 +120,7 @@ public class Player extends SpriteActorBox2d
         absorbAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
 
-        currentAnimation = idleAnimation;
+        setCurrentAnimation(idleAnimation);
     }
 
     public void setPowerUp(Enemy enemy) {
@@ -142,7 +143,7 @@ public class Player extends SpriteActorBox2d
 
     public State getRunState()
     {
-        return new RunState(stateMachine, this);
+        return runState;
     }
 
     public JumpState getJumpState()
@@ -173,12 +174,8 @@ public class Player extends SpriteActorBox2d
         return absorbState;
     }
 
-    public boolean isOnGround(){
-        return body.getLinearVelocity().y == 0;
-    }
-
     public State getDashState(){
-        return new DashState(stateMachine, this);
+        return dashState;
     }
 
     public Animation<TextureRegion> getIdleAnimation(){
@@ -219,8 +216,7 @@ public class Player extends SpriteActorBox2d
     }
 
     @Override
-    public void act(float delta)
-    {
+    public void act(float delta) {
         stateMachine.update(delta);
         Vector2 velocity = body.getLinearVelocity();
 
@@ -228,6 +224,10 @@ public class Player extends SpriteActorBox2d
             float brakeForce = 10f;
             body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
+    }
+
+    public Boolean isOnGround(){
+        return body.getLinearVelocity().y == 0;
     }
 
     public Fixture detectFrontFixture(float distance) {
@@ -251,8 +251,7 @@ public class Player extends SpriteActorBox2d
         fixture.getBody().applyForceToCenter(force, true);
     }
 
-    public void detach()
-    {
+    public void detach() {
         body.destroyFixture(fixture);
         world.destroyBody(body);
     }

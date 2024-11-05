@@ -17,6 +17,7 @@ public class RunState extends CanMoveState{
         player.setCurrentAnimation(player.getRunAnimation());
         player.speed = 15;
         player.maxSpeed = 6;
+        player.getBody().applyLinearImpulse(player.isFlipX() ? -3 : 3, 0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
 
     @Override

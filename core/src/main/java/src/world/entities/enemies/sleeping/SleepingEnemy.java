@@ -18,14 +18,13 @@ public class SleepingEnemy extends Enemy
 {
     private final float wakeUpTime = 5f;
     private float sleepTimer = 0f;
-    private final Sprite sprite;
     private final SleepingState sleepingState;
     private final WalkingState walkingState;
 
     public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id, Float crono)
     {
         super(world, id, crono);
-        this.sprite = new Sprite(texture);
+        sprite.setTexture(texture);
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();

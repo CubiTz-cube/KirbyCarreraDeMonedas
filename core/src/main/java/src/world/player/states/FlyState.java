@@ -8,6 +8,8 @@ import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
 public class FlyState extends CanMoveState{
+    Float time = 0f;
+
     public FlyState(StateMachine stateMachine, Player player) {
         super(stateMachine, player);
     }
@@ -26,7 +28,9 @@ public class FlyState extends CanMoveState{
     @Override
     public void update(Float delta) {
         super.update(delta);
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+        time += delta;
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && time > 0.2f){
+            time = 0f;
             player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
             player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }
