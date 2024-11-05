@@ -24,7 +24,7 @@ public class GameScreen extends WorldScreen {
     private Float sendTime = 0f;
 
     public GameScreen(Main main){
-        super(main, -20f, "tiled/maps/kirbyPrueba.tmx");
+        super(main, -20f, "tiled/maps/mainMap.tmx");
         world.setContactListener(new GameContactListener());
         lastPosition = new Vector2();
         pendingActions = new LinkedList<>();

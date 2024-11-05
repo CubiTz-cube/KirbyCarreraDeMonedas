@@ -8,10 +8,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import src.screens.worldScreens.WorldScreen;
-import src.world.entities.Entity;
 import src.world.entities.EnemyFactory;
 import src.world.entities.enemies.Enemy;
-import src.world.player.Player;
 import src.world.statics.StaticFactory;
 
 import static src.utils.Constants.PIXELS_IN_METER;
@@ -76,7 +74,7 @@ public class TiledManager {
     }
 
     public void makeMap() {
-        parsedEntityMap(tiledmap.getLayers().get("entity").getObjects());
+        parsedEntityMap(tiledmap.getLayers().get("entities").getObjects());
         parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
         parsedPlayer(tiledmap.getLayers().get("player").getObjects());
     }

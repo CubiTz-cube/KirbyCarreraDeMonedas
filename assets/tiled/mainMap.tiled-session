@@ -1,21 +1,42 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
     "activeFile": "maps/kirbyPrueba.tmx",
     "expandedProjectPaths": [
         ".",
         "maps/templates",
         "maps"
     ],
+    "file.lastUsedOpenFilter": "Todos los archivos (*)",
     "fileStates": {
         "maps/kirbyPrueba.tmx": {
-            "scale": 4,
+            "expandedObjectLayers": [
+                3,
+                4
+            ],
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 120.75,
-                "y": 242
+                "x": 306.5,
+                "y": 231
             }
         },
         "maps/kirbyPrueba.tsx": {
             "scaleInDock": 3
+        },
+        "maps/mainMap.tmx": {
+            "expandedObjectLayers": [
+                3,
+                4
+            ],
+            "scale": 1.541770833333333,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 240.30808729139926,
+                "y": 228.30889804742927
+            }
         }
     },
     "last.objectTemplatePath": "C:/Users/German Carreño/Documents/CODE/KB-92/assets/tiled/maps/templates",
