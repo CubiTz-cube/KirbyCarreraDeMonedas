@@ -3,24 +3,27 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "maps/kirbyPrueba.tmx",
+    "activeFile": "maps/mainMap.tmx",
     "expandedProjectPaths": [
+        "maps",
         ".",
-        "maps/templates",
-        "maps"
+        "maps/templates"
     ],
     "file.lastUsedOpenFilter": "Todos los archivos (*)",
     "fileStates": {
+        "maps/Bosque.tsx": {
+            "scaleInDock": 1
+        },
         "maps/kirbyPrueba.tmx": {
             "expandedObjectLayers": [
-                3,
-                4
+                4,
+                3
             ],
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 306.5,
-                "y": 231
+                "x": 457.5,
+                "y": 228
             }
         },
         "maps/kirbyPrueba.tsx": {
@@ -31,20 +34,22 @@
                 3,
                 4
             ],
-            "scale": 1.541770833333333,
-            "selectedLayer": 3,
+            "scale": 0.75,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 240.30808729139926,
-                "y": 228.30889804742927
+                "x": 499.33333333333337,
+                "y": 326.66666666666663
             }
         }
     },
     "last.objectTemplatePath": "C:/Users/German Carreño/Documents/CODE/KB-92/assets/tiled/maps/templates",
     "openFiles": [
-        "maps/kirbyPrueba.tmx"
+        "maps/kirbyPrueba.tmx",
+        "maps/mainMap.tmx"
     ],
     "project": "mainMap.tiled-project",
     "recentFiles": [
-        "maps/kirbyPrueba.tmx"
+        "maps/kirbyPrueba.tmx",
+        "maps/mainMap.tmx"
     ]
 }

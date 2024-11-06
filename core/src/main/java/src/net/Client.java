@@ -15,6 +15,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,8 @@ public class Client implements Runnable{
         this.game = game;
         this.ip = ip;
         this.port = port;
-        this.name = name;
+        if (name.isEmpty()) this.name = "Sin nombre";
+        else this.name = name;
         playersConnected = new HashMap<>();
         playersConnected.put(-1, name);
     }

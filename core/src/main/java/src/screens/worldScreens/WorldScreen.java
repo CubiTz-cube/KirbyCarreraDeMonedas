@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.main.Main;
 import src.screens.BaseScreen;
 import src.screens.uiScreens.UIScreen;
+import src.utils.ThreadSecureWorld;
 import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 public class WorldScreen extends BaseScreen {
     protected Stage stage;
     protected World world;
+    protected ThreadSecureWorld threadSecureWorld;
     protected OrthogonalTiledMapRenderer tiledRenderer;
     protected TiledManager tiledManager;
     protected EnemyFactory enemyFactory;
@@ -48,6 +50,7 @@ public class WorldScreen extends BaseScreen {
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 
         world = new World(new Vector2(0, gravity), true);
+        threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
         tiledRenderer = tiledManager.setupMap(map);
@@ -79,6 +82,15 @@ public class WorldScreen extends BaseScreen {
         if (actor instanceof Entity e) entities.put(e.getId(), e);
         actors.add(actor);
         stage.addActor(actor);
+    }
+
+    public void removeEntity(Entity entity){
+        threadSecureWorld.addModification(() -> {
+            entity.detach();
+            entities.remove(entity.getId());
+            actors.remove(entity);
+            stage.getActors().removeValue(entity, true);
+        });
     }
 
     @Override

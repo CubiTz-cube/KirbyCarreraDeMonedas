@@ -13,21 +13,16 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 import src.main.Main;
-
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class GameScreen extends WorldScreen {
     private final Vector2 lastPosition;
-    private final Queue<Runnable> pendingActions;
     private Float sendTime = 0f;
 
     public GameScreen(Main main){
         super(main, -20f, "tiled/maps/mainMap.tmx");
         world.setContactListener(new GameContactListener());
         lastPosition = new Vector2();
-        pendingActions = new LinkedList<>();
     }
 
     @Override
@@ -52,7 +47,7 @@ public class GameScreen extends WorldScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act();
-        world.step(delta, 6, 2);
+        threadSecureWorld.step(delta, 6, 2);
 
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
 
@@ -63,10 +58,6 @@ public class GameScreen extends WorldScreen {
         tiledRenderer.render();
         stage.draw();
         camera.zoom = 1f;
-
-        while (!pendingActions.isEmpty()) {
-            pendingActions.poll().run();
-        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(Main.Screens.MENU);
@@ -109,29 +100,19 @@ public class GameScreen extends WorldScreen {
 
     }
 
-    public synchronized void addEnemy(Enemy.Type actor, Vector2 position, Integer id){
-        pendingActions.add(() -> {
+    public void addEnemy(Enemy.Type actor, Vector2 position, Integer id){
+        threadSecureWorld.addModification(() -> {
             ActorBox2d actorBox2d = enemyFactory.create(actor, world, position, id, crono);
             addActor(actorBox2d);
         });
     }
 
-    public synchronized void removeEntity(Integer id){
-        pendingActions.add(() -> {
-            for (ActorBox2d actor : actors) {
-                if (!(actor instanceof Entity entity)) continue;
-                if (entity.getId().equals(id)) {
-                    entity.detach();
-                    actors.remove(actor);
-                    stage.getActors().removeValue(actor, true);
-                    break;
-                }
-            }
-        });
+    public void removeEntity(Integer id){
+        removeEntity(entities.get(id));
     }
 
-    public synchronized void actEntity(Integer id, Float x, Float y){
-        pendingActions.add(() -> {
+    public void actEntity(Integer id, Float x, Float y){
+        threadSecureWorld.addModification(() -> {
             entities.get(id).getBody().setTransform(x, y, 0);
         });
     }

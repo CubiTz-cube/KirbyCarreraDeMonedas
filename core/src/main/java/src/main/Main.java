@@ -21,11 +21,13 @@ public class Main extends Game {
     private AssetManager assetManager;
     private ArrayList<Screen> screensList;
     private Skin skin;
-    private Integer ids = 0;
+    private int ids = 0;
+    private String name;
     public enum Screens {
         INTRO,
         MENU,
         MULTIPLAYER,
+        JOIN,
         OPTION,
         INFO,
         LOBBYSERVER,
@@ -68,6 +70,7 @@ public class Main extends Game {
         screensList.add(new IntroScreen(this));
         screensList.add(new MenuScreen(this));
         screensList.add(new MultiplayerScreen(this));
+        screensList.add(new JoinScreen(this));
         screensList.add(new OptionScreen(this));
         screensList.add(new InfoScreen(this));
         screensList.add(new LobbyServerScreen(this));
@@ -75,16 +78,20 @@ public class Main extends Game {
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
 
-        changeScreen(Screens.INTRO);
+        changeScreen(Screens.MENU);
+    }
+
+    public void setName(String name) {
+        if (name.isEmpty()) this.name = "Sin nombre";
+        else this.name = name;
+    }
+
+    public Integer getIds() {
+        return ids++;
     }
 
     public AssetManager getAssetManager() {
         return assetManager;
-    }
-
-    public Integer getIds() {
-        ids++;
-        return ids-1;
     }
 
     public Skin getSkin() {
@@ -109,7 +116,13 @@ public class Main extends Game {
         server = null;
     }
 
-    public void startClient(String name){
+    public void startClient(String ip, int port){
+        if (client != null) closeClient();
+        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port, name);
+        clientThread.execute(client);
+    }
+
+    public void startClient(){
         if (client != null) closeClient();
         client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 1234, name);
         clientThread.execute(client);

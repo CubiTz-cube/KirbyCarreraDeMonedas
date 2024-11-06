@@ -9,9 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
 
-public class MultiplayerScreen extends UIScreen {
-
-    public MultiplayerScreen(Main main) {
+public class JoinScreen extends UIScreen {
+    public JoinScreen(Main main) {
         super(main);
         Skin skin = main.getSkin();
 
@@ -19,27 +18,19 @@ public class MultiplayerScreen extends UIScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        TextField nameTextField = new TextField("Sin nombre", skin);
-        nameTextField.setAlignment(Align.center);
+        TextField ipTextField = new TextField("localhost", skin);
+        ipTextField.setAlignment(Align.center);
 
-        TextButton createButton = new TextButton("Crear", skin);
-        createButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                main.setName(nameTextField.getText());
-                main.startServer();
-                main.startClient();
-                main.changeScreen(Main.Screens.LOBBYSERVER);
-            }
-        });
+        TextField portTextField = new TextField("1234", skin);
+        portTextField.setAlignment(Align.center);
 
         TextButton joinButton = new TextButton("Unirse", skin);
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setName(nameTextField.getText());
-                main.startClient();
-                main.changeScreen(Main.Screens.JOIN);
+                int port = Integer.parseInt(portTextField.getText());
+                main.startClient(ipTextField.getText(), port);
+                main.changeScreen(Main.Screens.CONNECTING);
                 System.out.println("Unirse");
             }
         });
@@ -48,16 +39,17 @@ public class MultiplayerScreen extends UIScreen {
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.changeScreen(Main.Screens.MENU);
+                main.changeScreen(Main.Screens.MULTIPLAYER);
             }
         });
 
-        table.add(nameTextField).width(400).height(50).pad(10);
+        table.add(ipTextField).width(400).height(50).pad(10);
         table.row();
-        table.add(createButton).width(200).height(50).pad(10);
+        table.add(portTextField).width(400).height(50).pad(10);
         table.row();
-        table.add(joinButton).width(200).height(50).pad(10);
+        table.add(joinButton).width(200).height(80).pad(10);
         table.row();
         table.add(backButton).width(200).height(50).pad(10);
+
     }
 }
