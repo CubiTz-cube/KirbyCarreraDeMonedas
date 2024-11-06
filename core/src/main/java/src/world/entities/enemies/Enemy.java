@@ -19,9 +19,9 @@ public abstract class Enemy extends Entity {
 
     public Float speed;
 
-    public Enemy(World world, Integer id, Float crono) {
+    public Enemy(World world, Integer id) {
         super(world, id);
-        this.actCrono = crono;
+        this.actCrono = 0f;
         powerUp = PowerUp.Type.NULL;
         stateMachine = new StateMachine();
         speed = 3f;

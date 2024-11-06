@@ -64,7 +64,7 @@ public class TiledManager {
             float Y = object.getProperties().get("y", Float.class )/ tiledSize;
 
             game.addActor(enemyFactory.create(Enemy.Type.valueOf(type), game.getWorld(),
-                new Vector2(X, Y), game.main.getIds(), game.getCrono()));
+                new Vector2(X, Y), game.main.getIds()));
         }
 
     }

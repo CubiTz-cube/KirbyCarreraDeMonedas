@@ -21,8 +21,8 @@ public class BasicEnemy extends Enemy {
     private final IdleState idleState;
     private final WalkState walkState;
 
-    public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id, Float crono) {
-        super(world, id, crono);
+    public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id) {
+        super(world, id);
         type = Type.BASIC;
         sprite = new Sprite(assetManager.get("perro.jpg", Texture.class));
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);

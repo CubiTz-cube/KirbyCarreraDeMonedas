@@ -15,10 +15,10 @@ public class EnemyFactory{
         this.main = main;
     }
 
-    public Enemy create(Enemy.Type type, World world, Vector2 position, Integer id, Float crono){
+    public Enemy create(Enemy.Type type, World world, Vector2 position, Integer id){
         return switch (type) {
-            case BASIC -> new BasicEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, crono);
-            case SLEEPY -> new SleepingEnemy(world, main.getAssetManager().get("yozhi.jpg"), new Rectangle(position.x, position.y, 1f, 1f), id, crono);
+            case BASIC -> new BasicEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);
+            case SLEEPY -> new SleepingEnemy(world, main.getAssetManager().get("yozhi.jpg"), new Rectangle(position.x, position.y, 1f, 1f), id);
             default -> null;
         };
 

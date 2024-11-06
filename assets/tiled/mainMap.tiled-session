@@ -5,8 +5,8 @@
     },
     "activeFile": "maps/mainMap.tmx",
     "expandedProjectPaths": [
-        "maps",
         ".",
+        "maps",
         "maps/templates"
     ],
     "file.lastUsedOpenFilter": "Todos los archivos (*)",
@@ -31,14 +31,14 @@
         },
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
-                3,
-                4
+                4,
+                3
             ],
-            "scale": 0.75,
-            "selectedLayer": 1,
+            "scale": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 499.33333333333337,
-                "y": 326.66666666666663
+                "x": 213.25,
+                "y": 208
             }
         }
     },

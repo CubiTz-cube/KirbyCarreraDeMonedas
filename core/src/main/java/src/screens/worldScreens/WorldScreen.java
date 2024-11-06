@@ -9,13 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.main.Main;
 import src.screens.BaseScreen;
-import src.screens.uiScreens.UIScreen;
 import src.utils.ThreadSecureWorld;
 import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EnemyFactory;
-import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 import src.world.statics.StaticFactory;
 
@@ -33,7 +31,6 @@ public class WorldScreen extends BaseScreen {
     protected ArrayList<ActorBox2d> actors;
     protected HashMap<Integer, Entity> entities;
     protected static Player player;
-    protected Float crono = 0f;
 
     /**
      * Crear una patalla con mundo y stage incluido ademas de cargar un tiledMap
@@ -54,14 +51,6 @@ public class WorldScreen extends BaseScreen {
 
         tiledManager = new TiledManager(this);
         tiledRenderer = tiledManager.setupMap(map);
-    }
-
-    public Float getCrono() {
-        return crono;
-    }
-
-    public void setCrono(Float crono) {
-            this.crono = crono;
     }
 
     public World getWorld() {

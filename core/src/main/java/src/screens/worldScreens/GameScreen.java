@@ -27,7 +27,6 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void show() {
-        crono = 0f;
         if (main.server != null || main.client == null) tiledManager.makeMap();
         if (main.server != null) main.client.send(Packet.newEnemy(null, null, null, null));
     }
@@ -102,7 +101,7 @@ public class GameScreen extends WorldScreen {
 
     public void addEnemy(Enemy.Type actor, Vector2 position, Integer id){
         threadSecureWorld.addModification(() -> {
-            ActorBox2d actorBox2d = enemyFactory.create(actor, world, position, id, crono);
+            ActorBox2d actorBox2d = enemyFactory.create(actor, world, position, id);
             addActor(actorBox2d);
         });
     }

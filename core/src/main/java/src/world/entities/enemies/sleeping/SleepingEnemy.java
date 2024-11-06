@@ -21,9 +21,9 @@ public class SleepingEnemy extends Enemy
     private final SleepingState sleepingState;
     private final WalkingState walkingState;
 
-    public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id, Float crono)
+    public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id)
     {
-        super(world, id, crono);
+        super(world, id);
         sprite.setTexture(texture);
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
