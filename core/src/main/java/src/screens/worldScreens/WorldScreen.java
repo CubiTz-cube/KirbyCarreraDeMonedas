@@ -13,7 +13,7 @@ import src.utils.ThreadSecureWorld;
 import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
-import src.world.entities.EnemyFactory;
+import src.world.entities.enemies.EnemyFactory;
 import src.world.player.Player;
 import src.world.statics.StaticFactory;
 

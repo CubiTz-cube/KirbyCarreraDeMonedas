@@ -1,35 +1,28 @@
 package src.world.entities.enemies.sleeping;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import src.utils.stateMachine.StateMachine;
-import src.world.entities.Entity;
+import src.utils.CollisionFilters;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.enemies.sleeping.states.SleepingState;
-import src.world.entities.enemies.sleeping.states.WalkingState;
+import src.world.entities.enemies.sleeping.states.*;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class SleepingEnemy extends Enemy
 {
-    private final float wakeUpTime = 5f;
-    private float sleepTimer = 0f;
-    private final SleepingState sleepingState;
-    private final WalkingState walkingState;
-
-    public SleepingEnemy(World world, Texture texture, Rectangle shape, Integer id)
+    public SleepingEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id)
     {
         super(world, id);
-        sprite.setTexture(texture);
+        sprite = new Sprite(assetManager.get("yozhi.jpg", Texture.class));
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
-        def.type = BodyDef.BodyType.StaticBody;
+        def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
@@ -39,51 +32,22 @@ public class SleepingEnemy extends Enemy
         box.dispose();
         body.setFixedRotation(true);
 
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionFilters.CATEGORY_NO_COLISION_PLAYER;
+        filter.maskBits = CollisionFilters.MASK_PLAYER;
+        fixture.setFilterData(filter);
+
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
-        sleepingState = new SleepingState(stateMachine, this);
-        walkingState = new WalkingState(stateMachine, this);
-        stateMachine.setState(sleepingState);
-    }
-
-    public SleepingState getSleepingState()
-    {
-        return sleepingState;
-    }
-
-    public WalkingState getWalkingState()
-    {
-        return walkingState;
+        idleState = new IdleState(stateMachine, this);
+        walkState = new WalkState(stateMachine, this);
+        setState(State.IDLE);
     }
 
     @Override
     public void act(float delta)
     {
         stateMachine.update(delta);
-    }
-
-    public void walk(float delta)
-    {
-        //Mueve al enemigo y luego vuelve a caminar
-        body.setLinearVelocity(3, body.getLinearVelocity().y);
-        if (shouldSleep())
-        {
-            stateMachine.setState(sleepingState);
-        }
-    }
-
-    public boolean shouldWakeUp()
-    {
-        //Despierta tras unos segundos
-        sleepTimer += Gdx.graphics.getDeltaTime();
-        return sleepTimer >= wakeUpTime;
-    }
-
-    public boolean shouldSleep()
-    {
-        //Duerme tras unos segundos
-        sleepTimer += Gdx.graphics.getDeltaTime();
-        return sleepTimer >= wakeUpTime;
     }
 
     @Override

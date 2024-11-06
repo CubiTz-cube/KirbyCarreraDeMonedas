@@ -82,24 +82,25 @@ public class GameScreen extends WorldScreen {
         sendTime += delta;
 
         Vector2 currentPosition = player.getBody().getPosition();
-        if (!currentPosition.epsilonEquals(lastPosition, 0.1f)) { // Check for significant change
+        if (!currentPosition.epsilonEquals(lastPosition, 0.05f)) { // Check for significant change
             main.client.send(Packet.position(-1,currentPosition.x, currentPosition.y));
             lastPosition.set(currentPosition);
         }
 
         if (main.server == null) return;
 
-        if (sendTime >= 3f) {
+        if (sendTime >= 2f) {
             for (Entity e: entities.values()){
-                if (e instanceof OtherPlayer) continue;
                 main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
+                if (!(e instanceof Enemy enemy)) continue;
+                if (enemy.checkChangeState()) main.client.send(Packet.enemyState(e.getId(), enemy.getState(), enemy.getActCrono(), enemy.isFlipX()));
             }
             sendTime = 0f;
         }
 
     }
 
-    public void addEnemy(Enemy.Type actor, Vector2 position, Integer id){
+    public void addEntity(Enemy.Type actor, Vector2 position, Integer id){
         threadSecureWorld.addModification(() -> {
             ActorBox2d actorBox2d = enemyFactory.create(actor, world, position, id);
             addActor(actorBox2d);
@@ -110,10 +111,23 @@ public class GameScreen extends WorldScreen {
         removeEntity(entities.get(id));
     }
 
-    public void actEntity(Integer id, Float x, Float y){
+    public void actPosEntity(Integer id, Float x, Float y){
+        Entity entity = entities.get(id);
+        if (entity == null) {
+            System.out.println("Entity " + id + "no encontrada en la lista");
+            return;
+        }
+        Body body = entity.getBody();
         threadSecureWorld.addModification(() -> {
-            entities.get(id).getBody().setTransform(x, y, 0);
+            body.setTransform(x, y, 0);
         });
+    }
+
+    public void actStateEnemy(Integer id, Enemy.State state,Float cronno, Boolean flipX){
+        Enemy enemy = (Enemy) entities.get(id);
+        enemy.setState(state);
+        enemy.setActCrono(cronno);
+        enemy.setFlipX(flipX);
     }
 
     public Player getPlayer() {

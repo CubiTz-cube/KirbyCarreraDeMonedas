@@ -4,7 +4,7 @@ import src.world.entities.enemies.Enemy;
 
 public class Packet {
     public static enum Types{
-        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY
+        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ENEMYSTATE
     }
 
     public static Object[] connect(String name){
@@ -29,6 +29,10 @@ public class Packet {
 
     public static Object[] newEnemy(Integer id, Enemy.Type type, Float x, Float y){
         return new Object[]{Types.NEWENTITY, id, type, x, y};
+    }
+
+    public static Object[] enemyState(Integer id, Enemy.State state, Float cronno, Boolean flipX){
+        return new Object[]{Types.ENEMYSTATE, id, state, cronno, flipX};
     }
 
 }

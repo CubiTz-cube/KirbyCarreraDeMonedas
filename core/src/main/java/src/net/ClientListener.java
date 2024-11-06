@@ -39,6 +39,7 @@ public class ClientListener implements Runnable{
     public void run() {
         System.out.println("[User] Nuevo usuario conectado " + id);
         try {
+            int packId;
             float x, y;
             while (running) {
                 Object[] pack = (Object[]) in.readObject();
@@ -60,7 +61,7 @@ public class ClientListener implements Runnable{
                         break;
 
                     case POSITION:
-                        Integer packId = (Integer) pack[1]; //Devuelve -1 si es la pos de un player
+                        packId = (Integer) pack[1]; //Devuelve -1 si es la pos de un player
                         x = (Float) pack[2];
                         y = (Float) pack[3];
                         if (packId == -1) server.sendAll(Packet.position(id, x, y), id);
@@ -80,6 +81,12 @@ public class ClientListener implements Runnable{
                             server.sendAll(Packet.newEnemy(e.getId(), enemy.getType(), x, y), id);
                         }
                         break;
+                    case ENEMYSTATE:
+                        packId = (Integer) pack[1];
+                        Enemy.State state = (Enemy.State) pack[2];
+                        float cronno = (Float) pack[3];
+                        boolean flipX = (Boolean) pack[4];
+                        server.sendAll(Packet.enemyState(packId, state, cronno, flipX), id);
                 }
             }
         }catch (EOFException | SocketException e) {

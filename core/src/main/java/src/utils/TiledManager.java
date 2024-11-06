@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import src.screens.worldScreens.WorldScreen;
-import src.world.entities.EnemyFactory;
+import src.world.entities.enemies.EnemyFactory;
 import src.world.entities.enemies.Enemy;
 import src.world.statics.StaticFactory;
 

@@ -91,7 +91,7 @@ public class Client implements Runnable{
                         Enemy.Type packType = (Enemy.Type) pack[2];
                         x = (Float) pack[3];
                         y = (Float) pack[4];
-                        game.addEnemy(packType, new Vector2(x,y), packId);
+                        game.addEntity(packType, new Vector2(x,y), packId);
                         break;
 
                     case DISCONNECTPLAYER:
@@ -108,8 +108,14 @@ public class Client implements Runnable{
                         packId = (Integer) pack[1];
                         x = (Float) pack[2];
                         y= (Float) pack[3];
-                        game.actEntity(packId, x, y);
+                        game.actPosEntity(packId, x, y);
                         break;
+                    case ENEMYSTATE:
+                        packId = (Integer) pack[1];
+                        Enemy.State state = (Enemy.State) pack[2];
+                        float cronno = (Float) pack[3];
+                        boolean flipX = (Boolean) pack[4];
+                        game.actStateEnemy(packId, state,cronno, flipX);
                 }
             }
         } catch (SocketException | EOFException e) {

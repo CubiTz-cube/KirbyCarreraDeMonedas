@@ -1,6 +1,5 @@
 package src.world.entities.enemies;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
@@ -16,6 +15,18 @@ public abstract class Enemy extends Entity {
     protected PowerUp.Type powerUp;
 
     protected StateMachine stateMachine;
+    public enum State{
+        IDLE,
+        WALK,
+        ATTACK,
+        DAMAGE
+    }
+    private State state;
+    protected StateEnemy idleState;
+    protected StateEnemy walkState;
+    protected StateEnemy attackState;
+    protected StateEnemy damageState;
+    private Boolean changeState;
 
     public Float speed;
 
@@ -25,6 +36,11 @@ public abstract class Enemy extends Entity {
         powerUp = PowerUp.Type.NULL;
         stateMachine = new StateMachine();
         speed = 3f;
+        changeState = false;
+    }
+
+    public void setActCrono(Float actCrono) {
+        this.actCrono = actCrono;
     }
 
     public PowerUp.Type getPowerUp() {
@@ -39,12 +55,27 @@ public abstract class Enemy extends Entity {
         return actCrono;
     }
 
-    public StateMachine getStateMachine() {
-        return stateMachine;
+    public void setState(State state){
+        this.state = state;
+        changeState = true;
+        switch (state){
+            case IDLE -> stateMachine.setState(idleState);
+            case WALK -> stateMachine.setState(walkState);
+            case ATTACK -> stateMachine.setState(attackState);
+            case DAMAGE -> stateMachine.setState(damageState);
+        }
     }
 
-    public void resetActCrono() {
-        actCrono = 0f;
+    public Boolean checkChangeState() {
+        if (changeState) {
+            changeState = false;
+            return true;
+        }
+        return false;
+    }
+
+    public State getState() {
+        return state;
     }
 
     @Override

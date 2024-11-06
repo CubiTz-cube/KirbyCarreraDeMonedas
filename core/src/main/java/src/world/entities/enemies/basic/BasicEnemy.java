@@ -18,9 +18,6 @@ public class BasicEnemy extends Enemy {
     private final BitmapFont font;
     private final GlyphLayout layout;
 
-    private final IdleState idleState;
-    private final WalkState walkState;
-
     public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id) {
         super(world, id);
         type = Type.BASIC;
@@ -50,15 +47,7 @@ public class BasicEnemy extends Enemy {
 
         idleState = new IdleState(stateMachine, this);
         walkState = new WalkState(stateMachine, this);
-        stateMachine.setState(idleState);
-    }
-
-    public IdleState getIdleState() {
-        return idleState;
-    }
-
-    public WalkState getWalkState() {
-        return walkState;
+        setState(State.IDLE);
     }
 
     @Override

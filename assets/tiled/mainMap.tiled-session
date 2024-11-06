@@ -16,14 +16,14 @@
         },
         "maps/kirbyPrueba.tmx": {
             "expandedObjectLayers": [
-                4,
-                3
+                3,
+                4
             ],
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 457.5,
-                "y": 228
+                "x": 240,
+                "y": 17.5
             }
         },
         "maps/kirbyPrueba.tsx": {

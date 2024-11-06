@@ -38,9 +38,7 @@ public class MultiplayerScreen extends UIScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setName(nameTextField.getText());
-                main.startClient();
                 main.changeScreen(Main.Screens.JOIN);
-                System.out.println("Unirse");
             }
         });
 

@@ -2,9 +2,12 @@ package src.world.entities.enemies.basic.states;
 
 import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
+import src.world.entities.enemies.Enemy;
+import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.basic.BasicEnemy;
+import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class WalkState extends StateBasicEnemy {
+public class WalkState extends StateEnemy {
     public WalkState(StateMachine stateMachine, BasicEnemy enemy) {
         super(stateMachine, enemy);
     }
@@ -18,7 +21,7 @@ public class WalkState extends StateBasicEnemy {
         }
 
         if (enemy.getActCrono() > 3) {
-            stateMachine.setState(enemy.getIdleState());
+            enemy.setState(SleepingEnemy.State.IDLE);
         }
     }
 
