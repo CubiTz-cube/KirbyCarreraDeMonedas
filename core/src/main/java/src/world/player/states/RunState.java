@@ -23,6 +23,10 @@ public class RunState extends CanMoveState{
     @Override
     public void update(Float delta) {
         super.update(delta);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+            player.setState(Player.StateType.ABSORB);
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             player.setState(Player.StateType.DOWN);
         }

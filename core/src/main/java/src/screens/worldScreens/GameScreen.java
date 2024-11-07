@@ -13,7 +13,6 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 import src.main.Main;
-import java.util.Iterator;
 
 public class GameScreen extends WorldScreen {
     private final Vector2 lastPosition;
@@ -63,16 +62,12 @@ public class GameScreen extends WorldScreen {
             if (main.client != null) main.client.send(Packet.disconnectPlayer(-1));
         }
 
-        Iterator<ActorBox2d> iterator = actors.iterator();
-        while (iterator.hasNext()) {
-            ActorBox2d actor = iterator.next();
+        for (ActorBox2d actor : actors) {
             if (actor instanceof Enemy enemy) {
                 if (player.getCurrentState() == Player.StateType.ABSORB) {
                     if (player.getSprite().getBoundingRectangle().overlaps(enemy.getSprite().getBoundingRectangle())) {
                         player.setPowerUp(enemy);
-                        enemy.detach();
-                        iterator.remove();
-                        stage.getActors().removeValue(actor, true);
+                        removeEntity(enemy);
                     }
                 }
             }
@@ -86,11 +81,13 @@ public class GameScreen extends WorldScreen {
             main.client.send(Packet.position(-1,currentPosition.x, currentPosition.y));
             lastPosition.set(currentPosition);
         }
+        if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimation(), player.isFlipX()));
 
         if (main.server == null) return;
 
         if (sendTime >= 2f) {
             for (Entity e: entities.values()){
+                if (e instanceof OtherPlayer) continue;
                 main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
                 if (!(e instanceof Enemy enemy)) continue;
                 if (enemy.checkChangeState()) main.client.send(Packet.enemyState(e.getId(), enemy.getState(), enemy.getActCrono(), enemy.isFlipX()));
@@ -111,10 +108,24 @@ public class GameScreen extends WorldScreen {
         removeEntity(entities.get(id));
     }
 
+    public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX){
+        Entity entity = entities.get(id);
+        if (entity == null) {
+            System.out.println("Animation OtherPlayer Entity " + id + " no encontrada en la lista");
+            return;
+        }
+        if (!(entity instanceof OtherPlayer otherPlayer)) {
+            System.out.println("Animation OtherPlayer Entity " + id + " no es un OtherPlayer");
+            return;
+        }
+        otherPlayer.setAnimation(animationType);
+        otherPlayer.setFlipX(flipX);
+    }
+
     public void actPosEntity(Integer id, Float x, Float y){
         Entity entity = entities.get(id);
         if (entity == null) {
-            System.out.println("Entity " + id + "no encontrada en la lista");
+            System.out.println("Posision Entity " + id + " no encontrada en la lista");
             return;
         }
         Body body = entity.getBody();
@@ -123,7 +134,7 @@ public class GameScreen extends WorldScreen {
         });
     }
 
-    public void actStateEnemy(Integer id, Enemy.State state,Float cronno, Boolean flipX){
+    public void actStateEnemy(Integer id, Enemy.StateType state,Float cronno, Boolean flipX){
         Enemy enemy = (Enemy) entities.get(id);
         enemy.setState(state);
         enemy.setActCrono(cronno);

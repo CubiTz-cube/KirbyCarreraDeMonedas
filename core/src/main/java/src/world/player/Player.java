@@ -63,6 +63,7 @@ public class Player extends SpriteActorBox2d
         FLY,
         ABSORB
     }
+    private Boolean changeAnimation;
     private AnimationType currentAnimation;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
@@ -113,6 +114,7 @@ public class Player extends SpriteActorBox2d
         runState = new RunState(stateMachine, this);
         stateMachine.setState(idleState);
 
+
         walkAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyWalk.png"), 10));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -145,6 +147,7 @@ public class Player extends SpriteActorBox2d
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
 
         setAnimation(AnimationType.IDLE);
+        changeAnimation = false;
     }
 
     public void setPowerUp(Enemy enemy) {
@@ -170,12 +173,21 @@ public class Player extends SpriteActorBox2d
         }
     }
 
+    public Boolean checkChangeAnimation() {
+        if (changeAnimation) {
+            changeAnimation = false;
+            return true;
+        }
+        return false;
+    }
+
     public StateType getCurrentState() {
         return currentState;
     }
 
     public void setAnimation(AnimationType animationType){
         currentAnimation = animationType;
+        changeAnimation = true;
         switch (animationType){
             case IDLE -> setCurrentAnimation(idleAnimation);
             case WALK -> setCurrentAnimation(walkAnimation);
@@ -187,6 +199,12 @@ public class Player extends SpriteActorBox2d
             case FLY -> setCurrentAnimation(flyAnimation);
             case ABSORB -> setCurrentAnimation(absorbAnimation);
         }
+    }
+
+    @Override
+    public void setFlipX(Boolean flipX) {
+        super.setFlipX(flipX);
+        changeAnimation = true;
     }
 
     public AnimationType getCurrentAnimation() {

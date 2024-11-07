@@ -15,13 +15,13 @@ public abstract class Enemy extends Entity {
     protected PowerUp.Type powerUp;
 
     protected StateMachine stateMachine;
-    public enum State{
+    public enum StateType {
         IDLE,
         WALK,
         ATTACK,
         DAMAGE
     }
-    private State state;
+    private StateType state;
     protected StateEnemy idleState;
     protected StateEnemy walkState;
     protected StateEnemy attackState;
@@ -55,7 +55,7 @@ public abstract class Enemy extends Entity {
         return actCrono;
     }
 
-    public void setState(State state){
+    public void setState(StateType state){
         this.state = state;
         changeState = true;
         switch (state){
@@ -74,7 +74,7 @@ public abstract class Enemy extends Entity {
         return false;
     }
 
-    public State getState() {
+    public StateType getState() {
         return state;
     }
 

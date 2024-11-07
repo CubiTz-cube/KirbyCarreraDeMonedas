@@ -28,7 +28,7 @@ public class IdleState extends StateEnemy
         // Duerme un poquito y se despierta
         if (shouldWakeUp())
         {
-            enemy.setState(SleepingEnemy.State.WALK);
+            enemy.setState(SleepingEnemy.StateType.WALK);
         }
     }
 

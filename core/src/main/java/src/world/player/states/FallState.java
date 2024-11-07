@@ -22,6 +22,11 @@ public class FallState extends CanMoveState
     @Override
     public void update(Float delta) {
         super.update(delta);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+            player.setState(Player.StateType.ABSORB);
+        }
+
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (player.isOnGround()){
             if (velocity.x == 0)  player.setState(Player.StateType.IDLE);

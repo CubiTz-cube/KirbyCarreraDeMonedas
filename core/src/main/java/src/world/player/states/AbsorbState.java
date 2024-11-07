@@ -25,7 +25,12 @@ public class AbsorbState extends StatePlayer{
         else fix = player.detectFrontFixture(2.5f);
         if (fix != null) player.attractFixture(fix);
 
-        if (!Gdx.input.isKeyPressed(Input.Keys.X)){
+        float velocityX = player.getBody().getLinearVelocity().x;
+        if (velocityX != 0) {
+            player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
+        }
+
+        if (!Gdx.input.isKeyPressed(Input.Keys.Z)){
             player.setState(Player.StateType.IDLE);
         }
     }

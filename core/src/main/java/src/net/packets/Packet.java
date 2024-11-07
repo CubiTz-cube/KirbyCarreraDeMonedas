@@ -1,10 +1,11 @@
 package src.net.packets;
 
 import src.world.entities.enemies.Enemy;
+import src.world.player.Player;
 
 public class Packet {
     public static enum Types{
-        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ENEMYSTATE
+        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ENEMYSTATE, ACTOTHERPLAYER
     }
 
     public static Object[] connect(String name){
@@ -31,8 +32,12 @@ public class Packet {
         return new Object[]{Types.NEWENTITY, id, type, x, y};
     }
 
-    public static Object[] enemyState(Integer id, Enemy.State state, Float cronno, Boolean flipX){
+    public static Object[] enemyState(Integer id, Enemy.StateType state, Float cronno, Boolean flipX){
         return new Object[]{Types.ENEMYSTATE, id, state, cronno, flipX};
+    }
+
+    public static Object[] actOtherPlayer(Integer id, Player.AnimationType animationType, Boolean flipX){
+        return new Object[]{Types.ACTOTHERPLAYER, id, animationType, flipX};
     }
 
 }

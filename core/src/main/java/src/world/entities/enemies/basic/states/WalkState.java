@@ -21,7 +21,7 @@ public class WalkState extends StateEnemy {
         }
 
         if (enemy.getActCrono() > 3) {
-            enemy.setState(SleepingEnemy.State.IDLE);
+            enemy.setState(SleepingEnemy.StateType.IDLE);
         }
     }
 

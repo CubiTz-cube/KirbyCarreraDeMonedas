@@ -25,6 +25,10 @@ public class DownState  extends StatePlayer{
 
         if (!Gdx.input.isKeyPressed(Input.Keys.DOWN)) player.setState(Player.StateType.IDLE);
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+            player.setState(Player.StateType.ABSORB);
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             player.setFlipX(false);
             player.setState(Player.StateType.DASH);

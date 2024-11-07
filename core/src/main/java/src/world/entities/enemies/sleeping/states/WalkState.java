@@ -30,12 +30,12 @@ public class WalkState extends StateEnemy
         enemy.getBody().setLinearVelocity(3, enemy.getBody().getLinearVelocity().y);
         if (shouldSleep())
         {
-            enemy.setState(SleepingEnemy.State.IDLE);
+            enemy.setState(SleepingEnemy.StateType.IDLE);
         }
 
         if (shouldSleep())
         {
-            enemy.setState(SleepingEnemy.State.IDLE);
+            enemy.setState(SleepingEnemy.StateType.IDLE);
         }
     }
 

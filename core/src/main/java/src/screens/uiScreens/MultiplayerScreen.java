@@ -22,6 +22,15 @@ public class MultiplayerScreen extends UIScreen {
         TextField nameTextField = new TextField("Sin nombre", skin);
         nameTextField.setAlignment(Align.center);
 
+        TextButton joinButton = new TextButton("Unirse", skin);
+        joinButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                main.setName(nameTextField.getText());
+                main.changeScreen(Main.Screens.JOIN);
+            }
+        });
+
         TextButton createButton = new TextButton("Crear", skin);
         createButton.addListener(new ClickListener() {
             @Override
@@ -30,15 +39,6 @@ public class MultiplayerScreen extends UIScreen {
                 main.startServer();
                 main.startClient();
                 main.changeScreen(Main.Screens.LOBBYSERVER);
-            }
-        });
-
-        TextButton joinButton = new TextButton("Unirse", skin);
-        joinButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                main.setName(nameTextField.getText());
-                main.changeScreen(Main.Screens.JOIN);
             }
         });
 
@@ -52,9 +52,9 @@ public class MultiplayerScreen extends UIScreen {
 
         table.add(nameTextField).width(400).height(50).pad(10);
         table.row();
-        table.add(createButton).width(200).height(50).pad(10);
-        table.row();
         table.add(joinButton).width(200).height(50).pad(10);
+        table.row();
+        table.add(createButton).width(200).height(50).pad(10);
         table.row();
         table.add(backButton).width(200).height(50).pad(10);
     }

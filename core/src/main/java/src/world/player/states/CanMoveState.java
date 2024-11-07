@@ -18,17 +18,13 @@ public abstract class CanMoveState extends StatePlayer{
         Body body = player.getBody();
         Vector2 velocity = body.getLinearVelocity();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.X)){
-            player.setState(Player.StateType.ABSORB);
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x <  player.maxSpeed){
             body.applyForce( player.speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
-            player.setFlipX(false);
+            if (player.isFlipX()) player.setFlipX(false);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && velocity.x > - player.maxSpeed){
             body.applyForce(- player.speed, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
-            player.setFlipX(true);
+            if (!player.isFlipX()) player.setFlipX(true);
         }
     }
 

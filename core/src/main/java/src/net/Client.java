@@ -10,6 +10,7 @@ import src.net.packets.Packet;
 import src.screens.worldScreens.GameScreen;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
+import src.world.player.Player;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -71,13 +72,13 @@ public class Client implements Runnable{
 
         int packId;
         float x,y;
+        boolean flipX;
         send(Packet.connect(name));
         try {
             while (running) {
-
                 Object[] pack = (Object[])in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
-                if (!type.equals(Packet.Types.POSITION)) System.out.println("[Client] Recibido: " + type);
+                if (!type.equals(Packet.Types.POSITION) && !type.equals(Packet.Types.ACTOTHERPLAYER)) System.out.println("[Client] Recibido: " + type);
                 switch (type){
                     case NEWPLAYER:
                         packId = (Integer) pack[1];
@@ -112,10 +113,17 @@ public class Client implements Runnable{
                         break;
                     case ENEMYSTATE:
                         packId = (Integer) pack[1];
-                        Enemy.State state = (Enemy.State) pack[2];
+                        Enemy.StateType state = (Enemy.StateType) pack[2];
                         float cronno = (Float) pack[3];
-                        boolean flipX = (Boolean) pack[4];
+                        flipX = (Boolean) pack[4];
                         game.actStateEnemy(packId, state,cronno, flipX);
+                        break;
+                    case ACTOTHERPLAYER:
+                        packId = (Integer) pack[1];
+                        Player.AnimationType animationType = (Player.AnimationType) pack[2];
+                        flipX = (Boolean) pack[3];
+                        game.actOtherPlayerAnimation(packId, animationType, flipX);
+                        break;
                 }
             }
         } catch (SocketException | EOFException e) {

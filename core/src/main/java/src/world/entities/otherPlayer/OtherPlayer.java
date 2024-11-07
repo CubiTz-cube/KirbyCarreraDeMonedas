@@ -1,31 +1,35 @@
 package src.world.entities.otherPlayer;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import src.utils.CollisionFilters;
+import src.utils.animation.SheetCutter;
 import src.world.entities.Entity;
+import src.world.player.Player;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
 public class OtherPlayer extends Entity {
-    //protected final StateMachine stateMachine;
     private final String name;
     private final BitmapFont font;
     private final GlyphLayout layout;
 
+    private final Animation<TextureRegion> walkAnimation;
+    private final Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> jumpAnimation;
+    private final Animation<TextureRegion> fallAnimation;
+    private final Animation<TextureRegion> downAnimation;
+    private final Animation<TextureRegion> runAnimation;
+    private final Animation<TextureRegion> dashAnimation;
+    private final Animation<TextureRegion> flyAnimation;
+    private final Animation<TextureRegion> absorbAnimation;
+
     public OtherPlayer(World world, AssetManager assetManager, Rectangle shape, Integer id, String name){
         super(world, id);
-        setDebug(true);
         this.name = name;
-        sprite = new Sprite(assetManager.get("yoshi.jpg", Texture.class));
+        sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class); // Obtén la fuente del AssetManager
         this.layout = new GlyphLayout();
@@ -50,8 +54,52 @@ public class OtherPlayer extends Entity {
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setSpritePosModification(0f, getHeight()/4);
 
-        //stateMachine = new StateMachine();
-        //stateMachine.setState(idleState);
+        walkAnimation = new Animation<>(0.12f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyWalk.png"), 10));
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        idleAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyIdle.png"), 31));
+        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        downAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDown.png"), 31));
+        downAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        jumpAnimation = new Animation<>(1,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyJump.png"), 1));
+
+        fallAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 22));
+
+        runAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 8));
+        runAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        dashAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 2));
+
+        flyAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 4));
+
+        absorbAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
+
+        setAnimation(Player.AnimationType.IDLE);
+    }
+
+    public void setAnimation(Player.AnimationType animationType){
+        switch (animationType){
+            case IDLE -> setCurrentAnimation(idleAnimation);
+            case WALK -> setCurrentAnimation(walkAnimation);
+            case JUMP -> setCurrentAnimation(jumpAnimation);
+            case FALL -> setCurrentAnimation(fallAnimation);
+            case DOWN -> setCurrentAnimation(downAnimation);
+            case RUN -> setCurrentAnimation(runAnimation);
+            case DASH -> setCurrentAnimation(dashAnimation);
+            case FLY -> setCurrentAnimation(flyAnimation);
+            case ABSORB -> setCurrentAnimation(absorbAnimation);
+        }
     }
 
     @Override

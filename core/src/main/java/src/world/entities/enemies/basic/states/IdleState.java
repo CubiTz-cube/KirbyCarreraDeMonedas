@@ -19,7 +19,7 @@ public class IdleState extends StateEnemy {
             flip = true;
         }
         if (enemy.getActCrono() > 2) {
-            enemy.setState(SleepingEnemy.State.WALK);
+            enemy.setState(SleepingEnemy.StateType.WALK);
         }
     }
 

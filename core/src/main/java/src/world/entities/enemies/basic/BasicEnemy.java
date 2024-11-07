@@ -47,7 +47,7 @@ public class BasicEnemy extends Enemy {
 
         idleState = new IdleState(stateMachine, this);
         walkState = new WalkState(stateMachine, this);
-        setState(State.IDLE);
+        setState(StateType.IDLE);
     }
 
     @Override

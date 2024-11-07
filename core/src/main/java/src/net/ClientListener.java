@@ -13,6 +13,7 @@ import com.badlogic.gdx.net.Socket;
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
+import src.world.player.Player;
 
 public class ClientListener implements Runnable{
     private final Server server;
@@ -41,10 +42,11 @@ public class ClientListener implements Runnable{
         try {
             int packId;
             float x, y;
+            boolean flipX;
             while (running) {
                 Object[] pack = (Object[]) in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
-                if (!type.equals(Packet.Types.POSITION)) System.out.println("[User " + id + "] Recibido: " + type);
+                if (!type.equals(Packet.Types.POSITION) && !type.equals(Packet.Types.ACTOTHERPLAYER)) System.out.println("[User " + id + "] Recibido: " + type);
                 switch (type){
                     case CONNECT:
                         name = (String) pack[1];
@@ -83,10 +85,17 @@ public class ClientListener implements Runnable{
                         break;
                     case ENEMYSTATE:
                         packId = (Integer) pack[1];
-                        Enemy.State state = (Enemy.State) pack[2];
+                        Enemy.StateType state = (Enemy.StateType) pack[2];
                         float cronno = (Float) pack[3];
-                        boolean flipX = (Boolean) pack[4];
+                        flipX = (Boolean) pack[4];
                         server.sendAll(Packet.enemyState(packId, state, cronno, flipX), id);
+                        break;
+                    case ACTOTHERPLAYER:
+                        //Integer packId = (Integer) pack[1]; Devuelve -1
+                        Player.AnimationType animationType = (Player.AnimationType) pack[2];
+                        flipX = (Boolean) pack[3];
+                        server.sendAll(Packet.actOtherPlayer(id, animationType, flipX), id);
+                        break;
                 }
             }
         }catch (EOFException | SocketException e) {
