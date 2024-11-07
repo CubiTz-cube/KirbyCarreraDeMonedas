@@ -22,6 +22,11 @@ public class JumpState extends CanMoveState{
     @Override
     public void update(Float delta) {
         super.update(delta);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+            player.setState(Player.StateType.ABSORB);
+        }
+
         if (jumpTime < Player.MAX_JUMP_TIME && Gdx.input.isKeyPressed(Input.Keys.UP)){
             jumpTime += delta;
             player.getBody().applyLinearImpulse(0, Player.JUMP_INAIR, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
