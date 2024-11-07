@@ -29,6 +29,18 @@ public class Player extends SpriteActorBox2d
     public static final float JUMP_INAIR = 0.3f;
     public static final float DASH_IMPULSE = 10f;
 
+    public enum StateType {
+        IDLE,
+        WALK,
+        JUMP,
+        FALL,
+        DOWN,
+        RUN,
+        DASH,
+        FLY,
+        ABSORB
+    }
+    private StateType currentState;
     protected final StateMachine stateMachine;
     private final IdleState idleState;
     private final JumpState jumpState;
@@ -40,6 +52,18 @@ public class Player extends SpriteActorBox2d
     private final DashState dashState;
     private final RunState runState;
 
+    public enum AnimationType {
+        IDLE,
+        WALK,
+        JUMP,
+        FALL,
+        DOWN,
+        RUN,
+        DASH,
+        FLY,
+        ABSORB
+    }
+    private AnimationType currentAnimation;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> jumpAnimation;
@@ -120,7 +144,7 @@ public class Player extends SpriteActorBox2d
         absorbAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
 
-        setCurrentAnimation(idleAnimation);
+        setAnimation(AnimationType.IDLE);
     }
 
     public void setPowerUp(Enemy enemy) {
@@ -131,88 +155,42 @@ public class Player extends SpriteActorBox2d
         }*/
     }
 
-    public StateMachine getStateMachine()
-    {
-        return stateMachine;
+    public void setState(StateType stateType){
+        currentState = stateType;
+        switch (stateType){
+            case IDLE -> stateMachine.setState(idleState);
+            case WALK -> stateMachine.setState(walkState);
+            case JUMP -> stateMachine.setState(jumpState);
+            case FALL -> stateMachine.setState(fallState);
+            case DOWN -> stateMachine.setState(downState);
+            case RUN -> stateMachine.setState(runState);
+            case DASH -> stateMachine.setState(dashState);
+            case FLY -> stateMachine.setState(flyState);
+            case ABSORB -> stateMachine.setState(absorbState);
+        }
     }
 
-    public IdleState getIdleState()
-    {
-        return idleState;
+    public StateType getCurrentState() {
+        return currentState;
     }
 
-    public State getRunState()
-    {
-        return runState;
+    public void setAnimation(AnimationType animationType){
+        currentAnimation = animationType;
+        switch (animationType){
+            case IDLE -> setCurrentAnimation(idleAnimation);
+            case WALK -> setCurrentAnimation(walkAnimation);
+            case JUMP -> setCurrentAnimation(jumpAnimation);
+            case FALL -> setCurrentAnimation(fallAnimation);
+            case DOWN -> setCurrentAnimation(downAnimation);
+            case RUN -> setCurrentAnimation(runAnimation);
+            case DASH -> setCurrentAnimation(dashAnimation);
+            case FLY -> setCurrentAnimation(flyAnimation);
+            case ABSORB -> setCurrentAnimation(absorbAnimation);
+        }
     }
 
-    public JumpState getJumpState()
-    {
-        return jumpState;
-    }
-
-    public WalkState getWalkState()
-    {
-        return walkState;
-    }
-
-    public FallState getFallState()
-    {
-        return fallState;
-    }
-
-    public FlyState getFlyState()
-    {
-        return flyState;
-    }
-
-    public DownState getDownState() {
-        return downState;
-    }
-
-    public AbsorbState getAbsorbState() {
-        return absorbState;
-    }
-
-    public State getDashState(){
-        return dashState;
-    }
-
-    public Animation<TextureRegion> getIdleAnimation(){
-        return idleAnimation;
-    }
-
-    public Animation<TextureRegion> getWalkAnimation()
-    {
-        return walkAnimation;
-    }
-
-    public Animation<TextureRegion> getJumpAnimation() {
-        return jumpAnimation;
-    }
-
-    public Animation<TextureRegion> getFallAnimation() {
-        return fallAnimation;
-    }
-
-    public Animation<TextureRegion> getDownAnimation() {
-        return downAnimation;
-    }
-
-    public Animation<TextureRegion> getRunAnimation() {
-        return runAnimation;
-    }
-
-    public Animation<TextureRegion> getFlyAnimation() {
-        return flyAnimation;
-    }
-
-    public Animation<TextureRegion> getDashAnimation() {
-        return dashAnimation;
-    }
-
-    public Animation<TextureRegion> getAbsorbAnimation() {
-        return absorbAnimation;
+    public AnimationType getCurrentAnimation() {
+        return currentAnimation;
     }
 
     @Override

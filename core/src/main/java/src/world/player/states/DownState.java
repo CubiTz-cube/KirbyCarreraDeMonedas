@@ -14,7 +14,7 @@ public class DownState  extends StatePlayer{
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getDownAnimation());
+        player.setAnimation(Player.AnimationType.DOWN);
     }
 
     @Override
@@ -23,14 +23,14 @@ public class DownState  extends StatePlayer{
 
         if (velocityX != 0) player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
 
-        if (!Gdx.input.isKeyPressed(Input.Keys.DOWN)) stateMachine.setState(player.getIdleState());
+        if (!Gdx.input.isKeyPressed(Input.Keys.DOWN)) player.setState(Player.StateType.IDLE);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             player.setFlipX(false);
-            stateMachine.setState(player.getDashState());
+            player.setState(Player.StateType.DASH);
         } else if ( Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             player.setFlipX(true);
-            stateMachine.setState(player.getDashState());
+            player.setState(Player.StateType.DASH);
         }
     }
 

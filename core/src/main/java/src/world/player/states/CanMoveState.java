@@ -19,7 +19,7 @@ public abstract class CanMoveState extends StatePlayer{
         Vector2 velocity = body.getLinearVelocity();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.X)){
-            stateMachine.setState(player.getAbsorbState());
+            player.setState(Player.StateType.ABSORB);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && velocity.x <  player.maxSpeed){

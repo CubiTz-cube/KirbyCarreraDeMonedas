@@ -14,22 +14,21 @@ public class IdleState extends CanMoveState{
 
     @Override
     public void start() {
-        player.getSprite().setColor(Color.WHITE);
-        player.setCurrentAnimation(player.getIdleAnimation());
+        player.setAnimation(Player.AnimationType.IDLE);
     }
 
     @Override
     public void update(Float delta) {
         super.update(delta);
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            stateMachine.setState(player.getDownState());
+            player.setState(Player.StateType.DOWN);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-            stateMachine.setState(player.getJumpState());
+            player.setState(Player.StateType.JUMP);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x != 0) stateMachine.setState(player.getWalkState());
-        if(velocity.y < -1f) stateMachine.setState(player.getFallState());
+        if (velocity.x != 0) player.setState(Player.StateType.WALK);
+        if(velocity.y < -1f) player.setState(Player.StateType.FALL);
     }
 
     @Override

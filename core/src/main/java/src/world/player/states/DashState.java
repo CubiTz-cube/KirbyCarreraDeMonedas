@@ -11,7 +11,7 @@ public class DashState extends StatePlayer{
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getDashAnimation());
+        player.setAnimation(Player.AnimationType.DASH);
         player.getBody().applyLinearImpulse(
             player.getSprite().isFlipX() ? -Player.DASH_IMPULSE : Player.DASH_IMPULSE,
             0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
@@ -23,7 +23,7 @@ public class DashState extends StatePlayer{
         if (velocityX != 0) {
             player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
         }else {
-            stateMachine.setState(player.getIdleState());
+            player.setState(Player.StateType.IDLE);
         }
     }
 

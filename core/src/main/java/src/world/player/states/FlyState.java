@@ -16,7 +16,7 @@ public class FlyState extends CanMoveState{
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getFlyAnimation());
+        player.setAnimation(Player.AnimationType.FLY);
         player.speed = 10;
         player.maxSpeed = 4;
         player.getSprite().setScale(1.1f);
@@ -35,7 +35,7 @@ public class FlyState extends CanMoveState{
             player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
-            stateMachine.setState(player.getFallState());
+            player.setState(Player.StateType.FALL);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.y < -5) {

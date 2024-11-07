@@ -16,7 +16,7 @@ public class FallState extends CanMoveState
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getFallAnimation());
+        player.setAnimation(Player.AnimationType.FALL);
     }
 
     @Override
@@ -24,11 +24,11 @@ public class FallState extends CanMoveState
         super.update(delta);
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (player.isOnGround()){
-            if (velocity.x == 0)  stateMachine.setState(player.getIdleState());
-            else stateMachine.setState(player.getWalkState());
+            if (velocity.x == 0)  player.setState(Player.StateType.IDLE);
+            else player.setState(Player.StateType.WALK);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            stateMachine.setState(player.getFlyState());
+            player.setState(Player.StateType.FLY);
         }
     }
 

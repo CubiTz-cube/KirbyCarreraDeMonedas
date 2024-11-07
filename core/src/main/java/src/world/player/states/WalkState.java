@@ -14,10 +14,10 @@ public class WalkState extends RunState{
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getWalkAnimation());
+        player.setAnimation(Player.AnimationType.WALK);
         player.speed = 10;
         player.maxSpeed = 4;
-        if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) stateMachine.setState(player.getRunState());
+        if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) player.setState(Player.StateType.RUN);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class WalkState extends RunState{
         Vector2 velocity = player.getBody().getLinearVelocity();
         if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && velocity.x < 0) ||
             (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) && velocity.x > 0){
-            stateMachine.setState(player.getRunState());
+            player.setState(Player.StateType.RUN);
         }
     }
 }

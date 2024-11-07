@@ -14,7 +14,7 @@ public class RunState extends CanMoveState{
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getRunAnimation());
+        player.setAnimation(Player.AnimationType.RUN);
         player.speed = 15;
         player.maxSpeed = 6;
         player.getBody().applyLinearImpulse(player.isFlipX() ? -3 : 3, 0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
@@ -24,17 +24,17 @@ public class RunState extends CanMoveState{
     public void update(Float delta) {
         super.update(delta);
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            stateMachine.setState(player.getDownState());
+            player.setState(Player.StateType.DOWN);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            stateMachine.setState(player.getJumpState());
+            player.setState(Player.StateType.JUMP);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.x == 0 && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            stateMachine.setState(player.getIdleState());
+            player.setState(Player.StateType.IDLE);
         }
         if (velocity.y < -1){
-            stateMachine.setState(player.getFallState());
+            player.setState(Player.StateType.FALL);
         }
     }
 

@@ -14,7 +14,7 @@ public class AbsorbState extends StatePlayer{
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getAbsorbAnimation());
+        player.setAnimation(Player.AnimationType.ABSORB);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class AbsorbState extends StatePlayer{
         if (fix != null) player.attractFixture(fix);
 
         if (!Gdx.input.isKeyPressed(Input.Keys.X)){
-            stateMachine.setState(player.getIdleState());
+            player.setState(Player.StateType.IDLE);
         }
     }
 

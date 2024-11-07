@@ -14,7 +14,7 @@ public class JumpState extends CanMoveState{
 
     @Override
     public void start() {
-        player.setCurrentAnimation(player.getJumpAnimation());
+        player.setAnimation(Player.AnimationType.JUMP);
         jumpTime = 0f;
         player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
@@ -27,10 +27,10 @@ public class JumpState extends CanMoveState{
             player.getBody().applyLinearImpulse(0, Player.JUMP_INAIR, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            stateMachine.setState(player.getFlyState());
+            player.setState(Player.StateType.FLY);
         }
         if (player.getBody().getLinearVelocity().y < 0){
-            stateMachine.setState(player.getFallState());
+            player.setState(Player.StateType.FALL);
         }
     }
 

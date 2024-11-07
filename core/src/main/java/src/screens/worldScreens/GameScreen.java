@@ -67,7 +67,7 @@ public class GameScreen extends WorldScreen {
         while (iterator.hasNext()) {
             ActorBox2d actor = iterator.next();
             if (actor instanceof Enemy enemy) {
-                if (player.getStateMachine().getState().equals(player.getAbsorbState())) {
+                if (player.getCurrentState() == Player.StateType.ABSORB) {
                     if (player.getSprite().getBoundingRectangle().overlaps(enemy.getSprite().getBoundingRectangle())) {
                         player.setPowerUp(enemy);
                         enemy.detach();
