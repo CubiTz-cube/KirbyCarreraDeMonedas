@@ -1,14 +1,15 @@
 package src.world.entities.enemies.basic.states;
 
 import src.utils.stateMachine.StateMachine;
+import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class IdleState extends StateEnemy {
+public class IdleStateBasic extends StateEnemy {
     private boolean flip = false;
 
-    public IdleState(StateMachine stateMachine, BasicEnemy enemy) {
+    public IdleStateBasic(StateMachine stateMachine, Enemy enemy) {
         super(stateMachine, enemy);
     }
 

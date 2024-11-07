@@ -3,7 +3,7 @@ package src.screens;
 import com.badlogic.gdx.Screen;
 import src.main.Main;
 
-public class BaseScreen implements Screen {
+public abstract class BaseScreen implements Screen {
     public Main main;
 
     public BaseScreen(Main main) {

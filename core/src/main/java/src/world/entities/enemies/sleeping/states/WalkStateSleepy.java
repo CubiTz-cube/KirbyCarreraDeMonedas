@@ -7,13 +7,12 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class WalkState extends StateEnemy
+public class WalkStateSleepy extends StateEnemy
 {
     private final float wakeUpTime = 5f;
     private float sleepTimer = 0f;
 
-    public WalkState(StateMachine stateMachine, SleepingEnemy enemy)
-    {
+    public WalkStateSleepy(StateMachine stateMachine, Enemy enemy) {
         super(stateMachine, enemy);
     }
 

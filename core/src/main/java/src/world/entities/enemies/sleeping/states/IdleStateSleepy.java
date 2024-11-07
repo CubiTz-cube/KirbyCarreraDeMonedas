@@ -2,18 +2,19 @@ package src.world.entities.enemies.sleeping.states;
 
 import com.badlogic.gdx.Gdx;
 import src.utils.stateMachine.StateMachine;
+import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class IdleState extends StateEnemy
+public class IdleStateSleepy extends StateEnemy
 {
     private final float wakeUpTime = 5f;
     private float sleepTimer = 0f;
 
-    public IdleState(StateMachine stateMachine, SleepingEnemy enemy)
-    {
+    public IdleStateSleepy(StateMachine stateMachine, Enemy enemy) {
         super(stateMachine, enemy);
     }
+
 
     @Override
     public void start()

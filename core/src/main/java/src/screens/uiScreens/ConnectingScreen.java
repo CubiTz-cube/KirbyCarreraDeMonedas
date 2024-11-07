@@ -38,7 +38,7 @@ public class ConnectingScreen extends UIScreen {
         if (timeOut > 5f) connectLabel.setText("Conexión fallida");
         if (timeOut > 7f) main.changeScreen(Main.Screens.MENU);
         if (main.client != null && main.client.isRunning()) {
-            main.changeScreen(Main.Screens.LOBBYCLIENT);
+            main.changeScreen(Main.Screens.LOBBY);
         }
     }
 }

@@ -27,6 +27,7 @@ public class GameScreen extends WorldScreen {
     @Override
     public void show() {
         if (main.server != null || main.client == null) tiledManager.makeMap();
+        //Manda a enviar todas las entidades desde el servirdor
         if (main.server != null) main.client.send(Packet.newEnemy(null, null, null, null));
     }
 

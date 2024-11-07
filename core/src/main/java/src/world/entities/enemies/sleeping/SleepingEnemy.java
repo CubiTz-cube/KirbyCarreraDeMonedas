@@ -39,8 +39,8 @@ public class SleepingEnemy extends Enemy
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
-        idleState = new IdleState(stateMachine, this);
-        walkState = new WalkState(stateMachine, this);
+        idleState = new IdleStateSleepy(stateMachine, this);
+        walkState = new WalkStateSleepy(stateMachine, this);
         setState(StateType.IDLE);
     }
 

@@ -20,7 +20,7 @@ import src.world.statics.StaticFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class WorldScreen extends BaseScreen {
+public abstract class  WorldScreen extends BaseScreen {
     protected Stage stage;
     protected World world;
     protected ThreadSecureWorld threadSecureWorld;

@@ -30,8 +30,7 @@ public class Main extends Game {
         JOIN,
         OPTION,
         INFO,
-        LOBBYSERVER,
-        LOBBYCLIENT,
+        LOBBY,
         CONNECTING,
         GAME
     }
@@ -73,8 +72,7 @@ public class Main extends Game {
         screensList.add(new JoinScreen(this));
         screensList.add(new OptionScreen(this));
         screensList.add(new InfoScreen(this));
-        screensList.add(new LobbyServerScreen(this));
-        screensList.add(new LobbyClientScreen(this));
+        screensList.add(new LobbyScreen(this));
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
 

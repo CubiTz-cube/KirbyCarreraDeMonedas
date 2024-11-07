@@ -45,8 +45,8 @@ public class BasicEnemy extends Enemy {
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
-        idleState = new IdleState(stateMachine, this);
-        walkState = new WalkState(stateMachine, this);
+        idleState = new IdleStateBasic(stateMachine, this);
+        walkState = new WalkStateBasic(stateMachine, this);
         setState(StateType.IDLE);
     }
 

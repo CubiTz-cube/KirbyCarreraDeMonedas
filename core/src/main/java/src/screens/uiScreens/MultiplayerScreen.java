@@ -38,7 +38,7 @@ public class MultiplayerScreen extends UIScreen {
                 main.setName(nameTextField.getText());
                 main.startServer();
                 main.startClient();
-                main.changeScreen(Main.Screens.LOBBYSERVER);
+                main.changeScreen(Main.Screens.LOBBY);
             }
         });
 

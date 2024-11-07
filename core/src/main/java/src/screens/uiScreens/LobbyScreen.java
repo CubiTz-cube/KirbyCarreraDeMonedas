@@ -6,27 +6,32 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
 import src.net.packets.Packet;
 
-public class LobbyServerScreen extends UIScreen {
-    private Table playersTable;
+public class LobbyScreen extends UIScreen {
+    private final Table playersTable;
     private Integer numPlayersConnected;
 
-    public LobbyServerScreen(Main main) {
+    private Table table;
+    private Label titleLabel;
+    private ScrollPane scrollPane;
+    private TextButton playButton;
+    private TextButton backButton;
+
+    public LobbyScreen(Main main) {
         super(main);
         Skin skin = main.getSkin();
-        stage.setDebugAll(true);
 
-        Table table = new Table();
+        table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
-        Label titleLabel = new Label("Lobby", skin);
+        titleLabel = new Label("Lobby", skin);
 
         playersTable = new Table();
 
-        ScrollPane scrollPane = new ScrollPane(playersTable, skin);
+        scrollPane = new ScrollPane(playersTable, skin);
         scrollPane.setFillParent(true);
 
-        TextButton playButton = new TextButton("Empezar Partida", skin);
+        playButton = new TextButton("Empezar Partida", skin);
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -34,7 +39,7 @@ public class LobbyServerScreen extends UIScreen {
             }
         });
 
-        TextButton backButton = new TextButton("Salirse", skin);
+        backButton = new TextButton("Salirse", skin);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -43,20 +48,21 @@ public class LobbyServerScreen extends UIScreen {
                 main.changeScreen(Main.Screens.MULTIPLAYER);
             }
         });
-
-        table.add(titleLabel).pad(10);
-        table.row();
-        table.add(scrollPane).expand().fill();
-        table.row();
-        table.add(playButton).width(200).height(50).pad(10);
-        table.row();
-        table.add(backButton).width(200).height(50).pad(10);
     }
 
     @Override
     public void show() {
         super.show();
         numPlayersConnected = 0;
+        table.add(titleLabel).pad(10);
+        table.row();
+        table.add(scrollPane).expand().fill();
+        table.row();
+        if (main.server != null) {
+            table.add(playButton).width(200).height(50).pad(10);
+            table.row();
+        }
+        table.add(backButton).width(200).height(50).pad(10);
     }
 
     @Override
@@ -82,5 +88,6 @@ public class LobbyServerScreen extends UIScreen {
     @Override
     public void hide() {
         playersTable.clear();
+        table.clear();
     }
 }

@@ -7,8 +7,9 @@ import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class WalkState extends StateEnemy {
-    public WalkState(StateMachine stateMachine, BasicEnemy enemy) {
+public class WalkStateBasic extends StateEnemy {
+
+    public WalkStateBasic(StateMachine stateMachine, Enemy enemy) {
         super(stateMachine, enemy);
     }
 
