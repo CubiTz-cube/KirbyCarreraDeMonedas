@@ -47,7 +47,7 @@ public class OtherPlayer extends Entity {
         body.setFixedRotation(true);
 
         Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.CATEGORY_NO_COLISION_PLAYER;
+        filter.categoryBits = CollisionFilters.CATEGORY_OTHERPLAYER;
         filter.maskBits = CollisionFilters.MASK_PLAYER;
         fixture.setFilterData(filter);
 

@@ -38,11 +38,6 @@ public class BasicEnemy extends Enemy {
         box.dispose();
         body.setFixedRotation(true);
 
-        Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.CATEGORY_NO_COLISION_PLAYER;
-        filter.maskBits = CollisionFilters.MASK_PLAYER;
-        fixture.setFilterData(filter);
-
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
         idleState = new IdleStateBasic(stateMachine, this);

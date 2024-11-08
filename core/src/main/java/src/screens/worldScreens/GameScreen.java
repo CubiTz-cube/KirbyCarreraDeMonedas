@@ -160,9 +160,18 @@ public class GameScreen extends WorldScreen {
 
         @Override
         public void beginContact(Contact contact) {
-            Fixture A = contact.getFixtureA();
-            Fixture B = contact.getFixtureB();
+            //Fixture A = contact.getFixtureA();
+            //Fixture B = contact.getFixtureB();
             //System.out.println(A.getUserData() + " " + B.getUserData());
+            if (areCollided(contact, "player", "enemy")) {
+                player.setState(Player.StateType.STUNT);
+
+                Body enemyBody = contact.getFixtureA().getUserData().equals("enemy") ? contact.getFixtureA().getBody() : contact.getFixtureB().getBody();
+
+                Vector2 pushDirection = player.getBody().getPosition().cpy().sub(enemyBody.getPosition()).nor();
+
+                player.getBody().applyLinearImpulse(pushDirection.scl(10.0f), player.getBody().getWorldCenter(), true);
+            }
         }
 
         @Override

@@ -38,7 +38,8 @@ public class Player extends SpriteActorBox2d
         RUN,
         DASH,
         FLY,
-        ABSORB
+        ABSORB,
+        STUNT
     }
     private StateType currentState;
     protected final StateMachine stateMachine;
@@ -51,6 +52,7 @@ public class Player extends SpriteActorBox2d
     private final AbsorbState absorbState;
     private final DashState dashState;
     private final RunState runState;
+    private final StuntState stuntState;
 
     public enum AnimationType {
         IDLE,
@@ -96,7 +98,7 @@ public class Player extends SpriteActorBox2d
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;
-        filter.maskBits = ~CollisionFilters.MASK_NO_COLISION_PLAYER;
+        filter.maskBits = ~CollisionFilters.MASK_OTHERPLAYER;
         fixture.setFilterData(filter);
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
@@ -112,6 +114,7 @@ public class Player extends SpriteActorBox2d
         absorbState = new AbsorbState(stateMachine, this);
         dashState = new DashState(stateMachine, this);
         runState = new RunState(stateMachine, this);
+        stuntState = new StuntState(stateMachine, this);
         stateMachine.setState(idleState);
 
 
@@ -170,6 +173,7 @@ public class Player extends SpriteActorBox2d
             case DASH -> stateMachine.setState(dashState);
             case FLY -> stateMachine.setState(flyState);
             case ABSORB -> stateMachine.setState(absorbState);
+            case STUNT -> stateMachine.setState(stuntState);
         }
     }
 

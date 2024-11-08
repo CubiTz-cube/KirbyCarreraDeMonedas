@@ -5,8 +5,8 @@
     },
     "activeFile": "maps/mainMap.tmx",
     "expandedProjectPaths": [
-        ".",
         "maps",
+        ".",
         "maps/templates"
     ],
     "file.lastUsedOpenFilter": "Todos los archivos (*)",
