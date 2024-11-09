@@ -12,6 +12,7 @@ import java.net.SocketException;
 import com.badlogic.gdx.net.Socket;
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
+import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 
 public class ClientListener implements Runnable{
@@ -79,10 +80,11 @@ public class ClientListener implements Runnable{
                         // Cuando recibe el paquete newEntity del cliente que creao el servidor recorre su lista de entidades
                         // por eso no hace falta revisar lso valores del paquete
                         for (Entity e : server.game.getEntities().values()){
-                            if (!(e instanceof Enemy enemy)) continue;
+                            System.out.println("tipo enviado: " + e.getClass().getSimpleName());
+                            if (e instanceof OtherPlayer) continue;
                             x = e.getBody().getPosition().x;
                             y = e.getBody().getPosition().y;
-                            server.sendAll(Packet.newEnemy(e.getId(), enemy.getType(), x, y), id);
+                            server.sendAll(Packet.newEnemy(e.getId(), e.getType(), x, y), id);
                         }
                         break;
                     case ACTENEMY:

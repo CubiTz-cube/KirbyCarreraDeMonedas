@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import src.screens.worldScreens.GameScreen;
+import src.screens.GameScreen;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.Socket;
 import java.util.concurrent.CopyOnWriteArrayList;

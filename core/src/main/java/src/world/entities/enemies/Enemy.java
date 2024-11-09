@@ -6,11 +6,6 @@ import src.world.entities.Entity;
 import src.world.player.powers.PowerUp;
 
 public abstract class Enemy extends Entity {
-    public enum Type{
-        BASIC,
-        SLEEPY
-    }
-    protected Type type;
     private Float actCrono;
     protected PowerUp.Type powerUp;
 
@@ -45,10 +40,6 @@ public abstract class Enemy extends Entity {
 
     public PowerUp.Type getPowerUp() {
         return powerUp;
-    }
-
-    public Type getType() {
-        return type;
     }
 
     public Float getActCrono() {

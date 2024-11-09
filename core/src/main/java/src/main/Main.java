@@ -9,9 +9,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import src.net.Client;
 import src.net.Server;
+import src.screens.GameScreen;
 import src.screens.IntroScreen;
+import src.screens.minigames.*;
 import src.screens.uiScreens.*;
-import src.screens.worldScreens.*;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -32,7 +33,8 @@ public class Main extends Game {
         INFO,
         LOBBY,
         CONNECTING,
-        GAME
+        GAME,
+        TEST
     }
 
     public Server server;
@@ -64,6 +66,7 @@ public class Main extends Game {
         assetManager.load("world/entities/kirby/kirbyDash.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyAbsorb.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyDamage.png", Texture.class);
+        assetManager.load("world/entities/mirror/mirrorLoop.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
@@ -78,6 +81,7 @@ public class Main extends Game {
         screensList.add(new LobbyScreen(this));
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
+        screensList.add(new TestScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
         changeScreen(Screens.GAME);
     }

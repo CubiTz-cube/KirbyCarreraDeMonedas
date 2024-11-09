@@ -17,6 +17,7 @@ public class SleepingEnemy extends Enemy
     public SleepingEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id)
     {
         super(world, id);
+        type = Type.SLEEPY;
         sprite = new Sprite(assetManager.get("yozhi.jpg", Texture.class));
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 

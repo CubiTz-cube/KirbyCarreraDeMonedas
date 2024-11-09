@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
-import src.screens.worldScreens.GameScreen;
+import src.screens.GameScreen;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
@@ -16,11 +16,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ConnectException;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.TransferQueue;
 
 public class Client implements Runnable{
     private final GameScreen game;
