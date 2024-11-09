@@ -51,7 +51,6 @@ public class TiledManager {
     }
 
     public void parsedEntityMap(MapObjects objects) {
-
         for (MapObject object : objects) {
             String type = object.getProperties().get("type", String.class);
             float X = object.getProperties().get("x", Float.class) / tiledSize;
@@ -60,7 +59,18 @@ public class TiledManager {
             game.addActor(game.entityFactory.create(Entity.Type.valueOf(type), game.getWorld(),
                 new Vector2(X, Y), game.main.getIds()));
         }
+    }
 
+    public void parsedSpawnMap(MapObjects objects) {
+        for (MapObject object : objects) {
+            String type = object.getProperties().get("type", String.class);
+            float X = object.getProperties().get("x", Float.class) / tiledSize;
+            float Y = object.getProperties().get("y", Float.class )/ tiledSize;
+
+            if (Entity.Type.valueOf(type) == Entity.Type.MIRROR) {
+                game.spawnMirror.add(new Vector2(X, Y));
+            }
+        }
     }
 
     public void dispose() {
@@ -70,6 +80,7 @@ public class TiledManager {
     public void makeMap() {
         parsedPlayer(tiledmap.getLayers().get("player").getObjects());
         parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
+        parsedSpawnMap(tiledmap.getLayers().get("spawn").getObjects());
     }
 
     public void makeEntities() {

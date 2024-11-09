@@ -17,6 +17,7 @@ import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
 import src.world.entities.enemies.Enemy;
+import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 import src.main.Main;
@@ -24,6 +25,7 @@ import src.world.statics.StaticFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class GameScreen extends BaseScreen {
     private final Stage stage;
@@ -44,6 +46,9 @@ public class GameScreen extends BaseScreen {
     private Float sendTime;
     private Integer score;
 
+    private Random random;
+    public ArrayList<Vector2> spawnMirror;
+
     public GameScreen(Main main){
         super(main);
         actors = new ArrayList<>();
@@ -62,6 +67,9 @@ public class GameScreen extends BaseScreen {
         lastPosition = new Vector2();
         sendTime = 0f;
         score = 0;
+
+        random = new Random();
+        spawnMirror = new ArrayList<>();
     }
 
     public void setScore(Integer score) {
@@ -178,6 +186,7 @@ public class GameScreen extends BaseScreen {
         actors.clear();
         entities.clear();
         score = 0;
+        spawnMirror.clear();
     }
 
     @Override
@@ -267,6 +276,17 @@ public class GameScreen extends BaseScreen {
         tiledManager.dispose();
     }
 
+    public void spawnMirror(){
+        for (Entity e : entities.values()) {
+            if (!(e instanceof Mirror)) continue;
+            removeEntity(e);
+        }
+
+        int index = random.nextInt(spawnMirror.size());
+        Vector2 position = spawnMirror.get(index);
+        addEntity(Entity.Type.MIRROR, position, main.getIds());
+    }
+
     private static class GameContactListener implements ContactListener {
         private final GameScreen game;
 
@@ -299,6 +319,7 @@ public class GameScreen extends BaseScreen {
                 threadSecureWorld.addModification(() -> {
                     game.getPlayer().getBody().setTransform(1, 46, 0);
                     game.main.changeScreen(Main.Screens.TEST);
+                    game.spawnMirror();
                 });
             }
         }
