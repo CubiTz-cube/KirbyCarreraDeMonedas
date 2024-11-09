@@ -5,7 +5,7 @@ import src.world.player.Player;
 
 public class Packet {
     public static enum Types{
-        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ENEMYSTATE, ACTOTHERPLAYER
+        CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ACTENEMY, ACTOTHERPLAYER
     }
 
     public static Object[] connect(String name){
@@ -32,8 +32,8 @@ public class Packet {
         return new Object[]{Types.NEWENTITY, id, type, x, y};
     }
 
-    public static Object[] enemyState(Integer id, Enemy.StateType state, Float cronno, Boolean flipX){
-        return new Object[]{Types.ENEMYSTATE, id, state, cronno, flipX};
+    public static Object[] actEnemy(Integer id, Enemy.StateType state, Float cronno, Boolean flipX){
+        return new Object[]{Types.ACTENEMY, id, state, cronno, flipX};
     }
 
     public static Object[] actOtherPlayer(Integer id, Player.AnimationType animationType, Boolean flipX){

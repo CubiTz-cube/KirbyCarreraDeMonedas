@@ -74,8 +74,11 @@ public class TiledManager {
     }
 
     public void makeMap() {
-        parsedEntityMap(tiledmap.getLayers().get("entities").getObjects());
-        parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
         parsedPlayer(tiledmap.getLayers().get("player").getObjects());
+        parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
+    }
+
+    public void makeEntities() {
+        parsedEntityMap(tiledmap.getLayers().get("entities").getObjects());
     }
 }

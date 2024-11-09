@@ -12,7 +12,6 @@ import java.net.SocketException;
 import com.badlogic.gdx.net.Socket;
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 
 public class ClientListener implements Runnable{
@@ -46,7 +45,10 @@ public class ClientListener implements Runnable{
             while (running) {
                 Object[] pack = (Object[]) in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
-                if (!type.equals(Packet.Types.POSITION) && !type.equals(Packet.Types.ACTOTHERPLAYER)) System.out.println("[User " + id + "] Recibido: " + type);
+                if (!type.equals(Packet.Types.POSITION) &&
+                    !type.equals(Packet.Types.ACTOTHERPLAYER) &&
+                    !type.equals(Packet.Types.ACTENEMY)) System.out.println("[User " + id + "] Recibido: " + type);
+
                 switch (type){
                     case CONNECT:
                         name = (String) pack[1];
@@ -83,12 +85,12 @@ public class ClientListener implements Runnable{
                             server.sendAll(Packet.newEnemy(e.getId(), enemy.getType(), x, y), id);
                         }
                         break;
-                    case ENEMYSTATE:
+                    case ACTENEMY:
                         packId = (Integer) pack[1];
                         Enemy.StateType state = (Enemy.StateType) pack[2];
                         float cronno = (Float) pack[3];
                         flipX = (Boolean) pack[4];
-                        server.sendAll(Packet.enemyState(packId, state, cronno, flipX), id);
+                        server.sendAll(Packet.actEnemy(packId, state, cronno, flipX), id);
                         break;
                     case ACTOTHERPLAYER:
                         //Integer packId = (Integer) pack[1]; Devuelve -1

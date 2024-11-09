@@ -41,7 +41,7 @@ public class Player extends SpriteActorBox2d
         ABSORB,
         STUNT
     }
-    private StateType currentState;
+    private StateType currentStateType;
     protected final StateMachine stateMachine;
     private final IdleState idleState;
     private final JumpState jumpState;
@@ -63,10 +63,13 @@ public class Player extends SpriteActorBox2d
         RUN,
         DASH,
         FLY,
-        ABSORB
+        INFLY,
+        UPFLY,
+        ABSORB,
+        DAMAGE
     }
     private Boolean changeAnimation;
-    private AnimationType currentAnimation;
+    private AnimationType currentAnimationType;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> jumpAnimation;
@@ -75,7 +78,10 @@ public class Player extends SpriteActorBox2d
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> dashAnimation;
     private final Animation<TextureRegion> flyAnimation;
+    private final Animation<TextureRegion> inFlyAnimation;
+    private final Animation<TextureRegion> upFlyAnimation;
     private final Animation<TextureRegion> absorbAnimation;
+    private final Animation<TextureRegion> damageAnimation;
 
     private PowerUp powerUp;
 
@@ -144,10 +150,20 @@ public class Player extends SpriteActorBox2d
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 2));
 
         flyAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 4));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 5));
+
+        inFlyAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyInFly.png"), 2));
+        inFlyAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        upFlyAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
 
         absorbAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
+
+        damageAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
 
         setAnimation(AnimationType.IDLE);
         changeAnimation = false;
@@ -162,7 +178,7 @@ public class Player extends SpriteActorBox2d
     }
 
     public void setState(StateType stateType){
-        currentState = stateType;
+        currentStateType = stateType;
         switch (stateType){
             case IDLE -> stateMachine.setState(idleState);
             case WALK -> stateMachine.setState(walkState);
@@ -185,12 +201,12 @@ public class Player extends SpriteActorBox2d
         return false;
     }
 
-    public StateType getCurrentState() {
-        return currentState;
+    public StateType getCurrentStateType() {
+        return currentStateType;
     }
 
     public void setAnimation(AnimationType animationType){
-        currentAnimation = animationType;
+        currentAnimationType = animationType;
         changeAnimation = true;
         switch (animationType){
             case IDLE -> setCurrentAnimation(idleAnimation);
@@ -201,7 +217,10 @@ public class Player extends SpriteActorBox2d
             case RUN -> setCurrentAnimation(runAnimation);
             case DASH -> setCurrentAnimation(dashAnimation);
             case FLY -> setCurrentAnimation(flyAnimation);
+            case INFLY -> setCurrentAnimation(inFlyAnimation);
+            case UPFLY -> setCurrentAnimation(upFlyAnimation);
             case ABSORB -> setCurrentAnimation(absorbAnimation);
+            case DAMAGE -> setCurrentAnimation(damageAnimation);
         }
     }
 
@@ -211,8 +230,8 @@ public class Player extends SpriteActorBox2d
         changeAnimation = true;
     }
 
-    public AnimationType getCurrentAnimation() {
-        return currentAnimation;
+    public AnimationType getCurrentAnimationType() {
+        return currentAnimationType;
     }
 
     @Override

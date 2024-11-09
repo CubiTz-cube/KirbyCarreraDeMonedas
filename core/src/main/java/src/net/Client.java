@@ -78,7 +78,10 @@ public class Client implements Runnable{
             while (running) {
                 Object[] pack = (Object[])in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
-                if (!type.equals(Packet.Types.POSITION) && !type.equals(Packet.Types.ACTOTHERPLAYER)) System.out.println("[Client] Recibido: " + type);
+                if (!type.equals(Packet.Types.POSITION) &&
+                    !type.equals(Packet.Types.ACTOTHERPLAYER) &&
+                    !type.equals(Packet.Types.ACTENEMY)) System.out.println("[Client] Recibido: " + type);
+
                 switch (type){
                     case NEWPLAYER:
                         packId = (Integer) pack[1];
@@ -111,7 +114,7 @@ public class Client implements Runnable{
                         y= (Float) pack[3];
                         game.actPosEntity(packId, x, y);
                         break;
-                    case ENEMYSTATE:
+                    case ACTENEMY:
                         packId = (Integer) pack[1];
                         Enemy.StateType state = (Enemy.StateType) pack[2];
                         float cronno = (Float) pack[3];

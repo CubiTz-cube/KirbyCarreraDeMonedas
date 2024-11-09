@@ -25,10 +25,6 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
         spritePosModification = new Vector2(0, 0);
     }
 
-    public Sprite getSprite() {
-        return sprite;
-    }
-
     public void setCurrentAnimation(Animation<TextureRegion> currentAnimation) {
         this.currentAnimation = currentAnimation;
         animateTime = 0f;
@@ -39,12 +35,20 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
         this.flipX = flipX;
     }
 
-    public Boolean isFlipX() {
-        return flipX;
+    public Boolean isAnimationFinish() {
+        return currentAnimation.isAnimationFinished(animateTime);
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 
     public void setSpritePosModification(Float x, Float y) {
         spritePosModification.set(x,y);
+    }
+
+    public Boolean isFlipX() {
+        return flipX;
     }
 
     @Override

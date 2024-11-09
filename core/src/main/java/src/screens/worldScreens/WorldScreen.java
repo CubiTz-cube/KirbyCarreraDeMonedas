@@ -83,6 +83,21 @@ public abstract class  WorldScreen extends BaseScreen {
     }
 
     @Override
+    public void show() {
+        tiledManager.makeMap();
+    }
+
+    @Override
+    public void hide() {
+        stage.clear();
+        player.detach();
+        player = null;
+        for (ActorBox2d actor : actors) actor.detach();
+        actors.clear();
+        entities.clear();
+    }
+
+    @Override
     public void dispose() {
         stage.dispose();
         world.dispose();

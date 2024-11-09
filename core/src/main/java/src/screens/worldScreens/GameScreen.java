@@ -26,18 +26,15 @@ public class GameScreen extends WorldScreen {
 
     @Override
     public void show() {
-        if (main.server != null || main.client == null) tiledManager.makeMap();
+        super.show();
+        if (main.server != null || main.client == null) tiledManager.makeEntities();
         //Manda a enviar todas las entidades desde el servirdor
         if (main.server != null) main.client.send(Packet.newEnemy(null, null, null, null));
     }
 
     @Override
     public void hide() {
-        stage.clear();
-
-        player.detach();
-        actors.forEach(ActorBox2d::detach);
-        actors.clear();
+        super.hide();
     }
 
     @Override
@@ -65,7 +62,7 @@ public class GameScreen extends WorldScreen {
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof Enemy enemy) {
-                if (player.getCurrentState() == Player.StateType.ABSORB) {
+                if (player.getCurrentStateType() == Player.StateType.ABSORB) {
                     if (player.getSprite().getBoundingRectangle().overlaps(enemy.getSprite().getBoundingRectangle())) {
                         player.setPowerUp(enemy);
                         removeEntity(enemy);
@@ -82,7 +79,7 @@ public class GameScreen extends WorldScreen {
             main.client.send(Packet.position(-1,currentPosition.x, currentPosition.y));
             lastPosition.set(currentPosition);
         }
-        if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimation(), player.isFlipX()));
+        if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX()));
 
         if (main.server == null) return;
 
@@ -91,7 +88,7 @@ public class GameScreen extends WorldScreen {
                 if (e instanceof OtherPlayer) continue;
                 main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
                 if (!(e instanceof Enemy enemy)) continue;
-                if (enemy.checkChangeState()) main.client.send(Packet.enemyState(e.getId(), enemy.getState(), enemy.getActCrono(), enemy.isFlipX()));
+                if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getState(), enemy.getActCrono(), enemy.isFlipX()));
             }
             sendTime = 0f;
         }
@@ -106,7 +103,12 @@ public class GameScreen extends WorldScreen {
     }
 
     public void removeEntity(Integer id){
-        removeEntity(entities.get(id));
+        Entity entity = entities.get(id);
+        if (entity == null) {
+            System.out.println("Entity " + id + " no encontrada en la lista");
+            return;
+        }
+        removeEntity(entity);
     }
 
     public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX){
@@ -137,6 +139,10 @@ public class GameScreen extends WorldScreen {
 
     public void actStateEnemy(Integer id, Enemy.StateType state,Float cronno, Boolean flipX){
         Enemy enemy = (Enemy) entities.get(id);
+        if (enemy == null) {
+            System.out.println("Entity " + id + " no encontrada en la lista");
+            return;
+        }
         enemy.setState(state);
         enemy.setActCrono(cronno);
         enemy.setFlipX(flipX);
@@ -170,7 +176,7 @@ public class GameScreen extends WorldScreen {
 
                 Vector2 pushDirection = player.getBody().getPosition().cpy().sub(enemyBody.getPosition()).nor();
 
-                player.getBody().applyLinearImpulse(pushDirection.scl(10.0f), player.getBody().getWorldCenter(), true);
+                player.getBody().applyLinearImpulse(pushDirection.scl(15.0f), player.getBody().getWorldCenter(), true);
             }
         }
 

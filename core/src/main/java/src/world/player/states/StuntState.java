@@ -1,7 +1,6 @@
 package src.world.player.states;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.physics.box2d.Body;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
@@ -15,7 +14,7 @@ public class StuntState extends StatePlayer{
     @Override
     public void start() {
         time = 0f;
-        player.getSprite().setColor(Color.BLUE);
+        player.setAnimation(Player.AnimationType.DAMAGE);
     }
 
     @Override
@@ -23,6 +22,10 @@ public class StuntState extends StatePlayer{
         time += delta;
         if (time > 2f) {
             player.setState(Player.StateType.IDLE);
+        }
+        float velocityX = player.getBody().getLinearVelocity().x;
+        if (velocityX != 0) {
+            player.getBody().setLinearVelocity(velocityX * 0.70f, player.getBody().getLinearVelocity().y);
         }
     }
 

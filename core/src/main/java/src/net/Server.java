@@ -27,6 +27,8 @@ public class Server implements Runnable{
         this.users = new CopyOnWriteArrayList<>();
         this.running = false;
 
+        game.main.resetIds();
+
         ServerSocketHints hints = new ServerSocketHints();
         hints.acceptTimeout = 0;
         serverSocket = Gdx.net.newServerSocket(Net.Protocol.TCP, port, hints);
@@ -69,7 +71,9 @@ public class Server implements Runnable{
 
     public void close(){
         running = false;
-
+        for (ClientListener user : users) {
+            user.close();
+        }
         serverSocket.dispose();
         pool.shutdown();
     }

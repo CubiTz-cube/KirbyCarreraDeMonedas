@@ -28,8 +28,10 @@ public class FlyState extends CanMoveState{
     @Override
     public void update(Float delta) {
         super.update(delta);
+        if (player.isAnimationFinish()) player.setAnimation(Player.AnimationType.INFLY);
         time += delta;
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && time > 0.2f){
+            if (player.getCurrentAnimationType() != Player.AnimationType.FLY) player.setAnimation(Player.AnimationType.UPFLY);
             time = 0f;
             player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
             player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);

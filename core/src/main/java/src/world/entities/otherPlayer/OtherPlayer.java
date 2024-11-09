@@ -24,7 +24,10 @@ public class OtherPlayer extends Entity {
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> dashAnimation;
     private final Animation<TextureRegion> flyAnimation;
+    private final Animation<TextureRegion> inFlyAnimation;
+    private final Animation<TextureRegion> upFlyAnimation;
     private final Animation<TextureRegion> absorbAnimation;
+    private final Animation<TextureRegion> damageAnimation;
 
     public OtherPlayer(World world, AssetManager assetManager, Rectangle shape, Integer id, String name){
         super(world, id);
@@ -80,10 +83,20 @@ public class OtherPlayer extends Entity {
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 2));
 
         flyAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 4));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 5));
+
+        inFlyAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyInFly.png"), 2));
+        inFlyAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        upFlyAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
 
         absorbAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
+
+        damageAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
 
         setAnimation(Player.AnimationType.IDLE);
     }
@@ -98,7 +111,10 @@ public class OtherPlayer extends Entity {
             case RUN -> setCurrentAnimation(runAnimation);
             case DASH -> setCurrentAnimation(dashAnimation);
             case FLY -> setCurrentAnimation(flyAnimation);
+            case INFLY -> setCurrentAnimation(inFlyAnimation);
+            case UPFLY -> setCurrentAnimation(upFlyAnimation);
             case ABSORB -> setCurrentAnimation(absorbAnimation);
+            case DAMAGE -> setCurrentAnimation(damageAnimation);
         }
     }
 

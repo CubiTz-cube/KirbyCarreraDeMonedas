@@ -22,7 +22,7 @@ public class MultiplayerScreen extends UIScreen {
         TextField nameTextField = new TextField("Sin nombre", skin);
         nameTextField.setAlignment(Align.center);
 
-        TextButton joinButton = new TextButton("Unirse", skin);
+        TextButton joinButton = new TextButton("Conectarse a una Partida", skin);
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -31,7 +31,7 @@ public class MultiplayerScreen extends UIScreen {
             }
         });
 
-        TextButton createButton = new TextButton("Crear", skin);
+        TextButton createButton = new TextButton("Crear Partida", skin);
         createButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
