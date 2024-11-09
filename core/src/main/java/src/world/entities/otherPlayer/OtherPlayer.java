@@ -92,8 +92,8 @@ public class OtherPlayer extends Entity {
         upFlyAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
 
-        absorbAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
+        absorbAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 16));
 
         damageAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));

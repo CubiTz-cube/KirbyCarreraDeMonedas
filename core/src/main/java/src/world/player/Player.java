@@ -159,8 +159,8 @@ public class Player extends SpriteActorBox2d
         upFlyAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
 
-        absorbAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 7));
+        absorbAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 16));
 
         damageAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
@@ -239,6 +239,7 @@ public class Player extends SpriteActorBox2d
         stateMachine.update(delta);
         Vector2 velocity = body.getLinearVelocity();
 
+        if (currentStateType == StateType.DASH || currentStateType == StateType.STUNT) return;
         if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             float brakeForce = 10f;
             body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
