@@ -124,6 +124,10 @@ public class Client implements Runnable{
                         flipX = (Boolean) pack[3];
                         game.actOtherPlayerAnimation(packId, animationType, flipX);
                         break;
+                    case REMOVEENTITY:
+                        packId = (Integer) pack[1];
+                        game.removeEntity(packId);
+                        break;
                 }
             }
         } catch (SocketException | EOFException e) {

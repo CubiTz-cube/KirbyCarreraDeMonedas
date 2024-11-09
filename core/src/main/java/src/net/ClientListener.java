@@ -77,15 +77,12 @@ public class ClientListener implements Runnable{
                         break;
 
                     case NEWENTITY:
-                        // Cuando recibe el paquete newEntity del cliente que creao el servidor recorre su lista de entidades
-                        // por eso no hace falta revisar lso valores del paquete
-                        for (Entity e : server.game.getEntities().values()){
-                            System.out.println("tipo enviado: " + e.getClass().getSimpleName());
-                            if (e instanceof OtherPlayer) continue;
-                            x = e.getBody().getPosition().x;
-                            y = e.getBody().getPosition().y;
-                            server.sendAll(Packet.newEnemy(e.getId(), e.getType(), x, y), id);
-                        }
+                        packId = (Integer) pack[1];
+                        Entity.Type entityType = (Entity.Type) pack[2];
+                        x = (Float) pack[3];
+                        y = (Float) pack[4];
+
+                        server.sendAll(Packet.newEntity(packId, entityType, x, y), id);
                         break;
                     case ACTENEMY:
                         packId = (Integer) pack[1];
@@ -99,6 +96,10 @@ public class ClientListener implements Runnable{
                         Player.AnimationType animationType = (Player.AnimationType) pack[2];
                         flipX = (Boolean) pack[3];
                         server.sendAll(Packet.actOtherPlayer(id, animationType, flipX), id);
+                        break;
+                    case REMOVEENTITY:
+                        packId = (Integer) pack[1];
+                        server.sendAll(Packet.removeEntity(packId), id);
                         break;
                 }
             }

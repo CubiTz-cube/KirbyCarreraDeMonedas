@@ -104,7 +104,15 @@ public class GameScreen extends BaseScreen {
     }
 
     public void addActor(ActorBox2d actor){
-        if (actor instanceof Entity e) entities.put(e.getId(), e);
+        if (actor instanceof Entity e){
+            if (entities.get(e.getId()) != null) {
+                System.out.println("Entity " + e.getType() + ":" + + e.getId() + " ya existe en la lista");
+                return;
+            }
+            entities.put(e.getId(), e);
+            Vector2 position = e.getBody().getPosition();
+            if (main.client != null && !(e instanceof OtherPlayer)) main.client.send(Packet.newEntity(e.getId(), e.getType(), position.x, position.y));
+        }
         actors.add(actor);
         stage.addActor(actor);
     }
@@ -118,6 +126,11 @@ public class GameScreen extends BaseScreen {
 
     public void addEntity(Entity.Type actor, Vector2 position, Integer id){
         threadSecureWorld.addModification(() -> {
+            if (entities.get(id) != null) {
+                System.out.println("Entity " + actor + ":" + id + " ya existe en la lista");
+                return;
+            }
+            System.out.println("Entity " + actor + ":" + id + " se mando a crear");
             ActorBox2d actorBox2d = entityFactory.create(actor, world, position, id);
             addActor(actorBox2d);
         });
@@ -162,10 +175,15 @@ public class GameScreen extends BaseScreen {
 
     public void removeEntity(Entity entity){
         threadSecureWorld.addModification(() -> {
-            entity.detach();
+            if (entities.get(entity.getId()) == null) {
+                System.out.println("Entity " + entity.getId() + " no encontrada en la lista");
+                return;
+            }
+            if (main.client != null) main.client.send(Packet.removeEntity(entity.getId()));
             entities.remove(entity.getId());
             actors.remove(entity);
             stage.getActors().removeValue(entity, true);
+            entity.detach();
         });
     }
 
@@ -199,8 +217,6 @@ public class GameScreen extends BaseScreen {
         }
         tiledManager.makeMap();
         if (main.server != null || main.client == null) tiledManager.makeEntities();
-        //Manda a enviar todas las entidades desde el servirdor
-        if (main.server != null) main.client.send(Packet.newEnemy(null, null, null, null));
     }
 
     /**
@@ -281,7 +297,7 @@ public class GameScreen extends BaseScreen {
             if (!(e instanceof Mirror)) continue;
             removeEntity(e);
         }
-
+        System.out.println("Spawning mirror");
         int index = random.nextInt(spawnMirror.size());
         Vector2 position = spawnMirror.get(index);
         addEntity(Entity.Type.MIRROR, position, main.getIds());

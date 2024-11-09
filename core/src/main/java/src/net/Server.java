@@ -75,6 +75,6 @@ public class Server implements Runnable{
             user.close();
         }
         serverSocket.dispose();
-        pool.shutdown();
+        pool.shutdownNow();
     }
 }
