@@ -45,8 +45,8 @@ public class TiledManager {
             Float Y = (Float) object.getProperties().get("y");
             Float W = (Float) object.getProperties().get("width");
             Float H = (Float) object.getProperties().get("height");
-            game.addActor(game.staticFactory.create(StaticFactory.Type.FLOOR, game.getWorld(),
-                new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize)));
+
+            game.addStatic(StaticFactory.Type.FLOOR, new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize));
         }
     }
 
@@ -56,8 +56,7 @@ public class TiledManager {
             float X = object.getProperties().get("x", Float.class) / tiledSize;
             float Y = object.getProperties().get("y", Float.class )/ tiledSize;
 
-            game.addActor(game.entityFactory.create(Entity.Type.valueOf(type), game.getWorld(),
-                new Vector2(X, Y), game.main.getIds()));
+            game.addEntity(Entity.Type.valueOf(type), new Vector2(X, Y), game.main.getIds());
         }
     }
 

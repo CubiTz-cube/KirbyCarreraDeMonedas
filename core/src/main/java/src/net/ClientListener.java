@@ -10,9 +10,9 @@ import java.io.ObjectOutputStream;
 import java.net.SocketException;
 
 import com.badlogic.gdx.net.Socket;
+import src.utils.ConsoleColor;
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
 
 public class ClientListener implements Runnable{
@@ -38,7 +38,6 @@ public class ClientListener implements Runnable{
     }
     @Override
     public void run() {
-        System.out.println("[User] Nuevo usuario conectado " + id);
         try {
             int packId;
             float x, y;
@@ -48,7 +47,7 @@ public class ClientListener implements Runnable{
                 Packet.Types type = (Packet.Types) pack[0];
                 if (!type.equals(Packet.Types.POSITION) &&
                     !type.equals(Packet.Types.ACTOTHERPLAYER) &&
-                    !type.equals(Packet.Types.ACTENEMY)) System.out.println("[User " + id + "] Recibido: " + type);
+                    !type.equals(Packet.Types.ACTENEMY)) System.out.println(ConsoleColor.PURPLE + "[User " + id + "] Recibido: " + type + ConsoleColor.RESET);
 
                 switch (type){
                     case CONNECT:

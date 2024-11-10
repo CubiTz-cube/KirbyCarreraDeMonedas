@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
+import src.utils.ConsoleColor;
 import src.utils.ThreadSecureWorld;
 import src.utils.TiledManager;
 import src.world.ActorBox2d;
@@ -103,20 +104,6 @@ public class GameScreen extends BaseScreen {
         stage.addActor(player);
     }
 
-    public void addActor(ActorBox2d actor){
-        if (actor instanceof Entity e){
-            if (entities.get(e.getId()) != null) {
-                System.out.println("Entity " + e.getType() + ":" + + e.getId() + " ya existe en la lista");
-                return;
-            }
-            entities.put(e.getId(), e);
-            Vector2 position = e.getBody().getPosition();
-            if (main.client != null && !(e instanceof OtherPlayer)) main.client.send(Packet.newEntity(e.getId(), e.getType(), position.x, position.y));
-        }
-        actors.add(actor);
-        stage.addActor(actor);
-    }
-
     public void addStatic(StaticFactory.Type type, Rectangle bounds){
         threadSecureWorld.addModification(() -> {
             ActorBox2d actorBox2d = staticFactory.create(type, world, bounds);
@@ -124,15 +111,35 @@ public class GameScreen extends BaseScreen {
         });
     }
 
-    public void addEntity(Entity.Type actor, Vector2 position, Integer id){
+    public void addActor(ActorBox2d actor){
+        if (actor instanceof Entity e){
+            entities.put(e.getId(), e);
+        }
+        actors.add(actor);
+        stage.addActor(actor);
+    }
+
+    private void createEntityLogic(Entity.Type type, Vector2 position, Integer id){
+        if (entities.get(id) != null) {
+            System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
+            return;
+        }
+        System.out.println("Entity " + type + ":" + id + " se mando a crear");
+        ActorBox2d actorBox2d = entityFactory.create(type, world, position, id);
+        addActor(actorBox2d);
+    }
+
+    public void addEntityNoPacket(Entity.Type type, Vector2 position, Integer id){
         threadSecureWorld.addModification(() -> {
-            if (entities.get(id) != null) {
-                System.out.println("Entity " + actor + ":" + id + " ya existe en la lista");
-                return;
-            }
-            System.out.println("Entity " + actor + ":" + id + " se mando a crear");
-            ActorBox2d actorBox2d = entityFactory.create(actor, world, position, id);
-            addActor(actorBox2d);
+            createEntityLogic(type, position, id);
+            main.setIds(id);
+        });
+    }
+
+    public void addEntity(Entity.Type type, Vector2 position, Integer id){
+        threadSecureWorld.addModification(() -> {
+            createEntityLogic(type, position, id);
+            if (main.client != null) main.client.send(Packet.newEntity(id, type, position.x, position.y));
         });
     }
 
@@ -173,13 +180,16 @@ public class GameScreen extends BaseScreen {
         enemy.setFlipX(flipX);
     }
 
-    public void removeEntity(Entity entity){
+    /**
+     * Elimina una entidad del juego. Sin enviar paquete.
+     * @param entity Entidad a eliminar.
+     */
+    private void removeEntity(Entity entity){
         threadSecureWorld.addModification(() -> {
             if (entities.get(entity.getId()) == null) {
-                System.out.println("Entity " + entity.getId() + " no encontrada en la lista");
+                System.out.println(ConsoleColor.RED + "Entity " + entity.getId() + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
                 return;
             }
-            if (main.client != null) main.client.send(Packet.removeEntity(entity.getId()));
             entities.remove(entity.getId());
             actors.remove(entity);
             stage.getActors().removeValue(entity, true);
@@ -187,10 +197,28 @@ public class GameScreen extends BaseScreen {
         });
     }
 
+    /**
+     * Elimina una entidad del juego. Envia paquete.
+     * @param id Id de la entidad a eliminar.
+     */
     public void removeEntity(Integer id){
         Entity entity = entities.get(id);
         if (entity == null) {
-            System.out.println("Entity " + id + " no encontrada en la lista");
+            System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
+            return;
+        }
+        if (main.client != null) main.client.send(Packet.removeEntity(entity.getId()));
+        removeEntity(entity);
+    }
+
+    /**
+     * Elimina una entidad del juego. Sin enviar paquete.
+     * @param id Id de la entidad a eliminar.
+     */
+    public void removeEntityNoPacket(Integer id){
+        Entity entity = entities.get(id);
+        if (entity == null) {
+            System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
             return;
         }
         removeEntity(entity);
@@ -278,7 +306,7 @@ public class GameScreen extends BaseScreen {
                 if (player.getCurrentStateType() == Player.StateType.ABSORB) {
                     if (player.getSprite().getBoundingRectangle().overlaps(enemy.getSprite().getBoundingRectangle())) {
                         player.setPowerUp(enemy);
-                        removeEntity(enemy);
+                        removeEntity(enemy.getId());
                     }
                 }
             }
@@ -295,7 +323,7 @@ public class GameScreen extends BaseScreen {
     public void spawnMirror(){
         for (Entity e : entities.values()) {
             if (!(e instanceof Mirror)) continue;
-            removeEntity(e);
+            removeEntity(e.getId());
         }
         System.out.println("Spawning mirror");
         int index = random.nextInt(spawnMirror.size());

@@ -8,6 +8,7 @@ import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
+import src.utils.ConsoleColor;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
@@ -71,13 +72,14 @@ public class Client implements Runnable{
         float x,y;
         boolean flipX;
         send(Packet.connect(name));
+        System.out.println(ConsoleColor.BLUE + "[Client] Conectado a servidor: " + socket.getRemoteAddress() + ConsoleColor.RESET);
         try {
             while (running) {
                 Object[] pack = (Object[])in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
                 if (!type.equals(Packet.Types.POSITION) &&
                     !type.equals(Packet.Types.ACTOTHERPLAYER) &&
-                    !type.equals(Packet.Types.ACTENEMY)) System.out.println("[Client] Recibido: " + type);
+                    !type.equals(Packet.Types.ACTENEMY)) System.out.println(ConsoleColor.CYAN + "[Client] Recibido: " + type + ConsoleColor.RESET);
 
                 switch (type){
                     case NEWPLAYER:
@@ -92,13 +94,13 @@ public class Client implements Runnable{
                         Enemy.Type packType = (Enemy.Type) pack[2];
                         x = (Float) pack[3];
                         y = (Float) pack[4];
-                        game.addEntity(packType, new Vector2(x,y), packId);
+                        game.addEntityNoPacket(packType, new Vector2(x,y), packId);
                         break;
 
                     case DISCONNECTPLAYER:
                         packId = (Integer) pack[1];
                         playersConnected.remove(packId);
-                        game.removeEntity(packId);
+                        game.removeEntityNoPacket(packId);
                         break;
 
                     case GAMESTART:
@@ -126,7 +128,7 @@ public class Client implements Runnable{
                         break;
                     case REMOVEENTITY:
                         packId = (Integer) pack[1];
-                        game.removeEntity(packId);
+                        game.removeEntityNoPacket(packId);
                         break;
                 }
             }

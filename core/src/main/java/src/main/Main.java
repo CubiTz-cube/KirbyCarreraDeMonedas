@@ -95,8 +95,8 @@ public class Main extends Game {
         return ids++;
     }
 
-    public void resetIds() {
-        ids = 0;
+    public void setIds(int ids) {
+        this.ids = ids;
     }
 
     public AssetManager getAssetManager() {

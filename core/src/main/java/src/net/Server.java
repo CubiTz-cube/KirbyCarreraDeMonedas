@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.screens.GameScreen;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.Socket;
+import src.utils.ConsoleColor;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,7 +29,7 @@ public class Server implements Runnable{
         this.users = new CopyOnWriteArrayList<>();
         this.running = false;
 
-        game.main.resetIds();
+        game.main.setIds(0);
 
         ServerSocketHints hints = new ServerSocketHints();
         hints.acceptTimeout = 0;
@@ -39,6 +41,11 @@ public class Server implements Runnable{
         return users;
     }
 
+    /**
+     * Envia un mensaje a todos los clientes conectados
+     * @param data Paquete
+     * @param id Id del User que envia el mensaje
+     */
     public void sendAll(Object[] data, Integer id){
         synchronized (users) {
             for (ClientListener user : users) {
@@ -54,7 +61,7 @@ public class Server implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("Server abierto en " + ip + ":" + port);
+        System.out.println( ConsoleColor.BLUE + "Server abierto en " + ip + ":" + port + ConsoleColor.RESET);
 
         try {
             while (running) {
