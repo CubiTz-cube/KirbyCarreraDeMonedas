@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.sleeping.states.*;
+import src.world.player.powers.PowerUp;
 
 import static src.utils.Constants.PIXELS_IN_METER;
 
@@ -19,6 +20,7 @@ public class SleepingEnemy extends Enemy
     {
         super(world, id);
         type = Type.SLEEPY;
+        powerUp = PowerUp.Type.SLEEP;
         sprite = new Sprite(assetManager.get("yozhi.jpg", Texture.class));
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 

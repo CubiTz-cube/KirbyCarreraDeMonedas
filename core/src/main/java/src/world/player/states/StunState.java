@@ -20,7 +20,7 @@ public class StunState extends StatePlayer{
     @Override
     public void update(Float delta) {
         time += delta;
-        if (time > 2f) {
+        if (time > player.stunTime) {
             player.setState(Player.StateType.IDLE);
         }
         float velocityX = player.getBody().getLinearVelocity().x;
@@ -31,6 +31,6 @@ public class StunState extends StatePlayer{
 
     @Override
     public void end() {
-        player.getSprite().setColor(Color.WHITE);
+        player.stunTime = 2;
     }
 }

@@ -15,6 +15,7 @@ import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.*;
 import src.world.SpriteActorBox2d;
 import src.world.entities.enemies.Enemy;
+import src.world.player.powers.PowerSleep;
 import src.world.player.powers.PowerUp;
 import src.world.player.states.*;
 
@@ -24,10 +25,12 @@ public class Player extends SpriteActorBox2d
 {
     public float speed = 10;
     public float maxSpeed = 4;
+    public float stunTime = 2;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 6f;
     public static final float JUMP_INAIR = 0.3f;
     public static final float DASH_IMPULSE = 10f;
+
 
     public enum StateType {
         IDLE,
@@ -170,11 +173,13 @@ public class Player extends SpriteActorBox2d
     }
 
     public void setPowerUp(Enemy enemy) {
-
-        /*this.powerUp = switch (enemy.getPowerUp()){
+        powerUp = switch (enemy.getPowerUp()){
             case NULL -> null;
-            case SLEEP ->
-        }*/
+            case SLEEP -> new PowerSleep(this);
+            default -> null;
+        };
+
+        if (powerUp != null) powerUp.start();
     }
 
     public void setState(StateType stateType){
