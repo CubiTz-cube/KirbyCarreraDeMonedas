@@ -3,6 +3,7 @@ package src.world.player.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
@@ -25,13 +26,14 @@ public class AbsorbState extends StatePlayer{
         else fix = player.detectFrontFixture(2.5f);
         if (fix != null) player.attractFixture(fix);
 
-        float velocityX = player.getBody().getLinearVelocity().x;
-        if (velocityX != 0) {
-            player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
+        Vector2 velocity = player.getBody().getLinearVelocity();
+        if (velocity.x != 0) {
+            player.getBody().setLinearVelocity(velocity.x * 0.90f, player.getBody().getLinearVelocity().y);
         }
 
         if (!Gdx.input.isKeyPressed(Input.Keys.Z)){
-            player.setState(Player.StateType.IDLE);
+            if (velocity.y != 0) player.setState(Player.StateType.FALL);
+            else player.setState(Player.StateType.IDLE);
         }
     }
 
