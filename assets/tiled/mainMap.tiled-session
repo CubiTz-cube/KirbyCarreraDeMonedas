@@ -1,0 +1,73 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "maps/gameMap.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "maps/Bosque.tsx": {
+            "scaleInDock": 1
+        },
+        "maps/gameMap.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 130,
+                "y": 2324
+            }
+        },
+        "maps/kirbyPrueba.tmx": {
+            "expandedObjectLayers": [
+                3,
+                4
+            ],
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 240,
+                "y": 17.5
+            }
+        },
+        "maps/kirbyPrueba.tsx": {
+            "scaleInDock": 3
+        },
+        "maps/mainMap.tmx": {
+            "expandedObjectLayers": [
+                3,
+                4
+            ],
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 480,
+                "y": 319.33333333333326
+            }
+        },
+        "maps/mainMap.tmx#forest": {
+            "scaleInDock": 1
+        },
+        "maps/temple.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "map.height": 160,
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": "2",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 240,
+    "openFiles": [
+        "maps/mainMap.tmx",
+        "maps/gameMap.tmx"
+    ],
+    "project": "",
+    "recentFiles": [
+        "maps/mainMap.tmx",
+        "maps/gameMap.tmx",
+        "maps/temple.tsx",
+        "maps/kirbyPrueba.tmx"
+    ]
+}
