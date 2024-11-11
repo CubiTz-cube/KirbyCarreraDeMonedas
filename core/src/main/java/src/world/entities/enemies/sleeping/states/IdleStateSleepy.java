@@ -8,7 +8,6 @@ import src.world.entities.enemies.sleeping.SleepingEnemy;
 
 public class IdleStateSleepy extends StateEnemy
 {
-    private final float wakeUpTime = 5f;
     private float sleepTimer = 0f;
 
     public IdleStateSleepy(StateMachine stateMachine, Enemy enemy) {
@@ -19,14 +18,12 @@ public class IdleStateSleepy extends StateEnemy
     @Override
     public void start()
     {
-        // Dormir
         float sleepTimer = 0f;
     }
 
     @Override
     public void update(Float delta)
     {
-        // Duerme un poquito y se despierta
         if (shouldWakeUp())
         {
             enemy.setState(SleepingEnemy.StateType.WALK);
@@ -35,16 +32,14 @@ public class IdleStateSleepy extends StateEnemy
 
     private boolean shouldWakeUp()
     {
-        //Despierta tras unos segundos
         sleepTimer += Gdx.graphics.getDeltaTime();
-        return sleepTimer >= wakeUpTime;
+        return sleepTimer >= 20f;
     }
 
     @Override
     public void end()
     {
-        // Despertar y comenzar a caminar un poco antes de volver a dormir
-
+        sleepTimer = 0f;
     }
 
 

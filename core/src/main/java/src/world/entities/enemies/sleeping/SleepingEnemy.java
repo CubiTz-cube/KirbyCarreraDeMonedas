@@ -14,6 +14,7 @@ import static src.utils.Constants.PIXELS_IN_METER;
 
 public class SleepingEnemy extends Enemy
 {
+
     public SleepingEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id)
     {
         super(world, id);
