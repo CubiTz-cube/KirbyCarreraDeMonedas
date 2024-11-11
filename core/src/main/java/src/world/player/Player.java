@@ -39,7 +39,7 @@ public class Player extends SpriteActorBox2d
         DASH,
         FLY,
         ABSORB,
-        STUNT
+        STUN
     }
     private StateType currentStateType;
     protected final StateMachine stateMachine;
@@ -52,7 +52,7 @@ public class Player extends SpriteActorBox2d
     private final AbsorbState absorbState;
     private final DashState dashState;
     private final RunState runState;
-    private final StuntState stuntState;
+    private final StunState stunState;
 
     public enum AnimationType {
         IDLE,
@@ -120,7 +120,7 @@ public class Player extends SpriteActorBox2d
         absorbState = new AbsorbState(stateMachine, this);
         dashState = new DashState(stateMachine, this);
         runState = new RunState(stateMachine, this);
-        stuntState = new StuntState(stateMachine, this);
+        stunState = new StunState(stateMachine, this);
         stateMachine.setState(idleState);
 
 
@@ -189,7 +189,7 @@ public class Player extends SpriteActorBox2d
             case DASH -> stateMachine.setState(dashState);
             case FLY -> stateMachine.setState(flyState);
             case ABSORB -> stateMachine.setState(absorbState);
-            case STUNT -> stateMachine.setState(stuntState);
+            case STUN -> stateMachine.setState(stunState);
         }
     }
 
@@ -239,7 +239,7 @@ public class Player extends SpriteActorBox2d
         stateMachine.update(delta);
         Vector2 velocity = body.getLinearVelocity();
 
-        if (currentStateType == StateType.DASH || currentStateType == StateType.STUNT) return;
+        if (currentStateType == StateType.DASH || currentStateType == StateType.STUN) return;
         if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             float brakeForce = 10f;
             body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);

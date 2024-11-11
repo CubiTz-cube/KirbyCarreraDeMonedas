@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
-public class StuntState extends StatePlayer{
+public class StunState extends StatePlayer{
     private Float time = 0f;
 
-    public StuntState(StateMachine stateMachine, Player player) {
+    public StunState(StateMachine stateMachine, Player player) {
         super(stateMachine, player);
     }
 

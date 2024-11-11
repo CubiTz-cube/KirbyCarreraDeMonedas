@@ -351,7 +351,7 @@ public class GameScreen extends BaseScreen {
         @Override
         public void beginContact(Contact contact) {
             if (areCollided(contact, "player", "enemy")) {
-                game.getPlayer().setState(Player.StateType.STUNT);
+                game.getPlayer().setState(Player.StateType.STUN);
 
                 Body enemyBody = contact.getFixtureA().getUserData().equals("enemy") ? contact.getFixtureA().getBody() : contact.getFixtureB().getBody();
 
