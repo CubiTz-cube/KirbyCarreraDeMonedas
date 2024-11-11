@@ -246,10 +246,6 @@ public class Player extends SpriteActorBox2d
         }
     }
 
-    public Boolean isOnGround(){
-        return body.getLinearVelocity().y == 0;
-    }
-
     public Fixture detectFrontFixture(float distance) {
         Vector2 startPoint = body.getPosition();
         Vector2 endPoint = new Vector2(startPoint.x + distance, startPoint.y);

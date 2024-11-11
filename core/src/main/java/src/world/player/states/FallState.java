@@ -28,7 +28,7 @@ public class FallState extends CanMoveState
         }
 
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (player.isOnGround()){
+        if (velocity.y == 0){
             if (velocity.x == 0)  player.setState(Player.StateType.IDLE);
             else player.setState(Player.StateType.WALK);
         }
