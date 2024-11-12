@@ -9,7 +9,10 @@ public abstract class Entity extends SpriteActorBox2d {
     public enum Type{
         BASIC,
         SLEEPY,
-        MIRROR
+        MIRROR,
+        //BREAKBLOCK,
+        //WATERIMPULSE,
+        //FALLBLOCK,
     }
     protected Type type;
     private final Integer id;

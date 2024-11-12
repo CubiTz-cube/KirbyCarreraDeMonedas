@@ -84,7 +84,7 @@ public class Main extends Game {
         screensList.add(new GameScreen(this));
         screensList.add(new TestScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MENU);
+        changeScreen(Screens.GAME);
     }
 
     public void setName(String name) {

@@ -49,6 +49,7 @@ public class GameScreen extends BaseScreen {
 
     private Random random;
     public ArrayList<Vector2> spawnMirror;
+    public ArrayList<Vector2> spawnPlayer;
 
     public GameScreen(Main main){
         super(main);
@@ -62,7 +63,7 @@ public class GameScreen extends BaseScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/mainMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
@@ -71,6 +72,7 @@ public class GameScreen extends BaseScreen {
 
         random = new Random();
         spawnMirror = new ArrayList<>();
+        spawnPlayer = new ArrayList<>();
     }
 
     public void setScore(Integer score) {
@@ -98,8 +100,9 @@ public class GameScreen extends BaseScreen {
         setScore(getScore() + score);
     }
 
-    public void addMainPlayer(Vector2 position){
+    public void addMainPlayer(){
         if (player != null) return;
+        Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
         player = new Player(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1.5f, 1.5f));
         stage.addActor(player);
     }
@@ -244,6 +247,7 @@ public class GameScreen extends BaseScreen {
             return;
         }
         tiledManager.makeMap();
+        addMainPlayer();
         if (main.server != null || main.client == null) tiledManager.makeEntities();
     }
 

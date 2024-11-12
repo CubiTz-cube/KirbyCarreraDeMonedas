@@ -62,7 +62,7 @@
  <objectgroup id="3" name="player">
   <object id="3" name="Player" type="PLAYER" x="80" y="224" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="4" name="entities">
+ <objectgroup id="4" name="entity">
   <object id="33" name="Enemigo Basico" type="BASIC" x="464" y="176" width="16" height="16"/>
   <object id="35" name="Enemigo Basico" type="BASIC" x="240" y="223" width="16" height="16"/>
   <object id="36" name="Espejo" type="MIRROR" x="168" y="209" width="16" height="16"/>

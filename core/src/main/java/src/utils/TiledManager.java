@@ -31,22 +31,25 @@ public class TiledManager {
         return new OrthogonalTiledMapRenderer(tiledmap, PIXELS_IN_METER/tiledSize);
     }
 
-    public void parsedPlayer(MapObjects objects) {
+    public void parsedStaticMap(MapObjects objects) {
         for (MapObject object : objects) {
-            float X = object.getProperties().get("x", Float.class) / tiledSize;
-            float Y = object.getProperties().get("y", Float.class )/ tiledSize;
-            game.addMainPlayer(new Vector2(X, Y));
-        }
-    }
-
-    public void parsedColisionMap(MapObjects objects) {
-        for (MapObject object : objects) {
+            String type = object.getProperties().get("type", String.class);
             Float X = (Float) object.getProperties().get("x");
             Float Y = (Float) object.getProperties().get("y");
             Float W = (Float) object.getProperties().get("width");
             Float H = (Float) object.getProperties().get("height");
 
-            game.addStatic(StaticFactory.Type.FLOOR, new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize));
+            if (type == null) {
+                game.addStatic(StaticFactory.Type.FLOOR, new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize));
+                continue;
+            }
+            try{
+                game.addStatic(StaticFactory.Type.valueOf(type), new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize));
+            }
+            catch (IllegalArgumentException e) {
+                System.out.println("Tipo de static " + type + " no encontrado");
+            }
+
         }
     }
 
@@ -56,7 +59,11 @@ public class TiledManager {
             float X = object.getProperties().get("x", Float.class) / tiledSize;
             float Y = object.getProperties().get("y", Float.class )/ tiledSize;
 
-            game.addEntity(Entity.Type.valueOf(type), new Vector2(X, Y), game.main.getIds());
+            try{
+                game.addEntity(Entity.Type.valueOf(type), new Vector2(X, Y), game.main.getIds());
+            }catch (IllegalArgumentException e) {
+                System.out.println("Tipo de entidad " + type + " no encontrado");
+            }
         }
     }
 
@@ -72,17 +79,25 @@ public class TiledManager {
         }
     }
 
+    public void parsedPlayer(MapObjects objects) {
+        for (MapObject object : objects) {
+            float X = object.getProperties().get("x", Float.class) / tiledSize;
+            float Y = object.getProperties().get("y", Float.class )/ tiledSize;
+            game.spawnPlayer.add(new Vector2(X, Y));
+        }
+    }
+
     public void dispose() {
         tiledmap.dispose();
     }
 
     public void makeMap() {
-        parsedPlayer(tiledmap.getLayers().get("player").getObjects());
-        parsedColisionMap(tiledmap.getLayers().get("colision").getObjects());
+        parsedPlayer(tiledmap.getLayers().get("playerSpawn").getObjects());
+        parsedStaticMap(tiledmap.getLayers().get("static").getObjects());
         parsedSpawnMap(tiledmap.getLayers().get("spawn").getObjects());
     }
 
     public void makeEntities() {
-        parsedEntityMap(tiledmap.getLayers().get("entities").getObjects());
+        parsedEntityMap(tiledmap.getLayers().get("entity").getObjects());
     }
 }
