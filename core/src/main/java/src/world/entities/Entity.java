@@ -10,7 +10,7 @@ public abstract class Entity extends SpriteActorBox2d {
         BASIC,
         SLEEPY,
         MIRROR,
-        //BREAKBLOCK,
+        BREAKBLOCK,
         //WATERIMPULSE,
         //FALLBLOCK,
     }

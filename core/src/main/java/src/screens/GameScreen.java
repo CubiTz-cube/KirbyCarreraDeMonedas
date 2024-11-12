@@ -242,7 +242,10 @@ public class GameScreen extends BaseScreen {
     public void show() {
         if (player != null) {
             threadSecureWorld.addModification(() -> {
-                player.getBody().setTransform(8, 25, 0);
+                Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
+                player.getBody().setTransform(position.x, position.y, 0);
+                player.getBody().setLinearVelocity(0,0);
+                player.setState(Player.StateType.IDLE);
             });
             return;
         }

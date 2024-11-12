@@ -10,7 +10,19 @@
         "maps/Bosque.tsx": {
             "scaleInDock": 1
         },
+        "maps/aventure.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/cemetery.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "maps/crypt.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/dungeon.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -31,6 +43,10 @@
                 "x": 703.5,
                 "y": 2047
             }
+        },
+        "maps/garden.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "maps/kirbyPrueba.tmx": {
             "expandedObjectLayers": [
@@ -66,6 +82,10 @@
         "maps/temple.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "maps/village.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.imagePath": "C:/Users/dacm/Documents/CODE/KB-92/assets/tiled/tiledSets",
@@ -83,8 +103,13 @@
     "project": "",
     "property.type": "color",
     "recentFiles": [
-        "maps/mainMap.tmx",
+        "maps/village.tsx",
+        "maps/garden.tsx",
+        "maps/dungeon.tsx",
+        "maps/cemetery.tsx",
+        "maps/aventure.tsx",
         "maps/crypt.tsx",
+        "maps/mainMap.tmx",
         "maps/gameMap.tmx",
         "maps/temple.tsx",
         "maps/kirbyPrueba.tmx"
