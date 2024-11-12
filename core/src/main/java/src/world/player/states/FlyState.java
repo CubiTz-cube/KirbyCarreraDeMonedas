@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
+import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class FlyState extends CanMoveState{
@@ -30,13 +31,13 @@ public class FlyState extends CanMoveState{
         super.update(delta);
         if (player.isAnimationFinish()) player.setAnimation(Player.AnimationType.INFLY);
         time += delta;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && time > 0.2f){
+        if (Gdx.input.isKeyPressed(PlayerControl.JUMP) && time > 0.2f){
             if (player.getCurrentAnimationType() != Player.AnimationType.FLY) player.setAnimation(Player.AnimationType.UPFLY);
             time = 0f;
             player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
             player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
             player.setState(Player.StateType.FALL);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();

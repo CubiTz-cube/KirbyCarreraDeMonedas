@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 import java.net.SocketException;
 
 import com.badlogic.gdx.net.Socket;
-import src.utils.ConsoleColor;
+import src.utils.variables.ConsoleColor;
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.player.Player;

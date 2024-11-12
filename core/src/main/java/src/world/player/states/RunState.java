@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
+import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class RunState extends CanMoveState{
@@ -23,18 +24,18 @@ public class RunState extends CanMoveState{
     @Override
     public void update(Float delta) {
         super.update(delta);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
             player.setState(Player.StateType.ABSORB);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+        if (Gdx.input.isKeyPressed(PlayerControl.DOWN)){
             player.setState(Player.StateType.DOWN);
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP)){
             player.setState(Player.StateType.JUMP);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x == 0 && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        if (velocity.x == 0 && !Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
             player.setState(Player.StateType.IDLE);
         }
         if (velocity.y < -1){

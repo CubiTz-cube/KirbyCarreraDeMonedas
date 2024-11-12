@@ -9,7 +9,7 @@ import src.utils.animation.SheetCutter;
 import src.world.entities.Entity;
 import src.world.player.Player;
 
-import static src.utils.Constants.PIXELS_IN_METER;
+import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class OtherPlayer extends Entity {
     private final String name;

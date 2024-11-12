@@ -1,11 +1,11 @@
 package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import src.utils.variables.Constants;
 import src.utils.stateMachine.StateMachine;
+import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class AbsorbState extends StatePlayer{
@@ -31,7 +31,7 @@ public class AbsorbState extends StatePlayer{
             player.getBody().setLinearVelocity(velocity.x * 0.90f, player.getBody().getLinearVelocity().y);
         }
 
-        if (!Gdx.input.isKeyPressed(Input.Keys.Z)){
+        if (!Gdx.input.isKeyPressed(PlayerControl.ACTION)){
             if (velocity.y != 0) player.setState(Player.StateType.FALL);
             else player.setState(Player.StateType.IDLE);
         }

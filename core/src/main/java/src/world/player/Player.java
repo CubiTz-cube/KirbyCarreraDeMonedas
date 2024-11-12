@@ -13,13 +13,14 @@ import src.utils.CollisionFilters;
 import src.utils.FrontRayCastCallback;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.*;
+import src.utils.variables.PlayerControl;
 import src.world.SpriteActorBox2d;
 import src.world.entities.enemies.Enemy;
 import src.world.player.powers.PowerSleep;
 import src.world.player.powers.PowerUp;
 import src.world.player.states.*;
 
-import static src.utils.Constants.PIXELS_IN_METER;
+import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class Player extends SpriteActorBox2d
 {
@@ -245,7 +246,7 @@ public class Player extends SpriteActorBox2d
         Vector2 velocity = body.getLinearVelocity();
 
         if (currentStateType == StateType.DASH || currentStateType == StateType.STUN) return;
-        if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        if (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
             float brakeForce = 10f;
             body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }

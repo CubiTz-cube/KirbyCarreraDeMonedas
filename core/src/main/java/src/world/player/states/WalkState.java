@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.stateMachine.StateMachine;
+import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class WalkState extends RunState{
@@ -24,8 +25,7 @@ public class WalkState extends RunState{
     public void update(Float delta) {
         super.update(delta);
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if ((Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && velocity.x < 0) ||
-            (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) && velocity.x > 0){
+        if (Gdx.input.isKeyPressed(PlayerControl.RUN)){
             player.setState(Player.StateType.RUN);
         }
     }

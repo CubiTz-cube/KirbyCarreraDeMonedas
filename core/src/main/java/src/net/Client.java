@@ -8,7 +8,7 @@ import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
-import src.utils.ConsoleColor;
+import src.utils.variables.ConsoleColor;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;

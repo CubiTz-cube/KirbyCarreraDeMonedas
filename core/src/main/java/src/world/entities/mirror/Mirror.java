@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.utils.animation.SheetCutter;
 import src.world.entities.Entity;
 
-import static src.utils.Constants.PIXELS_IN_METER;
+import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class Mirror extends Entity {
 

@@ -7,13 +7,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import src.screens.BaseScreen;
 import src.screens.GameScreen;
 import src.world.entities.Entity;
-import src.world.entities.EntityFactory;
 import src.world.statics.StaticFactory;
 
-import static src.utils.Constants.PIXELS_IN_METER;
+import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class TiledManager {
     private final GameScreen game;

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import src.utils.stateMachine.StateMachine;
+import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class DownState  extends StatePlayer{
@@ -23,16 +24,16 @@ public class DownState  extends StatePlayer{
 
         if (velocityX != 0) player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
 
-        if (!Gdx.input.isKeyPressed(Input.Keys.DOWN)) player.setState(Player.StateType.IDLE);
+        if (!Gdx.input.isKeyPressed(PlayerControl.DOWN)) player.setState(Player.StateType.IDLE);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
             player.setState(Player.StateType.ABSORB);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyJustPressed(PlayerControl.RIGHT)) {
             player.setFlipX(false);
             player.setState(Player.StateType.DASH);
-        } else if ( Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+        } else if ( Gdx.input.isKeyJustPressed(PlayerControl.LEFT)) {
             player.setFlipX(true);
             player.setState(Player.StateType.DASH);
         }

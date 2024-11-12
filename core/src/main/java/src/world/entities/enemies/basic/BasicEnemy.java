@@ -8,11 +8,10 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import src.utils.CollisionFilters;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.basic.states.*;
 
-import static src.utils.Constants.PIXELS_IN_METER;
+import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class BasicEnemy extends Enemy {
     private final BitmapFont font;

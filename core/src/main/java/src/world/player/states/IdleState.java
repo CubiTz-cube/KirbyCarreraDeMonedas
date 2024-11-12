@@ -1,9 +1,9 @@
 package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import src.utils.variables.Constants;
+import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 import src.utils.stateMachine.StateMachine;
 
@@ -21,14 +21,14 @@ public class IdleState extends CanMoveState{
     public void update(Float delta) {
         super.update(delta);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
             player.setState(Player.StateType.ABSORB);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+        if (Gdx.input.isKeyPressed(PlayerControl.DOWN)){
             player.setState(Player.StateType.DOWN);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+        if (Gdx.input.isKeyPressed(PlayerControl.JUMP)){
             player.setState(Player.StateType.JUMP);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
