@@ -15,7 +15,9 @@ public class ThreadSecureWorld {
     public void step(float delta, int velocityIterations, int positionIterations) {
         world.step(delta, velocityIterations, positionIterations);
         while (!modificationQueue.isEmpty()) {
-            modificationQueue.removeFirst().run();
+            Runnable run = modificationQueue.removeFirst();
+            if (run == null) continue;
+            run.run();
         }
     }
 

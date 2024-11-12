@@ -36,13 +36,14 @@
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
                 3,
-                4
+                4,
+                6
             ],
             "scale": 0.75,
-            "selectedLayer": 3,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 480,
-                "y": 319.33333333333326
+                "x": 608.6666666666666,
+                "y": 358.66666666666663
             }
         },
         "maps/mainMap.tmx#forest": {

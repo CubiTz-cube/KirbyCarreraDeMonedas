@@ -127,7 +127,7 @@ public class OtherPlayer extends Entity {
         super.draw(batch, parentAlpha);
 
         layout.setText(font, name + " " + getId());
-        font.draw(batch, layout, getX() + layout.width / 2, getY() + sprite.getHeight() + layout.height);
+        font.draw(batch, layout, getX() - layout.width / 4, getY() + sprite.getHeight() + layout.height/4);
     }
 
     public void detach(){

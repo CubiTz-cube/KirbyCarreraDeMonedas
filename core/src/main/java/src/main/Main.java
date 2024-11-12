@@ -29,6 +29,7 @@ public class Main extends Game {
         MENU,
         MULTIPLAYER,
         JOIN,
+        SERVER,
         OPTION,
         INFO,
         LOBBY,
@@ -75,6 +76,7 @@ public class Main extends Game {
         screensList.add(new MenuScreen(this));
         screensList.add(new MultiplayerScreen(this));
         screensList.add(new JoinScreen(this));
+        screensList.add(new ServerScreen(this));
         screensList.add(new OptionScreen(this));
         screensList.add(new InfoScreen(this));
         screensList.add(new LobbyScreen(this));
@@ -91,7 +93,7 @@ public class Main extends Game {
     }
 
     public Integer getIds() {
-        return ids++;
+        return ++ids;
     }
 
     public void setIds(int ids) {
@@ -110,9 +112,9 @@ public class Main extends Game {
         setScreen(screensList.get(screen.ordinal()));
     }
 
-    public void startServer(){
+    public void startServer(String ip, int port){
         if (server != null) closeServer();
-        server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 1234);
+        server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port);
         serverThread.execute(server);
     }
 
@@ -127,12 +129,6 @@ public class Main extends Game {
     public void startClient(String ip, int port){
         if (client != null) closeClient();
         client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port, name);
-        clientThread.execute(client);
-    }
-
-    public void startClient(){
-        if (client != null) closeClient();
-        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), "localhost", 1234, name);
         clientThread.execute(client);
     }
 

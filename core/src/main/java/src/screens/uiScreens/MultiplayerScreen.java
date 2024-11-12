@@ -36,9 +36,7 @@ public class MultiplayerScreen extends UIScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setName(nameTextField.getText());
-                main.startServer();
-                main.startClient();
-                main.changeScreen(Main.Screens.LOBBY);
+                main.changeScreen(Main.Screens.SERVER);
             }
         });
 
