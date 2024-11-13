@@ -9,8 +9,8 @@ import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class RunState extends CanMoveState{
-    public RunState(StateMachine stateMachine, Player player) {
-        super(stateMachine, player);
+    public RunState(Player player) {
+        super(player);
     }
 
     @Override

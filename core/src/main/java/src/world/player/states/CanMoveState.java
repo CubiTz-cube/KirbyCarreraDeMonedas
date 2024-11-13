@@ -9,8 +9,8 @@ import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public abstract class CanMoveState extends StatePlayer{
-    public CanMoveState(StateMachine stateMachine, Player player) {
-        super(stateMachine, player);
+    public CanMoveState(Player player) {
+        super(player);
     }
 
     @Override

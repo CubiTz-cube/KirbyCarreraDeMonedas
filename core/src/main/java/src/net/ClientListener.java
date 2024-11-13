@@ -12,6 +12,7 @@ import java.net.SocketException;
 import com.badlogic.gdx.net.Socket;
 import src.utils.variables.ConsoleColor;
 import src.world.entities.Entity;
+import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.player.Player;
 
@@ -99,6 +100,12 @@ public class ClientListener implements Runnable{
                     case REMOVEENTITY:
                         packId = (Integer) pack[1];
                         server.sendAll(Packet.removeEntity(packId), id);
+                        break;
+                    case ACTBREAKBLOCK:
+                        packId = (Integer) pack[1];
+                        BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
+
+                        server.sendAll(Packet.actBreakBlock(packId, stateType), id);
                         break;
                 }
             }

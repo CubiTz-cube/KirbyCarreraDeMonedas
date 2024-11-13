@@ -8,9 +8,9 @@ import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class DownState  extends StatePlayer{
-    public DownState(StateMachine stateMachine, Player player)
+    public DownState(Player player)
     {
-        super(stateMachine, player);
+        super(player);
     }
 
     @Override

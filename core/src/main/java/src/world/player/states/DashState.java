@@ -5,8 +5,8 @@ import src.utils.stateMachine.StateMachine;
 import src.world.player.Player;
 
 public class DashState extends StatePlayer{
-    public DashState(StateMachine stateMachine, Player player) {
-        super(stateMachine, player);
+    public DashState(Player player) {
+        super(player);
     }
 
     @Override

@@ -8,8 +8,8 @@ import src.world.player.Player;
 import src.utils.stateMachine.StateMachine;
 
 public class IdleState extends CanMoveState{
-    public IdleState(StateMachine stateMachine, Player player){
-        super(stateMachine, player);
+    public IdleState(Player player){
+        super(player);
     }
 
     @Override

@@ -7,8 +7,8 @@ import src.world.player.Player;
 public class StunState extends StatePlayer{
     private Float time = 0f;
 
-    public StunState(StateMachine stateMachine, Player player) {
-        super(stateMachine, player);
+    public StunState(Player player) {
+        super(player);
     }
 
     @Override

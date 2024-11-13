@@ -10,10 +10,9 @@ public class IdleStateSleepy extends StateEnemy
 {
     private float sleepTimer = 0f;
 
-    public IdleStateSleepy(StateMachine stateMachine, Enemy enemy) {
-        super(stateMachine, enemy);
+    public IdleStateSleepy(Enemy enemy) {
+        super(enemy);
     }
-
 
     @Override
     public void start()

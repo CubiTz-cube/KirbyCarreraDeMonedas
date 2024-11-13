@@ -79,9 +79,16 @@ public class TiledManager {
 
     public void parsedPlayer(MapObjects objects) {
         for (MapObject object : objects) {
+            String type = object.getProperties().get("type", String.class);
             float X = object.getProperties().get("x", Float.class) / tiledSize;
             float Y = object.getProperties().get("y", Float.class )/ tiledSize;
-            game.spawnPlayer.add(new Vector2(X, Y));
+
+            if (type == null) {
+                game.spawnPlayer.add(new Vector2(X, Y));
+                continue;
+            }
+            game.lobbyPlayer = new Vector2(X, Y);
+
         }
     }
 

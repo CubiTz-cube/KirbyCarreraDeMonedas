@@ -4,11 +4,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import src.main.Main;
-import src.world.entities.breakBlock.BreakBlock;
+import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 import src.world.entities.mirror.Mirror;
-import src.world.entities.otherPlayer.OtherPlayer;
 
 public class EntityFactory {
     private final Main main;

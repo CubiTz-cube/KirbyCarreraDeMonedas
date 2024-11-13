@@ -9,6 +9,7 @@ import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
 import src.utils.variables.ConsoleColor;
+import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.player.Player;
@@ -129,6 +130,11 @@ public class Client implements Runnable{
                     case REMOVEENTITY:
                         packId = (Integer) pack[1];
                         game.removeEntityNoPacket(packId);
+                        break;
+                    case ACTBREAKBLOCK:
+                        packId = (Integer) pack[1];
+                        BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
+                        game.actBreakBlock(packId, stateType);
                         break;
                 }
             }

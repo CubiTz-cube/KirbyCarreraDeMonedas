@@ -1,12 +1,13 @@
 package src.net.packets;
 
 import src.world.entities.Entity;
+import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.player.Player;
 
 public class Packet {
     public static enum Types{
-    CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ACTENEMY, ACTOTHERPLAYER, REMOVEENTITY
+    CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ACTENEMY, ACTOTHERPLAYER, REMOVEENTITY, ACTBREAKBLOCK
     }
 
     public static Object[] connect(String name){
@@ -39,6 +40,10 @@ public class Packet {
 
     public static Object[] actOtherPlayer(Integer id, Player.AnimationType animationType, Boolean flipX){
         return new Object[]{Types.ACTOTHERPLAYER, id, animationType, flipX};
+    }
+
+    public static Object[] actBreakBlock(Integer id, BreakBlock.StateType stateType){
+        return new Object[]{Types.ACTBREAKBLOCK, id, stateType};
     }
 
     public static Object[] removeEntity(Integer id){

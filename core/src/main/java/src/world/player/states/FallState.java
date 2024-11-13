@@ -11,8 +11,8 @@ import src.world.player.Player;
 public class FallState extends CanMoveState
 {
 
-    public FallState(StateMachine stateMachine, Player player) {
-        super(stateMachine, player);
+    public FallState(Player player) {
+        super(player);
     }
 
     @Override

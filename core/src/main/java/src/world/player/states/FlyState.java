@@ -11,8 +11,8 @@ import src.world.player.Player;
 public class FlyState extends CanMoveState{
     Float time = 0f;
 
-    public FlyState(StateMachine stateMachine, Player player) {
-        super(stateMachine, player);
+    public FlyState(Player player) {
+        super(player);
     }
 
     @Override

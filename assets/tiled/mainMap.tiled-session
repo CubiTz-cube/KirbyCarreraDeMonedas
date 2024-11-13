@@ -28,20 +28,20 @@
         },
         "maps/gameMap.tmx": {
             "expandedGroupLayers": [
-                8,
-                13
+                13,
+                8
             ],
             "expandedObjectLayers": [
                 8,
-                4,
                 9,
-                7
+                7,
+                4
             ],
-            "scale": 1,
-            "selectedLayer": 0,
+            "scale": 0.75,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 703.5,
-                "y": 2047
+                "x": 851.3333333333333,
+                "y": 2007.9999999999998
             }
         },
         "maps/garden.tsx": {
@@ -65,8 +65,8 @@
         },
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
-                3,
                 4,
+                3,
                 6
             ],
             "scale": 0.75,
@@ -97,20 +97,19 @@
     "map.width": 240,
     "openFiles": [
         "maps/mainMap.tmx",
-        "maps/gameMap.tmx",
-        "maps/crypt.tsx"
+        "maps/gameMap.tmx"
     ],
     "project": "",
     "property.type": "color",
     "recentFiles": [
+        "maps/mainMap.tmx",
+        "maps/gameMap.tmx",
         "maps/village.tsx",
         "maps/garden.tsx",
         "maps/dungeon.tsx",
         "maps/cemetery.tsx",
         "maps/aventure.tsx",
         "maps/crypt.tsx",
-        "maps/mainMap.tmx",
-        "maps/gameMap.tmx",
         "maps/temple.tsx",
         "maps/kirbyPrueba.tmx"
     ],

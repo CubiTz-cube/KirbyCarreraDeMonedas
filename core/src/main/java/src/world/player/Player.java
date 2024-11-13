@@ -115,16 +115,16 @@ public class Player extends SpriteActorBox2d
         setSpritePosModification(0f, getHeight()/4);
 
         stateMachine = new StateMachine();
-        idleState = new IdleState(stateMachine, this);
-        jumpState = new JumpState(stateMachine, this);
-        walkState = new WalkState(stateMachine, this);
-        fallState = new FallState(stateMachine, this);
-        flyState = new FlyState(stateMachine, this);
-        downState = new DownState(stateMachine, this);
-        absorbState = new AbsorbState(stateMachine, this);
-        dashState = new DashState(stateMachine, this);
-        runState = new RunState(stateMachine, this);
-        stunState = new StunState(stateMachine, this);
+        idleState = new IdleState(this);
+        jumpState = new JumpState(this);
+        walkState = new WalkState(this);
+        fallState = new FallState(this);
+        flyState = new FlyState(this);
+        downState = new DownState(this);
+        absorbState = new AbsorbState(this);
+        dashState = new DashState(this);
+        runState = new RunState(this);
+        stunState = new StunState(this);
         stateMachine.setState(idleState);
 
 
@@ -199,14 +199,6 @@ public class Player extends SpriteActorBox2d
         }
     }
 
-    public Boolean checkChangeAnimation() {
-        if (changeAnimation) {
-            changeAnimation = false;
-            return true;
-        }
-        return false;
-    }
-
     public StateType getCurrentStateType() {
         return currentStateType;
     }
@@ -230,14 +222,22 @@ public class Player extends SpriteActorBox2d
         }
     }
 
+    public AnimationType getCurrentAnimationType() {
+        return currentAnimationType;
+    }
+
+    public Boolean checkChangeAnimation() {
+        if (changeAnimation) {
+            changeAnimation = false;
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void setFlipX(Boolean flipX) {
         super.setFlipX(flipX);
         changeAnimation = true;
-    }
-
-    public AnimationType getCurrentAnimationType() {
-        return currentAnimationType;
     }
 
     @Override

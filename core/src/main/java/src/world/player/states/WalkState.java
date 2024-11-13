@@ -9,8 +9,8 @@ import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class WalkState extends RunState{
-    public WalkState(StateMachine stateMachine, Player player){
-        super(stateMachine, player);
+    public WalkState(Player player){
+        super(player);
     }
 
     @Override

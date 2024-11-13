@@ -9,8 +9,8 @@ import src.utils.stateMachine.StateMachine;
 public class JumpState extends CanMoveState{
     private Float jumpTime = 0f;
 
-    public JumpState(StateMachine stateMachine, Player player){
-        super(stateMachine, player);
+    public JumpState(Player player){
+        super(player);
     }
 
     @Override

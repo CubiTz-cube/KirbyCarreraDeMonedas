@@ -14,8 +14,8 @@ public class WalkStateSleepy extends StateEnemy
     private boolean flip = false;
     private float flipTimer = 0f;
 
-    public WalkStateSleepy(StateMachine stateMachine, Enemy enemy) {
-        super(stateMachine, enemy);
+    public WalkStateSleepy(Enemy enemy) {
+        super(enemy);
     }
 
     @Override

@@ -17,6 +17,7 @@ import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
+import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
@@ -48,6 +49,7 @@ public class GameScreen extends BaseScreen {
     private Integer score;
 
     private Random random;
+    public Vector2 lobbyPlayer;
     public ArrayList<Vector2> spawnMirror;
     public ArrayList<Vector2> spawnPlayer;
 
@@ -142,7 +144,7 @@ public class GameScreen extends BaseScreen {
     public void addEntity(Entity.Type type, Vector2 position, Integer id){
         threadSecureWorld.addModification(() -> {
             createEntityLogic(type, position, id);
-            if (main.client != null) main.client.send(Packet.newEntity(id, type, position.x, position.y));
+            sendPacket(Packet.newEntity(id, type, position.x, position.y));
         });
     }
 
@@ -183,6 +185,15 @@ public class GameScreen extends BaseScreen {
         enemy.setFlipX(flipX);
     }
 
+    public void actBreakBlock(Integer id, BreakBlock.StateType stateType){
+        BreakBlock breakBlock = (BreakBlock) entities.get(id);
+        if (breakBlock == null) {
+            System.out.println("Entity " + id + " no encontrada en la lista");
+            return;
+        }
+        breakBlock.setState(stateType);
+    }
+
     /**
      * Elimina una entidad del juego. Sin enviar paquete.
      * @param entity Entidad a eliminar.
@@ -210,7 +221,7 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
             return;
         }
-        if (main.client != null) main.client.send(Packet.removeEntity(entity.getId()));
+        sendPacket(Packet.removeEntity(entity.getId()));
         removeEntity(entity);
     }
 
@@ -304,11 +315,20 @@ public class GameScreen extends BaseScreen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(Main.Screens.MENU);
-            if (main.client != null) main.client.send(Packet.disconnectPlayer(-1));
+            sendPacket(Packet.disconnectPlayer(-1));
             clearAll();
         }
 
         for (ActorBox2d actor : actors) {
+            if (actor instanceof BreakBlock breakBlock) {
+                if (player.getCurrentStateType() == Player.StateType.DASH) {
+                    if (player.getSprite().getBoundingRectangle().overlaps(breakBlock.getSprite().getBoundingRectangle())) {
+                        sendPacket(Packet.actBreakBlock(breakBlock.getId(), BreakBlock.StateType.BREAK));
+                        breakBlock.setState(BreakBlock.StateType.BREAK);
+                    }
+                }
+            }
+
             if (actor instanceof Enemy enemy) {
                 if (player.getCurrentStateType() == Player.StateType.ABSORB) {
                     if (player.getSprite().getBoundingRectangle().overlaps(enemy.getSprite().getBoundingRectangle())) {
@@ -320,6 +340,10 @@ public class GameScreen extends BaseScreen {
         }
     }
 
+    private void sendPacket(Object[] packet) {
+        if (main.client != null) main.client.send(packet);
+    }
+
     @Override
     public void dispose() {
         stage.dispose();
@@ -327,15 +351,17 @@ public class GameScreen extends BaseScreen {
         tiledManager.dispose();
     }
 
-    public void spawnMirror(){
-        for (Entity e : entities.values()) {
-            if (!(e instanceof Mirror)) continue;
-            removeEntity(e.getId());
+    public void randomMirror(){
+
+        for (Entity entity : entities.values()){
+            if (entity instanceof Mirror mirror) {
+                System.out.println("Spawning mirror");
+                int index = random.nextInt(spawnMirror.size());
+                Vector2 position = spawnMirror.get(index);
+                actPosEntity(mirror.getId(), position.x, position.y);
+                return;
+            }
         }
-        System.out.println("Spawning mirror");
-        int index = random.nextInt(spawnMirror.size());
-        Vector2 position = spawnMirror.get(index);
-        addEntity(Entity.Type.MIRROR, position, main.getIds());
     }
 
     private static class GameContactListener implements ContactListener {
@@ -368,9 +394,10 @@ public class GameScreen extends BaseScreen {
             }
             if (areCollided(contact, "player", "mirror")) {
                 threadSecureWorld.addModification(() -> {
-                    game.getPlayer().getBody().setTransform(1, 46, 0);
+                    System.out.println("Player collided with mirror " + game.lobbyPlayer.x + " " + game.lobbyPlayer.y);
+                    game.getPlayer().getBody().setTransform(game.lobbyPlayer.x, game.lobbyPlayer.y, 0);
                     game.main.changeScreen(Main.Screens.TEST);
-                    game.spawnMirror();
+                    game.randomMirror();
                 });
             }
         }

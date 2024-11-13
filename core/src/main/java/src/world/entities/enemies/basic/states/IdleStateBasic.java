@@ -9,8 +9,8 @@ import src.world.entities.enemies.sleeping.SleepingEnemy;
 public class IdleStateBasic extends StateEnemy {
     private boolean flip = false;
 
-    public IdleStateBasic(StateMachine stateMachine, Enemy enemy) {
-        super(stateMachine, enemy);
+    public IdleStateBasic(Enemy enemy) {
+        super(enemy);
     }
 
     @Override

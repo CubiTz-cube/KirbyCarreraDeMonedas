@@ -9,8 +9,8 @@ import src.world.entities.enemies.sleeping.SleepingEnemy;
 
 public class WalkStateBasic extends StateEnemy {
 
-    public WalkStateBasic(StateMachine stateMachine, Enemy enemy) {
-        super(stateMachine, enemy);
+    public WalkStateBasic(Enemy enemy) {
+        super(enemy);
     }
 
     @Override

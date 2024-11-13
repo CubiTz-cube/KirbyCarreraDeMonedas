@@ -25,7 +25,7 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
         spritePosModification = new Vector2(0, 0);
     }
 
-    public void setCurrentAnimation(Animation<TextureRegion> currentAnimation) {
+    protected void setCurrentAnimation(Animation<TextureRegion> currentAnimation) {
         this.currentAnimation = currentAnimation;
         animateTime = 0f;
     }

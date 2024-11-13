@@ -9,8 +9,8 @@ import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
 public class AbsorbState extends StatePlayer{
-    public AbsorbState(StateMachine stateMachine, Player player) {
-        super(stateMachine, player);
+    public AbsorbState(Player player) {
+        super(player);
     }
 
     @Override
