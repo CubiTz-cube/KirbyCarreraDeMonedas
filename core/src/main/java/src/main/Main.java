@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import src.net.Client;
 import src.net.Server;
 import src.screens.GameScreen;
-import src.screens.IntroScreen;
+import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.*;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
@@ -55,6 +55,7 @@ public class Main extends Game {
         assetManager.load("perro.jpg", Texture.class);
         assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
+        assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
