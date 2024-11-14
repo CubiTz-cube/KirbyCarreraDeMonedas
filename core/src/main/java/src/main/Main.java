@@ -12,6 +12,7 @@ import src.net.Server;
 import src.screens.GameScreen;
 import src.screens.IntroScreen;
 import src.screens.minigames.*;
+import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
 
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class Main extends Game {
         screensList.add(new TestScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.GAME);
+        changeScreen(Screens.INTRO);
     }
 
     public void setName(String name) {

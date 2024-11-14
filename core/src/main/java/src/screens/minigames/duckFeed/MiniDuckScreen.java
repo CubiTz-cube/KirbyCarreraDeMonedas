@@ -1,14 +1,14 @@
-package src.screens.minigames;
+package src.screens.minigames.duckFeed;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
 import src.screens.GameScreen;
+import src.screens.minigames.MinigameScreen;
 
-public class MiniDuckScreen extends  MinigameScreen{
+public class MiniDuckScreen extends MinigameScreen {
     private TextButton duck1;
     private Image background;
     private float x = 0;
@@ -24,8 +24,8 @@ public class MiniDuckScreen extends  MinigameScreen{
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
         background.setSize(1300, 720);
-        background.setZIndex(0);
-        //stage.addActor(background);
+        stage.addActor(background);
+        background.toBack();
 
         duck1 = new TextButton("Duck1", skin);
         duck1.addListener(new ClickListener() {
