@@ -29,13 +29,4 @@ public class OptionScreen extends UIScreen {
 
         table.add(backButton).width(200).height(50).pad(10);
     }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0.8f, 0.5f, 0.8f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
-    }
 }
