@@ -34,14 +34,14 @@
             "expandedObjectLayers": [
                 8,
                 9,
-                7,
-                4
+                4,
+                7
             ],
-            "scale": 0.75,
-            "selectedLayer": 6,
+            "scale": 0.33,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 851.3333333333333,
-                "y": 2007.9999999999998
+                "x": 1425.757575757576,
+                "y": 2442.424242424242
             }
         },
         "maps/garden.tsx": {
@@ -65,8 +65,8 @@
         },
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
-                4,
                 3,
+                4,
                 6
             ],
             "scale": 0.75,
