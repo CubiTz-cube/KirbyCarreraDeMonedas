@@ -35,7 +35,8 @@ public class Main extends Game {
         LOBBY,
         CONNECTING,
         GAME,
-        TEST
+        MINITEST,
+        MINIDUCK,
     }
 
     public Server server;
@@ -54,6 +55,7 @@ public class Main extends Game {
         assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
+        assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyIdle.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyJump.png", Texture.class);
@@ -84,6 +86,7 @@ public class Main extends Game {
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
         screensList.add(new TestScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
+        screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
         changeScreen(Screens.GAME);
     }

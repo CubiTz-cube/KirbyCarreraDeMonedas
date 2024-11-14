@@ -75,6 +75,8 @@ public class GameScreen extends BaseScreen {
         random = new Random();
         spawnMirror = new ArrayList<>();
         spawnPlayer = new ArrayList<>();
+
+
     }
 
     public void setScore(Integer score) {
@@ -396,7 +398,7 @@ public class GameScreen extends BaseScreen {
                 threadSecureWorld.addModification(() -> {
                     System.out.println("Player collided with mirror " + game.lobbyPlayer.x + " " + game.lobbyPlayer.y);
                     game.getPlayer().getBody().setTransform(game.lobbyPlayer.x, game.lobbyPlayer.y, 0);
-                    game.main.changeScreen(Main.Screens.TEST);
+                    game.main.changeScreen(Main.Screens.MINIDUCK);
                     game.randomMirror();
                 });
             }

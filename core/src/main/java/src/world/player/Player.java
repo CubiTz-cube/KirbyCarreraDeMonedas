@@ -30,7 +30,7 @@ public class Player extends SpriteActorBox2d
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 6f;
     public static final float JUMP_INAIR = 0.3f;
-    public static final float DASH_IMPULSE = 10f;
+    public static final float DASH_IMPULSE = 15f;
 
 
     public enum StateType {
