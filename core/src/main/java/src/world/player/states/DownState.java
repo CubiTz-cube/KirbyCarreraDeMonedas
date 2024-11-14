@@ -30,10 +30,10 @@ public class DownState  extends StatePlayer{
             player.setState(Player.StateType.ABSORB);
         }
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.RIGHT)) {
+        if (velocityX > 5 || Gdx.input.isKeyJustPressed(PlayerControl.RIGHT)) {
             player.setFlipX(false);
             player.setState(Player.StateType.DASH);
-        } else if ( Gdx.input.isKeyJustPressed(PlayerControl.LEFT)) {
+        } else if ( velocityX < -5 || Gdx.input.isKeyJustPressed(PlayerControl.LEFT)) {
             player.setFlipX(true);
             player.setState(Player.StateType.DASH);
         }
