@@ -36,7 +36,6 @@ public class Main extends Game {
         LOBBY,
         CONNECTING,
         GAME,
-        MINITEST,
         MINIDUCK,
     }
 
@@ -87,7 +86,6 @@ public class Main extends Game {
         screensList.add(new LobbyScreen(this));
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
-        screensList.add(new TestScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
         changeScreen(Screens.INTRO);
