@@ -16,6 +16,7 @@ public class OtherPlayer extends Entity {
     private final BitmapFont font;
     private final GlyphLayout layout;
 
+    private Player.AnimationType currentAnimationType;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> jumpAnimation;
@@ -98,9 +99,11 @@ public class OtherPlayer extends Entity {
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
 
         setAnimation(Player.AnimationType.IDLE);
+        currentAnimationType = Player.AnimationType.IDLE;
     }
 
     public void setAnimation(Player.AnimationType animationType){
+        currentAnimationType = animationType;
         switch (animationType){
             case IDLE -> setCurrentAnimation(idleAnimation);
             case WALK -> setCurrentAnimation(walkAnimation);
@@ -115,6 +118,10 @@ public class OtherPlayer extends Entity {
             case ABSORB -> setCurrentAnimation(absorbAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
         }
+    }
+
+    public Player.AnimationType getCurrentAnimationType() {
+        return currentAnimationType;
     }
 
     @Override
