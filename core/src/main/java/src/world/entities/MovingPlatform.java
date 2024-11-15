@@ -1,6 +1,7 @@
 package src.world.entities;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,7 +20,7 @@ public class MovingPlatform extends Entity {
 
     public MovingPlatform(World world, AssetManager assetManager, Rectangle shape, Integer id, Vector2 impulso) {
         super(world, assetManager, shape,id);
-        sprite = new Sprite();
+        sprite = new Sprite(assetManager.get("world/entities/breakBlock.png", Texture.class));
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(shape.x, shape.y);
@@ -38,11 +39,6 @@ public class MovingPlatform extends Entity {
         body.setLinearVelocity(velocidad);
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setPosition(shape.x * PIXELS_IN_METER, shape.y * PIXELS_IN_METER);
-
-        Animation<TextureRegion> idleAnimation = new Animation<>(0.1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyIdle.png"), 31));
-        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
-        setCurrentAnimation(idleAnimation);
     }
 
     public void update(float delta) {

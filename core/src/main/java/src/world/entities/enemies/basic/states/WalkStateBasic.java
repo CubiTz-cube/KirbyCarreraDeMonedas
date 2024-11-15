@@ -14,6 +14,12 @@ public class WalkStateBasic extends StateEnemy {
     }
 
     @Override
+    public void start() {
+        super.start();
+        ((BasicEnemy) enemy).setAnimation(BasicEnemy.AnimationType.WALK);
+    }
+
+    @Override
     public void update(Float delta) {
         Vector2 velocity = enemy.getBody().getLinearVelocity();
         if (Math.abs(velocity.x) < enemy.speed) {

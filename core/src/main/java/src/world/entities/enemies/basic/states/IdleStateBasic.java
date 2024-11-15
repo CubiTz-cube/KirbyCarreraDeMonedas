@@ -14,6 +14,12 @@ public class IdleStateBasic extends StateEnemy {
     }
 
     @Override
+    public void start() {
+        super.start();
+        ((BasicEnemy) enemy).setAnimation(BasicEnemy.AnimationType.IDLE);
+    }
+
+    @Override
     public void update(Float delta) {
         if (enemy.getActCrono() > 1 && !flip) {
             enemy.setFlipX(!enemy.getSprite().isFlipX());

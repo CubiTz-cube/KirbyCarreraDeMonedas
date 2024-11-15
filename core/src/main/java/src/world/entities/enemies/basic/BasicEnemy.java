@@ -2,12 +2,10 @@ package src.world.entities.enemies.basic;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import src.utils.animation.SheetCutter;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.basic.states.*;
 
@@ -17,10 +15,18 @@ public class BasicEnemy extends Enemy {
     private final BitmapFont font;
     private final GlyphLayout layout;
 
+    public enum AnimationType {
+        IDLE,
+        WALK
+    }
+    private AnimationType currentAnimationType;
+    private final Animation<TextureRegion> idleAnimation;
+    private final Animation<TextureRegion> walkAnimation;
+
     public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id) {
         super(world, assetManager, shape,id);
         type = Type.BASIC;
-        sprite = new Sprite(assetManager.get("perro.jpg", Texture.class));
+        sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
         this.layout = new GlyphLayout();
@@ -31,17 +37,42 @@ public class BasicEnemy extends Enemy {
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width/2, shape.height/2);
+        box.setAsBox(shape.width/4, shape.height/4);
         fixture = body.createFixture(box, 1);
         fixture.setUserData("enemy");
         box.dispose();
         body.setFixedRotation(true);
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
+        setSpritePosModification(0f, getHeight()/4);
 
         idleState = new IdleStateBasic(this);
         walkState = new WalkStateBasic(this);
         setState(StateType.IDLE);
+
+        idleAnimation = new Animation<>(0.12f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/basic/basicIdle.png"), 1));
+
+        walkAnimation = new Animation<>(0.12f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/basic/basicWalk.png"), 8));
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        setCurrentAnimation(idleAnimation);
+    }
+
+    public void setAnimation(AnimationType type){
+        currentAnimationType = type;
+        switch (type){
+            case IDLE:
+                setCurrentAnimation(idleAnimation);
+                break;
+            case WALK:
+                setCurrentAnimation(walkAnimation);
+                break;
+        }
+    }
+
+    public AnimationType getCurrentAnimationType() {
+        return currentAnimationType;
     }
 
     @Override

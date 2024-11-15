@@ -18,7 +18,7 @@ public class EntityFactory {
 
     public Entity create(Entity.Type type, World world, Vector2 position, Integer id){
         return switch (type) {
-            case BASIC -> new BasicEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);
+            case BASIC -> new BasicEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1.5f, 1.5f), id);
             case SLEEPY -> new SleepingEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);
             case MIRROR -> new Mirror(world, main.getAssetManager(), new Rectangle(position.x, position.y, 2f, 2f), id);
             case BREAKBLOCK -> new BreakBlock(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);

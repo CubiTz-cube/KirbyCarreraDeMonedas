@@ -56,6 +56,7 @@ public class Main extends Game {
         assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
+        assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyIdle.png", Texture.class);
@@ -70,6 +71,8 @@ public class Main extends Game {
         assetManager.load("world/entities/kirby/kirbyAbsorb.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyDamage.png", Texture.class);
         assetManager.load("world/entities/mirror/mirrorLoop.png", Texture.class);
+        assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
+        assetManager.load("world/entities/basic/basicWalk.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
