@@ -22,6 +22,13 @@ public class EntityFactory {
             case SLEEPY -> new SleepingEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);
             case MIRROR -> new Mirror(world, main.getAssetManager(), new Rectangle(position.x, position.y, 2f, 2f), id);
             case BREAKBLOCK -> new BreakBlock(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);
+            case PLATFORMXR -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(1,0));
+            case PLATFORMXL -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(-1,0));
+            case PLATFORMYU -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(0,1));
+            case PLAYFORMRU -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(1,1));
+            case PLATOFRMRD -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(1,-1));
+            case PLATFORMLU -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(-1,1));
+            case PLATFORMLD -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(-1,-1));
             default -> null;
         };
 

@@ -1,5 +1,7 @@
 package src.world.entities.enemies;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
@@ -25,8 +27,8 @@ public abstract class Enemy extends Entity {
 
     public Float speed;
 
-    public Enemy(World world, Integer id) {
-        super(world, id);
+    public Enemy(World world, AssetManager assetManager, Rectangle shape, Integer id) {
+        super(world, assetManager, shape,id);
         this.actCrono = 0f;
         powerUp = PowerUp.Type.NULL;
         stateMachine = new StateMachine();

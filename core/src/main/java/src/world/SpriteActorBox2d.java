@@ -19,7 +19,6 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
 
     public SpriteActorBox2d(World world) {
         super(world);
-        //sprite = new Sprite();
         animateTime = 0f;
         flipX = false;
         spritePosModification = new Vector2(0, 0);

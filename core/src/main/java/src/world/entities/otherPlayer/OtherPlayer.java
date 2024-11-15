@@ -30,7 +30,7 @@ public class OtherPlayer extends Entity {
     private final Animation<TextureRegion> damageAnimation;
 
     public OtherPlayer(World world, AssetManager assetManager, Rectangle shape, Integer id, String name){
-        super(world, id);
+        super(world, assetManager, shape,id);
         this.name = name;
         sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);

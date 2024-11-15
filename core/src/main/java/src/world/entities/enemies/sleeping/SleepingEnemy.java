@@ -17,7 +17,7 @@ public class SleepingEnemy extends Enemy
 
     public SleepingEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id)
     {
-        super(world, id);
+        super(world, assetManager, shape,id);
         type = Type.SLEEPY;
         powerUp = PowerUp.Type.SLEEP;
         sprite = new Sprite(assetManager.get("yozhi.jpg", Texture.class));

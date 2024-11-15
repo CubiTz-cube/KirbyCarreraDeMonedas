@@ -69,7 +69,6 @@ public class Main extends Game {
         assetManager.load("world/entities/kirby/kirbyAbsorb.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyDamage.png", Texture.class);
         assetManager.load("world/entities/mirror/mirrorLoop.png", Texture.class);
-        assetManager.load("world/entities/breakBlock.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");

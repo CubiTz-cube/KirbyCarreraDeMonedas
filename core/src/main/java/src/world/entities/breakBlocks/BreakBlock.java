@@ -29,7 +29,7 @@ public class BreakBlock extends Entity {
     private final Animation<TextureRegion> liveAnimation;
 
     public BreakBlock(World world, AssetManager assetManager, Rectangle shape, Integer id) {
-        super(world, id);
+        super(world, assetManager, shape,id);
         type = Type.BREAKBLOCK;
         sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);

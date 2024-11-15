@@ -18,7 +18,7 @@ public class BasicEnemy extends Enemy {
     private final GlyphLayout layout;
 
     public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id) {
-        super(world, id);
+        super(world, assetManager, shape,id);
         type = Type.BASIC;
         sprite = new Sprite(assetManager.get("perro.jpg", Texture.class));
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
