@@ -48,7 +48,7 @@ public class GameScreen extends BaseScreen {
     private Float sendTime;
     private Integer score;
 
-    private Random random;
+    private final Random random;
     public Vector2 lobbyPlayer;
     public ArrayList<Vector2> spawnMirror;
     public ArrayList<Vector2> spawnPlayer;
@@ -171,9 +171,7 @@ public class GameScreen extends BaseScreen {
             return;
         }
         Body body = entity.getBody();
-        threadSecureWorld.addModification(() -> {
-            body.setTransform(x, y, 0);
-        });
+        threadSecureWorld.addModification(() -> body.setTransform(x, y, 0));
     }
 
     public void actStateEnemy(Integer id, Enemy.StateType state,Float cronno, Boolean flipX){

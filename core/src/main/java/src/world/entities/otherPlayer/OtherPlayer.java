@@ -120,10 +120,6 @@ public class OtherPlayer extends Entity {
         }
     }
 
-    public Player.AnimationType getCurrentAnimationType() {
-        return currentAnimationType;
-    }
-
     @Override
     public void act(float delta) {
         //stateMachine.update(delta);

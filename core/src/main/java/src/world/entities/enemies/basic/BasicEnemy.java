@@ -1,7 +1,6 @@
 package src.world.entities.enemies.basic;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
@@ -69,10 +68,6 @@ public class BasicEnemy extends Enemy {
                 setCurrentAnimation(walkAnimation);
                 break;
         }
-    }
-
-    public AnimationType getCurrentAnimationType() {
-        return currentAnimationType;
     }
 
     @Override

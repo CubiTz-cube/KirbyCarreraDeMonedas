@@ -1,21 +1,13 @@
 package src.world.entities.breakBlocks;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import src.net.packets.Packet;
-import src.screens.GameScreen;
-import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.StateMachine;
-import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.breakBlocks.states.*;
-import src.world.player.Player;
 
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 
@@ -62,10 +54,6 @@ public class BreakBlock extends Entity {
         }
     }
 
-    public StateType getCurrentStateType() {
-        return currentStateType;
-    }
-
     public void setAnimation(AnimationType animationType){
         currentAnimationType = animationType;
         changeAnimation = true;
@@ -73,18 +61,6 @@ public class BreakBlock extends Entity {
             case LIVE -> sprite.setAlpha(1);
             case BREAK -> sprite.setAlpha(0.5f);
         }
-    }
-
-    public AnimationType getCurrentAnimationType() {
-        return currentAnimationType;
-    }
-
-    public Boolean checkChangeAnimation() {
-        if (changeAnimation) {
-            changeAnimation = false;
-            return true;
-        }
-        return false;
     }
 
     public void setColision(Boolean colision){

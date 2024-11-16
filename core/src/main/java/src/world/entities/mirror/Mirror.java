@@ -15,8 +15,6 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class Mirror extends Entity {
 
-    private final Animation<TextureRegion> loopAnimation;
-
     public Mirror(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager,id);
         type = Type.MIRROR;
@@ -36,7 +34,7 @@ public class Mirror extends Entity {
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
-        loopAnimation = new Animation<>(0.12f,
+        Animation<TextureRegion> loopAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/mirror/mirrorLoop.png"), 4));
         loopAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
