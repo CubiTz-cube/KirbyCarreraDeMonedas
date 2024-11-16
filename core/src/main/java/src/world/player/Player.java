@@ -9,13 +9,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import src.main.Main;
+import src.screens.GameScreen;
 import src.utils.CollisionFilters;
 import src.utils.FrontRayCastCallback;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.*;
 import src.utils.variables.PlayerControl;
+import src.world.ActorBox2d;
 import src.world.SpriteActorBox2d;
 import src.world.entities.enemies.Enemy;
+import src.world.entities.mirror.Mirror;
 import src.world.player.powers.PowerSleep;
 import src.world.player.powers.PowerUp;
 import src.world.player.states.*;
@@ -102,7 +106,7 @@ public class Player extends SpriteActorBox2d
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width/4, shape.height/4);
         fixture = body.createFixture(box, 1.5f);
-        fixture.setUserData("player");
+        fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
 
@@ -249,6 +253,28 @@ public class Player extends SpriteActorBox2d
         if (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
             float brakeForce = 10f;
             body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+        }
+    }
+
+    @Override
+    public void beginContactWith(ActorBox2d actor, GameScreen game) {
+        if (actor instanceof Enemy enemy) {
+            if (currentStateType == StateType.ABSORB){
+                setPowerUp(enemy);
+                game.removeEntity(enemy.getId());
+                return;
+            }
+
+            setState(Player.StateType.STUN);
+            Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
+            body.applyLinearImpulse(pushDirection.scl(15.0f), body.getWorldCenter(), true);
+
+        } else if (actor instanceof Mirror) {
+            game.threadSecureWorld.addModification(() -> {
+                game.getPlayer().getBody().setTransform(game.lobbyPlayer.x, game.lobbyPlayer.y, 0);
+                game.main.changeScreen(Main.Screens.MINIDUCK);
+                game.randomMirror();
+            });
         }
     }
 

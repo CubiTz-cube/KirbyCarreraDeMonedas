@@ -32,7 +32,7 @@ import java.util.Random;
 public class GameScreen extends BaseScreen {
     private final Stage stage;
     private final World world;
-    private static ThreadSecureWorld threadSecureWorld;
+    public ThreadSecureWorld threadSecureWorld;
 
     private final OrthogonalTiledMapRenderer tiledRenderer;
     private final TiledManager tiledManager;
@@ -330,19 +330,10 @@ public class GameScreen extends BaseScreen {
                     }
                 }
             }
-
-            if (actor instanceof Enemy enemy) {
-                if (player.getCurrentStateType() == Player.StateType.ABSORB) {
-                    if (player.getSprite().getBoundingRectangle().overlaps(enemy.getSprite().getBoundingRectangle())) {
-                        player.setPowerUp(enemy);
-                        removeEntity(enemy.getId());
-                    }
-                }
-            }
         }
     }
 
-    private void sendPacket(Object[] packet) {
+    public void sendPacket(Object[] packet) {
         if (main.client != null) main.client.send(packet);
     }
 
@@ -357,7 +348,6 @@ public class GameScreen extends BaseScreen {
 
         for (Entity entity : entities.values()){
             if (entity instanceof Mirror mirror) {
-                System.out.println("Spawning mirror");
                 int index = random.nextInt(spawnMirror.size());
                 Vector2 position = spawnMirror.get(index);
                 actPosEntity(mirror.getId(), position.x, position.y);
@@ -373,35 +363,14 @@ public class GameScreen extends BaseScreen {
             this.game = gameScreen;
         }
 
-        private boolean areCollided(Contact contact, Object userA, Object userB) {
-            Object userDataA = contact.getFixtureA().getUserData();
-            Object userDataB = contact.getFixtureB().getUserData();
-
-            if (userDataA == null || userDataB == null) return false;
-
-            return (userDataA.equals(userA) && userDataB.equals(userB)) ||
-                (userDataA.equals(userB) && userDataB.equals(userA));
-        }
-
         @Override
         public void beginContact(Contact contact) {
-            if (areCollided(contact, "player", "enemy")) {
-                game.getPlayer().setState(Player.StateType.STUN);
+            ActorBox2d actorA = (ActorBox2d) contact.getFixtureA().getUserData();
+            ActorBox2d actorB = (ActorBox2d) contact.getFixtureB().getUserData();
 
-                Body enemyBody = contact.getFixtureA().getUserData().equals("enemy") ? contact.getFixtureA().getBody() : contact.getFixtureB().getBody();
-
-                Vector2 pushDirection = game.getPlayer().getBody().getPosition().cpy().sub(enemyBody.getPosition()).nor();
-
-                game.getPlayer().getBody().applyLinearImpulse(pushDirection.scl(15.0f), game.getPlayer().getBody().getWorldCenter(), true);
-            }
-            if (areCollided(contact, "player", "mirror")) {
-                threadSecureWorld.addModification(() -> {
-                    System.out.println("Player collided with mirror " + game.lobbyPlayer.x + " " + game.lobbyPlayer.y);
-                    game.getPlayer().getBody().setTransform(game.lobbyPlayer.x, game.lobbyPlayer.y, 0);
-                    game.main.changeScreen(Main.Screens.MINIDUCK);
-                    game.randomMirror();
-                });
-            }
+            if (actorA == null || actorB == null) return;
+            actorA.beginContactWith(actorB, game);
+            actorB.beginContactWith(actorA, game);
         }
 
         @Override

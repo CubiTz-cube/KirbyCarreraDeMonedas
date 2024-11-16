@@ -19,7 +19,7 @@ public class Floor extends ActorBox2d {
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width / 2, shape.height / 2);
         fixture = body.createFixture(box, 1);
-        fixture.setUserData("floor");
+        fixture.setUserData(this);
         box.dispose();
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);

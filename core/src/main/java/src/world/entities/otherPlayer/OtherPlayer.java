@@ -46,7 +46,7 @@ public class OtherPlayer extends Entity {
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width/4, shape.height/4);
         fixture = body.createFixture(box, 1.5f);
-        fixture.setUserData("otherPlayer");
+        fixture.setUserData(this);
         box.dispose();
 
         Filter filter = new Filter();

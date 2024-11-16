@@ -32,7 +32,7 @@ public class MovingPlatform extends Entity {
         box.setAsBox(shape.x / 2, shape.y / 2);
 
         fixture = body.createFixture(box, 0.0f);
-        fixture.setUserData("movingPlatform");
+        fixture.setUserData(this);
         box.dispose();
 
         this.velocidad = impulso;

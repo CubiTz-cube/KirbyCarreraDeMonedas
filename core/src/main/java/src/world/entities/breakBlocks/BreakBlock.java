@@ -8,8 +8,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import src.net.packets.Packet;
+import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.StateMachine;
+import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.breakBlocks.states.*;
 import src.world.player.Player;
@@ -41,7 +44,7 @@ public class BreakBlock extends Entity {
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width/2, shape.height/2);
         fixture = body.createFixture(box, 1.5f);
-        fixture.setUserData("breakBlock");
+        fixture.setUserData(this);
         box.dispose();
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);

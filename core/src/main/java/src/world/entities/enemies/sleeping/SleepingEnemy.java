@@ -31,7 +31,7 @@ public class SleepingEnemy extends Enemy
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width / 2, shape.height / 2);
         fixture = body.createFixture(box, 1);
-        fixture.setUserData("enemy");
+        fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
 

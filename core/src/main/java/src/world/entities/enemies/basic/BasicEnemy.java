@@ -39,7 +39,7 @@ public class BasicEnemy extends Enemy {
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width/4, shape.height/4);
         fixture = body.createFixture(box, 1);
-        fixture.setUserData("enemy");
+        fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
 
