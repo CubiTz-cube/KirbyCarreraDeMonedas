@@ -89,9 +89,9 @@ public class Player extends SpriteActorBox2d
 
     private PowerUp powerUp;
 
-    public Player(World world, AssetManager assetManager, Rectangle shape)
+    public Player(World world, Rectangle shape, AssetManager assetManager)
     {
-        super(world);
+        super(world, shape, assetManager);
         sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         BodyDef def = new BodyDef();

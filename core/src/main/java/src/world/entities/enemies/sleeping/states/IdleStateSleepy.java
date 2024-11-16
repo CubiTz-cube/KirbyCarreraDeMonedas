@@ -6,11 +6,11 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class IdleStateSleepy extends StateEnemy
+public class IdleStateSleepy extends StateEnemy<SleepingEnemy>
 {
     private float sleepTimer = 0f;
 
-    public IdleStateSleepy(Enemy enemy) {
+    public IdleStateSleepy(SleepingEnemy enemy) {
         super(enemy);
     }
 

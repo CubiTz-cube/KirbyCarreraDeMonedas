@@ -6,17 +6,17 @@ import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class IdleStateBasic extends StateEnemy {
+public class IdleStateBasic extends StateEnemy<BasicEnemy> {
     private boolean flip = false;
 
-    public IdleStateBasic(Enemy enemy) {
+    public IdleStateBasic(BasicEnemy enemy) {
         super(enemy);
     }
 
     @Override
     public void start() {
         super.start();
-        ((BasicEnemy) enemy).setAnimation(BasicEnemy.AnimationType.IDLE);
+        enemy.setAnimation(BasicEnemy.AnimationType.IDLE);
     }
 
     @Override

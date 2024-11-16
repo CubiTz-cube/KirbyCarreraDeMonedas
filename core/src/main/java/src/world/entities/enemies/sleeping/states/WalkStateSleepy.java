@@ -8,13 +8,13 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class WalkStateSleepy extends StateEnemy
+public class WalkStateSleepy extends StateEnemy<SleepingEnemy>
 {
     private float sleepTimer = 0f;
     private boolean flip = false;
     private float flipTimer = 0f;
 
-    public WalkStateSleepy(Enemy enemy) {
+    public WalkStateSleepy(SleepingEnemy enemy) {
         super(enemy);
     }
 

@@ -15,9 +15,9 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 public class SleepingEnemy extends Enemy
 {
 
-    public SleepingEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id)
+    public SleepingEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id)
     {
-        super(world, assetManager, shape,id);
+        super(world, shape, assetManager,id);
         type = Type.SLEEPY;
         powerUp = PowerUp.Type.SLEEP;
         sprite = new Sprite(assetManager.get("yozhi.jpg", Texture.class));

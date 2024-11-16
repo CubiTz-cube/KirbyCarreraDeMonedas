@@ -9,7 +9,7 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 public class Floor extends ActorBox2d {
 
     public Floor(World world, Rectangle shape){
-        super(world);
+        super(world, shape);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);

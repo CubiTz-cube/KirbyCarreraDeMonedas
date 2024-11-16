@@ -17,8 +17,8 @@ public class Mirror extends Entity {
 
     private final Animation<TextureRegion> loopAnimation;
 
-    public Mirror(World world, AssetManager assetManager, Rectangle shape, Integer id) {
-        super(world, assetManager, shape,id);
+    public Mirror(World world, Rectangle shape, AssetManager assetManager, Integer id) {
+        super(world, shape, assetManager,id);
         type = Type.MIRROR;
         sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);

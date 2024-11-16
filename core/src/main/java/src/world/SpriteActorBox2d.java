@@ -1,10 +1,13 @@
 package src.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -17,11 +20,12 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
     private Boolean flipX;
     private final Vector2 spritePosModification;
 
-    public SpriteActorBox2d(World world) {
-        super(world);
+    public SpriteActorBox2d(World world, Rectangle shape, AssetManager assetManager) {
+        super(world, shape);
         animateTime = 0f;
         flipX = false;
         spritePosModification = new Vector2(0, 0);
+        sprite = new Sprite(assetManager.get("logo.png", Texture.class));
     }
 
     protected void setCurrentAnimation(Animation<TextureRegion> currentAnimation) {

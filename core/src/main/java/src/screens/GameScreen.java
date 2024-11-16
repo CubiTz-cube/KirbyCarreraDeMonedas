@@ -107,7 +107,7 @@ public class GameScreen extends BaseScreen {
     public void addMainPlayer(){
         if (player != null) return;
         Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
-        player = new Player(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1.5f, 1.5f));
+        player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager());
         stage.addActor(player);
     }
 

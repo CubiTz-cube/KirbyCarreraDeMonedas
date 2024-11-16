@@ -27,8 +27,8 @@ public abstract class Entity extends SpriteActorBox2d {
     protected Type type;
     private final Integer id;
 
-    public Entity(World world, AssetManager assetManager, Rectangle shape, Integer id){
-        super(world);
+    public Entity(World world, Rectangle shape, AssetManager assetManager, Integer id){
+        super(world, shape, assetManager);
         this.id = id;
     }
 

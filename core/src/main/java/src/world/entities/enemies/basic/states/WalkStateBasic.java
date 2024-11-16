@@ -7,16 +7,16 @@ import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
-public class WalkStateBasic extends StateEnemy {
+public class WalkStateBasic extends StateEnemy<BasicEnemy> {
 
-    public WalkStateBasic(Enemy enemy) {
+    public WalkStateBasic(BasicEnemy enemy) {
         super(enemy);
     }
 
     @Override
     public void start() {
         super.start();
-        ((BasicEnemy) enemy).setAnimation(BasicEnemy.AnimationType.WALK);
+        enemy.setAnimation(BasicEnemy.AnimationType.WALK);
     }
 
     @Override

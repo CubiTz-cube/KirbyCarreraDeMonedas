@@ -23,8 +23,8 @@ public class BasicEnemy extends Enemy {
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> walkAnimation;
 
-    public BasicEnemy(World world, AssetManager assetManager, Rectangle shape, Integer id) {
-        super(world, assetManager, shape,id);
+    public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id) {
+        super(world, shape, assetManager,id);
         type = Type.BASIC;
         sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);

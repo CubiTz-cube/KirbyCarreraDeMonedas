@@ -27,8 +27,8 @@ public abstract class Enemy extends Entity {
 
     public Float speed;
 
-    public Enemy(World world, AssetManager assetManager, Rectangle shape, Integer id) {
-        super(world, assetManager, shape,id);
+    public Enemy(World world, Rectangle shape, AssetManager assetManager, Integer id) {
+        super(world, shape, assetManager,id);
         this.actCrono = 0f;
         powerUp = PowerUp.Type.NULL;
         stateMachine = new StateMachine();

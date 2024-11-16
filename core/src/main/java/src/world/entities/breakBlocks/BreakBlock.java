@@ -26,12 +26,11 @@ public class BreakBlock extends Entity {
     public enum AnimationType{LIVE,BREAK}
     private AnimationType currentAnimationType;
     private Boolean changeAnimation;
-    private final Animation<TextureRegion> liveAnimation;
 
-    public BreakBlock(World world, AssetManager assetManager, Rectangle shape, Integer id) {
-        super(world, assetManager, shape,id);
+    public BreakBlock(World world, Rectangle shape, AssetManager assetManager, Integer id) {
+        super(world, shape, assetManager,id);
         type = Type.BREAKBLOCK;
-        sprite = new Sprite();
+        sprite.setTexture((assetManager.get("world/entities/breakBlock.png")));
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
@@ -51,11 +50,6 @@ public class BreakBlock extends Entity {
         liveState = new LiveState(this);
         breakState = new BreakState(this);
         stateMachine.setState(liveState);
-
-        liveAnimation = new Animation<>(0.12f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/breakBlock.png"), 1));
-
-        setCurrentAnimation(liveAnimation);
     }
     public void setState(StateType stateType){
         currentStateType = stateType;

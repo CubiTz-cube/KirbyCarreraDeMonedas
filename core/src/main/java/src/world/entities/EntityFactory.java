@@ -18,17 +18,17 @@ public class EntityFactory {
 
     public Entity create(Entity.Type type, World world, Vector2 position, Integer id){
         return switch (type) {
-            case BASIC -> new BasicEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1.5f, 1.5f), id);
-            case SLEEPY -> new SleepingEnemy(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);
-            case MIRROR -> new Mirror(world, main.getAssetManager(), new Rectangle(position.x, position.y, 2f, 2f), id);
-            case BREAKBLOCK -> new BreakBlock(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id);
-            case PLATFORMXR -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(1,0));
-            case PLATFORMXL -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(-1,0));
-            case PLATFORMYU -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(0,1));
-            case PLAYFORMRU -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(1,1));
-            case PLATOFRMRD -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(1,-1));
-            case PLATFORMLU -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(-1,1));
-            case PLATFORMLD -> new MovingPlatform(world, main.getAssetManager(), new Rectangle(position.x, position.y, 1f, 1f), id, new Vector2(-1,-1));
+            case BASIC -> new BasicEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), id);
+            case SLEEPY -> new SleepingEnemy(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id);
+            case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), main.getAssetManager(), id);
+            case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id);
+            case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(1,0));
+            case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(-1,0));
+            case PLATFORMYU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(0,1));
+            case PLAYFORMRU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(1,1));
+            case PLATOFRMRD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(1,-1));
+            case PLATFORMLU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(-1,1));
+            case PLATFORMLD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(-1,-1));
             default -> null;
         };
 

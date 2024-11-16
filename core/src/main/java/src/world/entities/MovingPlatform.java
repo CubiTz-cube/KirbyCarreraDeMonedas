@@ -18,8 +18,8 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 public class MovingPlatform extends Entity {
     private Vector2 velocidad;
 
-    public MovingPlatform(World world, AssetManager assetManager, Rectangle shape, Integer id, Vector2 impulso) {
-        super(world, assetManager, shape,id);
+    public MovingPlatform(World world, Rectangle shape, AssetManager assetManager, Integer id, Vector2 impulso) {
+        super(world, shape, assetManager,id);
         sprite = new Sprite(assetManager.get("world/entities/breakBlock.png", Texture.class));
 
         BodyDef bodyDef = new BodyDef();

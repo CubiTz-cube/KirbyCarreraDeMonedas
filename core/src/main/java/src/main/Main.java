@@ -90,7 +90,7 @@ public class Main extends Game {
         screensList.add(new GameScreen(this));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.INTRO);
+        changeScreen(Screens.GAME);
     }
 
     public void setName(String name) {
