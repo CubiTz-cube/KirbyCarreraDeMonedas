@@ -26,7 +26,7 @@ public class DownState  extends StatePlayer{
 
         if (!Gdx.input.isKeyPressed(PlayerControl.DOWN)) player.setState(Player.StateType.IDLE);
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null) {
             player.setState(Player.StateType.ABSORB);
         }
 

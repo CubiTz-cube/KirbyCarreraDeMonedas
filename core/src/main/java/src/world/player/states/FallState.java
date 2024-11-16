@@ -24,7 +24,7 @@ public class FallState extends CanMoveState
     public void update(Float delta) {
         super.update(delta);
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
             player.setState(Player.StateType.ABSORB);
         }
 

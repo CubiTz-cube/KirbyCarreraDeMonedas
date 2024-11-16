@@ -15,5 +15,6 @@ public class PowerSleep extends PowerUp
     {
         player.stunTime = 5;
         player.setState(Player.StateType.STUN);
+        player.setAnimation(Player.AnimationType.SLEEP);
     }
 }

@@ -1,10 +1,7 @@
 package src.world.player.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import src.utils.stateMachine.StateMachine;
 import src.utils.variables.PlayerControl;
 import src.world.player.Player;
 
@@ -24,7 +21,7 @@ public class RunState extends CanMoveState{
     @Override
     public void update(Float delta) {
         super.update(delta);
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
             player.setState(Player.StateType.ABSORB);
         }
 

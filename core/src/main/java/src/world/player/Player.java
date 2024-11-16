@@ -80,7 +80,8 @@ public class Player extends SpriteActorBox2d
         UPFLY,
         FLYEND,
         ABSORB,
-        DAMAGE
+        DAMAGE,
+        SLEEP
     }
     private Boolean changeAnimation;
     private AnimationType currentAnimationType;
@@ -98,7 +99,13 @@ public class Player extends SpriteActorBox2d
     private final Animation<TextureRegion> flyEndAnimation;
     private final Animation<TextureRegion> absorbAnimation;
     private final Animation<TextureRegion> damageAnimation;
+    private final Animation<TextureRegion> sleepAnimation;
 
+    private final Animation<TextureRegion> absorbIdleAnimation;
+    private final Animation<TextureRegion> absorbWalkAnimation;
+    private final Animation<TextureRegion> absorbRunAnimation;
+
+    public Enemy enemyAbsorded;
     private PowerUp powerUp;
 
     public Player(World world, Rectangle shape, AssetManager assetManager)
@@ -187,6 +194,22 @@ public class Player extends SpriteActorBox2d
         damageAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
 
+        sleepAnimation = new Animation<>(0.15f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/sleep/sleep.png"), 33));
+
+
+        absorbIdleAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbIdle.png"), 31));
+        absorbIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        absorbWalkAnimation = new Animation<>(0.08f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbWalk.png"), 16));
+        absorbWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        absorbRunAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbWalk.png"), 16));
+        absorbRunAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
         setAnimation(AnimationType.IDLE);
         changeAnimation = false;
     }
@@ -239,6 +262,15 @@ public class Player extends SpriteActorBox2d
             case FLYEND -> setCurrentAnimation(flyEndAnimation);
             case ABSORB -> setCurrentAnimation(absorbAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
+            case SLEEP -> setCurrentAnimation(sleepAnimation);
+        }
+
+        if (enemyAbsorded == null) return;
+
+        switch (animationType){
+            case IDLE -> setCurrentAnimation(absorbIdleAnimation);
+            case WALK -> setCurrentAnimation(absorbWalkAnimation);
+            case RUN -> setCurrentAnimation(absorbRunAnimation);
         }
     }
 
@@ -275,8 +307,13 @@ public class Player extends SpriteActorBox2d
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy) {
+            if (currentStateType == StateType.DASH){
+                game.removeEntity(enemy.getId());
+                return;
+            }
+
             if (currentStateType == StateType.ABSORB){
-                setPowerUp(enemy);
+                enemyAbsorded = enemy;
                 game.removeEntity(enemy.getId());
                 return;
             }
