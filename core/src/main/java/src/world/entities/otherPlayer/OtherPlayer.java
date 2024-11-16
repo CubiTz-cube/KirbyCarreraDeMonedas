@@ -98,11 +98,9 @@ public class OtherPlayer extends Entity {
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
 
         setAnimation(Player.AnimationType.IDLE);
-        currentAnimationType = Player.AnimationType.IDLE;
     }
 
     public void setAnimation(Player.AnimationType animationType){
-        currentAnimationType = animationType;
         switch (animationType){
             case IDLE -> setCurrentAnimation(idleAnimation);
             case WALK -> setCurrentAnimation(walkAnimation);
