@@ -16,7 +16,6 @@ public class OtherPlayer extends Entity {
     private final BitmapFont font;
     private final GlyphLayout layout;
 
-    private Player.AnimationType currentAnimationType;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> jumpAnimation;

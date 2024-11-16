@@ -18,7 +18,6 @@ public class BasicEnemy extends Enemy {
         IDLE,
         WALK
     }
-    private AnimationType currentAnimationType;
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> walkAnimation;
 
@@ -59,7 +58,6 @@ public class BasicEnemy extends Enemy {
     }
 
     public void setAnimation(AnimationType type){
-        currentAnimationType = type;
         switch (type){
             case IDLE:
                 setCurrentAnimation(idleAnimation);
