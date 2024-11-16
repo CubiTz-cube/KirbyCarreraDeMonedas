@@ -37,6 +37,7 @@ public class JumpState extends CanMoveState{
         }
         if (player.getBody().getLinearVelocity().y < 0){
             player.setState(Player.StateType.FALL);
+            player.setAnimation(Player.AnimationType.FALL);
         }
     }
 

@@ -27,14 +27,19 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class Player extends SpriteActorBox2d
 {
-    public float speed = 10;
-    public float maxSpeed = 4;
+    public float speed = 12;
+    public float maxSpeed = 6;
     public float stunTime = 2;
-    public static final float MAX_JUMP_TIME = 0.3f;
-    public static final float JUMP_IMPULSE = 6f;
-    public static final float JUMP_INAIR = 0.3f;
-    public static final float DASH_IMPULSE = 15f;
 
+    public static final float WALK_SPEED = 10f;
+    public static final float WALK_MAX_SPEED = 5f;
+    public static final float RUN_SPEED = 14f;
+    public static final float RUN_MAX_SPEED = 6.5f;
+    public static final float MAX_JUMP_TIME = 0.3f;
+    public static final float JUMP_IMPULSE = 8f;
+    public static final float JUMP_INAIR = 0.35f;
+    public static final float FLY_IMPULSE = 6f;
+    public static final float DASH_IMPULSE = 15f;
 
     public enum StateType {
         IDLE,
@@ -66,12 +71,14 @@ public class Player extends SpriteActorBox2d
         WALK,
         JUMP,
         FALL,
+        FALLSIMPLE,
         DOWN,
         RUN,
         DASH,
         FLY,
         INFLY,
         UPFLY,
+        FLYEND,
         ABSORB,
         DAMAGE
     }
@@ -81,12 +88,14 @@ public class Player extends SpriteActorBox2d
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> jumpAnimation;
     private final Animation<TextureRegion> fallAnimation;
+    private final Animation<TextureRegion> fallSimpleAnimation;
     private final Animation<TextureRegion> downAnimation;
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> dashAnimation;
     private final Animation<TextureRegion> flyAnimation;
     private final Animation<TextureRegion> inFlyAnimation;
     private final Animation<TextureRegion> upFlyAnimation;
+    private final Animation<TextureRegion> flyEndAnimation;
     private final Animation<TextureRegion> absorbAnimation;
     private final Animation<TextureRegion> damageAnimation;
 
@@ -147,7 +156,10 @@ public class Player extends SpriteActorBox2d
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyJump.png"), 1));
 
         fallAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 22));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 26));
+
+        fallSimpleAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFallSimple.png"), 20));
 
         runAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 8));
@@ -164,7 +176,10 @@ public class Player extends SpriteActorBox2d
         inFlyAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         upFlyAnimation = new Animation<>(0.06f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
+        SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
+
+        flyEndAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFlyEnd.png"), 2));
 
         absorbAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 16));
@@ -214,12 +229,14 @@ public class Player extends SpriteActorBox2d
             case WALK -> setCurrentAnimation(walkAnimation);
             case JUMP -> setCurrentAnimation(jumpAnimation);
             case FALL -> setCurrentAnimation(fallAnimation);
+            case FALLSIMPLE -> setCurrentAnimation(fallSimpleAnimation);
             case DOWN -> setCurrentAnimation(downAnimation);
             case RUN -> setCurrentAnimation(runAnimation);
             case DASH -> setCurrentAnimation(dashAnimation);
             case FLY -> setCurrentAnimation(flyAnimation);
             case INFLY -> setCurrentAnimation(inFlyAnimation);
             case UPFLY -> setCurrentAnimation(upFlyAnimation);
+            case FLYEND -> setCurrentAnimation(flyEndAnimation);
             case ABSORB -> setCurrentAnimation(absorbAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
         }

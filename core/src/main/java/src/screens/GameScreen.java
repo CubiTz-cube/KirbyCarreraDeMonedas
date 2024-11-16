@@ -61,7 +61,7 @@ public class GameScreen extends BaseScreen {
         staticFactory = new StaticFactory(main);
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        world = new World(new Vector2(0, -20f), true);
+        world = new World(new Vector2(0, -30f), true);
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
@@ -262,6 +262,8 @@ public class GameScreen extends BaseScreen {
         }
         tiledManager.makeMap();
         addMainPlayer();
+        Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
+        addEntity(Entity.Type.MIRROR, position, main.getIds());
         if (main.server != null || main.client == null) tiledManager.makeEntities();
     }
 

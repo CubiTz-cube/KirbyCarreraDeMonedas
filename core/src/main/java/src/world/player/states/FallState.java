@@ -17,7 +17,7 @@ public class FallState extends CanMoveState
 
     @Override
     public void start() {
-        player.setAnimation(Player.AnimationType.FALL);
+        player.setAnimation(Player.AnimationType.FALLSIMPLE);
     }
 
     @Override

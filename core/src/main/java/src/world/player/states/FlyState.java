@@ -18,28 +18,28 @@ public class FlyState extends CanMoveState{
     @Override
     public void start() {
         player.setAnimation(Player.AnimationType.FLY);
-        player.speed = 10;
-        player.maxSpeed = 4;
-        player.getSprite().setScale(1.1f);
+        player.speed = Player.WALK_SPEED;
+        player.maxSpeed = Player.WALK_MAX_SPEED;
         player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
         player.getBody().setGravityScale(0.6f);
-        player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
+        player.getBody().applyLinearImpulse(0, Player.FLY_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
 
     @Override
     public void update(Float delta) {
         super.update(delta);
-        if (player.isAnimationFinish()) player.setAnimation(Player.AnimationType.INFLY);
+        if (player.isAnimationFinish() && player.getCurrentAnimationType() == Player.AnimationType.FLY) player.setAnimation(Player.AnimationType.INFLY);
         time += delta;
         if (Gdx.input.isKeyPressed(PlayerControl.JUMP) && time > 0.2f){
             if (player.getCurrentAnimationType() != Player.AnimationType.FLY) player.setAnimation(Player.AnimationType.UPFLY);
             time = 0f;
             player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
-            player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
+            player.getBody().applyLinearImpulse(0, Player.FLY_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
-            player.setState(Player.StateType.FALL);
+            if (player.getCurrentAnimationType() != Player.AnimationType.FLYEND) player.setAnimation(Player.AnimationType.FLYEND);
         }
+        if (player.isAnimationFinish() && player.getCurrentAnimationType() == Player.AnimationType.FLYEND) player.setState(Player.StateType.FALL);
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.y < -5) {
             player.getBody().setLinearVelocity(velocity.x, -5);

@@ -16,8 +16,8 @@ public class WalkState extends RunState{
     @Override
     public void start() {
         player.setAnimation(Player.AnimationType.WALK);
-        player.speed = 10;
-        player.maxSpeed = 4;
+        player.speed = Player.WALK_SPEED;
+        player.maxSpeed =  Player.WALK_MAX_SPEED;
         if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) player.setState(Player.StateType.RUN);
     }
 
