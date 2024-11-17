@@ -34,10 +34,10 @@ public abstract class UIScreen extends BaseScreen {
         stage.draw();
     }
 
-    /*@Override
+    @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-    }*/
+    }
 
     @Override
     public void dispose() {

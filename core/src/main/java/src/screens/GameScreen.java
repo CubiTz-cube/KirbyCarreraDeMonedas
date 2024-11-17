@@ -262,9 +262,11 @@ public class GameScreen extends BaseScreen {
         }
         tiledManager.makeMap();
         addMainPlayer();
-        Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
-        addEntity(Entity.Type.MIRROR, position, main.getIds());
-        if (main.server != null || main.client == null) tiledManager.makeEntities();
+        if (main.server != null || main.client == null){
+            tiledManager.makeEntities();
+            Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
+            addEntity(Entity.Type.MIRROR, position, main.getIds());
+        }
     }
 
     /**
@@ -345,7 +347,7 @@ public class GameScreen extends BaseScreen {
     }
 
     public void randomMirror(){
-
+        if (main.server == null) return;
         for (Entity entity : entities.values()){
             if (entity instanceof Mirror mirror) {
                 int index = random.nextInt(spawnMirror.size());

@@ -32,7 +32,7 @@ public class IdleStateSleepy extends StateEnemy<SleepingEnemy>
     private boolean shouldWakeUp()
     {
         sleepTimer += Gdx.graphics.getDeltaTime();
-        return sleepTimer >= 20f;
+        return sleepTimer >= 10f;
     }
 
     @Override

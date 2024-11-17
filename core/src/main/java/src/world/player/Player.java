@@ -3,7 +3,6 @@ package src.world.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -51,7 +50,8 @@ public class Player extends SpriteActorBox2d
         DASH,
         FLY,
         ABSORB,
-        STUN
+        STUN,
+        CONSUME,
     }
     private StateType currentStateType;
     protected final StateMachine stateMachine;
@@ -65,6 +65,7 @@ public class Player extends SpriteActorBox2d
     private final DashState dashState;
     private final RunState runState;
     private final StunState stunState;
+    private final ConsumeState consumeState;
 
     public enum AnimationType {
         IDLE,
@@ -76,12 +77,16 @@ public class Player extends SpriteActorBox2d
         RUN,
         DASH,
         FLY,
-        INFLY,
-        UPFLY,
+        FLYIN,
+        FLYUP,
         FLYEND,
         ABSORB,
         DAMAGE,
-        SLEEP
+        CONSUME,
+        SLEEP,
+        ABSORBIDLE,
+        ABSORBWALK,
+        ABSORBRUN,
     }
     private Boolean changeAnimation;
     private AnimationType currentAnimationType;
@@ -100,6 +105,7 @@ public class Player extends SpriteActorBox2d
     private final Animation<TextureRegion> absorbAnimation;
     private final Animation<TextureRegion> damageAnimation;
     private final Animation<TextureRegion> sleepAnimation;
+    private final Animation<TextureRegion> consumeAnimation;
 
     private final Animation<TextureRegion> absorbIdleAnimation;
     private final Animation<TextureRegion> absorbWalkAnimation;
@@ -107,11 +113,11 @@ public class Player extends SpriteActorBox2d
 
     public Enemy enemyAbsorded;
     private PowerUp powerUp;
+    private final PowerSleep powerSleep;
 
     public Player(World world, Rectangle shape, AssetManager assetManager)
     {
         super(world, shape, assetManager);
-        sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -144,8 +150,8 @@ public class Player extends SpriteActorBox2d
         dashState = new DashState(this);
         runState = new RunState(this);
         stunState = new StunState(this);
+        consumeState = new ConsumeState(this);
         stateMachine.setState(idleState);
-
 
         walkAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyWalk.png"), 10));
@@ -194,9 +200,11 @@ public class Player extends SpriteActorBox2d
         damageAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
 
+        consumeAnimation = new Animation<>(0.08f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyConsume.png"), 6));
+
         sleepAnimation = new Animation<>(0.15f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/sleep/sleep.png"), 33));
-
 
         absorbIdleAnimation = new Animation<>(0.1f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbIdle.png"), 31));
@@ -212,15 +220,19 @@ public class Player extends SpriteActorBox2d
 
         setAnimation(AnimationType.IDLE);
         changeAnimation = false;
+
+        powerSleep = new PowerSleep(this);
+
     }
 
-    public void setPowerUp(Enemy enemy) {
-        powerUp = switch (enemy.getPowerUp()){
-            case NULL -> null;
-            case SLEEP -> new PowerSleep(this);
+    public void consumeEnemy() {
+        if (enemyAbsorded == null) return;
+        powerUp = switch (enemyAbsorded.getPowerUp()){
+            case SLEEP -> powerSleep;
             default -> null;
         };
-
+        enemyAbsorded = null;
+        setState(Player.StateType.IDLE);
         if (powerUp != null) powerUp.start();
     }
 
@@ -237,6 +249,7 @@ public class Player extends SpriteActorBox2d
             case FLY -> stateMachine.setState(flyState);
             case ABSORB -> stateMachine.setState(absorbState);
             case STUN -> stateMachine.setState(stunState);
+            case CONSUME -> stateMachine.setState(consumeState);
         }
     }
 
@@ -257,20 +270,16 @@ public class Player extends SpriteActorBox2d
             case RUN -> setCurrentAnimation(runAnimation);
             case DASH -> setCurrentAnimation(dashAnimation);
             case FLY -> setCurrentAnimation(flyAnimation);
-            case INFLY -> setCurrentAnimation(inFlyAnimation);
-            case UPFLY -> setCurrentAnimation(upFlyAnimation);
+            case FLYIN -> setCurrentAnimation(inFlyAnimation);
+            case FLYUP -> setCurrentAnimation(upFlyAnimation);
             case FLYEND -> setCurrentAnimation(flyEndAnimation);
             case ABSORB -> setCurrentAnimation(absorbAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
+            case CONSUME -> setCurrentAnimation(consumeAnimation);
             case SLEEP -> setCurrentAnimation(sleepAnimation);
-        }
-
-        if (enemyAbsorded == null) return;
-
-        switch (animationType){
-            case IDLE -> setCurrentAnimation(absorbIdleAnimation);
-            case WALK -> setCurrentAnimation(absorbWalkAnimation);
-            case RUN -> setCurrentAnimation(absorbRunAnimation);
+            case ABSORBIDLE -> setCurrentAnimation(absorbIdleAnimation);
+            case ABSORBWALK -> setCurrentAnimation(absorbWalkAnimation);
+            case ABSORBRUN -> setCurrentAnimation(absorbRunAnimation);
         }
     }
 
@@ -315,6 +324,7 @@ public class Player extends SpriteActorBox2d
             if (currentStateType == StateType.ABSORB){
                 enemyAbsorded = enemy;
                 game.removeEntity(enemy.getId());
+                setState(Player.StateType.IDLE);
                 return;
             }
 

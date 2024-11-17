@@ -20,19 +20,26 @@ public class OtherPlayer extends Entity {
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> jumpAnimation;
     private final Animation<TextureRegion> fallAnimation;
+    private final Animation<TextureRegion> fallSimpleAnimation;
     private final Animation<TextureRegion> downAnimation;
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> dashAnimation;
     private final Animation<TextureRegion> flyAnimation;
     private final Animation<TextureRegion> inFlyAnimation;
     private final Animation<TextureRegion> upFlyAnimation;
+    private final Animation<TextureRegion> flyEndAnimation;
     private final Animation<TextureRegion> absorbAnimation;
     private final Animation<TextureRegion> damageAnimation;
+    private final Animation<TextureRegion> sleepAnimation;
+    private final Animation<TextureRegion> consumeAnimation;
+
+    private final Animation<TextureRegion> absorbIdleAnimation;
+    private final Animation<TextureRegion> absorbWalkAnimation;
+    private final Animation<TextureRegion> absorbRunAnimation;
 
     public OtherPlayer(World world, AssetManager assetManager, Rectangle shape, Integer id, String name){
         super(world, shape, assetManager,id);
         this.name = name;
-        sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class); // Obtén la fuente del AssetManager
         this.layout = new GlyphLayout();
@@ -72,7 +79,10 @@ public class OtherPlayer extends Entity {
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyJump.png"), 1));
 
         fallAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 22));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 26));
+
+        fallSimpleAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFallSimple.png"), 20));
 
         runAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 8));
@@ -91,11 +101,32 @@ public class OtherPlayer extends Entity {
         upFlyAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
 
+        flyEndAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFlyEnd.png"), 2));
+
         absorbAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 16));
 
         damageAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
+
+        consumeAnimation = new Animation<>(0.08f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyConsume.png"), 6));
+
+        sleepAnimation = new Animation<>(0.15f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/sleep/sleep.png"), 33));
+
+        absorbIdleAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbIdle.png"), 31));
+        absorbIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        absorbWalkAnimation = new Animation<>(0.08f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbWalk.png"), 16));
+        absorbWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        absorbRunAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbWalk.png"), 16));
+        absorbRunAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         setAnimation(Player.AnimationType.IDLE);
     }
@@ -106,14 +137,21 @@ public class OtherPlayer extends Entity {
             case WALK -> setCurrentAnimation(walkAnimation);
             case JUMP -> setCurrentAnimation(jumpAnimation);
             case FALL -> setCurrentAnimation(fallAnimation);
+            case FALLSIMPLE -> setCurrentAnimation(fallSimpleAnimation);
             case DOWN -> setCurrentAnimation(downAnimation);
             case RUN -> setCurrentAnimation(runAnimation);
             case DASH -> setCurrentAnimation(dashAnimation);
             case FLY -> setCurrentAnimation(flyAnimation);
-            case INFLY -> setCurrentAnimation(inFlyAnimation);
-            case UPFLY -> setCurrentAnimation(upFlyAnimation);
+            case FLYIN -> setCurrentAnimation(inFlyAnimation);
+            case FLYUP -> setCurrentAnimation(upFlyAnimation);
+            case FLYEND -> setCurrentAnimation(flyEndAnimation);
             case ABSORB -> setCurrentAnimation(absorbAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
+            case CONSUME -> setCurrentAnimation(consumeAnimation);
+            case SLEEP -> setCurrentAnimation(sleepAnimation);
+            case ABSORBIDLE -> setCurrentAnimation(absorbIdleAnimation);
+            case ABSORBWALK -> setCurrentAnimation(absorbWalkAnimation);
+            case ABSORBRUN -> setCurrentAnimation(absorbRunAnimation);
         }
     }
 

@@ -56,6 +56,12 @@ public abstract class MinigameScreen extends UIScreen {
     }
 
     @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        background.setSize(width, height);
+    }
+
+    @Override
     public void render(float delta) {
         super.render(delta);
         game.actLogic(delta);

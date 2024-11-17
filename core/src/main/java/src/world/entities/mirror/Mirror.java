@@ -18,7 +18,6 @@ public class Mirror extends Entity {
     public Mirror(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager,id);
         type = Type.MIRROR;
-        sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();

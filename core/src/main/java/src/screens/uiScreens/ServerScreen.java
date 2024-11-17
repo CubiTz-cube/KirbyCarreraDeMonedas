@@ -15,7 +15,7 @@ public class ServerScreen extends UIScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        Label labelTitle = new Label("Crear servidor", skin);
+        //Label labelTitle = new Label("Crear servidor", skin);
 
         TextField ipTextField = new TextField("localhost", skin);
         ipTextField.setAlignment(Align.center);
@@ -43,8 +43,8 @@ public class ServerScreen extends UIScreen {
             }
         });
 
-        table.add(labelTitle).width(400).height(50).pad(10);
-        table.row();
+        //table.add(labelTitle).width(400).height(50).pad(10);
+        //table.row();
         table.add(ipTextField).width(400).height(50).pad(10);
         table.row();
         table.add(portTextField).width(400).height(50).pad(10);

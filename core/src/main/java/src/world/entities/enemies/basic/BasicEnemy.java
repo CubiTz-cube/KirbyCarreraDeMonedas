@@ -24,7 +24,6 @@ public class BasicEnemy extends Enemy {
     public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager,id);
         type = Type.BASIC;
-        sprite = new Sprite();
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
         this.layout = new GlyphLayout();
