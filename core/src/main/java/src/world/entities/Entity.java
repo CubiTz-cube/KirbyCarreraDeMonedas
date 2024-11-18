@@ -11,6 +11,7 @@ public abstract class Entity extends SpriteActorBox2d {
     public enum Type{
         BASIC,
         SLEEPY,
+        SWORD,
         MIRROR,
         BREAKBLOCK,
         PLATFORMXR,

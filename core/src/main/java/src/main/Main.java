@@ -54,6 +54,7 @@ public class Main extends Game {
         assetManager.load("perro.jpg", Texture.class);
         assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
+        assetManager.load("yoshiSword.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);

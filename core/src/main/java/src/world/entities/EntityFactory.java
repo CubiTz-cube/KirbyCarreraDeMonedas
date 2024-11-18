@@ -7,6 +7,7 @@ import src.main.Main;
 import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
+import src.world.entities.enemies.sword.SwordEnemy;
 import src.world.entities.mirror.Mirror;
 
 public class EntityFactory {
@@ -20,6 +21,7 @@ public class EntityFactory {
         return switch (type) {
             case BASIC -> new BasicEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), id);
             case SLEEPY -> new SleepingEnemy(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id);
+            case SWORD -> new SwordEnemy(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id);
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), main.getAssetManager(), id);
             case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id);
             case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), main.getAssetManager(), id, new Vector2(1,0));

@@ -19,10 +19,10 @@ public abstract class Enemy extends Entity {
         DAMAGE
     }
     private StateType state;
-    protected StateEnemy idleState;
-    protected StateEnemy walkState;
-    protected StateEnemy attackState;
-    protected StateEnemy damageState;
+    protected StateEnemy<?> idleState;
+    protected StateEnemy<?> walkState;
+    protected StateEnemy<?> attackState;
+    protected StateEnemy<?> damageState;
     private Boolean changeState;
 
     public Float speed;
