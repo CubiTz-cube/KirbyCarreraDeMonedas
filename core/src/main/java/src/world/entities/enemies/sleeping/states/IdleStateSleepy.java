@@ -8,38 +8,22 @@ import src.world.entities.enemies.sleeping.SleepingEnemy;
 
 public class IdleStateSleepy extends StateEnemy<SleepingEnemy>
 {
-    private float sleepTimer = 0f;
 
     public IdleStateSleepy(SleepingEnemy enemy) {
         super(enemy);
     }
 
     @Override
-    public void start()
-    {
-        float sleepTimer = 0f;
-    }
-
-    @Override
     public void update(Float delta)
     {
-        if (shouldWakeUp())
+        if (enemy.getActCrono() >= 3f)
         {
             enemy.setState(SleepingEnemy.StateType.WALK);
         }
     }
 
-    private boolean shouldWakeUp()
-    {
-        sleepTimer += Gdx.graphics.getDeltaTime();
-        return sleepTimer >= 10f;
-    }
-
     @Override
-    public void end()
-    {
-        sleepTimer = 0f;
+    public void end() {
+
     }
-
-
 }

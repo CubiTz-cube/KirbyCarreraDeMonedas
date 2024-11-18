@@ -43,12 +43,6 @@ public class SleepingEnemy extends Enemy
     }
 
     @Override
-    public void act(float delta)
-    {
-        stateMachine.update(delta);
-    }
-
-    @Override
     public void draw(Batch batch, float parentAlpha)
     {
         setPosition(
