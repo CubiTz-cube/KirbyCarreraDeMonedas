@@ -53,7 +53,7 @@ public abstract class PlayerAnimations extends Entity {
     protected final Animation<TextureRegion> absorbRunAnimation;
 
     public PlayerAnimations(World world, Rectangle shape, AssetManager assetManager, Integer id) {
-        super(world, shape, assetManager, id);
+        super(world, shape, assetManager, id, null);
 
         walkAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyWalk.png"), 10));

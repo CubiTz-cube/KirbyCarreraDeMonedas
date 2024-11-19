@@ -16,8 +16,7 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 public class Mirror extends Entity {
 
     public Mirror(World world, Rectangle shape, AssetManager assetManager, Integer id) {
-        super(world, shape, assetManager,id);
-        type = Type.MIRROR;
+        super(world, shape, assetManager,id, Type.MIRROR);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);

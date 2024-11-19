@@ -27,10 +27,10 @@ public abstract class Enemy extends Entity {
 
     public Float speed;
 
-    public Enemy(World world, Rectangle shape, AssetManager assetManager, Integer id) {
-        super(world, shape, assetManager,id);
+    public Enemy(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, PowerUp.Type powerUp) {
+        super(world, shape, assetManager,id, type);
         this.actCrono = 0f;
-        powerUp = PowerUp.Type.NULL;
+        this.powerUp = powerUp;
         stateMachine = new StateMachine();
         speed = 3f;
         changeState = false;

@@ -20,8 +20,7 @@ public class BreakBlock extends Entity {
     public enum AnimationType{LIVE,BREAK}
 
     public BreakBlock(World world, Rectangle shape, AssetManager assetManager, Integer id) {
-        super(world, shape, assetManager,id);
-        type = Type.BREAKBLOCK;
+        super(world, shape, assetManager,id, Type.BREAKBLOCK);
         sprite.setTexture((assetManager.get("world/entities/breakBlock.png")));
 
         BodyDef def = new BodyDef();

@@ -13,9 +13,9 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class MovingPlatform extends Entity {
 
-    public MovingPlatform(World world, Rectangle shape, AssetManager assetManager, Integer id, Vector2 impulso) {
-        super(world, shape, assetManager,id);
-        sprite = new Sprite(assetManager.get("world/entities/breakBlock.png", Texture.class));
+    public MovingPlatform(World world, Rectangle shape, AssetManager assetManager, Integer id,Type type, Vector2 impulso) {
+        super(world, shape, assetManager,id, type);
+        sprite.setTexture(assetManager.get("world/entities/breakBlock.png", Texture.class));
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(shape.x, shape.y);
@@ -31,12 +31,6 @@ public class MovingPlatform extends Entity {
         box.dispose();
 
         body.setLinearVelocity(impulso);
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setPosition(shape.x * PIXELS_IN_METER, shape.y * PIXELS_IN_METER);
-    }
-
-    public void detach(){
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
     }
 }

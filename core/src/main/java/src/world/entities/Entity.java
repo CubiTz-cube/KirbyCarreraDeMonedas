@@ -13,12 +13,13 @@ public abstract class Entity extends SpriteActorBox2d {
         SLEEPY,
         SWORD,
         MIRROR,
+        CLOUD,
         BREAKBLOCK,
         PLATFORMXR,
         PLATFORMXL,
         PLATFORMYU,
         PLATFORMYD,
-        PLAYFORMRU,
+        PLATFORMRU,
         PLATOFRMRD,
         PLATFORMLU,
         PLATFORMLD
@@ -28,9 +29,10 @@ public abstract class Entity extends SpriteActorBox2d {
     protected Type type;
     private final Integer id;
 
-    public Entity(World world, Rectangle shape, AssetManager assetManager, Integer id){
+    public Entity(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type){
         super(world, shape, assetManager);
         this.id = id;
+        this.type = type;
     }
 
     public Type getType() {

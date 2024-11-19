@@ -23,8 +23,7 @@ public class BasicEnemy extends Enemy {
     private final Animation<TextureRegion> walkAnimation;
 
     public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id) {
-        super(world, shape, assetManager,id);
-        type = Type.BASIC;
+        super(world, shape, assetManager,id, Type.BASIC, null);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
         this.layout = new GlyphLayout();
 
