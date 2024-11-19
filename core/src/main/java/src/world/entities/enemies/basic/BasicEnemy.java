@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import src.utils.CollisionFilters;
 import src.utils.animation.SheetCutter;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.basic.states.*;
@@ -39,6 +40,11 @@ public class BasicEnemy extends Enemy {
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
+
+        Filter filter = new Filter();
+        filter.categoryBits = ~CollisionFilters.CATEGORY_ENEMY;
+        filter.maskBits = CollisionFilters.MASK_ENEMY;
+        fixture.setFilterData(filter);
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setSpritePosModification(0f, getHeight()/4);

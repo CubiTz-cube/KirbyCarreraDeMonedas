@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import src.utils.CollisionFilters;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.sword.states.AttackStateSword;
 import src.world.entities.enemies.sword.states.IdleStateSword;
@@ -35,6 +36,11 @@ public class SwordEnemy extends Enemy
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
+
+        Filter filter = new Filter();
+        filter.categoryBits = ~CollisionFilters.CATEGORY_ENEMY;
+        filter.maskBits = CollisionFilters.MASK_ENEMY;
+        fixture.setFilterData(filter);
 
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
