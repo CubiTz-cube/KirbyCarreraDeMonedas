@@ -1,10 +1,8 @@
-package src.world.player.states;
+package src.world.entities.player.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import src.utils.variables.PlayerControl;
-import src.world.player.Player;
-import src.utils.stateMachine.StateMachine;
+import src.world.entities.player.Player;
 
 public class JumpState extends CanMoveState{
     private Float jumpTime = 0f;

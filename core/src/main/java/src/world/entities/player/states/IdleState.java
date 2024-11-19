@@ -1,11 +1,7 @@
-package src.world.player.states;
+package src.world.entities.player.states;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import src.utils.variables.Constants;
-import src.utils.variables.PlayerControl;
-import src.world.player.Player;
-import src.utils.stateMachine.StateMachine;
+import src.world.entities.player.Player;
 
 public class IdleState extends CanBasicMoveState{
     public IdleState(Player player){

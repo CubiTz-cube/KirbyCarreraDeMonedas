@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
-import src.world.player.powers.PowerUp;
+import src.world.entities.player.powers.PowerUp;
 
 public abstract class Enemy extends Entity {
     private Float actCrono;

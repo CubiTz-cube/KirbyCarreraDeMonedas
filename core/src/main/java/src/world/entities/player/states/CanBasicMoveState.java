@@ -1,8 +1,8 @@
-package src.world.player.states;
+package src.world.entities.player.states;
 
 import com.badlogic.gdx.Gdx;
 import src.utils.variables.PlayerControl;
-import src.world.player.Player;
+import src.world.entities.player.Player;
 
 public abstract class CanBasicMoveState extends CanMoveState{
 

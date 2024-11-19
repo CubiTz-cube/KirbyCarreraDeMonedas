@@ -1,9 +1,9 @@
-package src.world.player.states;
+package src.world.entities.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.variables.PlayerControl;
-import src.world.player.Player;
+import src.world.entities.player.Player;
 
 public class RunState extends CanBasicMoveState{
     public RunState(Player player) {

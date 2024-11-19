@@ -1,6 +1,6 @@
-package src.world.player.powers;
+package src.world.entities.player.powers;
 
-import src.world.player.Player;
+import src.world.entities.player.Player;
 
 public abstract class PowerUp
 {

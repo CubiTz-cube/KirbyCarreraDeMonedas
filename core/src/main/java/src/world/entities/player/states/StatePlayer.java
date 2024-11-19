@@ -1,8 +1,7 @@
-package src.world.player.states;
+package src.world.entities.player.states;
 
-import src.world.player.Player;
+import src.world.entities.player.Player;
 import src.utils.stateMachine.State;
-import src.utils.stateMachine.StateMachine;
 
 public abstract class StatePlayer implements State {
     protected Player player;

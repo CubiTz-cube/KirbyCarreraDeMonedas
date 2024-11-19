@@ -1,8 +1,6 @@
-package src.world.player.states;
+package src.world.entities.player.states;
 
-import com.badlogic.gdx.graphics.Color;
-import src.utils.stateMachine.StateMachine;
-import src.world.player.Player;
+import src.world.entities.player.Player;
 
 public class StunState extends StatePlayer{
     private Float time = 0f;

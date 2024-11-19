@@ -1,9 +1,7 @@
-package src.world.player;
+package src.world.entities.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -11,20 +9,17 @@ import src.main.Main;
 import src.screens.GameScreen;
 import src.utils.CollisionFilters;
 import src.utils.FrontRayCastCallback;
-import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.*;
 import src.utils.variables.PlayerControl;
 import src.world.ActorBox2d;
-import src.world.SpriteActorBox2d;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.mirror.Mirror;
-import src.world.player.powers.PowerSleep;
-import src.world.player.powers.PowerUp;
-import src.world.player.states.*;
+import src.world.entities.player.powers.*;
+import src.world.entities.player.states.*;
 
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 
-public class Player extends SpriteActorBox2d
+public class Player extends PlayerAnimations
 {
     public float speed = 12;
     public float maxSpeed = 6;
@@ -67,57 +62,17 @@ public class Player extends SpriteActorBox2d
     private final StunState stunState;
     private final ConsumeState consumeState;
 
-    public enum AnimationType {
-        IDLE,
-        WALK,
-        JUMP,
-        FALL,
-        FALLSIMPLE,
-        DOWN,
-        RUN,
-        DASH,
-        FLY,
-        FLYIN,
-        FLYUP,
-        FLYEND,
-        ABSORB,
-        DAMAGE,
-        CONSUME,
-        SLEEP,
-        ABSORBIDLE,
-        ABSORBWALK,
-        ABSORBRUN,
-    }
     private Boolean changeAnimation;
-    private AnimationType currentAnimationType;
-    private final Animation<TextureRegion> walkAnimation;
-    private final Animation<TextureRegion> idleAnimation;
-    private final Animation<TextureRegion> jumpAnimation;
-    private final Animation<TextureRegion> fallAnimation;
-    private final Animation<TextureRegion> fallSimpleAnimation;
-    private final Animation<TextureRegion> downAnimation;
-    private final Animation<TextureRegion> runAnimation;
-    private final Animation<TextureRegion> dashAnimation;
-    private final Animation<TextureRegion> flyAnimation;
-    private final Animation<TextureRegion> inFlyAnimation;
-    private final Animation<TextureRegion> upFlyAnimation;
-    private final Animation<TextureRegion> flyEndAnimation;
-    private final Animation<TextureRegion> absorbAnimation;
-    private final Animation<TextureRegion> damageAnimation;
-    private final Animation<TextureRegion> sleepAnimation;
-    private final Animation<TextureRegion> consumeAnimation;
-
-    private final Animation<TextureRegion> absorbIdleAnimation;
-    private final Animation<TextureRegion> absorbWalkAnimation;
-    private final Animation<TextureRegion> absorbRunAnimation;
 
     public Enemy enemyAbsorded;
     private PowerUp powerUp;
+
     private final PowerSleep powerSleep;
+    private final PowerSword powerSword;
 
     public Player(World world, Rectangle shape, AssetManager assetManager)
     {
-        super(world, shape, assetManager);
+        super(world, shape, assetManager, -1);
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -153,82 +108,17 @@ public class Player extends SpriteActorBox2d
         consumeState = new ConsumeState(this);
         stateMachine.setState(idleState);
 
-        walkAnimation = new Animation<>(0.12f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyWalk.png"), 10));
-        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        idleAnimation = new Animation<>(0.1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyIdle.png"), 31));
-        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        downAnimation = new Animation<>(0.1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDown.png"), 31));
-        downAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        jumpAnimation = new Animation<>(1,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyJump.png"), 1));
-
-        fallAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFall.png"), 26));
-
-        fallSimpleAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFallSimple.png"), 20));
-
-        runAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 8));
-        runAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        dashAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 2));
-
-        flyAnimation = new Animation<>(0.04f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFly.png"), 5));
-
-        inFlyAnimation = new Animation<>(0.1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyInFly.png"), 2));
-        inFlyAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        upFlyAnimation = new Animation<>(0.06f,
-        SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyUpFly.png"), 6));
-
-        flyEndAnimation = new Animation<>(0.06f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyFlyEnd.png"), 2));
-
-        absorbAnimation = new Animation<>(0.06f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyAbsorb.png"), 16));
-
-        damageAnimation = new Animation<>(0.06f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDamage.png"), 9));
-
-        consumeAnimation = new Animation<>(0.08f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyConsume.png"), 6));
-
-        sleepAnimation = new Animation<>(0.15f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/sleep/sleep.png"), 33));
-
-        absorbIdleAnimation = new Animation<>(0.1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbIdle.png"), 31));
-        absorbIdleAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        absorbWalkAnimation = new Animation<>(0.08f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbWalk.png"), 16));
-        absorbWalkAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        absorbRunAnimation = new Animation<>(0.06f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbWalk.png"), 16));
-        absorbRunAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        setAnimation(AnimationType.IDLE);
         changeAnimation = false;
 
         powerSleep = new PowerSleep(this);
-
+        powerSword = new PowerSword(this);
     }
 
     public void consumeEnemy() {
         if (enemyAbsorded == null) return;
         powerUp = switch (enemyAbsorded.getPowerUp()){
             case SLEEP -> powerSleep;
+            case SWORD -> powerSword;
             default -> null;
         };
         enemyAbsorded = null;
@@ -257,34 +147,10 @@ public class Player extends SpriteActorBox2d
         return currentStateType;
     }
 
-    public void setAnimation(AnimationType animationType){
-        currentAnimationType = animationType;
+    @Override
+    public void setAnimation(AnimationType animationType) {
+        super.setAnimation(animationType);
         changeAnimation = true;
-        switch (animationType){
-            case IDLE -> setCurrentAnimation(idleAnimation);
-            case WALK -> setCurrentAnimation(walkAnimation);
-            case JUMP -> setCurrentAnimation(jumpAnimation);
-            case FALL -> setCurrentAnimation(fallAnimation);
-            case FALLSIMPLE -> setCurrentAnimation(fallSimpleAnimation);
-            case DOWN -> setCurrentAnimation(downAnimation);
-            case RUN -> setCurrentAnimation(runAnimation);
-            case DASH -> setCurrentAnimation(dashAnimation);
-            case FLY -> setCurrentAnimation(flyAnimation);
-            case FLYIN -> setCurrentAnimation(inFlyAnimation);
-            case FLYUP -> setCurrentAnimation(upFlyAnimation);
-            case FLYEND -> setCurrentAnimation(flyEndAnimation);
-            case ABSORB -> setCurrentAnimation(absorbAnimation);
-            case DAMAGE -> setCurrentAnimation(damageAnimation);
-            case CONSUME -> setCurrentAnimation(consumeAnimation);
-            case SLEEP -> setCurrentAnimation(sleepAnimation);
-            case ABSORBIDLE -> setCurrentAnimation(absorbIdleAnimation);
-            case ABSORBWALK -> setCurrentAnimation(absorbWalkAnimation);
-            case ABSORBRUN -> setCurrentAnimation(absorbRunAnimation);
-        }
-    }
-
-    public AnimationType getCurrentAnimationType() {
-        return currentAnimationType;
     }
 
     public Boolean checkChangeAnimation() {

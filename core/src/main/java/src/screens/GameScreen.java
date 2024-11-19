@@ -21,7 +21,7 @@ import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
-import src.world.player.Player;
+import src.world.entities.player.Player;
 import src.main.Main;
 import src.world.statics.StaticFactory;
 

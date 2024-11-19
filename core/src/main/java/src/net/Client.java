@@ -12,7 +12,7 @@ import src.utils.variables.ConsoleColor;
 import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
-import src.world.player.Player;
+import src.world.entities.player.Player;
 
 import java.io.EOFException;
 import java.io.IOException;

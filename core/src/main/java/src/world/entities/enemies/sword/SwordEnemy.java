@@ -3,7 +3,6 @@ package src.world.entities.enemies.sword;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
@@ -11,7 +10,7 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.sword.states.AttackStateSword;
 import src.world.entities.enemies.sword.states.IdleStateSword;
 import src.world.entities.enemies.sword.states.WalkStateSword;
-import src.world.player.powers.PowerUp;
+import src.world.entities.player.powers.PowerUp;
 
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 

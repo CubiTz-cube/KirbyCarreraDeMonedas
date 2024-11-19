@@ -3,7 +3,7 @@ package src.net.packets;
 import src.world.entities.Entity;
 import src.world.entities.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
-import src.world.player.Player;
+import src.world.entities.player.Player;
 
 public class Packet {
     public static enum Types{
