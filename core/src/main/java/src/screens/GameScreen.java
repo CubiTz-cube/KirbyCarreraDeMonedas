@@ -107,7 +107,7 @@ public class GameScreen extends BaseScreen {
     public void addMainPlayer(){
         if (player != null) return;
         Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
-        player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager());
+        player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), this);
         stage.addActor(player);
     }
 
@@ -143,10 +143,21 @@ public class GameScreen extends BaseScreen {
         });
     }
 
-    public void addEntity(Entity.Type type, Vector2 position, Integer id){
+    public void addEntity(Entity.Type type, Vector2 position){
+        int id = main.getIds();
         threadSecureWorld.addModification(() -> {
             createEntityLogic(type, position, id);
             sendPacket(Packet.newEntity(id, type, position.x, position.y));
+        });
+    }
+
+    public void addEntityWithForce(Entity.Type type, Vector2 position, Vector2 force){
+        int id = main.getIds();
+        threadSecureWorld.addModification(() -> {
+            createEntityLogic(type, position, id);
+            sendPacket(Packet.newEntity(id, type, position.x, position.y));
+            Entity entity = entities.get(id);
+            entity.getBody().applyLinearImpulse(force, entity.getBody().getWorldCenter(), true);
         });
     }
 
@@ -265,7 +276,7 @@ public class GameScreen extends BaseScreen {
         if (main.server != null || main.client == null){
             tiledManager.makeEntities();
             Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
-            addEntity(Entity.Type.MIRROR, position, main.getIds());
+            addEntity(Entity.Type.MIRROR, position);
         }
     }
 

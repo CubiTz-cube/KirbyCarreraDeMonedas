@@ -70,9 +70,12 @@ public class Player extends PlayerAnimations
     private final PowerSleep powerSleep;
     private final PowerSword powerSword;
 
-    public Player(World world, Rectangle shape, AssetManager assetManager)
+    public final GameScreen game;
+
+    public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game)
     {
         super(world, shape, assetManager, -1);
+        this.game = game;
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
         def.type = BodyDef.BodyType.DynamicBody;

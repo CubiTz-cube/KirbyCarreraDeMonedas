@@ -58,7 +58,7 @@ public class TiledManager {
             float Y = object.getProperties().get("y", Float.class )/ tiledSize;
 
             try{
-                game.addEntity(Entity.Type.valueOf(type), new Vector2(X, Y), game.main.getIds());
+                game.addEntity(Entity.Type.valueOf(type), new Vector2(X, Y));
             }catch (IllegalArgumentException e) {
                 System.out.println("Tipo de entidad " + type + " no encontrado");
             }

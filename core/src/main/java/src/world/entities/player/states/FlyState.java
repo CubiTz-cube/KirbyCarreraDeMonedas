@@ -3,6 +3,7 @@ package src.world.entities.player.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.variables.PlayerControl;
+import src.world.entities.Entity;
 import src.world.entities.player.Player;
 
 public class FlyState extends CanMoveState{
@@ -38,7 +39,10 @@ public class FlyState extends CanMoveState{
         if (player.isAnimationFinish() && player.getCurrentAnimationType() == Player.AnimationType.FLYUP) player.setAnimation(Player.AnimationType.FLYIN);
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
-            if (player.getCurrentAnimationType() != Player.AnimationType.FLYEND) player.setAnimation(Player.AnimationType.FLYEND);
+            if (player.getCurrentAnimationType() != Player.AnimationType.FLYEND) {
+                player.setAnimation(Player.AnimationType.FLYEND);
+                player.game.addEntityWithForce(Entity.Type.CLOUD, player.getBody().getPosition().add(player.isFlipX() ? -1.5f : 1.5f,0), new Vector2((player.isFlipX() ? -1.5f : 1.5f) + player.getBody().getLinearVelocity().x,0));
+            }
         }
 
         if (player.isAnimationFinish() && player.getCurrentAnimationType() == Player.AnimationType.FLYEND) player.setState(Player.StateType.FALL);
