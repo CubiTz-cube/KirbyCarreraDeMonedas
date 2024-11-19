@@ -25,7 +25,6 @@ public class BasicEnemy extends Enemy {
     public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager,id);
         type = Type.BASIC;
-        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
         this.layout = new GlyphLayout();
 
@@ -46,7 +45,6 @@ public class BasicEnemy extends Enemy {
         filter.maskBits = CollisionFilters.MASK_ENEMY;
         fixture.setFilterData(filter);
 
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setSpritePosModification(0f, getHeight()/4);
 
         idleState = new IdleStateBasic(this);
@@ -84,10 +82,5 @@ public class BasicEnemy extends Enemy {
 
         layout.setText(font, "ID " + getId() + " TIME " + getActCrono());
         font.draw(batch, layout, getX() + layout.width / 2, getY() + sprite.getHeight() + layout.height);
-    }
-
-    public void detach() {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
     }
 }

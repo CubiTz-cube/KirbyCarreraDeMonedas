@@ -26,6 +26,7 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
         flipX = false;
         spritePosModification = new Vector2(0, 0);
         sprite = new Sprite(assetManager.get("logo.png", Texture.class));
+        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
     }
 
     protected void setCurrentAnimation(Animation<TextureRegion> currentAnimation) {

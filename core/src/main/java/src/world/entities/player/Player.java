@@ -73,7 +73,6 @@ public class Player extends PlayerAnimations
     public Player(World world, Rectangle shape, AssetManager assetManager)
     {
         super(world, shape, assetManager, -1);
-        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
         def.type = BodyDef.BodyType.DynamicBody;
@@ -91,7 +90,6 @@ public class Player extends PlayerAnimations
         filter.maskBits = ~CollisionFilters.MASK_OTHERPLAYER;
         fixture.setFilterData(filter);
 
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setSpritePosModification(0f, getHeight()/4);
 
         stateMachine = new StateMachine();
@@ -226,10 +224,5 @@ public class Player extends PlayerAnimations
         float forceMagnitude = 10.0f;
         Vector2 force = direction.scl(forceMagnitude * distance);
         fixture.getBody().applyForceToCenter(force, true);
-    }
-
-    public void detach() {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
     }
 }

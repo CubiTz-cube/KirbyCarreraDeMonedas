@@ -20,7 +20,6 @@ public class OtherPlayer extends PlayerAnimations {
     public OtherPlayer(World world, AssetManager assetManager, Rectangle shape, Integer id, String name){
         super(world, shape, assetManager,id);
         this.name = name;
-        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class); // Obtén la fuente del AssetManager
         this.layout = new GlyphLayout();
 
@@ -40,7 +39,6 @@ public class OtherPlayer extends PlayerAnimations {
         filter.maskBits = CollisionFilters.MASK_PLAYER;
         fixture.setFilterData(filter);
 
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setSpritePosModification(0f, getHeight()/4);
     }
 
@@ -57,8 +55,4 @@ public class OtherPlayer extends PlayerAnimations {
         font.draw(batch, layout, getX() - layout.width / 4, getY() + sprite.getHeight() + layout.height/4);
     }
 
-    public void detach(){
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
-    }
 }

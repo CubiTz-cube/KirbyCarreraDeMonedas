@@ -23,7 +23,6 @@ public class BreakBlock extends Entity {
         super(world, shape, assetManager,id);
         type = Type.BREAKBLOCK;
         sprite.setTexture((assetManager.get("world/entities/breakBlock.png")));
-        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -35,8 +34,6 @@ public class BreakBlock extends Entity {
         fixture = body.createFixture(box, 1.5f);
         fixture.setUserData(this);
         box.dispose();
-
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
 
         stateMachine = new StateMachine();
         liveState = new LiveState(this);
@@ -64,11 +61,5 @@ public class BreakBlock extends Entity {
     @Override
     public void act(float delta) {
         stateMachine.update(delta);
-    }
-
-    @Override
-    public void detach() {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
     }
 }

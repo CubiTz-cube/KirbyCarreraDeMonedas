@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import src.screens.GameScreen;
 
+import static src.utils.variables.Constants.PIXELS_IN_METER;
+
 public abstract class ActorBox2d extends Actor {
     protected final World world;
     protected Body body;
@@ -19,6 +21,7 @@ public abstract class ActorBox2d extends Actor {
      */
     public ActorBox2d(World world, Rectangle shape){
         this.world = world;
+        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
     }
 
     public Body getBody() {
@@ -27,5 +30,8 @@ public abstract class ActorBox2d extends Actor {
 
     public void beginContactWith(ActorBox2d actor, GameScreen game){}
 
-    public abstract void detach();
+    public void detach(){
+        body.destroyFixture(fixture);
+        world.destroyBody(body);
+    }
 }

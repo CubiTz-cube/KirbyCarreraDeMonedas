@@ -21,7 +21,6 @@ public class SleepingEnemy extends Enemy
         type = Type.SLEEPY;
         powerUp = PowerUp.Type.SLEEP;
         sprite.setTexture(assetManager.get("yozhi.jpg", Texture.class));
-        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
@@ -40,8 +39,6 @@ public class SleepingEnemy extends Enemy
         filter.maskBits = CollisionFilters.MASK_ENEMY;
         fixture.setFilterData(filter);
 
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
-
         idleState = new IdleStateSleepy(this);
         walkState = new WalkStateSleepy(this);
         setState(StateType.IDLE);
@@ -58,12 +55,5 @@ public class SleepingEnemy extends Enemy
         sprite.setSize(getWidth(), getHeight());
         sprite.setOriginCenter();
         sprite.draw(batch);
-    }
-
-    @Override
-    public void detach()
-    {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
     }
 }

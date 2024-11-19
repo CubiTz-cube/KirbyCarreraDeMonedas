@@ -18,7 +18,6 @@ public class Mirror extends Entity {
     public Mirror(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager,id);
         type = Type.MIRROR;
-        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -31,18 +30,10 @@ public class Mirror extends Entity {
         fixture.setUserData(this);
         box.dispose();
 
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
-
         Animation<TextureRegion> loopAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/mirror/mirrorLoop.png"), 4));
         loopAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         setCurrentAnimation(loopAnimation);
-    }
-
-    @Override
-    public void detach() {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
     }
 }

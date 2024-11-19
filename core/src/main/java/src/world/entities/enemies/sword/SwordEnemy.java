@@ -22,7 +22,6 @@ public class SwordEnemy extends Enemy
         type = Type.SWORD;
         powerUp = PowerUp.Type.SWORD;
         sprite.setTexture(assetManager.get("yoshiSword.png", Texture.class));
-        sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
@@ -41,8 +40,6 @@ public class SwordEnemy extends Enemy
         filter.maskBits = CollisionFilters.MASK_ENEMY;
         fixture.setFilterData(filter);
 
-        setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
-
         idleState = new IdleStateSword(this);
         walkState = new WalkStateSword(this);
         attackState = new AttackStateSword(this);
@@ -60,12 +57,5 @@ public class SwordEnemy extends Enemy
     public void draw(Batch batch, float parentAlpha)
     {
         super.draw(batch, parentAlpha);
-    }
-
-    @Override
-    public void detach()
-    {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
     }
 }
