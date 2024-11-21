@@ -1,6 +1,7 @@
 package src.world.entities.player.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import src.utils.variables.PlayerControl;
 import src.world.entities.player.Player;
 
@@ -13,6 +14,7 @@ public abstract class CanBasicMoveState extends CanMoveState{
     @Override
     public void update(Float delta) {
         super.update(delta);
+        Vector2 velocity = player.getBody().getLinearVelocity();
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
             player.setState(Player.StateType.ABSORB);
@@ -23,6 +25,9 @@ public abstract class CanBasicMoveState extends CanMoveState{
         if (Gdx.input.isKeyPressed(PlayerControl.DOWN)){
             if (player.enemyAbsorded == null) player.setState(Player.StateType.DOWN);
             else player.setState(Player.StateType.CONSUME);
+        }
+        if (velocity.y < -1){
+            player.setState(Player.StateType.FALL);
         }
     }
 }

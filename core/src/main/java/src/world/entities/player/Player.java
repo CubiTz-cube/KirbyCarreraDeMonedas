@@ -34,6 +34,7 @@ public class Player extends PlayerAnimations
     public static final float JUMP_INAIR = 0.35f;
     public static final float FLY_IMPULSE = 6f;
     public static final float DASH_IMPULSE = 15f;
+    public static final float ABSORB_FORCE = 12f;
 
     public enum StateType {
         IDLE,
@@ -117,11 +118,13 @@ public class Player extends PlayerAnimations
 
     public void consumeEnemy() {
         if (enemyAbsorded == null) return;
-        powerUp = switch (enemyAbsorded.getPowerUp()){
-            case SLEEP -> powerSleep;
-            case SWORD -> powerSword;
-            default -> null;
-        };
+        if (enemyAbsorded.getPowerUp() != null){
+            powerUp = switch (enemyAbsorded.getPowerUp()){
+                case SLEEP -> powerSleep;
+                case SWORD -> powerSword;
+                default -> null;
+            };
+        }
         enemyAbsorded = null;
         setState(Player.StateType.IDLE);
         if (powerUp != null) powerUp.start();
@@ -183,11 +186,6 @@ public class Player extends PlayerAnimations
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy) {
-            if (currentStateType == StateType.DASH){
-                game.removeEntity(enemy.getId());
-                return;
-            }
-
             if (currentStateType == StateType.ABSORB){
                 enemyAbsorded = enemy;
                 game.removeEntity(enemy.getId());
@@ -195,9 +193,19 @@ public class Player extends PlayerAnimations
                 return;
             }
 
-            setState(Player.StateType.STUN);
             Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
-            body.applyLinearImpulse(pushDirection.scl(15.0f), body.getWorldCenter(), true);
+            if (currentStateType == StateType.DASH){
+                enemy.takeDamage(1);
+                body.setLinearVelocity(0,0);
+                body.applyLinearImpulse(pushDirection.scl(5f), body.getWorldCenter(), true);
+                body.applyLinearImpulse(0,5f, body.getWorldCenter().x, body.getWorldCenter().y, true);
+                setState(StateType.FALL);
+                return;
+            }
+
+            if (currentStateType == StateType.STUN) return;
+            setState(Player.StateType.STUN);
+            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
 
         } else if (actor instanceof Mirror) {
             game.threadSecureWorld.addModification(() -> {
@@ -218,13 +226,12 @@ public class Player extends PlayerAnimations
         return callback.getHitFixture();
     }
 
-    public void attractFixture(Fixture fixture) {
+    public void attractFixture(Fixture fixture, Float forceMagnitude) {
         Vector2 playerPosition = body.getPosition();
         Vector2 fixturePosition = fixture.getBody().getPosition();
 
         Vector2 direction = playerPosition.cpy().sub(fixturePosition).nor();
         float distance = playerPosition.dst(fixturePosition);
-        float forceMagnitude = 10.0f;
         Vector2 force = direction.scl(forceMagnitude * distance);
         fixture.getBody().applyForceToCenter(force, true);
     }

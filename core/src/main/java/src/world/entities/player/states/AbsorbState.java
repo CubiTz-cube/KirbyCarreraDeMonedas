@@ -22,7 +22,7 @@ public class AbsorbState extends StatePlayer{
 
         if (player.getSprite().isFlipX()) fix = player.detectFrontFixture(-2.5f);
         else fix = player.detectFrontFixture(2.5f);
-        if (fix != null) player.attractFixture(fix);
+        if (fix != null) player.attractFixture(fix, Player.ABSORB_FORCE);
 
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.x != 0) {

@@ -17,6 +17,7 @@ public abstract class PlayerAnimations extends Entity {
         FALLSIMPLE,
         DOWN,
         RUN,
+        CHANGERUN,
         DASH,
         FLY,
         FLYIN,
@@ -38,6 +39,7 @@ public abstract class PlayerAnimations extends Entity {
     protected final Animation<TextureRegion> fallSimpleAnimation;
     protected final Animation<TextureRegion> downAnimation;
     protected final Animation<TextureRegion> runAnimation;
+    protected final Animation<TextureRegion> changeRunAnimation;
     protected final Animation<TextureRegion> dashAnimation;
     protected final Animation<TextureRegion> flyAnimation;
     protected final Animation<TextureRegion> inFlyAnimation;
@@ -79,6 +81,9 @@ public abstract class PlayerAnimations extends Entity {
         runAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyRun.png"), 8));
         runAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        changeRunAnimation = new Animation<>(1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyChangeRun.png"), 1));
 
         dashAnimation = new Animation<>(0.04f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyDash.png"), 2));
@@ -133,6 +138,7 @@ public abstract class PlayerAnimations extends Entity {
             case FALLSIMPLE -> setCurrentAnimation(fallSimpleAnimation);
             case DOWN -> setCurrentAnimation(downAnimation);
             case RUN -> setCurrentAnimation(runAnimation);
+            case CHANGERUN -> setCurrentAnimation(changeRunAnimation);
             case DASH -> setCurrentAnimation(dashAnimation);
             case FLY -> setCurrentAnimation(flyAnimation);
             case FLYIN -> setCurrentAnimation(inFlyAnimation);

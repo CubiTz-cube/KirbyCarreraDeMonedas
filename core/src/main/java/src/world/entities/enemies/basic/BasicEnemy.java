@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import src.screens.GameScreen;
 import src.utils.CollisionFilters;
 import src.utils.animation.SheetCutter;
 import src.world.entities.enemies.Enemy;
@@ -17,13 +18,15 @@ public class BasicEnemy extends Enemy {
 
     public enum AnimationType {
         IDLE,
-        WALK
+        WALK,
+        DAMAGE,
     }
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> walkAnimation;
+    private final Animation<TextureRegion> damageAnimation;
 
-    public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id) {
-        super(world, shape, assetManager,id, Type.BASIC, null);
+    public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+        super(world, shape, assetManager,id, game, Type.BASIC, null,3);
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
         this.layout = new GlyphLayout();
 
@@ -48,6 +51,7 @@ public class BasicEnemy extends Enemy {
 
         idleState = new IdleStateBasic(this);
         walkState = new WalkStateBasic(this);
+        damageState = new DamageStateBasic(this);
         setState(StateType.IDLE);
 
         idleAnimation = new Animation<>(0.12f,
@@ -56,17 +60,18 @@ public class BasicEnemy extends Enemy {
         walkAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/basic/basicWalk.png"), 8));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        damageAnimation = new Animation<>(0.25f,
+            SheetCutter.cutHorizontal(assetManager.get("yoshi.jpg"), 4));
+
         setCurrentAnimation(idleAnimation);
     }
 
     public void setAnimation(AnimationType type){
         switch (type){
-            case IDLE:
-                setCurrentAnimation(idleAnimation);
-                break;
-            case WALK:
-                setCurrentAnimation(walkAnimation);
-                break;
+            case IDLE -> setCurrentAnimation(idleAnimation);
+            case WALK -> setCurrentAnimation(walkAnimation);
+            case DAMAGE -> setCurrentAnimation(damageAnimation);
         }
     }
 

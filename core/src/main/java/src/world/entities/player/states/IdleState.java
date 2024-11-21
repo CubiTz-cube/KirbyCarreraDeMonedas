@@ -20,7 +20,6 @@ public class IdleState extends CanBasicMoveState{
 
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.x != 0) player.setState(Player.StateType.WALK);
-        if(velocity.y < -1f) player.setState(Player.StateType.FALL);
     }
 
     @Override

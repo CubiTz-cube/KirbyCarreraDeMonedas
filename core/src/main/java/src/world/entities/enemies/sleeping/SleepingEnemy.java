@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import src.screens.GameScreen;
 import src.utils.CollisionFilters;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.sleeping.states.*;
@@ -15,9 +16,9 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 public class SleepingEnemy extends Enemy
 {
 
-    public SleepingEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id)
+    public SleepingEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
     {
-        super(world, shape, assetManager,id, Type.SLEEPY, PowerUp.Type.SLEEP);
+        super(world, shape, assetManager,id, game, Type.SLEEPY, PowerUp.Type.SLEEP, 3);
         sprite.setTexture(assetManager.get("yozhi.jpg", Texture.class));
 
         BodyDef def = new BodyDef();
@@ -39,6 +40,7 @@ public class SleepingEnemy extends Enemy
 
         idleState = new IdleStateSleepy(this);
         walkState = new WalkStateSleepy(this);
+        damageState = new DamageStateSleepy(this);
         setState(StateType.IDLE);
     }
 

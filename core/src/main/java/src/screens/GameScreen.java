@@ -57,7 +57,7 @@ public class GameScreen extends BaseScreen {
         super(main);
         actors = new ArrayList<>();
         entities = new HashMap<>();
-        entityFactory = new EntityFactory(main);
+        entityFactory = new EntityFactory(this);
         staticFactory = new StaticFactory(main);
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -211,14 +211,15 @@ public class GameScreen extends BaseScreen {
      */
     private void removeEntity(Entity entity){
         threadSecureWorld.addModification(() -> {
-            if (entities.get(entity.getId()) == null) {
-                System.out.println(ConsoleColor.RED + "Entity " + entity.getId() + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
+            if (entity == null) {
+                System.out.println(ConsoleColor.RED + "Entity no se pudo eliminar , es nulo" + ConsoleColor.RESET);
                 return;
             }
             entities.remove(entity.getId());
             actors.remove(entity);
             stage.getActors().removeValue(entity, true);
             entity.detach();
+            System.out.println("Entity " + entity.getId() + " se mando a eliminar");
         });
     }
 

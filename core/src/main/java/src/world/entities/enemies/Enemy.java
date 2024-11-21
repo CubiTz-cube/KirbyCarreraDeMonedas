@@ -3,6 +3,7 @@ package src.world.entities.enemies;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
+import src.screens.GameScreen;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
 import src.world.entities.player.powers.PowerUp;
@@ -25,15 +26,21 @@ public abstract class Enemy extends Entity {
     protected StateEnemy<?> damageState;
     private Boolean changeState;
 
-    public Float speed;
+    public GameScreen game;
 
-    public Enemy(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, PowerUp.Type powerUp) {
+    public Float speed;
+    private Integer live;
+
+    public Enemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game, Type type, PowerUp.Type powerUp, Integer live) {
         super(world, shape, assetManager,id, type);
+        this.game = game;
+
         this.actCrono = 0f;
         this.powerUp = powerUp;
         stateMachine = new StateMachine();
         speed = 3f;
         changeState = false;
+        this.live = live;
     }
 
     public void setActCrono(Float actCrono) {
@@ -59,6 +66,10 @@ public abstract class Enemy extends Entity {
         }
     }
 
+    public StateType getState() {
+        return state;
+    }
+
     public Boolean checkChangeState() {
         if (changeState) {
             changeState = false;
@@ -67,8 +78,13 @@ public abstract class Enemy extends Entity {
         return false;
     }
 
-    public StateType getState() {
-        return state;
+    public void takeDamage(Integer damage) {
+        live -= damage;
+        setState(StateType.DAMAGE);
+    }
+
+    public Boolean isDead(){
+        return live <= 0;
     }
 
     @Override
