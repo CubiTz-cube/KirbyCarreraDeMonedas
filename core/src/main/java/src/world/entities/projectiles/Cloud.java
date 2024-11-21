@@ -40,12 +40,12 @@ public class Cloud extends Entity {
     public void act(float delta) {
         timeDespawn += delta;
         if (timeDespawn > 0.3f) {
-            game.removeEntity(this.getId());
+            game.removeEntityNoPacket(this.getId());
         }
     }
 
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
-        if (!despawn) game.removeEntity(this.getId()); despawn = true;
+        if (!despawn) game.removeEntityNoPacket(this.getId()); despawn = true;
     }
 }
