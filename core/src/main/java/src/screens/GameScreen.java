@@ -5,9 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
@@ -23,6 +25,7 @@ import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
 import src.main.Main;
+import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
 
 import java.util.ArrayList;
@@ -39,6 +42,7 @@ public class GameScreen extends BaseScreen {
 
     public final EntityFactory entityFactory;
     public final StaticFactory staticFactory;
+    public final ParticleFactory particleFactory;
 
     private Player player;
     private final ArrayList<ActorBox2d> actors;
@@ -57,8 +61,10 @@ public class GameScreen extends BaseScreen {
         super(main);
         actors = new ArrayList<>();
         entities = new HashMap<>();
+
         entityFactory = new EntityFactory(this);
-        staticFactory = new StaticFactory(main);
+        staticFactory = new StaticFactory();
+        particleFactory = new ParticleFactory();
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         world = new World(new Vector2(0, -30f), true);
@@ -118,11 +124,9 @@ public class GameScreen extends BaseScreen {
         });
     }
 
-    public void addActor(ActorBox2d actor){
-        if (actor instanceof Entity e){
-            entities.put(e.getId(), e);
-        }
-        actors.add(actor);
+    public void addActor(Actor actor){
+        if (actor instanceof Entity e) entities.put(e.getId(), e);
+        if (actor instanceof ActorBox2d a) actors.add(a);
         stage.addActor(actor);
     }
 
@@ -206,21 +210,26 @@ public class GameScreen extends BaseScreen {
     }
 
     /**
-     * Elimina una entidad del juego. Sin enviar paquete.
-     * @param entity Entidad a eliminar.
+     * Elimina un actor del juego. Sin enviar paquete.
+     * @param actor Actor a eliminar.
      */
-    private void removeEntity(Entity entity){
+    public void removeActorBox2d(ActorBox2d actor){
         threadSecureWorld.addModification(() -> {
-            if (entity == null) {
-                System.out.println(ConsoleColor.RED + "Entity no se pudo eliminar , es nulo" + ConsoleColor.RESET);
+            if (actor == null) {
+                System.out.println(ConsoleColor.RED + "Actor no se pudo eliminar , es nulo" + ConsoleColor.RESET);
                 return;
             }
-            entities.remove(entity.getId());
-            actors.remove(entity);
-            stage.getActors().removeValue(entity, true);
-            entity.detach();
-            System.out.println("Entity " + entity.getId() + " se mando a eliminar");
+            if (actor instanceof Entity e) {
+                entities.remove(e.getId());
+            }
+            actors.remove(actor);
+            removeActor(actor);
+            actor.detach();
         });
+    }
+
+    public void removeActor(Actor actor){
+        stage.getActors().removeValue(actor, true);
     }
 
     /**
@@ -234,7 +243,7 @@ public class GameScreen extends BaseScreen {
             return;
         }
         sendPacket(Packet.removeEntity(entity.getId()));
-        removeEntity(entity);
+        removeActorBox2d(entity);
     }
 
     /**
@@ -247,7 +256,13 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
             return;
         }
-        removeEntity(entity);
+        removeActorBox2d(entity);
+    }
+
+    public void addParticle(ParticleFactory.Type type, Vector2 position){
+        threadSecureWorld.addModification(() -> {
+            addActor(particleFactory.create(type, position, this));
+        });
     }
 
     public void clearAll(){
@@ -270,14 +285,14 @@ public class GameScreen extends BaseScreen {
                 player.getBody().setLinearVelocity(0,0);
                 player.setState(Player.StateType.IDLE);
             });
-            return;
-        }
-        tiledManager.makeMap();
-        addMainPlayer();
-        if (main.server != null || main.client == null){
-            tiledManager.makeEntities();
-            Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
-            addEntity(Entity.Type.MIRROR, position);
+        }else{
+            tiledManager.makeMap();
+            addMainPlayer();
+            if (main.server != null || main.client == null){
+                tiledManager.makeEntities();
+                Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
+                addEntity(Entity.Type.MIRROR, position);
+            }
         }
     }
 
@@ -322,7 +337,8 @@ public class GameScreen extends BaseScreen {
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
 
         camera.zoom = 1.3f;
-        camera.position.set(player.getX(), player.getY(), 0);
+        camera.position.x = MathUtils.lerp(camera.position.x, player.getX(), 0.2f);
+        camera.position.y = MathUtils.lerp(camera.position.y, player.getY(), 0.3f);
         camera.update();
         tiledRenderer.setView(camera);
         tiledRenderer.render();

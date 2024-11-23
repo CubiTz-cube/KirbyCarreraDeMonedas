@@ -81,6 +81,7 @@ public class Main extends Game {
         assetManager.load("world/entities/mirror/mirrorLoop.png", Texture.class);
         assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
         assetManager.load("world/entities/basic/basicWalk.png", Texture.class);
+        assetManager.load("world/particles/cloudParticle.png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");

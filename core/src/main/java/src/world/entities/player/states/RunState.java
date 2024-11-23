@@ -5,10 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import src.utils.variables.PlayerControl;
 import src.world.entities.player.Player;
 import src.world.entities.player.PlayerAnimations;
+import src.world.particles.ParticleFactory;
 
 public class RunState extends CanBasicMoveState{
     private Boolean isLeft = false;
-    private Float time = 0f;
+    private Float timeInverse = 0f, timeParticle = 0f, timeActivateParticle = 0f;
 
     public RunState(Player player) {
         super(player);
@@ -24,6 +25,7 @@ public class RunState extends CanBasicMoveState{
         player.getBody().applyLinearImpulse(player.isFlipX() ? -2 : 2, 0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
 
         isLeft = player.isFlipX();
+        timeActivateParticle = 0.3f;
     }
 
     @Override
@@ -35,17 +37,31 @@ public class RunState extends CanBasicMoveState{
             player.setState(Player.StateType.IDLE);
         }
 
-        if (player.getCurrentAnimationType() == Player.AnimationType.CHANGERUN) time += delta;
-        if (time > 0.3f){
+        if (timeActivateParticle > 0){
+            timeActivateParticle -= delta;
+            timeParticle += delta;
+            if (timeParticle > 0.1f){
+                float X;
+                if (player.getCurrentAnimationType() == Player.AnimationType.CHANGERUN) X = player.getBody().getPosition().x + (isLeft ? -0.8f : 0.8f);
+                else X = player.getBody().getPosition().x + (isLeft ? 0.8f : -0.8f);
+                player.game.addParticle(ParticleFactory.Type.CLOUD, new Vector2(X, player.getBody().getPosition().y-0.1f));
+                timeParticle = 0f;
+            }
+        }
+
+        if (player.getCurrentAnimationType() == Player.AnimationType.CHANGERUN) timeInverse += delta;
+        if (timeInverse > 0.3f){
             player.setAnimation(Player.AnimationType.RUN);
-            time = 0f;
+            timeInverse = 0f;
         }
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.LEFT) && !isLeft){
             player.setAnimation(Player.AnimationType.CHANGERUN);
+            timeActivateParticle = 0.3f;
             isLeft = true;
         }else if (Gdx.input.isKeyJustPressed(PlayerControl.RIGHT) && isLeft){
             player.setAnimation(Player.AnimationType.CHANGERUN);
+            timeActivateParticle = 0.3f;
             isLeft = false;
         }
     }

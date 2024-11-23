@@ -7,13 +7,8 @@ import src.main.Main;
 import src.world.ActorBox2d;
 
 public class StaticFactory {
-    private final Main game;
     public enum Type{
         FLOOR
-    }
-
-    public StaticFactory(Main game){
-        this.game = game;
     }
 
     public ActorBox2d create(Type actor, World world, Rectangle shape){
