@@ -2,11 +2,14 @@ package src.world.entities.projectiles;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.utils.animation.SheetCutter;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 
@@ -20,7 +23,7 @@ public class Cloud extends Entity {
         this.game = game;
         timeDespawn = 0f;
         despawn = false;
-        sprite.setTexture(assetManager.get("yoshi.jpg", Texture.class));
+        setDebug(true);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
@@ -34,6 +37,10 @@ public class Cloud extends Entity {
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
+
+        Animation<TextureRegion> cloudAnimation = new Animation<>(0.08f,
+            SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 5));
+        setCurrentAnimation(cloudAnimation);
     }
 
     @Override
