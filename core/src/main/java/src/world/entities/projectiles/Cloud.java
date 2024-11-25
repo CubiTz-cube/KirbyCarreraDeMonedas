@@ -23,7 +23,6 @@ public class Cloud extends Entity {
         this.game = game;
         timeDespawn = 0f;
         despawn = false;
-        setDebug(true);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);

@@ -19,7 +19,7 @@ public abstract class Enemy extends Entity {
         ATTACK,
         DAMAGE
     }
-    private StateType state;
+    private StateType currentStateType;
     protected StateEnemy<?> idleState;
     protected StateEnemy<?> walkState;
     protected StateEnemy<?> attackState;
@@ -56,7 +56,7 @@ public abstract class Enemy extends Entity {
     }
 
     public void setState(StateType state){
-        this.state = state;
+        currentStateType = state;
         changeState = true;
         switch (state){
             case IDLE -> stateMachine.setState(idleState);
@@ -66,8 +66,8 @@ public abstract class Enemy extends Entity {
         }
     }
 
-    public StateType getState() {
-        return state;
+    public StateType getCurrentStateType() {
+        return currentStateType;
     }
 
     public Boolean checkChangeState() {

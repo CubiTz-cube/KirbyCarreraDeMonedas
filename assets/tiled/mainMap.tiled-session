@@ -6,6 +6,7 @@
     "activeFile": "maps/gameMap.tmx",
     "expandedProjectPaths": [
     ],
+    "file.lastUsedOpenFilter": "Todos los archivos (*)",
     "fileStates": {
         "maps/Bosque.tsx": {
             "scaleInDock": 1
@@ -14,7 +15,13 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "maps/backForest.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "maps/cemetery.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -65,9 +72,9 @@
         },
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
+                6,
                 3,
-                4,
-                6
+                4
             ],
             "scale": 0.75,
             "selectedLayer": 6,
@@ -80,6 +87,7 @@
             "scaleInDock": 1
         },
         "maps/temple.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -88,7 +96,7 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/dacm/Documents/CODE/KB-92/assets/tiled/tiledSets",
+    "last.imagePath": "C:/Users/German Carreño/Documents/CODE/KB-92/assets/background",
     "map.height": 160,
     "map.lastUsedFormat": "tmx",
     "map.renderOrder": "2",
@@ -102,6 +110,7 @@
     "project": "",
     "property.type": "color",
     "recentFiles": [
+        "maps/backForest.tsx",
         "maps/mainMap.tmx",
         "maps/gameMap.tmx",
         "maps/village.tsx",
@@ -117,5 +126,6 @@
     "tileset.tileSize": {
         "height": 16,
         "width": 16
-    }
+    },
+    "tileset.type": 1
 }

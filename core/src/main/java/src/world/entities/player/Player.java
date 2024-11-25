@@ -33,7 +33,7 @@ public class Player extends PlayerAnimations
     public static final float JUMP_IMPULSE = 8f;
     public static final float JUMP_INAIR = 0.35f;
     public static final float FLY_IMPULSE = 6f;
-    public static final float DASH_IMPULSE = 15f;
+    public static final float DASH_IMPULSE = 18f;
     public static final float ABSORB_FORCE = 12f;
 
     public enum StateType {
@@ -194,7 +194,7 @@ public class Player extends PlayerAnimations
             }
 
             Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
-            if (currentStateType == StateType.DASH){
+            if (currentStateType == StateType.DASH && enemy.getCurrentStateType() != Enemy.StateType.DAMAGE){
                 enemy.takeDamage(1);
                 body.setLinearVelocity(0,0);
                 body.applyLinearImpulse(pushDirection.scl(5f), body.getWorldCenter(), true);

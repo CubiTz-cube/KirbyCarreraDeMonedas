@@ -321,7 +321,7 @@ public class GameScreen extends BaseScreen {
                 if (e instanceof OtherPlayer) continue;
                 main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
                 if (!(e instanceof Enemy enemy)) continue;
-                if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getState(), enemy.getActCrono(), enemy.isFlipX()));
+                if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX()));
             }
             sendTime = 0f;
         }
