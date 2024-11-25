@@ -196,8 +196,8 @@ public class GameScreen extends BaseScreen {
             return;
         }
         enemy.setState(state);
-        enemy.setActCrono(cronno);
         enemy.setFlipX(flipX);
+        enemy.setActCrono(cronno);
     }
 
     public void actBreakBlock(Integer id, BreakBlock.StateType stateType){
@@ -256,6 +256,7 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
             return;
         }
+        System.out.println("Remove Entity no pack " + id);
         removeActorBox2d(entity);
     }
 
@@ -321,6 +322,7 @@ public class GameScreen extends BaseScreen {
                 if (e instanceof OtherPlayer) continue;
                 main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
                 if (!(e instanceof Enemy enemy)) continue;
+                if (enemy.getCurrentStateType() == Enemy.StateType.IDLE) continue;
                 if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX()));
             }
             sendTime = 0f;
