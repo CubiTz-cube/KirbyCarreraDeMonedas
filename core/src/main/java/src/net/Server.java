@@ -19,7 +19,7 @@ public class Server implements Runnable{
     private final Integer port;
     private Boolean running;
     private final CopyOnWriteArrayList<ClientListener> users;
-    private final ExecutorService pool = Executors.newFixedThreadPool(4);
+    private final ExecutorService pool = Executors.newFixedThreadPool(32);
     private final ServerSocket serverSocket;
 
     public Server(GameScreen game, String ip, Integer port){

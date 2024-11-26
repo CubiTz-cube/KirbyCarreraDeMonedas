@@ -119,7 +119,8 @@ public class Client implements Runnable{
                         Enemy.StateType state = (Enemy.StateType) pack[2];
                         float cronno = (Float) pack[3];
                         flipX = (Boolean) pack[4];
-                        game.actStateEnemy(packId, state,cronno, flipX);
+                        Vector2 forces = (Vector2) pack[5];
+                        game.actStateEnemy(packId, state,cronno, flipX, forces);
                         break;
                     case ACTOTHERPLAYER:
                         packId = (Integer) pack[1];

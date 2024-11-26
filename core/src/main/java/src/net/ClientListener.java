@@ -1,6 +1,7 @@
 package src.net;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import src.net.packets.Packet;
 
 import java.io.EOFException;
@@ -89,7 +90,8 @@ public class ClientListener implements Runnable{
                         Enemy.StateType state = (Enemy.StateType) pack[2];
                         float cronno = (Float) pack[3];
                         flipX = (Boolean) pack[4];
-                        server.sendAll(Packet.actEnemy(packId, state, cronno, flipX), id);
+                        Vector2 forces = (Vector2) pack[5];
+                        server.sendAll(Packet.actEnemy(packId, state, cronno, flipX, forces), id);
                         break;
                     case ACTOTHERPLAYER:
                         //Integer packId = (Integer) pack[1]; Devuelve -1

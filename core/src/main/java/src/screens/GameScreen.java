@@ -189,7 +189,7 @@ public class GameScreen extends BaseScreen {
         threadSecureWorld.addModification(() -> body.setTransform(x, y, 0));
     }
 
-    public void actStateEnemy(Integer id, Enemy.StateType state,Float cronno, Boolean flipX){
+    public void actStateEnemy(Integer id, Enemy.StateType state,Float cronno, Boolean flipX, Vector2 forces){
         Enemy enemy = (Enemy) entities.get(id);
         if (enemy == null) {
             System.out.println("Entity " + id + " no encontrada en la lista");
@@ -198,6 +198,7 @@ public class GameScreen extends BaseScreen {
         enemy.setState(state);
         enemy.setActCrono(cronno);
         enemy.setFlipX(flipX);
+        threadSecureWorld.addModification(() -> enemy.getBody().setLinearVelocity(forces));
     }
 
     public void actBreakBlock(Integer id, BreakBlock.StateType stateType){
@@ -321,7 +322,8 @@ public class GameScreen extends BaseScreen {
                 if (e instanceof OtherPlayer) continue;
                 main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
                 if (!(e instanceof Enemy enemy)) continue;
-                if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX()));
+                if (enemy.getCurrentStateType() == Enemy.StateType.IDLE) continue;
+                if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX(), enemy.getBody().getLinearVelocity()));
             }
             sendTime = 0f;
         }
