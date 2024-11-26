@@ -196,9 +196,9 @@ public class GameScreen extends BaseScreen {
             return;
         }
         enemy.setState(state);
-        enemy.setActCrono(cronno);
         enemy.setFlipX(flipX);
         threadSecureWorld.addModification(() -> enemy.getBody().setLinearVelocity(forces));
+        enemy.setActCrono(cronno);
     }
 
     public void actBreakBlock(Integer id, BreakBlock.StateType stateType){
@@ -257,6 +257,7 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
             return;
         }
+        System.out.println("Remove Entity no pack " + id);
         removeActorBox2d(entity);
     }
 
