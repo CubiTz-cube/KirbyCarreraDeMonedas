@@ -2,6 +2,7 @@ package src.world.entities.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -21,6 +22,9 @@ public class Player extends PlayerCommon {
     public Enemy enemyAbsorded;
 
     public final GameScreen game;
+
+    private Float invencibleTime;
+    private Boolean invencible;
 
     public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game) {
         super(world, shape, assetManager, -1);
@@ -48,6 +52,8 @@ public class Player extends PlayerCommon {
         setCurrentState(StateType.IDLE);
 
         changeAnimation = false;
+        invencibleTime = 0f;
+        invencible = false;
     }
 
     private void initStates(){
@@ -93,9 +99,24 @@ public class Player extends PlayerCommon {
         changeAnimation = true;
     }
 
+    public void setInvencible(Float time) {
+        invencible = true;
+        sprite.setColor(Color.GOLD);
+        invencibleTime = time;
+    }
+
+    public Boolean isInvencible(){
+        return invencible;
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
+        if (invencibleTime > 0) invencibleTime -= delta;
+        else if (invencible){
+            sprite.setColor(Color.WHITE);
+            invencible = false;
+        }
         Vector2 velocity = body.getLinearVelocity();
 
         if (getCurrentStateType() == StateType.DASH || getCurrentStateType() == StateType.STUN) return;
@@ -125,7 +146,7 @@ public class Player extends PlayerCommon {
                 return;
             }
 
-            if (getCurrentStateType() == StateType.STUN) return;
+            if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
 
