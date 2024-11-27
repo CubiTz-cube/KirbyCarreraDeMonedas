@@ -667,7 +667,7 @@
   <object id="143" name="Espejo" type="MIRROR" x="272" y="2048" width="32" height="32"/>
  </objectgroup>
  <objectgroup color="#ff5500" id="6" name="entity">
-  <object id="26" name="Enemigo Basico" type="BASIC" x="704" y="1968" width="16" height="16"/>
+  <object id="26" name="Enemigo Basico" type="BASIC" x="1360" y="1968" width="16" height="16"/>
   <object id="102" name="breakBlock" type="BREAKBLOCK" x="816" y="1968" width="16" height="16"/>
   <object id="104" name="breakBlock" type="BREAKBLOCK" x="832" y="1968" width="16" height="16"/>
   <object id="105" name="breakBlock" type="BREAKBLOCK" x="848" y="1968" width="16" height="16"/>
@@ -681,7 +681,7 @@
   <object id="127" name="fallBlock" type="FALLBLOCK" x="1120" y="1984" width="16" height="16"/>
   <object id="128" name="fallBlock" type="FALLBLOCK" x="1136" y="1984" width="16" height="16"/>
   <object id="153" name="Enemigo Durmiente" type="SLEEPY" x="1328" y="1968" width="16" height="16"/>
-  <object id="155" name="Enemigo Espada" type="SWORD" x="640" y="1904" width="16" height="16"/>
+  <object id="155" name="Enemigo Espada" type="SWORD" x="1392" y="1968" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="static">
   <object id="1" x="432" y="1936" width="48" height="96"/>

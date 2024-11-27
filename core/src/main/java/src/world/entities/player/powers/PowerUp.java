@@ -15,9 +15,7 @@ public abstract class PowerUp
         this.player = player;
     }
 
-    public void start(){
-        player.setCurrentState(Player.StateType.IDLE);
-    };
+    public abstract void start();
 
     public abstract void actionIdle();
 

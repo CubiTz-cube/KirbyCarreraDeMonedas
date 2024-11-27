@@ -211,6 +211,45 @@ public abstract class PlayerCommon extends Entity {
         absorbRunAnimation.setPlayMode(Animation.PlayMode.LOOP);
     }
 
+    public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
+        this.secondCurrentAnimation = secondCurrentAnimation;
+    }
+
+    public void setAnimation(AnimationType animationType){
+        currentAnimationType = animationType;
+
+        if (currentPowerUp != null){
+            setSecondCurrentAnimation(currentPowerUp.getSecondAnimation(animationType));
+        }
+
+        switch (animationType){
+            case IDLE -> setCurrentAnimation(idleAnimation);
+            case WALK -> setCurrentAnimation(walkAnimation);
+            case JUMP -> setCurrentAnimation(jumpAnimation);
+            case FALL -> setCurrentAnimation(fallAnimation);
+            case FALLSIMPLE -> setCurrentAnimation(fallSimpleAnimation);
+            case DOWN -> setCurrentAnimation(downAnimation);
+            case RUN -> setCurrentAnimation(runAnimation);
+            case CHANGERUN -> setCurrentAnimation(changeRunAnimation);
+            case DASH -> setCurrentAnimation(dashAnimation);
+            case FLY -> setCurrentAnimation(flyAnimation);
+            case FLYIN -> setCurrentAnimation(inFlyAnimation);
+            case FLYUP -> setCurrentAnimation(upFlyAnimation);
+            case FLYEND -> setCurrentAnimation(flyEndAnimation);
+            case ABSORB -> setCurrentAnimation(absorbAnimation);
+            case DAMAGE -> setCurrentAnimation(damageAnimation);
+            case CONSUME -> setCurrentAnimation(consumeAnimation);
+            case SLEEP -> setCurrentAnimation(sleepAnimation);
+            case ABSORBIDLE -> setCurrentAnimation(absorbIdleAnimation);
+            case ABSORBWALK -> setCurrentAnimation(absorbWalkAnimation);
+            case ABSORBRUN -> setCurrentAnimation(absorbRunAnimation);
+        }
+    }
+
+    public AnimationType getCurrentAnimationType() {
+        return currentAnimationType;
+    }
+
     public void setCurrentState(Player.StateType stateType){
         currentStateType = stateType;
         switch (stateType){
@@ -265,45 +304,6 @@ public abstract class PlayerCommon extends Entity {
     @Override
     public void act(float delta) {
         stateMachine.update(delta);
-    }
-
-    public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
-        this.secondCurrentAnimation = secondCurrentAnimation;
-    }
-
-    public void setAnimation(AnimationType animationType){
-        currentAnimationType = animationType;
-
-        if (currentPowerUp != null){
-            setSecondCurrentAnimation(currentPowerUp.getSecondAnimation(animationType));
-        }
-
-        switch (animationType){
-            case IDLE -> setCurrentAnimation(idleAnimation);
-            case WALK -> setCurrentAnimation(walkAnimation);
-            case JUMP -> setCurrentAnimation(jumpAnimation);
-            case FALL -> setCurrentAnimation(fallAnimation);
-            case FALLSIMPLE -> setCurrentAnimation(fallSimpleAnimation);
-            case DOWN -> setCurrentAnimation(downAnimation);
-            case RUN -> setCurrentAnimation(runAnimation);
-            case CHANGERUN -> setCurrentAnimation(changeRunAnimation);
-            case DASH -> setCurrentAnimation(dashAnimation);
-            case FLY -> setCurrentAnimation(flyAnimation);
-            case FLYIN -> setCurrentAnimation(inFlyAnimation);
-            case FLYUP -> setCurrentAnimation(upFlyAnimation);
-            case FLYEND -> setCurrentAnimation(flyEndAnimation);
-            case ABSORB -> setCurrentAnimation(absorbAnimation);
-            case DAMAGE -> setCurrentAnimation(damageAnimation);
-            case CONSUME -> setCurrentAnimation(consumeAnimation);
-            case SLEEP -> setCurrentAnimation(consumeAnimation);
-            case ABSORBIDLE -> setCurrentAnimation(absorbIdleAnimation);
-            case ABSORBWALK -> setCurrentAnimation(absorbWalkAnimation);
-            case ABSORBRUN -> setCurrentAnimation(absorbRunAnimation);
-        }
-    }
-
-    public AnimationType getCurrentAnimationType() {
-        return currentAnimationType;
     }
 
     public Fixture detectFrontFixture(float distance) {

@@ -1,6 +1,7 @@
 package src.world.entities.player.states;
 
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class ConsumeState extends StatePlayer{
 
@@ -15,7 +16,6 @@ public class ConsumeState extends StatePlayer{
 
     @Override
     public void update(Float delta) {
-
         if (player.isAnimationFinish()) player.consumeEnemy();
     }
 

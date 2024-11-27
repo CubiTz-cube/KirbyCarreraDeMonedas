@@ -12,6 +12,7 @@ import src.utils.variables.PlayerControl;
 import src.world.ActorBox2d;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.mirror.Mirror;
+import src.world.entities.player.powers.PowerUp;
 import src.world.entities.player.states.*;
 
 public class Player extends PlayerCommon {
@@ -65,8 +66,10 @@ public class Player extends PlayerCommon {
 
     public void consumeEnemy() {
         if (enemyAbsorded == null) return;
-        setCurrentPowerUp(enemyAbsorded.getPowerUp());
+        PowerUp.Type powerType = enemyAbsorded.getPowerUp();
         enemyAbsorded = null;
+        setCurrentState(PlayerCommon.StateType.IDLE);
+        setCurrentPowerUp(powerType);
     }
 
     @Override

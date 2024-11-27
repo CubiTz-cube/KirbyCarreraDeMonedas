@@ -18,7 +18,6 @@ public class PowerSleep extends PowerUp {
 
     @Override
     public void start() {
-        super.start();
         player.stunTime = 5;
         player.setCurrentState(Player.StateType.STUN);
         player.setAnimation(Player.AnimationType.SLEEP);
