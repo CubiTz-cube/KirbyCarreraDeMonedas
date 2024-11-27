@@ -39,9 +39,9 @@ public class Player extends PlayerCommon {
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
-        PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width/4, shape.height/4);
-        fixture = body.createFixture(box, 1.5f);
+        CircleShape box = new CircleShape();
+        box.setRadius(shape.width/4);
+        fixture = body.createFixture(box, 1.9f);
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);

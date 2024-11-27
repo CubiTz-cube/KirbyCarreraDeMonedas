@@ -2,7 +2,8 @@ package src.net.packets;
 
 import com.badlogic.gdx.math.Vector2;
 import src.world.entities.Entity;
-import src.world.entities.staticEntity.breakBlocks.BreakBlock;
+import src.world.entities.staticEntity.blocks.Block;
+import src.world.entities.staticEntity.blocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 
@@ -43,7 +44,7 @@ public class Packet {
         return new Object[]{Types.ACTOTHERPLAYER, id, animationType, flipX};
     }
 
-    public static Object[] actBreakBlock(Integer id, BreakBlock.StateType stateType){
+    public static Object[] actBlock(Integer id, Block.StateType stateType){
         return new Object[]{Types.ACTBREAKBLOCK, id, stateType};
     }
 

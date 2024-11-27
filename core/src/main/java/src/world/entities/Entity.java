@@ -24,9 +24,9 @@ public abstract class Entity extends SpriteActorBox2d {
         PLATFORMRU,
         PLATOFRMRD,
         PLATFORMLU,
-        PLATFORMLD
+        PLATFORMLD,
+        FALLBLOCK,
         //WATERIMPULSE,
-        //FALLBLOCK,
     }
     protected Type type;
     private final Integer id;

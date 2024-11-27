@@ -22,7 +22,7 @@ import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
-import src.world.entities.staticEntity.breakBlocks.BreakBlock;
+import src.world.entities.staticEntity.blocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.staticEntity.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
@@ -109,7 +109,6 @@ public class GameScreen extends BaseScreen {
 
     public void setScore(Integer score) {
         this.score = score;
-        System.out.println("Score: " + score);
     }
 
     public Integer getScore() {
@@ -393,7 +392,7 @@ public class GameScreen extends BaseScreen {
             if (actor instanceof BreakBlock breakBlock) {
                 if (player.getCurrentStateType() == Player.StateType.DASH) {
                     if (player.getSprite().getBoundingRectangle().overlaps(breakBlock.getSprite().getBoundingRectangle())) {
-                        sendPacket(Packet.actBreakBlock(breakBlock.getId(), BreakBlock.StateType.BREAK));
+                        sendPacket(Packet.actBlock(breakBlock.getId(), BreakBlock.StateType.BREAK));
                         breakBlock.setState(BreakBlock.StateType.BREAK);
                     }
                 }
