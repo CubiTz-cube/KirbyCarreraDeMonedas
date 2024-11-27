@@ -14,6 +14,7 @@ public abstract class Entity extends SpriteActorBox2d {
         SWORD,
         MIRROR,
         CLOUD,
+        STAR,
         BREAKBLOCK,
         PLATFORMXR,
         PLATFORMXL,

@@ -12,6 +12,7 @@ import src.world.entities.enemies.sleeping.SleepingEnemy;
 import src.world.entities.enemies.sword.SwordEnemy;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.projectiles.Cloud;
+import src.world.entities.projectiles.Star;
 
 public class EntityFactory {
     private final GameScreen game;
@@ -28,6 +29,7 @@ public class EntityFactory {
             case SWORD -> new SwordEnemy(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id);
             case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXR, new Vector2(1,0));
             case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXL, new Vector2(-1,0));

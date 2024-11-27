@@ -62,6 +62,7 @@ public class Player extends PlayerCommon {
         runState = new RunState(this);
         stunState = new StunState(this);
         consumeState = new ConsumeState(this);
+        starState = new StarState(this);
     }
 
     public void consumeEnemy() {

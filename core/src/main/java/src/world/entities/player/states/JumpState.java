@@ -22,8 +22,9 @@ public class JumpState extends CanMoveState{
     public void update(Float delta) {
         super.update(delta);
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
-            player.setCurrentState(Player.StateType.ABSORB);
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
+            if (player.enemyAbsorded == null) player.setCurrentState(Player.StateType.ABSORB);
+            else player.setCurrentState(Player.StateType.STAR);
         }
 
         if (jumpTime < Player.MAX_JUMP_TIME && Gdx.input.isKeyPressed(PlayerControl.JUMP)){

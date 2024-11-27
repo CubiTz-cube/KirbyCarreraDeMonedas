@@ -1,7 +1,6 @@
 package src.world.entities.player;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,7 +20,7 @@ import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public abstract class PlayerCommon extends Entity {
     private Animation<TextureRegion> secondCurrentAnimation;
-    private Sprite secondSprite;
+    private final Sprite secondSprite;
 
     public float speed = 12;
     public float maxSpeed = 6;
@@ -50,9 +49,10 @@ public abstract class PlayerCommon extends Entity {
         ABSORB,
         STUN,
         CONSUME,
+        STAR,
     }
     private StateType currentStateType;
-    private StateMachine stateMachine;
+    private final StateMachine stateMachine;
     protected IdleState idleState;
     protected JumpState jumpState;
     protected WalkState walkState;
@@ -64,6 +64,7 @@ public abstract class PlayerCommon extends Entity {
     protected RunState runState;
     protected StunState stunState;
     protected ConsumeState consumeState;
+    protected StarState starState;
 
     public enum AnimationType {
         IDLE,
@@ -264,6 +265,7 @@ public abstract class PlayerCommon extends Entity {
             case ABSORB -> stateMachine.setState(absorbState);
             case STUN -> stateMachine.setState(stunState);
             case CONSUME -> stateMachine.setState(consumeState);
+            case STAR -> stateMachine.setState(starState);
         }
     }
 

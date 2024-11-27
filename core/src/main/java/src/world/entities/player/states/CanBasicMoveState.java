@@ -16,8 +16,9 @@ public abstract class CanBasicMoveState extends CanMoveState{
         super.update(delta);
         Vector2 velocity = player.getBody().getLinearVelocity();
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
-            player.setCurrentState(Player.StateType.ABSORB);
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
+            if (player.enemyAbsorded == null) player.setCurrentState(Player.StateType.ABSORB);
+            else player.setCurrentState(Player.StateType.STAR);
         }
         if (Gdx.input.isKeyPressed(PlayerControl.JUMP) && player.getBody().getLinearVelocity().y == 0){
             player.setCurrentState(Player.StateType.JUMP);

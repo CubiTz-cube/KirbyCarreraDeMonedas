@@ -21,8 +21,9 @@ public class FallState extends CanMoveState
     public void update(Float delta) {
         super.update(delta);
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
-            player.setCurrentState(Player.StateType.ABSORB);
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
+            if (player.enemyAbsorded == null) player.setCurrentState(Player.StateType.ABSORB);
+            else player.setCurrentState(Player.StateType.STAR);
         }
 
         Vector2 velocity = player.getBody().getLinearVelocity();
@@ -30,7 +31,7 @@ public class FallState extends CanMoveState
             if (velocity.x == 0)  player.setCurrentState(Player.StateType.IDLE);
             else player.setCurrentState(Player.StateType.WALK);
         }
-        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP)){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP) && player.enemyAbsorded == null){
             player.setCurrentState(Player.StateType.FLY);
         }
     }

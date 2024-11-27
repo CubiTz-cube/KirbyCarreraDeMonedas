@@ -1,7 +1,6 @@
 package src.world.entities.projectiles;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,15 +9,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
-import src.world.ActorBox2d;
-import src.world.entities.Entity;
 
-public class Cloud extends Projectil {
-    private Float timeDespawn;
-
-    public Cloud(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager, id, Type.CLOUD, game);
-        timeDespawn = 0f;
+public class Star extends Projectil{
+    public Star(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+        super(world, shape, assetManager, id, Type.STAR, game);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
@@ -38,13 +32,5 @@ public class Cloud extends Projectil {
         Animation<TextureRegion> cloudAnimation = new Animation<>(0.08f,
             SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 5));
         setCurrentAnimation(cloudAnimation);
-    }
-
-    @Override
-    public void act(float delta) {
-        timeDespawn += delta;
-        if (timeDespawn > 0.3f) {
-            game.removeEntityNoPacket(this.getId());
-        }
     }
 }

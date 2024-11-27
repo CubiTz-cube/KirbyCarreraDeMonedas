@@ -17,15 +17,16 @@ public class DownState  extends StatePlayer{
 
     @Override
     public void update(Float delta) {
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
+            if (player.enemyAbsorded == null) player.setCurrentState(Player.StateType.ABSORB);
+            else player.setCurrentState(Player.StateType.STAR);
+        }
+
         float velocityX = player.getBody().getLinearVelocity().x;
 
         if (velocityX != 0) player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
 
         if (!Gdx.input.isKeyPressed(PlayerControl.DOWN)) player.setCurrentState(Player.StateType.IDLE);
-
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null) {
-            player.setCurrentState(Player.StateType.ABSORB);
-        }
 
         if (velocityX > 5 || Gdx.input.isKeyJustPressed(PlayerControl.RIGHT)) {
             player.setFlipX(false);

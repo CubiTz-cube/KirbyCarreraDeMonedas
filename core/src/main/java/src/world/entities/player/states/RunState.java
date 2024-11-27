@@ -14,10 +14,14 @@ public class RunState extends CanBasicMoveState{
         super(player);
     }
 
-    @Override
-    public void start() {
+    private void playRunAnimation(){
         if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.RUN);
         else player.setAnimation(Player.AnimationType.ABSORBRUN);
+    }
+
+    @Override
+    public void start() {
+        playRunAnimation();
 
         player.speed =  Player.RUN_SPEED;
         player.maxSpeed =  Player.RUN_MAX_SPEED;
@@ -50,9 +54,11 @@ public class RunState extends CanBasicMoveState{
 
         if (player.getCurrentAnimationType() == Player.AnimationType.CHANGERUN) timeInverse += delta;
         if (timeInverse > 0.3f){
-            player.setAnimation(Player.AnimationType.RUN);
+            playRunAnimation();
             timeInverse = 0f;
         }
+
+        if (player.enemyAbsorded != null) return;
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.LEFT) && !isLeft){
             player.setAnimation(Player.AnimationType.CHANGERUN);
