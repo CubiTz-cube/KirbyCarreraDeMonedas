@@ -19,7 +19,7 @@ public class StunState extends StatePlayer{
     public void update(Float delta) {
         time += delta;
         if (time > player.stunTime) {
-            player.setState(Player.StateType.IDLE);
+            player.setCurrentState(Player.StateType.IDLE);
         }
         float velocityX = player.getBody().getLinearVelocity().x;
         if (velocityX != 0) {

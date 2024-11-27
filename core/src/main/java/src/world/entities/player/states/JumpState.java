@@ -23,18 +23,18 @@ public class JumpState extends CanMoveState{
         super.update(delta);
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
-            player.setState(Player.StateType.ABSORB);
+            player.setCurrentState(Player.StateType.ABSORB);
         }
 
         if (jumpTime < Player.MAX_JUMP_TIME && Gdx.input.isKeyPressed(PlayerControl.JUMP)){
             jumpTime += delta;
             player.getBody().applyLinearImpulse(0, Player.JUMP_INAIR, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }
-        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP)){
-            player.setState(Player.StateType.FLY);
+        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP) && player.enemyAbsorded == null){
+            player.setCurrentState(Player.StateType.FLY);
         }
         if (player.getBody().getLinearVelocity().y < 0){
-            player.setState(Player.StateType.FALL);
+            player.setCurrentState(Player.StateType.FALL);
             player.setAnimation(Player.AnimationType.FALL);
         }
     }

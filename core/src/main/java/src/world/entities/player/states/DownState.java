@@ -21,18 +21,18 @@ public class DownState  extends StatePlayer{
 
         if (velocityX != 0) player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
 
-        if (!Gdx.input.isKeyPressed(PlayerControl.DOWN)) player.setState(Player.StateType.IDLE);
+        if (!Gdx.input.isKeyPressed(PlayerControl.DOWN)) player.setCurrentState(Player.StateType.IDLE);
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null) {
-            player.setState(Player.StateType.ABSORB);
+            player.setCurrentState(Player.StateType.ABSORB);
         }
 
         if (velocityX > 5 || Gdx.input.isKeyJustPressed(PlayerControl.RIGHT)) {
             player.setFlipX(false);
-            player.setState(Player.StateType.DASH);
+            player.setCurrentState(Player.StateType.DASH);
         } else if ( velocityX < -5 || Gdx.input.isKeyJustPressed(PlayerControl.LEFT)) {
             player.setFlipX(true);
-            player.setState(Player.StateType.DASH);
+            player.setCurrentState(Player.StateType.DASH);
         }
     }
 

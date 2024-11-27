@@ -257,7 +257,6 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Remove Entity no pack " + id);
         removeActorBox2d(entity);
     }
 
@@ -285,7 +284,7 @@ public class GameScreen extends BaseScreen {
                 Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
                 player.getBody().setTransform(position.x, position.y, 0);
                 player.getBody().setLinearVelocity(0,0);
-                player.setState(Player.StateType.IDLE);
+                player.setCurrentState(Player.StateType.IDLE);
             });
         }else{
             tiledManager.makeMap();

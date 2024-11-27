@@ -45,7 +45,7 @@ public class FlyState extends CanMoveState{
             }
         }
 
-        if (player.isAnimationFinish() && player.getCurrentAnimationType() == Player.AnimationType.FLYEND) player.setState(Player.StateType.FALL);
+        if (player.isAnimationFinish() && player.getCurrentAnimationType() == Player.AnimationType.FLYEND) player.setCurrentState(Player.StateType.FALL);
 
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.y < -5) {

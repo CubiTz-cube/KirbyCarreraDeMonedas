@@ -22,16 +22,16 @@ public class FallState extends CanMoveState
         super.update(delta);
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION) && player.enemyAbsorded == null){
-            player.setState(Player.StateType.ABSORB);
+            player.setCurrentState(Player.StateType.ABSORB);
         }
 
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.y == 0){
-            if (velocity.x == 0)  player.setState(Player.StateType.IDLE);
-            else player.setState(Player.StateType.WALK);
+            if (velocity.x == 0)  player.setCurrentState(Player.StateType.IDLE);
+            else player.setCurrentState(Player.StateType.WALK);
         }
         if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP)){
-            player.setState(Player.StateType.FLY);
+            player.setCurrentState(Player.StateType.FLY);
         }
     }
 

@@ -5,14 +5,9 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
-import src.utils.animation.SheetCutter;
-import src.world.entities.Entity;
-import src.world.entities.player.Player;
-import src.world.entities.player.PlayerAnimations;
+import src.world.entities.player.PlayerCommon;
 
-import static src.utils.variables.Constants.PIXELS_IN_METER;
-
-public class OtherPlayer extends PlayerAnimations {
+public class OtherPlayer extends PlayerCommon {
     private final String name;
     private final BitmapFont font;
     private final GlyphLayout layout;

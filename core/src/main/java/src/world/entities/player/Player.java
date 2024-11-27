@@ -8,73 +8,20 @@ import com.badlogic.gdx.physics.box2d.*;
 import src.main.Main;
 import src.screens.GameScreen;
 import src.utils.CollisionFilters;
-import src.utils.FrontRayCastCallback;
-import src.utils.stateMachine.*;
 import src.utils.variables.PlayerControl;
 import src.world.ActorBox2d;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.mirror.Mirror;
-import src.world.entities.player.powers.*;
 import src.world.entities.player.states.*;
 
-import static src.utils.variables.Constants.PIXELS_IN_METER;
-
-public class Player extends PlayerAnimations
-{
-    public float speed = 12;
-    public float maxSpeed = 6;
-    public float stunTime = 2;
-
-    public static final float WALK_SPEED = 10f;
-    public static final float WALK_MAX_SPEED = 5f;
-    public static final float RUN_SPEED = 14f;
-    public static final float RUN_MAX_SPEED = 6.5f;
-    public static final float MAX_JUMP_TIME = 0.3f;
-    public static final float JUMP_IMPULSE = 8f;
-    public static final float JUMP_INAIR = 0.35f;
-    public static final float FLY_IMPULSE = 6f;
-    public static final float DASH_IMPULSE = 18f;
-    public static final float ABSORB_FORCE = 12f;
-
-    public enum StateType {
-        IDLE,
-        WALK,
-        JUMP,
-        FALL,
-        DOWN,
-        RUN,
-        DASH,
-        FLY,
-        ABSORB,
-        STUN,
-        CONSUME,
-    }
-    private StateType currentStateType;
-    protected final StateMachine stateMachine;
-    private final IdleState idleState;
-    private final JumpState jumpState;
-    private final WalkState walkState;
-    private final FallState fallState;
-    private final FlyState flyState;
-    private final DownState downState;
-    private final AbsorbState absorbState;
-    private final DashState dashState;
-    private final RunState runState;
-    private final StunState stunState;
-    private final ConsumeState consumeState;
-
+public class Player extends PlayerCommon {
     private Boolean changeAnimation;
 
     public Enemy enemyAbsorded;
-    private PowerUp powerUp;
-
-    private final PowerSleep powerSleep;
-    private final PowerSword powerSword;
 
     public final GameScreen game;
 
-    public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game)
-    {
+    public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game) {
         super(world, shape, assetManager, -1);
         this.game = game;
         BodyDef def = new BodyDef();
@@ -96,7 +43,13 @@ public class Player extends PlayerAnimations
 
         setSpritePosModification(0f, getHeight()/4);
 
-        stateMachine = new StateMachine();
+        initStates();
+        setCurrentState(StateType.IDLE);
+
+        changeAnimation = false;
+    }
+
+    private void initStates(){
         idleState = new IdleState(this);
         jumpState = new JumpState(this);
         walkState = new WalkState(this);
@@ -108,47 +61,12 @@ public class Player extends PlayerAnimations
         runState = new RunState(this);
         stunState = new StunState(this);
         consumeState = new ConsumeState(this);
-        stateMachine.setState(idleState);
-
-        changeAnimation = false;
-
-        powerSleep = new PowerSleep(this);
-        powerSword = new PowerSword(this);
     }
 
     public void consumeEnemy() {
         if (enemyAbsorded == null) return;
-        if (enemyAbsorded.getPowerUp() != null){
-            powerUp = switch (enemyAbsorded.getPowerUp()){
-                case SLEEP -> powerSleep;
-                case SWORD -> powerSword;
-                default -> null;
-            };
-        }
+        setCurrentPowerUp(enemyAbsorded.getPowerUp());
         enemyAbsorded = null;
-        setState(Player.StateType.IDLE);
-        if (powerUp != null) powerUp.start();
-    }
-
-    public void setState(StateType stateType){
-        currentStateType = stateType;
-        switch (stateType){
-            case IDLE -> stateMachine.setState(idleState);
-            case WALK -> stateMachine.setState(walkState);
-            case JUMP -> stateMachine.setState(jumpState);
-            case FALL -> stateMachine.setState(fallState);
-            case DOWN -> stateMachine.setState(downState);
-            case RUN -> stateMachine.setState(runState);
-            case DASH -> stateMachine.setState(dashState);
-            case FLY -> stateMachine.setState(flyState);
-            case ABSORB -> stateMachine.setState(absorbState);
-            case STUN -> stateMachine.setState(stunState);
-            case CONSUME -> stateMachine.setState(consumeState);
-        }
-    }
-
-    public StateType getCurrentStateType() {
-        return currentStateType;
     }
 
     @Override
@@ -173,10 +91,10 @@ public class Player extends PlayerAnimations
 
     @Override
     public void act(float delta) {
-        stateMachine.update(delta);
+        super.act(delta);
         Vector2 velocity = body.getLinearVelocity();
 
-        if (currentStateType == StateType.DASH || currentStateType == StateType.STUN) return;
+        if (getCurrentStateType() == StateType.DASH || getCurrentStateType() == StateType.STUN) return;
         if (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
             float brakeForce = 10f;
             body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
@@ -186,25 +104,25 @@ public class Player extends PlayerAnimations
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy) {
-            if (currentStateType == StateType.ABSORB){
+            if (getCurrentStateType() == StateType.ABSORB){
                 enemyAbsorded = enemy;
                 game.removeEntity(enemy.getId());
-                setState(Player.StateType.IDLE);
+                setCurrentState(Player.StateType.IDLE);
                 return;
             }
 
             Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
-            if (currentStateType == StateType.DASH && enemy.getCurrentStateType() != Enemy.StateType.DAMAGE){
+            if (getCurrentStateType() == StateType.DASH && enemy.getCurrentStateType() != Enemy.StateType.DAMAGE){
                 enemy.takeDamage(1);
                 body.setLinearVelocity(0,0);
                 body.applyLinearImpulse(pushDirection.scl(5f), body.getWorldCenter(), true);
                 body.applyLinearImpulse(0,5f, body.getWorldCenter().x, body.getWorldCenter().y, true);
-                setState(StateType.FALL);
+                setCurrentState(StateType.FALL);
                 return;
             }
 
-            if (currentStateType == StateType.STUN) return;
-            setState(Player.StateType.STUN);
+            if (getCurrentStateType() == StateType.STUN) return;
+            setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
 
         } else if (actor instanceof Mirror) {
@@ -214,25 +132,5 @@ public class Player extends PlayerAnimations
                 game.randomMirror();
             });
         }
-    }
-
-    public Fixture detectFrontFixture(float distance) {
-        Vector2 startPoint = body.getPosition();
-        Vector2 endPoint = new Vector2(startPoint.x + distance, startPoint.y);
-
-        FrontRayCastCallback callback = new FrontRayCastCallback();
-        world.rayCast(callback, startPoint, endPoint);
-
-        return callback.getHitFixture();
-    }
-
-    public void attractFixture(Fixture fixture, Float forceMagnitude) {
-        Vector2 playerPosition = body.getPosition();
-        Vector2 fixturePosition = fixture.getBody().getPosition();
-
-        Vector2 direction = playerPosition.cpy().sub(fixturePosition).nor();
-        float distance = playerPosition.dst(fixturePosition);
-        Vector2 force = direction.scl(forceMagnitude * distance);
-        fixture.getBody().applyForceToCenter(force, true);
     }
 }

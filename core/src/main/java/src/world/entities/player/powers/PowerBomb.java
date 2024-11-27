@@ -2,10 +2,11 @@ package src.world.entities.player.powers;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
 
-public class PowerSword extends PowerUp {
-    public PowerSword(PlayerCommon player) {
+public class PowerBomb extends PowerUp{
+    public PowerBomb(PlayerCommon player) {
         super(player);
     }
 

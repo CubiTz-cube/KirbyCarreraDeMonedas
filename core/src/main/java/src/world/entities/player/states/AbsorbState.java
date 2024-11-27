@@ -30,8 +30,8 @@ public class AbsorbState extends StatePlayer{
         }
 
         if (!Gdx.input.isKeyPressed(PlayerControl.ACTION)){
-            if (velocity.y != 0) player.setState(Player.StateType.FALL);
-            else player.setState(Player.StateType.IDLE);
+            if (velocity.y != 0) player.setCurrentState(Player.StateType.FALL);
+            else player.setCurrentState(Player.StateType.IDLE);
         }
     }
 

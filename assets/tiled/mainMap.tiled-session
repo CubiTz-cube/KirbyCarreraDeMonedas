@@ -35,20 +35,20 @@
         },
         "maps/gameMap.tmx": {
             "expandedGroupLayers": [
-                13,
-                8
+                8,
+                13
             ],
             "expandedObjectLayers": [
+                9,
                 8,
                 7,
-                4,
-                9
+                4
             ],
-            "scale": 2,
-            "selectedLayer": 4,
+            "scale": 1.5,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 642.75,
-                "y": 1965.5
+                "x": 446.33333333333326,
+                "y": 2100.6666666666665
             }
         },
         "maps/garden.tsx": {
@@ -72,9 +72,9 @@
         },
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
-                6,
                 3,
-                4
+                4,
+                6
             ],
             "scale": 0.75,
             "selectedLayer": 6,
@@ -88,7 +88,7 @@
         },
         "maps/temple.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "maps/village.tsx": {
@@ -105,21 +105,22 @@
     "map.width": 240,
     "openFiles": [
         "maps/mainMap.tmx",
-        "maps/gameMap.tmx"
+        "maps/gameMap.tmx",
+        "maps/temple.tsx"
     ],
     "project": "",
     "property.type": "color",
     "recentFiles": [
-        "maps/backForest.tsx",
         "maps/mainMap.tmx",
+        "maps/temple.tsx",
         "maps/gameMap.tmx",
+        "maps/backForest.tsx",
         "maps/village.tsx",
         "maps/garden.tsx",
         "maps/dungeon.tsx",
         "maps/cemetery.tsx",
         "maps/aventure.tsx",
         "maps/crypt.tsx",
-        "maps/temple.tsx",
         "maps/kirbyPrueba.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",

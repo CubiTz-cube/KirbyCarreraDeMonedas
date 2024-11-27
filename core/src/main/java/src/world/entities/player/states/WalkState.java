@@ -17,18 +17,18 @@ public class WalkState extends CanBasicMoveState{
 
         player.speed = Player.WALK_SPEED;
         player.maxSpeed =  Player.WALK_MAX_SPEED;
-        if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) player.setState(Player.StateType.RUN);
+        if (Math.abs(player.getBody().getLinearVelocity().x) > player.maxSpeed) player.setCurrentState(Player.StateType.RUN);
     }
 
     @Override
     public void update(Float delta) {
         super.update(delta);
         if (Gdx.input.isKeyPressed(PlayerControl.RUN)){
-            player.setState(Player.StateType.RUN);
+            player.setCurrentState(Player.StateType.RUN);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.x == 0 && !Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
-            player.setState(Player.StateType.IDLE);
+            player.setCurrentState(Player.StateType.IDLE);
         }
     }
 

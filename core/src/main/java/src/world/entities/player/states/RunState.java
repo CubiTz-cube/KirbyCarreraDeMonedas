@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.variables.PlayerControl;
 import src.world.entities.player.Player;
-import src.world.entities.player.PlayerAnimations;
 import src.world.particles.ParticleFactory;
 
 public class RunState extends CanBasicMoveState{
@@ -34,7 +33,7 @@ public class RunState extends CanBasicMoveState{
 
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.x == 0 && !Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
-            player.setState(Player.StateType.IDLE);
+            player.setCurrentState(Player.StateType.IDLE);
         }
 
         if (timeActivateParticle > 0){

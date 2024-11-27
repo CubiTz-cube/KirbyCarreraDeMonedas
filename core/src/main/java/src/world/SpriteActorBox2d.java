@@ -34,6 +34,10 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
         animateTime = 0f;
     }
 
+    public Float getAnimateTime() {
+        return animateTime;
+    }
+
     public void setFlipX(Boolean flipX) {
         sprite.setFlip(flipX, false);
         this.flipX = flipX;

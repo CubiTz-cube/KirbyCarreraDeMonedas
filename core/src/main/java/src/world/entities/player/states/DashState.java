@@ -21,7 +21,7 @@ public class DashState extends StatePlayer{
         if (velocityX != 0) {
             player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
         }else {
-            player.setState(Player.StateType.IDLE);
+            player.setCurrentState(Player.StateType.IDLE);
         }
     }
 
