@@ -79,6 +79,8 @@ public class Main extends Game {
         assetManager.load("world/entities/kirby/sleep/sleep.png", Texture.class);
         assetManager.load("world/entities/kirby/absorb/kirbyAbsorbIdle.png", Texture.class);
         assetManager.load("world/entities/kirby/absorb/kirbyAbsorbWalk.png", Texture.class);
+        assetManager.load("world/entities/kirby/absorb/kirbyAbsorbFall.png", Texture.class);
+        assetManager.load("world/entities/kirby/absorb/kirbyAbsorbJump.png", Texture.class);
         assetManager.load("world/entities/mirror/mirrorLoop.png", Texture.class);
         assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
         assetManager.load("world/entities/basic/basicWalk.png", Texture.class);

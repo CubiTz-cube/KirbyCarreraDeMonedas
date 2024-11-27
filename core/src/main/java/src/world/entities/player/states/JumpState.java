@@ -13,7 +13,8 @@ public class JumpState extends CanMoveState{
 
     @Override
     public void start() {
-        player.setAnimation(Player.AnimationType.JUMP);
+        if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.JUMP);
+        else player.setAnimation(Player.AnimationType.ABSORBJUMP);
         jumpTime = 0f;
         player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
@@ -36,7 +37,7 @@ public class JumpState extends CanMoveState{
         }
         if (player.getBody().getLinearVelocity().y < 0){
             player.setCurrentState(Player.StateType.FALL);
-            player.setAnimation(Player.AnimationType.FALL);
+            if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.FALL);
         }
     }
 

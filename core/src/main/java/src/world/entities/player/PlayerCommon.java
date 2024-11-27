@@ -87,6 +87,8 @@ public abstract class PlayerCommon extends Entity {
         ABSORBIDLE,
         ABSORBWALK,
         ABSORBRUN,
+        ABSORBFALL,
+        ABSORBJUMP,
     }
     private AnimationType currentAnimationType;
     protected Animation<TextureRegion> walkAnimation;
@@ -110,6 +112,8 @@ public abstract class PlayerCommon extends Entity {
     protected  Animation<TextureRegion> absorbIdleAnimation;
     protected  Animation<TextureRegion> absorbWalkAnimation;
     protected  Animation<TextureRegion> absorbRunAnimation;
+    protected  Animation<TextureRegion> absorbFallAnimation;
+    protected  Animation<TextureRegion> absorbJumpAnimation;
 
     protected PowerUp.Type currentpowerUptype;
     private PowerUp currentPowerUp;
@@ -210,6 +214,13 @@ public abstract class PlayerCommon extends Entity {
         absorbRunAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbWalk.png"), 16));
         absorbRunAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        absorbFallAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbFall.png"), 2));
+        absorbFallAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        absorbJumpAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbJump.png"), 4));
     }
 
     public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
@@ -244,6 +255,8 @@ public abstract class PlayerCommon extends Entity {
             case ABSORBIDLE -> setCurrentAnimation(absorbIdleAnimation);
             case ABSORBWALK -> setCurrentAnimation(absorbWalkAnimation);
             case ABSORBRUN -> setCurrentAnimation(absorbRunAnimation);
+            case ABSORBFALL -> setCurrentAnimation(absorbFallAnimation);
+            case ABSORBJUMP -> setCurrentAnimation(absorbJumpAnimation);
         }
     }
 

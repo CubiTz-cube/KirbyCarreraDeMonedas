@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.variables.PlayerControl;
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class FallState extends CanMoveState
 {
@@ -14,7 +15,8 @@ public class FallState extends CanMoveState
 
     @Override
     public void start() {
-        player.setAnimation(Player.AnimationType.FALLSIMPLE);
+        if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.FALLSIMPLE);
+        else player.setAnimation(Player.AnimationType.ABSORBFALL);
     }
 
     @Override
