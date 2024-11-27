@@ -15,6 +15,7 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.player.powers.PowerUp;
 import src.world.entities.player.states.*;
+import src.world.entities.projectiles.Projectil;
 
 public class Player extends PlayerCommon {
     private Boolean changeAnimation;
@@ -156,6 +157,11 @@ public class Player extends PlayerCommon {
                 game.main.changeScreen(Main.Screens.MINIDUCK);
                 game.randomMirror();
             });
+        } else if (actor instanceof Projectil) {
+            Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
+            if (getCurrentStateType() == StateType.STUN || invencible) return;
+            setCurrentState(Player.StateType.STUN);
+            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
         }
     }
 }

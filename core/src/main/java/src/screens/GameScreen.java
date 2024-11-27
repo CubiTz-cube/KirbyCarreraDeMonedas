@@ -11,6 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
 import src.utils.variables.ConsoleColor;
@@ -57,6 +60,9 @@ public class GameScreen extends BaseScreen {
     public ArrayList<Vector2> spawnMirror;
     public ArrayList<Vector2> spawnPlayer;
 
+    private Table tableUI;
+    private Label odsPointsLabel;
+
     public GameScreen(Main main){
         super(main);
         actors = new ArrayList<>();
@@ -82,7 +88,19 @@ public class GameScreen extends BaseScreen {
         spawnMirror = new ArrayList<>();
         spawnPlayer = new ArrayList<>();
 
+        initUI();
+    }
 
+    private void initUI(){
+        tableUI = new Table();
+        tableUI.setFillParent(true);
+        stage.addActor(tableUI);
+
+        odsPointsLabel = new Label("ODS POINTS\n"+score,main.getSkin());
+        odsPointsLabel.setAlignment(Align.center);
+        odsPointsLabel.setFontScale(2);
+
+        tableUI.top().right().add(odsPointsLabel).pad(10);
     }
 
     public void setScore(Integer score) {
@@ -278,6 +296,12 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override
+    public void resize(int width, int height) {
+        //stage.getViewport().update(width, height, true);
+        tableUI.setSize(width, height);
+    }
+
+    @Override
     public void show() {
         if (player != null) {
             threadSecureWorld.addModification(() -> {
@@ -329,6 +353,10 @@ public class GameScreen extends BaseScreen {
         }
     }
 
+    private void actUI(){
+        odsPointsLabel.setText("ODS POINTS\n"+score);
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
@@ -342,8 +370,10 @@ public class GameScreen extends BaseScreen {
         camera.position.x = MathUtils.lerp(camera.position.x, player.getX(), 0.2f);
         camera.position.y = MathUtils.lerp(camera.position.y, player.getY(), 0.3f);
         camera.update();
+        tableUI.setPosition(camera.position.x - tableUI.getWidth()/2, camera.position.y - tableUI.getHeight()/2);
         tiledRenderer.setView(camera);
         tiledRenderer.render();
+        actUI();
         stage.draw();
         camera.zoom = 1f;
 
