@@ -4,13 +4,14 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import src.main.Main;
 import src.screens.GameScreen;
-import src.world.entities.breakBlocks.BreakBlock;
+import src.world.entities.objects.CoinOdsPoint;
+import src.world.entities.staticEntity.MovingPlatform;
+import src.world.entities.staticEntity.breakBlocks.BreakBlock;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 import src.world.entities.enemies.sword.SwordEnemy;
-import src.world.entities.mirror.Mirror;
+import src.world.entities.staticEntity.mirror.Mirror;
 import src.world.entities.projectiles.Cloud;
 import src.world.entities.projectiles.Star;
 
@@ -30,6 +31,7 @@ public class EntityFactory {
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id);
             case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id);
             case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXR, new Vector2(1,0));
             case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXL, new Vector2(-1,0));

@@ -9,7 +9,7 @@ import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
 import src.utils.variables.ConsoleColor;
-import src.world.entities.breakBlocks.BreakBlock;
+import src.world.entities.staticEntity.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;

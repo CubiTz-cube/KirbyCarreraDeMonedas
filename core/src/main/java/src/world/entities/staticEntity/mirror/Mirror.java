@@ -1,19 +1,18 @@
-package src.world.entities.mirror;
+package src.world.entities.staticEntity.mirror;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.utils.animation.SheetCutter;
-import src.world.entities.Entity;
+import src.world.entities.staticEntity.StaticEntity;
 
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 
-public class Mirror extends Entity {
+public class Mirror extends StaticEntity {
 
     public Mirror(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager,id, Type.MIRROR);

@@ -22,9 +22,9 @@ import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
-import src.world.entities.breakBlocks.BreakBlock;
+import src.world.entities.staticEntity.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.mirror.Mirror;
+import src.world.entities.staticEntity.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
 import src.main.Main;
@@ -63,6 +63,8 @@ public class GameScreen extends BaseScreen {
     private Table tableUI;
     private Label odsPointsLabel;
 
+    private Box2DDebugRenderer debugRenderer;
+
     public GameScreen(Main main){
         super(main);
         actors = new ArrayList<>();
@@ -82,11 +84,13 @@ public class GameScreen extends BaseScreen {
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
         sendTime = 0f;
-        score = 0;
+        score = 10;
 
         random = new Random();
         spawnMirror = new ArrayList<>();
         spawnPlayer = new ArrayList<>();
+
+        debugRenderer = new Box2DDebugRenderer();
 
         initUI();
     }
@@ -377,6 +381,8 @@ public class GameScreen extends BaseScreen {
         stage.draw();
         camera.zoom = 1f;
 
+        debugRenderer.render(world, camera.combined);
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(Main.Screens.MENU);
             sendPacket(Packet.disconnectPlayer(-1));
@@ -401,6 +407,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void dispose() {
+        debugRenderer.dispose();
         stage.dispose();
         world.dispose();
         tiledManager.dispose();

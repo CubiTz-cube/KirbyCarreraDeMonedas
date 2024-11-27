@@ -1,8 +1,7 @@
-package src.world.entities.breakBlocks.states;
+package src.world.entities.staticEntity.breakBlocks.states;
 
 import src.utils.stateMachine.State;
-import src.utils.stateMachine.StateMachine;
-import src.world.entities.breakBlocks.BreakBlock;
+import src.world.entities.staticEntity.breakBlocks.BreakBlock;
 
 public abstract class StateBreaklBlock implements State {
     protected final BreakBlock block;

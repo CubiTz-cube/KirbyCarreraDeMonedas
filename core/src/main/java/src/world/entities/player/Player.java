@@ -11,11 +11,15 @@ import src.screens.GameScreen;
 import src.utils.CollisionFilters;
 import src.utils.variables.PlayerControl;
 import src.world.ActorBox2d;
+import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.mirror.Mirror;
+import src.world.entities.objects.CoinOdsPoint;
+import src.world.entities.staticEntity.mirror.Mirror;
 import src.world.entities.player.powers.PowerUp;
 import src.world.entities.player.states.*;
 import src.world.entities.projectiles.Projectil;
+
+import java.util.Random;
 
 public class Player extends PlayerCommon {
     private Boolean changeAnimation;
@@ -127,6 +131,23 @@ public class Player extends PlayerCommon {
         }
     }
 
+    public void lossPoints(Integer amount){
+        int coins;
+        Random random = new Random();
+        if (game.getScore() > amount) {
+            coins = amount;
+            game.addScore(-coins);
+        } else {
+            coins = game.getScore();
+            game.setScore(0);
+        }
+        game.threadSecureWorld.addModification(() -> {
+            for (int i = 0; i<coins;i++){
+                game.addEntityWithForce(Type.COIN, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
+            }
+        });
+    }
+
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy) {
@@ -150,6 +171,7 @@ public class Player extends PlayerCommon {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            lossPoints(3);
 
         } else if (actor instanceof Mirror) {
             game.threadSecureWorld.addModification(() -> {
@@ -162,6 +184,10 @@ public class Player extends PlayerCommon {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+        } else if (actor instanceof CoinOdsPoint coin){
+            if (getCurrentStateType() == StateType.STUN || invencible) return;
+            game.removeEntity(coin.getId());
+            game.addScore(1);
         }
     }
 }

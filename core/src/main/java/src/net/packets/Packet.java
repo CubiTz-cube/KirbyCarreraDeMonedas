@@ -2,7 +2,7 @@ package src.net.packets;
 
 import com.badlogic.gdx.math.Vector2;
 import src.world.entities.Entity;
-import src.world.entities.breakBlocks.BreakBlock;
+import src.world.entities.staticEntity.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 

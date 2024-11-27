@@ -13,7 +13,7 @@ import java.net.SocketException;
 import com.badlogic.gdx.net.Socket;
 import src.utils.variables.ConsoleColor;
 import src.world.entities.Entity;
-import src.world.entities.breakBlocks.BreakBlock;
+import src.world.entities.staticEntity.breakBlocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 
