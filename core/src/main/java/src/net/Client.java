@@ -122,7 +122,7 @@ public class Client implements Runnable{
                         y = (Float) pack[3];
                         fx = (Float) pack[4];
                         fy = (Float) pack[5];
-                        System.out.println("Actualizar " + packId + " en " + x+ ", "+ y + " FX: " + fx + " | FY" + fy);
+                        //System.out.println("Actualizar " + packId + " en " + x+ ", "+ y + " FX: " + fx + " | FY" + fy);
                         game.actEntityPos(packId, x, y, fx, fy);
                         break;
 
