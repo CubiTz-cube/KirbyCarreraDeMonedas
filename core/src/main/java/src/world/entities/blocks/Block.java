@@ -1,4 +1,4 @@
-package src.world.entities.staticEntity.blocks;
+package src.world.entities.blocks;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
@@ -6,11 +6,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.utils.stateMachine.StateMachine;
-import src.world.entities.staticEntity.StaticEntity;
-import src.world.entities.staticEntity.blocks.states.BreakState;
-import src.world.entities.staticEntity.blocks.states.LiveState;
+import src.world.entities.Entity;
+import src.world.entities.NoAutoPacketEntity;
+import src.world.entities.blocks.states.BreakState;
+import src.world.entities.blocks.states.LiveState;
 
-public class Block  extends StaticEntity {
+public class Block extends Entity implements NoAutoPacketEntity {
     public enum StateType {LIVE,BREAK}
     private final StateMachine stateMachine;
     private final LiveState liveState;

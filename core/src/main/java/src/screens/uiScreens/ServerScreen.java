@@ -31,7 +31,6 @@ public class ServerScreen extends UIScreen {
                 main.startServer(ipTextField.getText(), port);
                 main.startClient(ipTextField.getText(), port);
                 main.changeScreen(Main.Screens.LOBBY);
-                System.out.println("Unirse");
             }
         });
 

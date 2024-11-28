@@ -1,30 +1,26 @@
 package src.net.packets;
 
-import com.badlogic.gdx.math.Vector2;
 import src.world.entities.Entity;
-import src.world.entities.staticEntity.blocks.Block;
-import src.world.entities.staticEntity.blocks.BreakBlock;
+import src.world.entities.blocks.Block;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 
 public class Packet {
-    public static enum Types{
-    CONNECT, DISCONNECTPLAYER, POSITION, NEWPLAYER, GAMESTART, NEWENTITY, ACTENEMY, ACTOTHERPLAYER, REMOVEENTITY, ACTBREAKBLOCK
+    public enum Types{
+        CONNECTPLAYER, DISCONNECTPLAYER, NEWPLAYER, GAMESTART,
+        ACTENTITYPOSITION, NEWENTITY, REMOVEENTITY,
+        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK
     }
 
-    public static Object[] connect(String name){
-        return new Object[]{Types.CONNECT, name};
+    public static Object[] connectPlayer(String name){
+        return new Object[]{Types.CONNECTPLAYER, name};
     }
 
-    public static Object[] disconnectPlayer(Integer id){
+    public static Object[] disconnectPlayer(int id){
         return new Object[]{Types.DISCONNECTPLAYER, id};
     }
 
-    public static Object[] position(Integer id,Float x, Float y){
-        return new Object[]{Types.POSITION, id, x, y};
-    }
-
-    public static Object[] newPlayer(Integer id,String name){
+    public static Object[] newPlayer(int id,String name){
         return new Object[]{Types.NEWPLAYER, id, name};
     }
 
@@ -32,24 +28,30 @@ public class Packet {
         return new Object[]{Types.GAMESTART};
     }
 
-    public static Object[] newEntity(Integer id, Entity.Type type, Float x, Float y){
-        return new Object[]{Types.NEWENTITY, id, type, x, y};
+    public static Object[] actEntityPosition(int id, float x, float y, float fx, float fy){
+        return new Object[]{Types.ACTENTITYPOSITION, id, x, y, fx, fy};
+    }
+    public static Object[] actEntityPosition(int id, float x, float y){
+        return new Object[]{Types.ACTENTITYPOSITION, id, x, y, 0f, 0f};
     }
 
-    public static Object[] actEnemy(Integer id, Enemy.StateType state, Float cronno, Boolean flipX, Vector2 forces){
-        return new Object[]{Types.ACTENEMY, id, state, cronno, flipX, forces};
+    public static Object[] newEntity(int id, Entity.Type type, float x, float y, float fx, float fy){
+        return new Object[]{Types.NEWENTITY, id, type, x, y, fx, fy};
     }
 
-    public static Object[] actOtherPlayer(Integer id, Player.AnimationType animationType, Boolean flipX){
-        return new Object[]{Types.ACTOTHERPLAYER, id, animationType, flipX};
+    public static Object[] actEnemy(int id, Enemy.StateType state, float cronno, boolean flipX){
+        return new Object[]{Types.ACTENEMY, id, state, cronno, flipX};
     }
 
-    public static Object[] actBlock(Integer id, Block.StateType stateType){
-        return new Object[]{Types.ACTBREAKBLOCK, id, stateType};
-    }
-
-    public static Object[] removeEntity(Integer id){
+    public static Object[] removeEntity(int id){
         return new Object[]{Types.REMOVEENTITY, id};
     }
 
+    public static Object[] actOtherPlayer(int id, Player.AnimationType animationType, boolean flipX){
+        return new Object[]{Types.ACTOTHERPLAYER, id, animationType, flipX};
+    }
+
+    public static Object[] actBlock(int id, Block.StateType stateType){
+        return new Object[]{Types.ACTBREAKBLOCK, id, stateType};
+    }
 }

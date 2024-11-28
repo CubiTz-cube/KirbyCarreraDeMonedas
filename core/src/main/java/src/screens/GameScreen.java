@@ -22,9 +22,11 @@ import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
-import src.world.entities.staticEntity.blocks.BreakBlock;
+import src.world.entities.NoAutoPacketEntity;
+import src.world.entities.blocks.Block;
+import src.world.entities.blocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.staticEntity.mirror.Mirror;
+import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
 import src.main.Main;
@@ -63,8 +65,6 @@ public class GameScreen extends BaseScreen {
     private Table tableUI;
     private Label odsPointsLabel;
 
-    private Box2DDebugRenderer debugRenderer;
-
     public GameScreen(Main main){
         super(main);
         actors = new ArrayList<>();
@@ -84,15 +84,11 @@ public class GameScreen extends BaseScreen {
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
         sendTime = 0f;
-        score = 10;
+        score = 0;
 
         random = new Random();
         spawnMirror = new ArrayList<>();
         spawnPlayer = new ArrayList<>();
-
-        debugRenderer = new Box2DDebugRenderer();
-
-        initUI();
     }
 
     private void initUI(){
@@ -151,38 +147,29 @@ public class GameScreen extends BaseScreen {
         stage.addActor(actor);
     }
 
-    private void createEntityLogic(Entity.Type type, Vector2 position, Integer id){
+    private void createEntityLogic(Entity.Type type, Vector2 position, Vector2 force, Integer id){
         if (entities.get(id) != null) {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Entity " + type + ":" + id + " se mando a crear");
+        System.out.println("Entity " + type + ":" + id + " se mando a crear en"+ position+ " con "+ "FX: " + force);
         ActorBox2d actorBox2d = entityFactory.create(type, world, position, id);
+        actorBox2d.getBody().applyLinearImpulse(force, actorBox2d.getBody().getWorldCenter(), true);
         addActor(actorBox2d);
     }
 
-    public void addEntityNoPacket(Entity.Type type, Vector2 position, Integer id){
+    public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Integer id){
         threadSecureWorld.addModification(() -> {
-            createEntityLogic(type, position, id);
+            createEntityLogic(type, position, force, id);
             main.setIds(id);
         });
     }
 
-    public void addEntity(Entity.Type type, Vector2 position){
+    public void addEntity(Entity.Type type, Vector2 position, Vector2 force){
         int id = main.getIds();
         threadSecureWorld.addModification(() -> {
-            createEntityLogic(type, position, id);
-            sendPacket(Packet.newEntity(id, type, position.x, position.y));
-        });
-    }
-
-    public void addEntityWithForce(Entity.Type type, Vector2 position, Vector2 force){
-        int id = main.getIds();
-        threadSecureWorld.addModification(() -> {
-            createEntityLogic(type, position, id);
-            sendPacket(Packet.newEntity(id, type, position.x, position.y));
-            Entity entity = entities.get(id);
-            entity.getBody().applyLinearImpulse(force, entity.getBody().getWorldCenter(), true);
+            createEntityLogic(type, position, force, id);
+            sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y));
         });
     }
 
@@ -200,17 +187,21 @@ public class GameScreen extends BaseScreen {
         otherPlayer.setFlipX(flipX);
     }
 
-    public void actPosEntity(Integer id, Float x, Float y){
+    public void actEntityPos(Integer id, Float x, Float y, Float fx, Float fy){
         Entity entity = entities.get(id);
         if (entity == null) {
-            System.out.println("Posision Entity " + id + " no encontrada en la lista");
+            System.err.println("Entity " + id + " no encontrada en la lista para cambiar su posicion");
             return;
         }
         Body body = entity.getBody();
-        threadSecureWorld.addModification(() -> body.setTransform(x, y, 0));
+        threadSecureWorld.addModification(() -> {
+            body.setTransform(x, y, 0);
+            //if (fx == 0 || fy == 0) return;
+            body.setLinearVelocity(fx, fy);
+        });
     }
 
-    public void actStateEnemy(Integer id, Enemy.StateType state,Float cronno, Boolean flipX, Vector2 forces){
+    public void actEnemy(Integer id, Enemy.StateType state, Float cronno, Boolean flipX){
         Enemy enemy = (Enemy) entities.get(id);
         if (enemy == null) {
             System.out.println("Entity " + id + " no encontrada en la lista");
@@ -218,11 +209,10 @@ public class GameScreen extends BaseScreen {
         }
         enemy.setState(state);
         enemy.setFlipX(flipX);
-        threadSecureWorld.addModification(() -> enemy.getBody().setLinearVelocity(forces));
         enemy.setActCrono(cronno);
     }
 
-    public void actBreakBlock(Integer id, BreakBlock.StateType stateType){
+    public void actBlock(Integer id, Block.StateType stateType){
         BreakBlock breakBlock = (BreakBlock) entities.get(id);
         if (breakBlock == null) {
             System.out.println("Entity " + id + " no encontrada en la lista");
@@ -298,10 +288,11 @@ public class GameScreen extends BaseScreen {
         spawnMirror.clear();
     }
 
-    @Override
-    public void resize(int width, int height) {
-        //stage.getViewport().update(width, height, true);
-        tableUI.setSize(width, height);
+    public void endGame(){
+        clearAll();
+        //main.closeClient();
+        //main.closeServer();
+        main.changeScreen(Main.Screens.MENU);
     }
 
     @Override
@@ -314,12 +305,14 @@ public class GameScreen extends BaseScreen {
                 player.setCurrentState(Player.StateType.IDLE);
             });
         }else{
+            initUI();
+            score = 3;
             tiledManager.makeMap();
             addMainPlayer();
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
                 Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
-                addEntity(Entity.Type.MIRROR, position);
+                addEntity(Entity.Type.MIRROR, position, new Vector2(0,0));
             }
         }
     }
@@ -329,31 +322,36 @@ public class GameScreen extends BaseScreen {
      * @param delta Tiempo en segundos desde el ultimo renderizado.
      */
     public void actLogic(float delta){
+        if (main.client != null){
+            sendTime += delta;
+
+            Vector2 currentPosition = player.getBody().getPosition();
+            if (!currentPosition.epsilonEquals(lastPosition, 0.05f)) { // Check for significant change
+                main.client.send(Packet.actEntityPosition(-1,currentPosition.x, currentPosition.y));
+                lastPosition.set(currentPosition);
+            }
+
+            if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX()));
+
+            if (main.server != null){
+
+                if (sendTime >= 2f) {
+                    for (Entity e: entities.values()){
+                        if (e instanceof NoAutoPacketEntity) continue;
+                        Body body = e.getBody();
+                        main.client.send(Packet.actEntityPosition(e.getId(), body.getPosition().x, body.getPosition().y,
+                            body.getLinearVelocity().x , body.getLinearVelocity().y));
+                        if (!(e instanceof Enemy enemy)) continue;
+                        if (enemy.getCurrentStateType() == Enemy.StateType.IDLE) continue;
+                        if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX()));
+                    }
+                    sendTime = 0f;
+                }
+            }
+        }
+
         stage.act();
         threadSecureWorld.step(delta, 6, 2);
-
-        if (main.client == null) return;
-        sendTime += delta;
-
-        Vector2 currentPosition = player.getBody().getPosition();
-        if (!currentPosition.epsilonEquals(lastPosition, 0.05f)) { // Check for significant change
-            main.client.send(Packet.position(-1,currentPosition.x, currentPosition.y));
-            lastPosition.set(currentPosition);
-        }
-        if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX()));
-
-        if (main.server == null) return;
-
-        if (sendTime >= 2f) {
-            for (Entity e: entities.values()){
-                if (e instanceof OtherPlayer) continue;
-                main.client.send(Packet.position(e.getId(), e.getBody().getPosition().x, e.getBody().getPosition().y));
-                if (!(e instanceof Enemy enemy)) continue;
-                if (enemy.getCurrentStateType() == Enemy.StateType.IDLE) continue;
-                if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX(), enemy.getBody().getLinearVelocity()));
-            }
-            sendTime = 0f;
-        }
     }
 
     private void actUI(){
@@ -380,12 +378,9 @@ public class GameScreen extends BaseScreen {
         stage.draw();
         camera.zoom = 1f;
 
-        debugRenderer.render(world, camera.combined);
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            main.changeScreen(Main.Screens.MENU);
             sendPacket(Packet.disconnectPlayer(-1));
-            clearAll();
+            endGame();
         }
 
         for (ActorBox2d actor : actors) {
@@ -400,28 +395,27 @@ public class GameScreen extends BaseScreen {
         }
     }
 
-    public void sendPacket(Object[] packet) {
-        if (main.client != null) main.client.send(packet);
-    }
-
-    @Override
-    public void dispose() {
-        debugRenderer.dispose();
-        stage.dispose();
-        world.dispose();
-        tiledManager.dispose();
-    }
-
     public void randomMirror(){
         if (main.server == null) return;
         for (Entity entity : entities.values()){
             if (entity instanceof Mirror mirror) {
                 int index = random.nextInt(spawnMirror.size());
                 Vector2 position = spawnMirror.get(index);
-                actPosEntity(mirror.getId(), position.x, position.y);
+                actEntityPos(mirror.getId(), position.x, position.y, 0f, 0f);
                 return;
             }
         }
+    }
+
+    public void sendPacket(Object[] packet) {
+        if (main.client != null) main.client.send(packet);
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        world.dispose();
+        tiledManager.dispose();
     }
 
     private static class GameContactListener implements ContactListener {

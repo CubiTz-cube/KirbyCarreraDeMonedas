@@ -9,7 +9,8 @@ import com.badlogic.gdx.net.SocketHints;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
 import src.utils.variables.ConsoleColor;
-import src.world.entities.staticEntity.blocks.BreakBlock;
+import src.world.entities.Entity;
+import src.world.entities.blocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
@@ -70,15 +71,15 @@ public class Client implements Runnable{
         }
 
         int packId;
-        float x,y;
+        float x,y ,fx, fy;
         boolean flipX;
-        send(Packet.connect(name));
+        send(Packet.connectPlayer(name));
         System.out.println(ConsoleColor.BLUE + "[Client] Conectado a servidor: " + socket.getRemoteAddress() + ConsoleColor.RESET);
         try {
             while (running) {
                 Object[] pack = (Object[])in.readObject();
                 Packet.Types type = (Packet.Types) pack[0];
-                if (!type.equals(Packet.Types.POSITION) &&
+                if (!type.equals(Packet.Types.ACTENTITYPOSITION) &&
                     !type.equals(Packet.Types.ACTOTHERPLAYER) &&
                     !type.equals(Packet.Types.ACTENEMY)) System.out.println(ConsoleColor.CYAN + "[Client] Recibido: " + type + ConsoleColor.RESET);
 
@@ -88,14 +89,6 @@ public class Client implements Runnable{
                         String name = (String) pack[2];
                         playersConnected.put(packId, name);
                         game.addActor(new OtherPlayer(game.getWorld(), game.main.getAssetManager(), new Rectangle(0, 10, 1.5f, 1.5f), packId, name));
-                        break;
-
-                    case NEWENTITY:
-                        packId = (Integer) pack[1];
-                        Enemy.Type packType = (Enemy.Type) pack[2];
-                        x = (Float) pack[3];
-                        y = (Float) pack[4];
-                        game.addEntityNoPacket(packType, new Vector2(x,y), packId);
                         break;
 
                     case DISCONNECTPLAYER:
@@ -108,34 +101,50 @@ public class Client implements Runnable{
                         gameStart = true;
                         break;
 
-                    case POSITION:
+                    case NEWENTITY:
+                        packId = (Integer) pack[1];
+                        Entity.Type packType = (Entity.Type) pack[2];
+                        x = (Float) pack[3];
+                        y = (Float) pack[4];
+                        fx = (Float) pack[5];
+                        fy = (Float) pack[6];
+                        System.out.println("Crear " + packType+":"+packId + " en " + x+ ", "+ y + " FX: " + fx + " | FY" + fy);
+                        game.addEntityNoPacket(packType, new Vector2(x,y), new Vector2(fx,fy), packId);
+                        break;
+
+                    case REMOVEENTITY:
+                        packId = (Integer) pack[1];
+                        game.removeEntityNoPacket(packId);
+                        break;
+
+                    case ACTENTITYPOSITION:
                         packId = (Integer) pack[1];
                         x = (Float) pack[2];
-                        y= (Float) pack[3];
-                        game.actPosEntity(packId, x, y);
+                        y = (Float) pack[3];
+                        fx = (Float) pack[4];
+                        fy = (Float) pack[5];
+                        game.actEntityPos(packId, x, y, fx, fy);
                         break;
+
                     case ACTENEMY:
                         packId = (Integer) pack[1];
                         Enemy.StateType state = (Enemy.StateType) pack[2];
-                        float cronno = (Float) pack[3];
+                        Float cronno = (Float) pack[3];
                         flipX = (Boolean) pack[4];
-                        Vector2 forces = (Vector2) pack[5];
-                        game.actStateEnemy(packId, state,cronno, flipX, forces);
+                        game.actEnemy(packId, state,cronno, flipX);
                         break;
+
                     case ACTOTHERPLAYER:
                         packId = (Integer) pack[1];
                         Player.AnimationType animationType = (Player.AnimationType) pack[2];
                         flipX = (Boolean) pack[3];
                         game.actOtherPlayerAnimation(packId, animationType, flipX);
                         break;
-                    case REMOVEENTITY:
-                        packId = (Integer) pack[1];
-                        game.removeEntityNoPacket(packId);
-                        break;
+
                     case ACTBREAKBLOCK:
                         packId = (Integer) pack[1];
                         BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
-                        game.actBreakBlock(packId, stateType);
+                        game.actBlock(packId, stateType);
                         break;
                 }
             }

@@ -11,10 +11,9 @@ import src.screens.GameScreen;
 import src.utils.CollisionFilters;
 import src.utils.variables.PlayerControl;
 import src.world.ActorBox2d;
-import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.objects.CoinOdsPoint;
-import src.world.entities.staticEntity.mirror.Mirror;
+import src.world.entities.mirror.Mirror;
 import src.world.entities.player.powers.PowerUp;
 import src.world.entities.player.states.*;
 import src.world.entities.projectiles.Projectil;
@@ -134,6 +133,7 @@ public class Player extends PlayerCommon {
     public void lossPoints(Integer amount){
         int coins;
         Random random = new Random();
+
         if (game.getScore() > amount) {
             coins = amount;
             game.addScore(-coins);
@@ -141,11 +141,10 @@ public class Player extends PlayerCommon {
             coins = game.getScore();
             game.setScore(0);
         }
-        game.threadSecureWorld.addModification(() -> {
-            for (int i = 0; i<coins;i++){
-                game.addEntityWithForce(Type.COIN, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
-            }
-        });
+
+        for (int i = 0; i<coins;i++){
+            game.addEntity(Type.COIN, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
+        }
     }
 
     @Override

@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.CollisionFilters;
+import src.world.entities.NoAutoPacketEntity;
 import src.world.entities.player.PlayerCommon;
 
-public class OtherPlayer extends PlayerCommon {
+public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
     private final String name;
     private final BitmapFont font;
     private final GlyphLayout layout;

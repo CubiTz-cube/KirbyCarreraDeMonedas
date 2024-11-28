@@ -6,13 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.world.entities.objects.CoinOdsPoint;
-import src.world.entities.staticEntity.MovingPlatform;
-import src.world.entities.staticEntity.blocks.BreakBlock;
+import src.world.entities.blocks.BreakBlock;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 import src.world.entities.enemies.sword.SwordEnemy;
-import src.world.entities.staticEntity.blocks.FallBlock;
-import src.world.entities.staticEntity.mirror.Mirror;
+import src.world.entities.blocks.FallBlock;
+import src.world.entities.mirror.Mirror;
 import src.world.entities.projectiles.Cloud;
 import src.world.entities.projectiles.Star;
 

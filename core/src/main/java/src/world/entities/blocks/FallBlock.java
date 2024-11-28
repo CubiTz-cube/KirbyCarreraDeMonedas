@@ -1,4 +1,4 @@
-package src.world.entities.staticEntity.blocks;
+package src.world.entities.blocks;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;

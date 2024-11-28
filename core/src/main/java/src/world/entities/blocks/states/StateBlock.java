@@ -1,7 +1,7 @@
-package src.world.entities.staticEntity.blocks.states;
+package src.world.entities.blocks.states;
 
 import src.utils.stateMachine.State;
-import src.world.entities.staticEntity.blocks.Block;
+import src.world.entities.blocks.Block;
 
 public abstract class StateBlock implements State {
     protected final Block block;

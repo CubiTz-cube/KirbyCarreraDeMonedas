@@ -39,16 +39,16 @@
                 13
             ],
             "expandedObjectLayers": [
-                9,
                 8,
-                7,
-                4
+                4,
+                9,
+                7
             ],
-            "scale": 1.5,
-            "selectedLayer": 0,
+            "scale": 5.5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 446.33333333333326,
-                "y": 2100.6666666666665
+                "x": 1104.6363636363635,
+                "y": 1996.909090909091
             }
         },
         "maps/garden.tsx": {
