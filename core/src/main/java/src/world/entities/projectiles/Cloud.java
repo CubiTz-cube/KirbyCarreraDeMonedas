@@ -43,7 +43,7 @@ public class Cloud extends Projectil {
     @Override
     public void act(float delta) {
         timeDespawn += delta;
-        if (timeDespawn > 2f) {
+        if (timeDespawn > 0.5f) {
             game.removeEntityNoPacket(this.getId());
         }
     }

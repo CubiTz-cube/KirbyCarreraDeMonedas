@@ -108,7 +108,6 @@ public class Client implements Runnable{
                         y = (Float) pack[4];
                         fx = (Float) pack[5];
                         fy = (Float) pack[6];
-                        System.out.println("Crear " + packType+":"+packId + " en " + x+ ", "+ y + " FX: " + fx + " | FY" + fy);
                         game.addEntityNoPacket(packType, new Vector2(x,y), new Vector2(fx,fy), packId);
                         break;
 
@@ -123,6 +122,7 @@ public class Client implements Runnable{
                         y = (Float) pack[3];
                         fx = (Float) pack[4];
                         fy = (Float) pack[5];
+                        System.out.println("Actualizar " + packId + " en " + x+ ", "+ y + " FX: " + fx + " | FY" + fy);
                         game.actEntityPos(packId, x, y, fx, fy);
                         break;
 

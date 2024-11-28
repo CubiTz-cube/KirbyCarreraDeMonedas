@@ -86,7 +86,6 @@ public class ClientListener implements Runnable{
                         y = (Float) pack[4];
                         fx = (Float) pack[5];
                         fy = (Float) pack[6];
-                        System.out.println("SE MANDA A TODOS Crear " + packType+":"+packId + " en " + x+ ", "+ y + " FX: " + fx + " | FY" + fy);
                         server.sendAll(Packet.newEntity(packId, packType, x, y, fx, fy), id);
                         break;
 

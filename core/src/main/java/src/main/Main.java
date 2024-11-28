@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.Client;
 import src.net.Server;
 import src.screens.GameScreen;
@@ -103,7 +104,7 @@ public class Main extends Game {
         screensList.add(new GameScreen(this));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MULTIPLAYER);
+        changeScreen(Screens.GAME);
     }
 
     public void setName(String name) {
@@ -133,8 +134,12 @@ public class Main extends Game {
 
     public void startServer(String ip, int port){
         if (server != null) closeServer();
-        server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port);
-        serverThread.execute(server);
+        try{
+            server = new Server((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port);
+            serverThread.execute(server);
+        }catch (GdxRuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void closeServer(){
