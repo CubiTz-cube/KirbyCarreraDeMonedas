@@ -8,7 +8,10 @@ import src.world.ActorBox2d;
 
 public class StaticFactory {
     public enum Type{
-        FLOOR
+        FLOOR,
+        //SPIKE,
+        //LAVA,
+        //PLATAFORM,
     }
 
     public ActorBox2d create(Type actor, World world, Rectangle shape){

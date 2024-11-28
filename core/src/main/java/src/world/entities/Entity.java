@@ -12,6 +12,11 @@ public abstract class Entity extends SpriteActorBox2d {
         BASIC,
         SLEEPY,
         SWORD,
+        //WHEEL,
+        //BOMBER,
+        //TURRET,
+        //DRAGON,
+        //FLYBUG,
         MIRROR,
         CLOUD,
         STAR,
@@ -27,6 +32,7 @@ public abstract class Entity extends SpriteActorBox2d {
         PLATFORMLD,
         FALLBLOCK,
         //WATERIMPULSE,
+        //BOMBBREAKBLOCK,
     }
     protected Type type;
     private final Integer id;
