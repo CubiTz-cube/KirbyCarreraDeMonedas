@@ -152,7 +152,6 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Entity " + type + ":" + id + " se mando a crear en"+ position+ " con "+ "FX: " + force);
         ActorBox2d actorBox2d = entityFactory.create(type, world, position, id);
         actorBox2d.getBody().applyLinearImpulse(force, actorBox2d.getBody().getWorldCenter(), true);
         addActor(actorBox2d);
@@ -196,7 +195,6 @@ public class GameScreen extends BaseScreen {
         Body body = entity.getBody();
         threadSecureWorld.addModification(() -> {
             body.setTransform(x, y, 0);
-            //if (fx == 0 || fy == 0) return;
             body.setLinearVelocity(fx, fy);
         });
     }

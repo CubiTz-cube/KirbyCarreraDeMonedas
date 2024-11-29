@@ -13,9 +13,6 @@ import src.world.entities.enemies.basic.states.*;
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class BasicEnemy extends Enemy {
-    private final BitmapFont font;
-    private final GlyphLayout layout;
-
     public enum AnimationType {
         IDLE,
         WALK,
@@ -27,8 +24,6 @@ public class BasicEnemy extends Enemy {
 
     public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager,id, game, Type.BASIC, null,3);
-        this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
-        this.layout = new GlyphLayout();
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -78,13 +73,5 @@ public class BasicEnemy extends Enemy {
     @Override
     public void act(float delta) {
         super.act(delta);
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-
-        layout.setText(font, "ID " + getId() + " TIME " + getActCrono());
-        font.draw(batch, layout, getX() + layout.width / 2, getY() + sprite.getHeight() + layout.height);
     }
 }
