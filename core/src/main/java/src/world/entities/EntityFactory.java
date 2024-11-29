@@ -32,8 +32,8 @@ public class EntityFactory {
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id);
-            case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id);
-            case FALLBLOCK -> new FallBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id);
+            case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case FALLBLOCK -> new FallBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXR, new Vector2(1,0));
             case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXL, new Vector2(-1,0));
             case PLATFORMYU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMYU, new Vector2(0,1));

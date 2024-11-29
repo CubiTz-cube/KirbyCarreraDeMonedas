@@ -14,9 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
+import src.utils.SecondsTimer;
 import src.utils.variables.ConsoleColor;
 import src.utils.ThreadSecureWorld;
 import src.utils.TiledManager;
@@ -33,9 +33,6 @@ import src.world.entities.player.Player;
 import src.main.Main;
 import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
-
-import java.awt.datatransfer.FlavorEvent;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -59,7 +56,7 @@ public class GameScreen extends BaseScreen {
     private final Vector2 lastPosition;
     private Float sendTime;
     private Integer score;
-    private Float timeGame;
+    private final SecondsTimer timeGame;
 
     private final Random random;
     public Vector2 lobbyPlayer;
@@ -90,7 +87,7 @@ public class GameScreen extends BaseScreen {
         lastPosition = new Vector2();
         sendTime = 0f;
         score = 0;
-        timeGame = 0f;
+        timeGame = new SecondsTimer(0,5,0);
 
         random = new Random();
         spawnMirror = new ArrayList<>();
@@ -103,16 +100,17 @@ public class GameScreen extends BaseScreen {
         stage.addActor(tableUI);
 
         odsPointsLabel = new Label("ODS POINTS\n"+score,main.getSkin());
-        odsPointsLabel.setAlignment(Align.center);
+        odsPointsLabel.setAlignment(Align.topRight);
         odsPointsLabel.setFontScale(2);
 
         gameTimeLabel = new Label("Game Time\n" + timeGame, main.getSkin());
-        gameTimeLabel.setAlignment(Align.center);
+        gameTimeLabel.setAlignment(Align.topLeft);
         gameTimeLabel.setFontScale(2);
 
-        tableUI.add(gameTimeLabel);
         tableUI.top();
-        tableUI.add(odsPointsLabel).pad(10);
+        tableUI.add(gameTimeLabel);
+        tableUI.add().expandX();
+        tableUI.add(odsPointsLabel);
     }
 
     public void setScore(Integer score) {
@@ -164,24 +162,23 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        ActorBox2d actorBox2d = entityFactory.create(type, world, position, id);
-        actorBox2d.getBody().applyLinearImpulse(force, actorBox2d.getBody().getWorldCenter(), true);
-        addActor(actorBox2d);
+        threadSecureWorld.addModification(() -> {
+            ActorBox2d actorBox2d = entityFactory.create(type, world, position, id);
+            actorBox2d.getBody().applyLinearImpulse(force, actorBox2d.getBody().getWorldCenter(), true);
+            addActor(actorBox2d);
+        });
     }
 
     public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Integer id){
-        threadSecureWorld.addModification(() -> {
-            createEntityLogic(type, position, force, id);
-            main.setIds(id);
-        });
+        createEntityLogic(type, position, force, id);
+        main.setIds(id);
+
     }
 
     public void addEntity(Entity.Type type, Vector2 position, Vector2 force){
         int id = main.getIds();
-        threadSecureWorld.addModification(() -> {
-            createEntityLogic(type, position, force, id);
-            sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y));
-        });
+        createEntityLogic(type, position, force, id);
+        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y));
     }
 
     public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX){
@@ -223,12 +220,12 @@ public class GameScreen extends BaseScreen {
     }
 
     public void actBlock(Integer id, Block.StateType stateType){
-        BreakBlock breakBlock = (BreakBlock) entities.get(id);
-        if (breakBlock == null) {
+        Block block = (Block) entities.get(id);
+        if (block == null) {
             System.out.println("Entity " + id + " no encontrada en la lista");
             return;
         }
-        breakBlock.setState(stateType);
+        block.setState(stateType);
     }
 
     /**
@@ -359,13 +356,14 @@ public class GameScreen extends BaseScreen {
                 }
             }
         }
-
+        timeGame.update(delta);
         stage.act();
         threadSecureWorld.step(delta, 6, 2);
     }
 
     private void actUI(){
         odsPointsLabel.setText("ODS POINTS\n"+score);
+        gameTimeLabel.setText("Game Time\n" + timeGame);
     }
 
     @Override

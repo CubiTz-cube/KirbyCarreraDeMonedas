@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import src.screens.GameScreen;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
 import src.world.entities.NoAutoPacketEntity;
@@ -19,8 +20,11 @@ public class Block extends Entity implements NoAutoPacketEntity {
 
     public enum AnimationType{LIVE,BREAK}
 
-    public Block(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type) {
+    protected GameScreen game;
+
+    public Block(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game) {
         super(world, shape, assetManager, id, type);
+        this.game = game;
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
