@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
 import src.utils.variables.ConsoleColor;
@@ -33,6 +34,8 @@ import src.main.Main;
 import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
 
+import java.awt.datatransfer.FlavorEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -56,6 +59,7 @@ public class GameScreen extends BaseScreen {
     private final Vector2 lastPosition;
     private Float sendTime;
     private Integer score;
+    private Float timeGame;
 
     private final Random random;
     public Vector2 lobbyPlayer;
@@ -64,6 +68,7 @@ public class GameScreen extends BaseScreen {
 
     private Table tableUI;
     private Label odsPointsLabel;
+    private Label gameTimeLabel;
 
     public GameScreen(Main main){
         super(main);
@@ -85,6 +90,7 @@ public class GameScreen extends BaseScreen {
         lastPosition = new Vector2();
         sendTime = 0f;
         score = 0;
+        timeGame = 0f;
 
         random = new Random();
         spawnMirror = new ArrayList<>();
@@ -100,7 +106,13 @@ public class GameScreen extends BaseScreen {
         odsPointsLabel.setAlignment(Align.center);
         odsPointsLabel.setFontScale(2);
 
-        tableUI.top().right().add(odsPointsLabel).pad(10);
+        gameTimeLabel = new Label("Game Time\n" + timeGame, main.getSkin());
+        gameTimeLabel.setAlignment(Align.center);
+        gameTimeLabel.setFontScale(2);
+
+        tableUI.add(gameTimeLabel);
+        tableUI.top();
+        tableUI.add(odsPointsLabel).pad(10);
     }
 
     public void setScore(Integer score) {
@@ -152,7 +164,6 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Entity " + type + ":" + id + " se mando a crear en"+ position+ " con "+ "FX: " + force);
         ActorBox2d actorBox2d = entityFactory.create(type, world, position, id);
         actorBox2d.getBody().applyLinearImpulse(force, actorBox2d.getBody().getWorldCenter(), true);
         addActor(actorBox2d);
@@ -196,7 +207,6 @@ public class GameScreen extends BaseScreen {
         Body body = entity.getBody();
         threadSecureWorld.addModification(() -> {
             body.setTransform(x, y, 0);
-            //if (fx == 0 || fy == 0) return;
             body.setLinearVelocity(fx, fy);
         });
     }
