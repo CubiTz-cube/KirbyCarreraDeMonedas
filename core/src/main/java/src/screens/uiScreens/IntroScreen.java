@@ -21,7 +21,7 @@ public class IntroScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         logo = new Image(main.getAssetManager().get("logo.png", Texture.class));
         table.add(logo).width(logo.getWidth()/2).height(logo.getHeight()/2);

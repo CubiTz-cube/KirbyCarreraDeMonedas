@@ -16,7 +16,7 @@ public class ConnectingScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         connectLabel = new Label("Conectando...", skin);
         connectLabel.setFontScale(3f);

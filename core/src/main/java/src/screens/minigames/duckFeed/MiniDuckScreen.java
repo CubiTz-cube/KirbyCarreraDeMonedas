@@ -24,7 +24,7 @@ public class MiniDuckScreen extends MinigameScreen {
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
         background.setSize(1300, 720);
-        stage.addActor(background);
+        stageUI.addActor(background);
         background.toBack();
 
         duck1 = new TextButton("Duck1", skin);
@@ -35,7 +35,7 @@ public class MiniDuckScreen extends MinigameScreen {
             }
         });
 
-        stage.addActor(duck1);
+        stageUI.addActor(duck1);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class MultiplayerScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         TextField nameTextField = new TextField("Sin nombre", skin);
         nameTextField.setAlignment(Align.center);

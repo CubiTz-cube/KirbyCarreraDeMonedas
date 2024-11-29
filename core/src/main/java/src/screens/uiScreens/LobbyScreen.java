@@ -22,7 +22,7 @@ public class LobbyScreen extends UIScreen {
 
         table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         titleLabel = new Label("Lobby", skin);
 

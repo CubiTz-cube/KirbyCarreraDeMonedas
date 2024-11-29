@@ -13,7 +13,7 @@ public class ServerScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         //Label labelTitle = new Label("Crear servidor", skin);
 

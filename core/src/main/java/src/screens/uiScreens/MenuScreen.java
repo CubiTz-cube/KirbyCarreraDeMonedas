@@ -16,7 +16,7 @@ public class MenuScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         TextButton playButton = new TextButton("Jugar", skin);
         playButton.addListener(new ClickListener() {

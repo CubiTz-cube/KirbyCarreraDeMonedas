@@ -29,12 +29,12 @@ public abstract class MinigameScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
         background.setSize(1300, 720);
         background.setColor(1, 0, 1, 0.5f);
-        stage.addActor(background);
+        stageUI.addActor(background);
 
         timeLabel = new Label("Start in 3", main.getSkin());
         timeLabel.setFontScale(6);

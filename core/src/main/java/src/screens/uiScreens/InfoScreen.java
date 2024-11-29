@@ -16,7 +16,7 @@ public class InfoScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         TextButton backButton = new TextButton("Volver", skin);
         backButton.addListener(new ClickListener() {

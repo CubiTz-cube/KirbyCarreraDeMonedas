@@ -297,8 +297,8 @@ public class GameScreen extends BaseScreen {
 
     public void endGame(){
         clearAll();
-        //main.closeClient();
-        //main.closeServer();
+        main.closeClient();
+        main.closeServer();
         main.changeScreen(Main.Screens.MENU);
     }
 

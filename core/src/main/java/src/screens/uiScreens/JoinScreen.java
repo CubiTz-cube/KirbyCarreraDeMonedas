@@ -16,7 +16,7 @@ public class JoinScreen extends UIScreen {
 
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
+        stageUI.addActor(table);
 
         TextField ipTextField = new TextField("localhost", skin);
         ipTextField.setAlignment(Align.center);
