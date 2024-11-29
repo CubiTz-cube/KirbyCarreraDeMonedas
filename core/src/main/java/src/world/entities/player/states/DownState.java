@@ -18,8 +18,7 @@ public class DownState  extends StatePlayer{
     @Override
     public void update(Float delta) {
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
-            if (player.enemyAbsorded == null) player.setCurrentState(Player.StateType.ABSORB);
-            else player.setCurrentState(Player.StateType.STAR);
+            player.doAction();
         }
 
         float velocityX = player.getBody().getLinearVelocity().x;

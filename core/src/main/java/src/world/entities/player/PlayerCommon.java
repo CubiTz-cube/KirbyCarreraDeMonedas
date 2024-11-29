@@ -19,23 +19,7 @@ import src.world.entities.player.states.*;
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public abstract class PlayerCommon extends Entity {
-    private Animation<TextureRegion> secondCurrentAnimation;
-    private final Sprite secondSprite;
-
-    public float speed = 12;
-    public float maxSpeed = 6;
     public float stunTime = 2;
-
-    public static final float WALK_SPEED = 10f;
-    public static final float WALK_MAX_SPEED = 5f;
-    public static final float RUN_SPEED = 14f;
-    public static final float RUN_MAX_SPEED = 6.5f;
-    public static final float MAX_JUMP_TIME = 0.3f;
-    public static final float JUMP_IMPULSE = 8f;
-    public static final float JUMP_INAIR = 0.15f;
-    public static final float FLY_IMPULSE = 6f;
-    public static final float DASH_IMPULSE = 35f;
-    public static final float ABSORB_FORCE = 12f;
 
     public enum StateType {
         IDLE,
@@ -114,6 +98,9 @@ public abstract class PlayerCommon extends Entity {
     protected  Animation<TextureRegion> absorbRunAnimation;
     protected  Animation<TextureRegion> absorbFallAnimation;
     protected  Animation<TextureRegion> absorbJumpAnimation;
+
+    private final Sprite secondSprite;
+    private Animation<TextureRegion> secondCurrentAnimation;
 
     protected PowerUp.Type currentpowerUptype;
     private PowerUp currentPowerUp;
@@ -287,11 +274,8 @@ public abstract class PlayerCommon extends Entity {
     }
 
     public void setCurrentPowerUp(PowerUp.Type type){
-        if (type == null){
-            currentpowerUptype = null;
-            return;
-        }
         currentpowerUptype = type;
+        if (type == null) return;
         currentPowerUp = switch (type){
             case BOMB -> powerBomb;
             case SLEEP -> powerSleep;

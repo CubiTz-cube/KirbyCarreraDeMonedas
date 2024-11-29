@@ -24,8 +24,7 @@ public class FallState extends CanMoveState
         super.update(delta);
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
-            if (player.enemyAbsorded == null) player.setCurrentState(Player.StateType.ABSORB);
-            else player.setCurrentState(Player.StateType.STAR);
+            player.doAction();
         }
 
         Vector2 velocity = player.getBody().getLinearVelocity();

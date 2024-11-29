@@ -21,6 +21,21 @@ import src.world.entities.projectiles.Projectil;
 import java.util.Random;
 
 public class Player extends PlayerCommon {
+    public float speed = 12;
+    public float maxSpeed = 6;
+
+    public static final float WALK_SPEED = 10f;
+    public static final float WALK_MAX_SPEED = 5f;
+    public static final float RUN_SPEED = 14f;
+    public static final float RUN_MAX_SPEED = 6.5f;
+    public static final float MAX_JUMP_TIME = 0.3f;
+    public static final float JUMP_IMPULSE = 9f;
+    public static final float JUMP_INAIR = 16f; // Se multiplica por deltaTime
+    public static final float FLY_IMPULSE = 6f;
+    public static final float DASH_IMPULSE = 15f;
+    public static final float ABSORB_FORCE = 12f;
+    public static final float BRAKE_FORCE = 280f;
+
     private Boolean changeAnimation;
 
     public Enemy enemyAbsorded;
@@ -125,8 +140,7 @@ public class Player extends PlayerCommon {
 
         if (getCurrentStateType() == StateType.DASH || getCurrentStateType() == StateType.STUN) return;
         if (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
-            float brakeForce = 10f;
-            body.applyForce(-velocity.x * brakeForce, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+            body.applyForce(-velocity.x * Player.BRAKE_FORCE * delta, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
     }
 
@@ -145,6 +159,17 @@ public class Player extends PlayerCommon {
         for (int i = 0; i<coins;i++){
             game.addEntity(Type.COIN, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
         }
+    }
+
+    public void doAction(){
+        if (currentpowerUptype != null) {
+            PowerUp power = getCurrentPowerUp();
+            if (getCurrentStateType() == StateType.IDLE || getCurrentStateType() == StateType.WALK ) power.actionIdle();
+            else if (getCurrentStateType() == StateType.RUN) power.actionMove();
+            else if (getCurrentStateType() == StateType.JUMP || getCurrentStateType() == StateType.FALL) power.actionAir();
+        }
+        else if (enemyAbsorded == null) setCurrentState(Player.StateType.ABSORB);
+        else setCurrentState(Player.StateType.STAR);
     }
 
     @Override

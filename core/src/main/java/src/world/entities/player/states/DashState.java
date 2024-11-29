@@ -19,7 +19,7 @@ public class DashState extends StatePlayer{
     public void update(Float delta) {
         float velocityX = player.getBody().getLinearVelocity().x;
         if (velocityX != 0) {
-            player.getBody().setLinearVelocity(velocityX * 0.90f, player.getBody().getLinearVelocity().y);
+            player.getBody().applyForce(-velocityX * Player.BRAKE_FORCE * delta, 0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }else {
             player.setCurrentState(Player.StateType.IDLE);
         }
