@@ -11,6 +11,9 @@ import src.main.Main;
 import src.screens.GameScreen;
 import src.screens.ScorePlayer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class EndGameScreen extends UIScreen{
     private Table table;
     private GameScreen game;
@@ -46,7 +49,9 @@ public class EndGameScreen extends UIScreen{
         table.add(new Label("Name", main.getSkin())).pad(10);
         table.add(new Label("Score", main.getSkin())).pad(10);
         table.row();
-        for (ScorePlayer score : game.getScorePlayers().values()){
+        ArrayList<ScorePlayer> scores = new ArrayList<>(game.getScorePlayers().values());
+        Collections.sort(scores);
+        for (ScorePlayer score : scores){
             addScoreEntry(score.name, score.score);
         }
     }
@@ -55,6 +60,7 @@ public class EndGameScreen extends UIScreen{
     public void hide() {
         super.hide();
         table.clear();
+        game.getScorePlayers().clear();
     }
 
     private void addScoreEntry(String name, Integer score) {

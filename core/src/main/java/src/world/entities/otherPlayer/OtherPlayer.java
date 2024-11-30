@@ -39,6 +39,11 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public void act(float delta) {
         //stateMachine.update(delta);
     }

@@ -157,10 +157,8 @@ public class GameScreen extends BaseScreen {
     public void addActor(Actor actor){
         if (actor instanceof Entity e) entities.put(e.getId(), e);
         if (actor instanceof ActorBox2d a) actors.add(a);
-        if (actor instanceof OtherPlayer o) {
-            scorePlayers.put(o.getId(), new ScorePlayer(o.getName()));
-            System.out.println("OtherPlayer " + o.getId() + " añadido a la lista");
-        }
+        if (actor instanceof OtherPlayer o) scorePlayers.put(o.getId(), new ScorePlayer(o.getName()));
+
         stage.addActor(actor);
     }
 
@@ -286,7 +284,7 @@ public class GameScreen extends BaseScreen {
      * @param id Id de la entidad a eliminar.
      */
     public void removeEntityNoPacket(Integer id){
-        //System.out.println("Removiendo Entity " + id);
+        System.out.println("Removiendo Entity " + id);
         Entity entity = entities.get(id);
         if (entity == null) {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
@@ -328,7 +326,6 @@ public class GameScreen extends BaseScreen {
                 player.setCurrentState(Player.StateType.IDLE);
             });
         }else{
-            scorePlayers.clear();
             initUI();
             tiledManager.makeMap();
             addMainPlayer();
@@ -403,10 +400,7 @@ public class GameScreen extends BaseScreen {
         stage.draw();
         camera.zoom = 1f;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            sendPacket(Packet.disconnectPlayer(-1));
-            endGame();
-        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {
