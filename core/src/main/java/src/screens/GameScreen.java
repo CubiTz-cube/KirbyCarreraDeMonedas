@@ -55,8 +55,8 @@ public class GameScreen extends BaseScreen {
 
     private final Vector2 lastPosition;
     private Float sendTime;
-    private Integer score;
     private final SecondsTimer timeGame;
+    private final HashMap<Integer, ScorePlayer> scorePlayers;
 
     private final Random random;
     public Vector2 lobbyPlayer;
@@ -86,8 +86,8 @@ public class GameScreen extends BaseScreen {
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
         sendTime = 0f;
-        score = 0;
-        timeGame = new SecondsTimer(0,5,0);
+        scorePlayers = new HashMap<>();
+        timeGame = new SecondsTimer(0,15,0);
 
         random = new Random();
         spawnMirror = new ArrayList<>();
@@ -99,7 +99,7 @@ public class GameScreen extends BaseScreen {
         tableUI.setFillParent(true);
         stage.addActor(tableUI);
 
-        odsPointsLabel = new Label("ODS POINTS\n"+score,main.getSkin());
+        odsPointsLabel = new Label("ODS POINTS\n"+0,main.getSkin());
         odsPointsLabel.setAlignment(Align.topRight);
         odsPointsLabel.setFontScale(2);
 
@@ -114,11 +114,16 @@ public class GameScreen extends BaseScreen {
     }
 
     public void setScore(Integer score) {
-        this.score = score;
+        scorePlayers.get(-1).score = score;
+        sendPacket(Packet.actScore(-1, score));
     }
 
     public Integer getScore() {
-        return score;
+        return scorePlayers.get(-1).score;
+    }
+
+    public HashMap<Integer, ScorePlayer> getScorePlayers() {
+        return scorePlayers;
     }
 
     public World getWorld() {
@@ -133,15 +138,13 @@ public class GameScreen extends BaseScreen {
         return entities;
     }
 
-    public void addScore(Integer score) {
-        setScore(getScore() + score);
-    }
-
     public void addMainPlayer(){
         if (player != null) return;
         Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
         player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), this);
         stage.addActor(player);
+        if (main.client == null) scorePlayers.put(-1, new ScorePlayer("TU"));
+        else scorePlayers.put(-1, new ScorePlayer(main.client.getName()));
     }
 
     public void addStatic(StaticFactory.Type type, Rectangle bounds){
@@ -154,6 +157,10 @@ public class GameScreen extends BaseScreen {
     public void addActor(Actor actor){
         if (actor instanceof Entity e) entities.put(e.getId(), e);
         if (actor instanceof ActorBox2d a) actors.add(a);
+        if (actor instanceof OtherPlayer o) {
+            scorePlayers.put(o.getId(), new ScorePlayer(o.getName()));
+            System.out.println("OtherPlayer " + o.getId() + " añadido a la lista");
+        }
         stage.addActor(actor);
     }
 
@@ -228,6 +235,15 @@ public class GameScreen extends BaseScreen {
         block.setState(stateType);
     }
 
+    public void actScore(Integer id, Integer score){
+        ScorePlayer scorePlayer = scorePlayers.get(id);
+        if (scorePlayer == null){
+            System.out.println("ScorePlayer " + id + " no encontrada en la lista");
+            return;
+        }
+        scorePlayer.score = score;
+    }
+
     /**
      * Elimina un actor del juego. Sin enviar paquete.
      * @param actor Actor a eliminar.
@@ -270,6 +286,7 @@ public class GameScreen extends BaseScreen {
      * @param id Id de la entidad a eliminar.
      */
     public void removeEntityNoPacket(Integer id){
+        //System.out.println("Removiendo Entity " + id);
         Entity entity = entities.get(id);
         if (entity == null) {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
@@ -291,15 +308,14 @@ public class GameScreen extends BaseScreen {
         for (ActorBox2d actor : actors) actor.detach();
         actors.clear();
         entities.clear();
-        score = 0;
         spawnMirror.clear();
     }
 
     public void endGame(){
-        clearAll();
         main.closeClient();
         main.closeServer();
-        main.changeScreen(Main.Screens.MENU);
+        clearAll();
+        main.changeScreen(Main.Screens.ENDGAME);
     }
 
     @Override
@@ -312,10 +328,11 @@ public class GameScreen extends BaseScreen {
                 player.setCurrentState(Player.StateType.IDLE);
             });
         }else{
+            scorePlayers.clear();
             initUI();
-            score = 3;
             tiledManager.makeMap();
             addMainPlayer();
+            setScore(3);
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
                 Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
@@ -362,7 +379,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void actUI(){
-        odsPointsLabel.setText("ODS POINTS\n"+score);
+        odsPointsLabel.setText("ODS POINTS\n"+getScore());
         gameTimeLabel.setText("Game Time\n" + timeGame);
     }
 

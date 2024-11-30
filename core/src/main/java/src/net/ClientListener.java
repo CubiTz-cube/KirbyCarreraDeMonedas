@@ -115,6 +115,12 @@ public class ClientListener implements Runnable{
 
                         server.sendAll(Packet.actBlock(packId, stateType), id);
                         break;
+
+                    case ACTSCORE:
+                        //Integer packId = (Integer) pack[1]; Devuelve -1
+                        int score = (int) pack[2];
+                        server.sendAll(Packet.actScore(id,score), id);
+                        break;
                 }
             }
         }catch (EOFException | SocketException e) {

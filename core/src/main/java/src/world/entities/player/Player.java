@@ -150,7 +150,7 @@ public class Player extends PlayerCommon {
 
         if (game.getScore() > amount) {
             coins = amount;
-            game.addScore(-coins);
+            game.setScore(game.getScore() - coins);
         } else {
             coins = game.getScore();
             game.setScore(0);
@@ -208,10 +208,11 @@ public class Player extends PlayerCommon {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            lossPoints(3);
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             game.removeEntity(coin.getId());
-            game.addScore(1);
+            game.setScore(game.getScore() + 1);
         }
     }
 }

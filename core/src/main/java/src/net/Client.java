@@ -146,6 +146,12 @@ public class Client implements Runnable{
                         BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
                         game.actBlock(packId, stateType);
                         break;
+
+                    case ACTSCORE:
+                        packId = (Integer) pack[1];
+                        int score = (int) pack[2];
+                        game.actScore(packId, score);
+                        break;
                 }
             }
         } catch (SocketException | EOFException e) {

@@ -9,7 +9,7 @@ public class Packet {
     public enum Types{
         CONNECTPLAYER, DISCONNECTPLAYER, NEWPLAYER, GAMESTART,
         ACTENTITYPOSITION, NEWENTITY, REMOVEENTITY,
-        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK
+        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK, ACTSCORE
     }
 
     public static Object[] connectPlayer(String name){
@@ -53,5 +53,9 @@ public class Packet {
 
     public static Object[] actBlock(int id, Block.StateType stateType){
         return new Object[]{Types.ACTBREAKBLOCK, id, stateType};
+    }
+
+    public static Object[] actScore(int id,int score){
+        return new Object[]{Types.ACTSCORE, id, score};
     }
 }

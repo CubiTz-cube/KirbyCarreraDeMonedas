@@ -8,19 +8,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
+import src.screens.GameScreen;
+import src.screens.ScorePlayer;
 
 public class EndGameScreen extends UIScreen{
-    Table table;
+    private Table table;
+    private GameScreen game;
 
-    public EndGameScreen(Main main) {
+    private TextButton backButton;
+
+    public EndGameScreen(Main main, GameScreen game) {
         super(main);
-        Skin skin = main.getSkin();
+        this.game = game;
 
         table = new Table();
         table.setFillParent(true);
         stageUI.addActor(table);
 
-        TextButton backButton = new TextButton("Volver", skin);
+        backButton = new TextButton("Volver", main.getSkin());
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -29,11 +34,27 @@ public class EndGameScreen extends UIScreen{
         });
 
 
+
+
+    }
+
+    @Override
+    public void show() {
+        super.show();
         table.top();
         table.add(backButton).expandX().row();
-        table.add(new Label("Name", skin)).pad(10);
-        table.add(new Label("Score", skin)).pad(10);
+        table.add(new Label("Name", main.getSkin())).pad(10);
+        table.add(new Label("Score", main.getSkin())).pad(10);
         table.row();
+        for (ScorePlayer score : game.getScorePlayers().values()){
+            addScoreEntry(score.name, score.score);
+        }
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        table.clear();
     }
 
     private void addScoreEntry(String name, Integer score) {

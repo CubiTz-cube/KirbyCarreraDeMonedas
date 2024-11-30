@@ -31,7 +31,7 @@ public class MiniDuckScreen extends MinigameScreen {
         duck1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.addScore(10);
+                game.setScore(game.getScore() + 1);
             }
         });
 

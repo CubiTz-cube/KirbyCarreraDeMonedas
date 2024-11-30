@@ -14,7 +14,6 @@ import src.screens.GameScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
-import src.world.entities.player.PlayerInfo;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -106,7 +105,7 @@ public class Main extends Game {
         screensList.add(new LobbyScreen(this));
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
-        screensList.add(new EndGameScreen(this));
+        screensList.add(new EndGameScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
         changeScreen(Screens.GAME);
