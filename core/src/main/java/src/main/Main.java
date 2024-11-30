@@ -12,9 +12,9 @@ import src.net.Client;
 import src.net.Server;
 import src.screens.GameScreen;
 import src.screens.uiScreens.IntroScreen;
-import src.screens.minigames.*;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
+import src.world.entities.player.PlayerInfo;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -25,7 +25,6 @@ public class Main extends Game {
     private ArrayList<Screen> screensList;
     private Skin skin;
     private int ids = 0;
-    private String name;
     public enum Screens {
         INTRO,
         MENU,
@@ -37,6 +36,7 @@ public class Main extends Game {
         LOBBY,
         CONNECTING,
         GAME,
+        ENDGAME,
         MINIDUCK,
     }
 
@@ -44,6 +44,10 @@ public class Main extends Game {
     public Client client;
     private ExecutorService serverThread = Executors.newSingleThreadExecutor();
     private ExecutorService clientThread = Executors.newSingleThreadExecutor();
+
+    private String name;
+    private String ip;
+    private Integer port;
 
     @Override
     public void create() {
@@ -102,6 +106,7 @@ public class Main extends Game {
         screensList.add(new LobbyScreen(this));
         screensList.add(new ConnectingScreen(this));
         screensList.add(new GameScreen(this));
+        screensList.add(new EndGameScreen(this));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
         changeScreen(Screens.GAME);
@@ -110,6 +115,23 @@ public class Main extends Game {
     public void setName(String name) {
         if (name.isEmpty()) this.name = "Sin nombre";
         else this.name = name;
+    }
+
+    public void setIp(String ip) {
+        if (ip.isEmpty()) this.ip = "localhost";
+        this.ip = ip;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public Integer getPort() {
+        return port;
     }
 
     public Integer getIds() {

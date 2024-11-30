@@ -27,9 +27,10 @@ public class ServerScreen extends UIScreen {
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int port = Integer.parseInt(portTextField.getText());
-                main.startServer(ipTextField.getText(), port);
-                main.startClient(ipTextField.getText(), port);
+                main.setPort(Integer.parseInt(portTextField.getText()));
+                main.setIp(ipTextField.getText());
+                main.startServer(main.getIp(), main.getPort());
+                main.startClient(main.getIp(), main.getPort());
                 main.changeScreen(Main.Screens.LOBBY);
             }
         });

@@ -28,8 +28,9 @@ public class JoinScreen extends UIScreen {
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int port = Integer.parseInt(portTextField.getText());
-                main.startClient(ipTextField.getText(), port);
+                main.setPort(Integer.parseInt(portTextField.getText()));
+                main.setIp(ipTextField.getText());
+                main.startClient(main.getIp(), main.getPort());
                 main.changeScreen(Main.Screens.CONNECTING);
                 System.out.println("Unirse");
             }
