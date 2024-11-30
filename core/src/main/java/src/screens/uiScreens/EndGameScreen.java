@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class EndGameScreen extends UIScreen{
-    private Table table;
-    private GameScreen game;
+    private final Table table;
+    private final GameScreen game;
 
-    private TextButton backButton;
+    private final TextButton backButton;
 
     public EndGameScreen(Main main, GameScreen game) {
         super(main);
@@ -35,19 +35,20 @@ public class EndGameScreen extends UIScreen{
                 main.changeScreen(Main.Screens.MENU);
             }
         });
-
-
-
-
     }
 
     @Override
     public void show() {
         super.show();
         table.top();
-        table.add(backButton).expandX().row();
+        table.add().expandX();
+        table.add(backButton).expandX().fillX().prefHeight(50);
+        table.add().expandX();
+        table.row();
+        table.add().expandX();
         table.add(new Label("Name", main.getSkin())).pad(10);
         table.add(new Label("Score", main.getSkin())).pad(10);
+        table.add().expandX();
         table.row();
         ArrayList<ScorePlayer> scores = new ArrayList<>(game.getScorePlayers().values());
         Collections.sort(scores);
@@ -64,8 +65,10 @@ public class EndGameScreen extends UIScreen{
     }
 
     private void addScoreEntry(String name, Integer score) {
+        table.add().expandX();
         table.add(new Label(name, main.getSkin())).pad(10);
         table.add(new Label(String.valueOf(score), main.getSkin())).pad(10);
+        table.add().expandX();
         table.row();
     }
 }
