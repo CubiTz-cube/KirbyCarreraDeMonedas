@@ -18,7 +18,7 @@ public class Projectil extends Entity {
     }
 
     @Override
-    public void beginContactWith(ActorBox2d actor, GameScreen game) {
+    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (!despawn) game.removeEntityNoPacket(this.getId()); despawn = true;
     }
 }
