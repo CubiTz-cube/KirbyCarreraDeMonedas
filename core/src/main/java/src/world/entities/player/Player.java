@@ -17,6 +17,7 @@ import src.world.entities.mirror.Mirror;
 import src.world.entities.player.powers.PowerUp;
 import src.world.entities.player.states.*;
 import src.world.entities.projectiles.Projectil;
+import src.world.statics.Spike;
 
 import java.util.Random;
 
@@ -174,6 +175,7 @@ public class Player extends PlayerCommon {
 
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
+        Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
         if (actor instanceof Enemy enemy) {
             if (getCurrentStateType() == StateType.ABSORB){
                 enemyAbsorded = enemy;
@@ -182,7 +184,6 @@ public class Player extends PlayerCommon {
                 return;
             }
 
-            Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
             if (getCurrentStateType() == StateType.DASH && enemy.getCurrentStateType() != Enemy.StateType.DAMAGE){
                 enemy.takeDamage(1);
                 body.setLinearVelocity(0,0);
@@ -204,7 +205,6 @@ public class Player extends PlayerCommon {
                 game.randomMirror();
             });
         } else if (actor instanceof Projectil) {
-            Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
@@ -213,6 +213,12 @@ public class Player extends PlayerCommon {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             game.removeEntity(coin.getId());
             game.setScore(game.getScore() + 1);
+        } else if (actor instanceof Spike) {
+            if (getCurrentStateType() == StateType.STUN || invencible) return;
+            setCurrentState(Player.StateType.STUN);
+            body.setLinearVelocity(0,0);
+            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            lossPoints(4);
         }
     }
 }
