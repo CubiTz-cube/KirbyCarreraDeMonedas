@@ -28,10 +28,4 @@ public class Spike extends ActorBox2d
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
         setPosition(shape.x * PIXELS_IN_METER, shape.y * PIXELS_IN_METER);
     }
-
-    public void detach()
-    {
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
-    }
 }
