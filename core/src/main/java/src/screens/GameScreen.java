@@ -33,6 +33,8 @@ import src.world.entities.player.Player;
 import src.main.Main;
 import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
+
+import javax.swing.plaf.TableUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -66,6 +68,7 @@ public class GameScreen extends BaseScreen {
     private Table tableUI;
     private Label odsPointsLabel;
     private Label gameTimeLabel;
+    private ChatWidget chatWidget;
 
     public GameScreen(Main main){
         super(main);
@@ -107,10 +110,14 @@ public class GameScreen extends BaseScreen {
         gameTimeLabel.setAlignment(Align.topLeft);
         gameTimeLabel.setFontScale(2);
 
+        chatWidget = new ChatWidget(main.getSkin());
+
         tableUI.top();
         tableUI.add(gameTimeLabel);
         tableUI.add().expandX();
         tableUI.add(odsPointsLabel);
+        tableUI.row();
+        tableUI.add(chatWidget).padTop(400).height(200).width(300).fill();
     }
 
     public void setScore(Integer score) {
@@ -136,6 +143,10 @@ public class GameScreen extends BaseScreen {
 
     public HashMap<Integer, Entity> getEntities() {
         return entities;
+    }
+
+    public void addMessage(String name, String message){
+        chatWidget.addMessage(name + ": " + message);
     }
 
     public void addMainPlayer(){

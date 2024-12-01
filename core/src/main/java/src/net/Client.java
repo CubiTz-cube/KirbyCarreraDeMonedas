@@ -152,6 +152,11 @@ public class Client implements Runnable{
                         int score = (int) pack[2];
                         game.actScore(packId, score);
                         break;
+                    case MESSAGE:
+                        String packName = (String) pack[1];
+                        String message = (String) pack[2];
+                        game.addMessage(packName, message);
+                        break;
                 }
             }
         } catch (SocketException | EOFException e) {

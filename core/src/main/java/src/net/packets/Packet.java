@@ -9,7 +9,8 @@ public class Packet {
     public enum Types{
         CONNECTPLAYER, DISCONNECTPLAYER, NEWPLAYER, GAMESTART,
         ACTENTITYPOSITION, NEWENTITY, REMOVEENTITY,
-        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK, ACTSCORE
+        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK, ACTSCORE,
+        MESSAGE,
     }
 
     public static Object[] connectPlayer(String name){
@@ -57,5 +58,9 @@ public class Packet {
 
     public static Object[] actScore(int id,int score){
         return new Object[]{Types.ACTSCORE, id, score};
+    }
+
+    public static Object[] message(String name ,String message){
+        return new Object[]{Types.MESSAGE, name, message};
     }
 }

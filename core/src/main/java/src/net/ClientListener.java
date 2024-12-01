@@ -121,6 +121,11 @@ public class ClientListener implements Runnable{
                         int score = (int) pack[2];
                         server.sendAll(Packet.actScore(id,score), id);
                         break;
+
+                    case MESSAGE:
+                        String message = (String) pack[2];
+                        server.sendAll(Packet.message(name, message), id);
+                        break;
                 }
             }
         }catch (EOFException | SocketException e) {
@@ -151,6 +156,7 @@ public class ClientListener implements Runnable{
         if (!running) return;
         System.out.println("[USER] Usuario desconectado " + name + " "+ id);
         server.sendAll(Packet.disconnectPlayer(id), id);
+        server.sendAll(Packet.message("Server", name + " se ha desconectado"), id);
         running = false;
         server.removeUser(this);
         try {
