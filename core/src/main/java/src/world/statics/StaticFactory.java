@@ -1,6 +1,5 @@
 package src.world.statics;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import src.world.ActorBox2d;
