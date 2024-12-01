@@ -417,7 +417,6 @@ public class GameScreen extends BaseScreen {
             if (actor instanceof BreakBlock breakBlock) {
                 if (player.getCurrentStateType() == Player.StateType.DASH) {
                     if (player.getSprite().getBoundingRectangle().overlaps(breakBlock.getSprite().getBoundingRectangle())) {
-                        sendPacket(Packet.actBlock(breakBlock.getId(), BreakBlock.StateType.BREAK));
                         breakBlock.setState(BreakBlock.StateType.BREAK);
                     }
                 }
