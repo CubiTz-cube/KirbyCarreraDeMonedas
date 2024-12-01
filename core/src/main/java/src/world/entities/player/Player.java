@@ -17,6 +17,7 @@ import src.world.entities.mirror.Mirror;
 import src.world.entities.player.powers.PowerUp;
 import src.world.entities.player.states.*;
 import src.world.entities.projectiles.Projectil;
+import src.world.statics.Lava;
 import src.world.statics.Spike;
 
 import java.util.Random;
@@ -215,10 +216,18 @@ public class Player extends PlayerCommon {
             game.setScore(game.getScore() + 1);
         } else if (actor instanceof Spike) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
+            stunTime = 0.5f;
             setCurrentState(Player.StateType.STUN);
             body.setLinearVelocity(0,0);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
             lossPoints(4);
+        } else if (actor instanceof Lava) {
+            if (getCurrentStateType() == StateType.STUN || invencible) return;
+            stunTime = 0.5f;
+            setCurrentState(Player.StateType.STUN);
+            body.setLinearVelocity(0,0);
+            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            lossPoints(3);
         }
     }
 }

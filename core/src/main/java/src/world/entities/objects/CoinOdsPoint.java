@@ -1,14 +1,19 @@
 package src.world.entities.objects;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import src.screens.GameScreen;
+import src.world.ActorBox2d;
 import src.world.entities.Entity;
+import src.world.statics.Lava;
 
 public class CoinOdsPoint extends Entity {
+    protected Game game;
     public CoinOdsPoint(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager, id, Type.COIN);
         sprite.setTexture(assetManager.get("world/entities/coin.png", Texture.class));
@@ -24,5 +29,17 @@ public class CoinOdsPoint extends Entity {
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
+    }
+
+    @Override
+    public void beginContactWith(ActorBox2d actor, GameScreen game) {
+        super.beginContactWith(actor, game);
+        if(actor instanceof Lava) {
+            delete();
+        }
+    }
+
+    public void delete() {
+        game.dispose();
     }
 }

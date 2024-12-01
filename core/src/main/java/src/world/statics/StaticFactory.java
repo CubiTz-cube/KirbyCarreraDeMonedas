@@ -9,7 +9,7 @@ public class StaticFactory {
     public enum Type{
         FLOOR,
         SPIKE,
-        //LAVA,
+        LAVA,
         //PLATAFORM,
     }
 
