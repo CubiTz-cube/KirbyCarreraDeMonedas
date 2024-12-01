@@ -35,7 +35,6 @@ public class FallBlock extends Block{
         if (timeBreak > 0) timeBreak -= delta;
         else {
             setState(StateType.BREAK);
-            game.sendPacket(Packet.actBlock(getId(), BreakBlock.StateType.BREAK));
         }
     }
 

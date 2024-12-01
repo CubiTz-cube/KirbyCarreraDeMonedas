@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import src.net.packets.Packet;
 import src.screens.GameScreen;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
@@ -48,6 +49,8 @@ public class Block extends Entity implements NoAutoPacketEntity {
             case LIVE -> stateMachine.setState(liveState);
             case BREAK -> stateMachine.setState(breakState);
         }
+        if (stateType != StateType.BREAK) return;
+        game.sendPacket(Packet.actBlock(getId(), StateType.BREAK));
     }
 
     public void setAnimation(AnimationType animationType){

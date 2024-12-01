@@ -4,6 +4,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.world.ActorBox2d;
+import src.world.entities.projectiles.Projectil;
 
 public class BreakBlock extends Block {
 
@@ -12,4 +14,10 @@ public class BreakBlock extends Block {
         sprite.setTexture((assetManager.get("world/entities/breakBlock.png")));
     }
 
+    @Override
+    public void beginContactWith(ActorBox2d actor, GameScreen game) {
+        if (actor instanceof Projectil) {
+            setState(StateType.BREAK);
+        }
+    }
 }
