@@ -72,8 +72,8 @@
         },
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
-                3,
                 4,
+                3,
                 6
             ],
             "scale": 0.75,
