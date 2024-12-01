@@ -432,6 +432,7 @@ public class GameScreen extends BaseScreen {
                 int index = random.nextInt(spawnMirror.size());
                 Vector2 position = spawnMirror.get(index);
                 actEntityPos(mirror.getId(), position.x, position.y, 0f, 0f);
+                sendPacket(Packet.actEntityPosition(mirror.getId(), position.x, position.y));
                 return;
             }
         }
