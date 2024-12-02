@@ -15,6 +15,10 @@ import com.badlogic.gdx.utils.Align;
 
 public class ChatWidget extends Table {
 
+    /**
+     * Crea un chat dentro de una tabla
+     * @param skin skin de la tabla
+     */
     public ChatWidget(Skin skin){
         setSkin(skin);
         setFillParent(true);

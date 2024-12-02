@@ -6,6 +6,10 @@ import src.main.Main;
 public abstract class BaseScreen implements Screen {
     public Main main;
 
+    /**
+     * Clase base para crear pantallas
+     * @param main
+     */
     public BaseScreen(Main main) {
         this.main = main;
     }

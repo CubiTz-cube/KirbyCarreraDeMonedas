@@ -295,7 +295,6 @@ public class GameScreen extends BaseScreen {
      * @param id Id de la entidad a eliminar.
      */
     public void removeEntityNoPacket(Integer id){
-        System.out.println("Removiendo Entity " + id);
         Entity entity = entities.get(id);
         if (entity == null) {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);

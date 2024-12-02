@@ -20,6 +20,11 @@ public abstract class MinigameScreen extends UIScreen {
     private final Image background;
     private final Label timeLabel;
 
+    /**
+     * Clase base para crear Minijuegos, incluye la intruccion de 3 segundos.
+     * @param main
+     * @param game
+     */
     public MinigameScreen(Main main, GameScreen game) {
         super(main);
         this.game = game;
