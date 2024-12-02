@@ -95,7 +95,7 @@ public abstract class MinigameScreen extends UIScreen {
         }
 
         if (timeGame <= 1){
-            //main.changeScreen(Main.Screens.GAME);
+            main.changeScreen(Main.Screens.GAME);
         }
     }
 }
