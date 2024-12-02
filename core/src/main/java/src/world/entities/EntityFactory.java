@@ -14,6 +14,7 @@ import src.world.entities.blocks.FallBlock;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.projectiles.Cloud;
 import src.world.entities.projectiles.Star;
+import static java.lang.Math.sqrt;
 
 public class EntityFactory {
     private final GameScreen game;
@@ -37,7 +38,7 @@ public class EntityFactory {
             case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXR, new Vector2(1,0));
             case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXL, new Vector2(-1,0));
             case PLATFORMYU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMYU, new Vector2(0,1));
-            case PLATFORMRU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMRU, new Vector2(1,1));
+            case PLATFORMRU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMRU, new Vector2(Float.parseFloat(sqrt(1/2)),Float.parseFloat(sqrt(1/2))));
             case PLATOFRMRD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATOFRMRD, new Vector2(1,-1));
             case PLATFORMLU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMLU, new Vector2(-1,1));
             case PLATFORMLD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMLD, new Vector2(-1,-1));
