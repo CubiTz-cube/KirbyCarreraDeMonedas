@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.Client;
 import src.net.Server;
 import src.screens.GameScreen;
+import src.screens.minigames.odsPlease.OdsPleaseScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
@@ -37,6 +38,7 @@ public class Main extends Game {
         GAME,
         ENDGAME,
         MINIDUCK,
+        ODSPLEASE,
     }
 
     public Server server;
@@ -107,8 +109,9 @@ public class Main extends Game {
         screensList.add(new GameScreen(this));
         screensList.add(new EndGameScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
+        screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MENU);
+        changeScreen(Screens.ODSPLEASE);
     }
 
     public void setName(String name) {

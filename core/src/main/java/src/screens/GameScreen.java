@@ -96,7 +96,6 @@ public class GameScreen extends BaseScreen {
         spawnMirror = new ArrayList<>();
         spawnPlayer = new ArrayList<>();
     }
-
     private void initUI(){
         tableUI = new Table();
         tableUI.setFillParent(true);
@@ -324,6 +323,19 @@ public class GameScreen extends BaseScreen {
         main.closeServer();
         clearAll();
         main.changeScreen(Main.Screens.ENDGAME);
+    }
+
+    public void playMinigame(){
+        int select = random.nextInt(2);
+
+        switch (select){
+            case 0:
+                main.changeScreen(Main.Screens.MINIDUCK);
+                break;
+            case 1:
+                main.changeScreen(Main.Screens.ODSPLEASE);
+                break;
+        }
     }
 
     @Override
