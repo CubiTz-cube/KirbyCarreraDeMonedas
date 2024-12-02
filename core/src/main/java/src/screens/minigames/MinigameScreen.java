@@ -3,7 +3,6 @@ package src.screens.minigames;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 import src.main.Main;
 import src.screens.GameScreen;
 import src.screens.uiScreens.UIScreen;
@@ -17,8 +16,11 @@ public abstract class MinigameScreen extends UIScreen {
     private Float timeGame;
     private boolean gameStarted;
 
+    private final Table backTable;
+    private final Table frontTable;
     private final Image background;
-    private final Label timeLabel;
+    private final Label timeStartlabel;
+    protected final Label timeMinigameLabel;
 
     /**
      * Clase base para crear Minijuegos, incluye la intruccion de 3 segundos.
@@ -32,20 +34,23 @@ public abstract class MinigameScreen extends UIScreen {
         timeGame = 0f;
         gameStarted = false;
 
-        Table table = new Table();
-        table.setFillParent(true);
-        stageUI.addActor(table);
+        backTable = new Table();
+        backTable.setFillParent(true);
+        frontTable = new Table();
+        frontTable.setFillParent(true);
+        stageUI.addActor(backTable);
+        stageUI.addActor(frontTable);
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
-        background.setSize(1300, 720);
         background.setColor(1, 0, 1, 0.5f);
-        stageUI.addActor(background);
+        backTable.add(background).expand().fill();
 
-        timeLabel = new Label("Start in 3", main.getSkin());
-        timeLabel.setFontScale(6);
-        timeLabel.setAlignment(Align.center);
-        timeLabel.setColor(0, 0, 0, 1);
-        table.add(timeLabel).expand().fill();
+        timeStartlabel = new Label("Start in 3", main.getSkin());
+        timeStartlabel.setFontScale(3);
+
+        timeMinigameLabel = new Label("Time " + timeGame.intValue(), main.getSkin());
+
+        frontTable.center().add(timeStartlabel);
     }
 
     public boolean isGameStarted() {
@@ -58,6 +63,8 @@ public abstract class MinigameScreen extends UIScreen {
         timeStart = 3f;
         timeGame = 5f;
         gameStarted = false;
+        frontTable.setVisible(true);
+        backTable.setVisible(true);
     }
 
     @Override
@@ -72,22 +79,23 @@ public abstract class MinigameScreen extends UIScreen {
         game.actLogic(delta);
 
         if (timeStart >= 1){
-            timeLabel.setText("Start in " + timeStart.intValue());
+            timeStartlabel.setText("Start in " + timeStart.intValue());
             timeStart -= delta;
         }else if (timeStart > 0){
-            timeLabel.setText("GO!");
+            timeStartlabel.setText("GO!");
             timeStart -= delta;
         } else{
             if (!gameStarted){
                 gameStarted = true;
-                background.remove();
+                frontTable.setVisible(false);
+                backTable.setVisible(false);
             }
-            timeLabel.setText("Time " + timeGame.intValue());
+            timeMinigameLabel.setText("Time " + timeGame.intValue());
             timeGame -= delta;
         }
 
         if (timeGame <= 1){
-            main.changeScreen(Main.Screens.GAME);
+            //main.changeScreen(Main.Screens.GAME);
         }
     }
 }
