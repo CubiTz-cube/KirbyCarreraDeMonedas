@@ -5,9 +5,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.utils.CollisionFilters;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.statics.Lava;
@@ -29,6 +31,11 @@ public class CoinOdsPoint extends Entity {
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
+
+        Filter filter = new Filter();
+        filter.categoryBits = ~CollisionFilters.CATEGORY_ENEMY;
+        filter.maskBits = CollisionFilters.MASK_COIN;
+        fixture.setFilterData(filter);
     }
 
     @Override

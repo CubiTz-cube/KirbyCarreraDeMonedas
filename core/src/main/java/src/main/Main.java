@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.Client;
 import src.net.Server;
 import src.screens.GameScreen;
+import src.screens.minigames.odsPlease.OdsPleaseScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
@@ -37,6 +38,7 @@ public class Main extends Game {
         GAME,
         ENDGAME,
         MINIDUCK,
+        ODSPLEASE,
     }
 
     public Server server;
@@ -90,6 +92,23 @@ public class Main extends Game {
         assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
         assetManager.load("world/entities/basic/basicWalk.png", Texture.class);
         assetManager.load("world/particles/cloudParticle.png", Texture.class);
+        assetManager.load("odsPng/ods (1).png", Texture.class);
+        assetManager.load("odsPng/ods (2).png", Texture.class);
+        assetManager.load("odsPng/ods (3).png", Texture.class);
+        assetManager.load("odsPng/ods (4).png", Texture.class);
+        assetManager.load("odsPng/ods (5).png", Texture.class);
+        assetManager.load("odsPng/ods (6).png", Texture.class);
+        assetManager.load("odsPng/ods (7).png", Texture.class);
+        assetManager.load("odsPng/ods (8).png", Texture.class);
+        assetManager.load("odsPng/ods (9).png", Texture.class);
+        assetManager.load("odsPng/ods (10).png", Texture.class);
+        assetManager.load("odsPng/ods (11).png", Texture.class);
+        assetManager.load("odsPng/ods (12).png", Texture.class);
+        assetManager.load("odsPng/ods (13).png", Texture.class);
+        assetManager.load("odsPng/ods (14).png", Texture.class);
+        assetManager.load("odsPng/ods (15).png", Texture.class);
+        assetManager.load("odsPng/ods (16).png", Texture.class);
+        assetManager.load("odsPng/ods (17).png", Texture.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
@@ -107,8 +126,9 @@ public class Main extends Game {
         screensList.add(new GameScreen(this));
         screensList.add(new EndGameScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
+        screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MENU);
+    changeScreen(Screens.INTRO);
     }
 
     public void setName(String name) {

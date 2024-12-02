@@ -41,6 +41,8 @@ public class MiniDuckScreen extends MinigameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        if (!isGameStarted()) return;
+
         x += 100 * delta;
         duck1.setPosition(x, 600);
         x = x % 1280;
