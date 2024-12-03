@@ -1,27 +1,27 @@
 package src.utils;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ThreadSecureWorld {
     private final World world;
-    private final Queue<Runnable> modificationQueue;
+    private final ConcurrentLinkedQueue<Runnable> modificationQueue;
 
     public ThreadSecureWorld(World world) {
         this.world = world;
-        this.modificationQueue = new Queue<>();
+        this.modificationQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void step(float delta, int velocityIterations, int positionIterations) {
         world.step(delta, velocityIterations, positionIterations);
         while (!modificationQueue.isEmpty()) {
-            Runnable run = modificationQueue.removeFirst();
+            Runnable run = modificationQueue.poll();
             if (run == null) continue;
             run.run();
         }
     }
 
     public void addModification(Runnable modification) {
-        modificationQueue.addLast(modification);
+        modificationQueue.add(modification);
     }
 }
