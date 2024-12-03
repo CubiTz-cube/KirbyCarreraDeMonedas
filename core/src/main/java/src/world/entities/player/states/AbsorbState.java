@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import src.utils.variables.PlayerControl;
 import src.world.entities.player.Player;
 
+import java.util.ArrayList;
+
 public class AbsorbState extends StatePlayer{
     public AbsorbState(Player player) {
         super(player);
@@ -18,11 +20,14 @@ public class AbsorbState extends StatePlayer{
 
     @Override
     public void update(Float delta) {
-        Fixture fix;
+        ArrayList<Fixture> fixtures;
 
-        if (player.getSprite().isFlipX()) fix = player.detectFrontFixture(-2.5f);
-        else fix = player.detectFrontFixture(2.5f);
-        if (fix != null) player.attractFixture(fix, Player.ABSORB_FORCE);
+        if (player.getSprite().isFlipX()) fixtures = player.detectFrontFixtures(-2.5f);
+        else fixtures = player.detectFrontFixtures(2.5f);
+
+        for (Fixture fix : fixtures){
+            if (fix != null) player.attractFixture(fix, Player.ABSORB_FORCE);
+        }
 
         Vector2 velocity = player.getBody().getLinearVelocity();
         if (velocity.x != 0) {

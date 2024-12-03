@@ -50,17 +50,6 @@ public class Player extends PlayerCommon {
     public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game) {
         super(world, shape, assetManager, -1);
         this.game = game;
-        BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
-        def.type = BodyDef.BodyType.DynamicBody;
-        body = world.createBody(def);
-
-        CircleShape box = new CircleShape();
-        box.setRadius(shape.width/4);
-        fixture = body.createFixture(box, 1.9f);
-        fixture.setUserData(this);
-        box.dispose();
-        body.setFixedRotation(true);
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;

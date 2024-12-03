@@ -5,16 +5,22 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import src.utils.FrontRayCastCallback;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
 import src.world.entities.player.powers.*;
 import src.world.entities.player.states.*;
+
+import java.util.ArrayList;
 
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 
@@ -116,6 +122,18 @@ public abstract class PlayerCommon extends Entity {
         super(world, shape, assetManager, id, null);
         this.assetManager = assetManager;
         stateMachine = new StateMachine();
+
+        BodyDef def = new BodyDef();
+        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
+        def.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(def);
+
+        CircleShape box = new CircleShape();
+        box.setRadius(shape.width/4);
+        fixture = body.createFixture(box, 1.9f);
+        fixture.setUserData(this);
+        box.dispose();
+        body.setFixedRotation(true);
 
         initAnimations(assetManager);
         setAnimation(AnimationType.IDLE);
@@ -305,14 +323,32 @@ public abstract class PlayerCommon extends Entity {
         stateMachine.update(delta);
     }
 
-    public Fixture detectFrontFixture(float distance) {
+    public ArrayList<Fixture> detectFrontFixtures(float distance) {
+        ArrayList<Fixture> hitFixtures = new ArrayList<>();
         Vector2 startPoint = body.getPosition();
-        Vector2 endPoint = new Vector2(startPoint.x + distance, startPoint.y);
 
+        Vector2 endPoint = new Vector2(startPoint.x + distance, startPoint.y);
         FrontRayCastCallback callback = new FrontRayCastCallback();
         world.rayCast(callback, startPoint, endPoint);
+        if (callback.getHitFixture() != null) {
+            hitFixtures.add(callback.getHitFixture());
+        }
 
-        return callback.getHitFixture();
+        endPoint.set(startPoint.x + distance * MathUtils.cosDeg(35), startPoint.y + distance * MathUtils.sinDeg(35));
+        callback = new FrontRayCastCallback();
+        world.rayCast(callback, startPoint, endPoint);
+        if (callback.getHitFixture() != null) {
+            hitFixtures.add(callback.getHitFixture());
+        }
+
+        endPoint.set(startPoint.x + distance * MathUtils.cosDeg(-35), startPoint.y + distance * MathUtils.sinDeg(-35));
+        callback = new FrontRayCastCallback();
+        world.rayCast(callback, startPoint, endPoint);
+        if (callback.getHitFixture() != null) {
+            hitFixtures.add(callback.getHitFixture());
+        }
+
+        return hitFixtures;
     }
 
     public void attractFixture(Fixture fixture, Float forceMagnitude) {
