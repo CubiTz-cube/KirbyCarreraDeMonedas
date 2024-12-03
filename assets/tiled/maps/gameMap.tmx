@@ -661,10 +661,10 @@
 </data>
  </layer>
  <objectgroup color="#55ffff" id="5" name="spawn">
-  <object id="29" name="Espejo" type="MIRROR" x="272" y="1904" width="32" height="32"/>
-  <object id="141" name="Espejo" type="MIRROR" x="272" y="1952" width="32" height="32"/>
-  <object id="142" name="Espejo" type="MIRROR" x="272" y="2000" width="32" height="32"/>
-  <object id="143" name="Espejo" type="MIRROR" x="272" y="2048" width="32" height="32"/>
+  <object id="29" name="Espejo" type="MIRROR" x="1136" y="1872" width="32" height="32"/>
+  <object id="141" name="Espejo" type="MIRROR" x="944" y="1872" width="32" height="32"/>
+  <object id="142" name="Espejo" type="MIRROR" x="1072" y="1872" width="32" height="32"/>
+  <object id="143" name="Espejo" type="MIRROR" x="1008" y="1872" width="32" height="32"/>
  </objectgroup>
  <objectgroup color="#ff5500" id="6" name="entity">
   <object id="26" name="Enemigo Basico" type="BASIC" x="1360" y="1968" width="16" height="16"/>

@@ -34,7 +34,6 @@ import src.main.Main;
 import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
 
-import javax.swing.plaf.TableUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -326,16 +325,18 @@ public class GameScreen extends BaseScreen {
     }
 
     public void playMinigame(){
-        int select = random.nextInt(2);
+        getPlayer().getBody().setTransform(lobbyPlayer.x, lobbyPlayer.y, 0);
+        main.changeScreen(Main.Screens.MINIODSPLEASE);
+       /* int select = random.nextInt(2);
 
         switch (select){
             case 0:
                 main.changeScreen(Main.Screens.MINIDUCK);
                 break;
             case 1:
-                main.changeScreen(Main.Screens.ODSPLEASE);
+                main.changeScreen(Main.Screens.MINIODSPLEASE);
                 break;
-        }
+        }*/
     }
 
     @Override
@@ -435,17 +436,11 @@ public class GameScreen extends BaseScreen {
         }
     }
 
-    public void randomMirror(){
-        if (main.server == null) return;
-        for (Entity entity : entities.values()){
-            if (entity instanceof Mirror mirror) {
-                int index = random.nextInt(spawnMirror.size());
-                Vector2 position = spawnMirror.get(index);
-                actEntityPos(mirror.getId(), position.x, position.y, 0f, 0f);
-                sendPacket(Packet.actEntityPosition(mirror.getId(), position.x, position.y));
-                return;
-            }
-        }
+    public void randomMirror(Integer id){
+        int index = random.nextInt(spawnMirror.size());
+        Vector2 position = spawnMirror.get(index);
+        actEntityPos(id, position.x, position.y, 0f, 0f);
+        sendPacket(Packet.actEntityPosition(id, position.x, position.y));
     }
 
     public void sendPacket(Object[] packet) {

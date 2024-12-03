@@ -199,11 +199,10 @@ public class Player extends PlayerCommon {
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
             lossPoints(3);
 
-        } else if (actor instanceof Mirror) {
+        } else if (actor instanceof Mirror m) {
             game.threadSecureWorld.addModification(() -> {
-                game.getPlayer().getBody().setTransform(game.lobbyPlayer.x, game.lobbyPlayer.y, 0);
-                game.main.changeScreen(Main.Screens.MINIDUCK);
-                game.randomMirror();
+                game.playMinigame();
+                game.randomMirror(m.getId());
             });
         } else if (actor instanceof Projectil) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;

@@ -45,10 +45,10 @@ public abstract class MinigameScreen extends UIScreen {
         background.setColor(1, 0, 1, 0.5f);
         backTable.add(background).expand().fill();
 
-        timeStartlabel = new Label("Start in 3", main.getSkin());
+        timeStartlabel = new Label("Empieza en" + timeStart, main.getSkin());
         timeStartlabel.setFontScale(3);
 
-        timeMinigameLabel = new Label("Time " + timeGame.intValue(), main.getSkin());
+        timeMinigameLabel = new Label("Tiempo " + timeGame.intValue(), main.getSkin());
 
         frontTable.center().add(timeStartlabel);
     }
@@ -60,8 +60,8 @@ public abstract class MinigameScreen extends UIScreen {
     @Override
     public void show() {
         super.show();
-        timeStart = 3f;
-        timeGame = 5f;
+        timeStart = 0f;
+        timeGame = 15f;
         gameStarted = false;
         frontTable.setVisible(true);
         backTable.setVisible(true);
@@ -79,10 +79,10 @@ public abstract class MinigameScreen extends UIScreen {
         game.actLogic(delta);
 
         if (timeStart >= 1){
-            timeStartlabel.setText("Start in " + timeStart.intValue());
+            timeStartlabel.setText("Empieza en " + timeStart.intValue());
             timeStart -= delta;
         }else if (timeStart > 0){
-            timeStartlabel.setText("GO!");
+            timeStartlabel.setText("VAMOS!");
             timeStart -= delta;
         } else{
             if (!gameStarted){
@@ -90,7 +90,7 @@ public abstract class MinigameScreen extends UIScreen {
                 frontTable.setVisible(false);
                 backTable.setVisible(false);
             }
-            timeMinigameLabel.setText("Time " + timeGame.intValue());
+            timeMinigameLabel.setText("Tiempo " + timeGame.intValue());
             timeGame -= delta;
         }
 

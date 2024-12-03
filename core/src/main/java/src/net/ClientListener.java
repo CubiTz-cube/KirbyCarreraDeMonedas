@@ -3,10 +3,7 @@ package src.net;
 import com.badlogic.gdx.Gdx;
 import src.net.packets.Packet;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.SocketException;
 
 import com.badlogic.gdx.net.Socket;
@@ -44,96 +41,99 @@ public class ClientListener implements Runnable{
             float x, y, fx, fy;
             boolean flipX;
             while (running) {
-                Object[] pack = (Object[]) in.readObject();
-                Packet.Types type = (Packet.Types) pack[0];
-                if (!type.equals(Packet.Types.ACTENTITYPOSITION) &&
-                    !type.equals(Packet.Types.ACTOTHERPLAYER) &&
-                    !type.equals(Packet.Types.ACTENEMY)) System.out.println(ConsoleColor.PURPLE + "[User " + id + "] Recibido: " + type + ConsoleColor.RESET);
+                try {
+                    Object[] pack = (Object[]) in.readObject();
+                    Packet.Types type = (Packet.Types) pack[0];
+                    if (!type.equals(Packet.Types.ACTENTITYPOSITION) &&
+                        !type.equals(Packet.Types.ACTOTHERPLAYER) &&
+                        !type.equals(Packet.Types.ACTENEMY))
+                        System.out.println(ConsoleColor.PURPLE + "[User " + id + "] Recibido: " + type + ConsoleColor.RESET);
 
-                switch (type){
-                    case CONNECTPLAYER:
-                        name = (String) pack[1];
-                        server.sendAll(Packet.newPlayer(id, name), id);
-                        for (ClientListener u : server.getUsers()){
-                            if (u.id.equals(id)) continue;
-                            send(Packet.newPlayer(u.id, u.name));
-                        }
-                        break;
+                    switch (type) {
+                        case CONNECTPLAYER:
+                            name = (String) pack[1];
+                            server.sendAll(Packet.newPlayer(id, name), id);
+                            for (ClientListener u : server.getUsers()) {
+                                if (u.id.equals(id)) continue;
+                                send(Packet.newPlayer(u.id, u.name));
+                            }
+                            break;
 
-                    case DISCONNECTPLAYER:
-                        //Integer packId = (Integer) pack[1]; Devuelve -1
-                        server.sendAll(Packet.disconnectPlayer(id), id);
-                        break;
+                        case DISCONNECTPLAYER:
+                            //Integer packId = (Integer) pack[1]; Devuelve -1
+                            server.sendAll(Packet.disconnectPlayer(id), id);
+                            break;
 
-                    case GAMESTART:
-                        server.sendAll(Packet.gameStart(), -1);
-                        break;
+                        case GAMESTART:
+                            server.sendAll(Packet.gameStart(), -1);
+                            break;
 
-                    case ACTENTITYPOSITION:
-                        packId = (Integer) pack[1]; //Devuelve -1 si es la pos de un player
-                        x = (Float) pack[2];
-                        y = (Float) pack[3];
-                        fx = (Float) pack[4];
-                        fy = (Float) pack[5];
-                        if (packId == -1) server.sendAll(Packet.actEntityPosition(id, x, y, fx, fy), id);
-                        else server.sendAll(Packet.actEntityPosition(packId, x, y, fx, fy), id);
-                        break;
+                        case ACTENTITYPOSITION:
+                            packId = (int) pack[1]; //Devuelve -1 si es la pos de un player
+                            x = (float) pack[2];
+                            y = (float) pack[3];
+                            fx = (float) pack[4];
+                            fy = (float) pack[5];
+                            if (packId == -1) server.sendAll(Packet.actEntityPosition(id, x, y, fx, fy), id);
+                            else server.sendAll(Packet.actEntityPosition(packId, x, y, fx, fy), id);
+                            break;
 
-                    case NEWENTITY:
-                        packId = (Integer) pack[1];
-                        Entity.Type packType = (Entity.Type) pack[2];
-                        x = (Float) pack[3];
-                        y = (Float) pack[4];
-                        fx = (Float) pack[5];
-                        fy = (Float) pack[6];
-                        server.sendAll(Packet.newEntity(packId, packType, x, y, fx, fy), id);
-                        break;
+                        case NEWENTITY:
+                            packId = (int) pack[1];
+                            Entity.Type packType = (Entity.Type) pack[2];
+                            x = (float) pack[3];
+                            y = (float) pack[4];
+                            fx = (float) pack[5];
+                            fy = (float) pack[6];
+                            server.sendAll(Packet.newEntity(packId, packType, x, y, fx, fy), id);
+                            break;
 
-                    case REMOVEENTITY:
-                        packId = (Integer) pack[1];
-                        server.sendAll(Packet.removeEntity(packId), id);
-                        break;
+                        case REMOVEENTITY:
+                            packId = (int) pack[1];
+                            server.sendAll(Packet.removeEntity(packId), id);
+                            break;
 
-                    case ACTENEMY:
-                        packId = (Integer) pack[1];
-                        Enemy.StateType state = (Enemy.StateType) pack[2];
-                        Float cronno = (Float) pack[3];
-                        flipX = (Boolean) pack[4];
-                        server.sendAll(Packet.actEnemy(packId, state, cronno, flipX), id);
-                        break;
+                        case ACTENEMY:
+                            packId = (int) pack[1];
+                            Enemy.StateType state = (Enemy.StateType) pack[2];
+                            Float cronno = (Float) pack[3];
+                            flipX = (boolean) pack[4];
+                            server.sendAll(Packet.actEnemy(packId, state, cronno, flipX), id);
+                            break;
 
-                    case ACTOTHERPLAYER:
-                        //Integer packId = (Integer) pack[1]; Devuelve -1
-                        Player.AnimationType animationType = (Player.AnimationType) pack[2];
-                        flipX = (Boolean) pack[3];
-                        server.sendAll(Packet.actOtherPlayer(id, animationType, flipX), id);
-                        break;
+                        case ACTOTHERPLAYER:
+                            //Integer packId = (Integer) pack[1]; Devuelve -1
+                            Player.AnimationType animationType = (Player.AnimationType) pack[2];
+                            flipX = (boolean) pack[3];
+                            server.sendAll(Packet.actOtherPlayer(id, animationType, flipX), id);
+                            break;
 
-                    case ACTBREAKBLOCK:
-                        packId = (Integer) pack[1];
-                        BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
+                        case ACTBREAKBLOCK:
+                            packId = (int) pack[1];
+                            BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
 
-                        server.sendAll(Packet.actBlock(packId, stateType), id);
-                        break;
+                            server.sendAll(Packet.actBlock(packId, stateType), id);
+                            break;
 
-                    case ACTSCORE:
-                        //Integer packId = (Integer) pack[1]; Devuelve -1
-                        int score = (int) pack[2];
-                        server.sendAll(Packet.actScore(id,score), id);
-                        break;
+                        case ACTSCORE:
+                            //Integer packId = (Integer) pack[1]; Devuelve -1
+                            int score = (int) pack[2];
+                            server.sendAll(Packet.actScore(id, score), id);
+                            break;
 
-                    case MESSAGE:
-                        String message = (String) pack[2];
-                        server.sendAll(Packet.message(name, message), id);
-                        break;
+                        case MESSAGE:
+                            String message = (String) pack[2];
+                            server.sendAll(Packet.message(name, message), id);
+                            break;
+                    }
+                }catch (StreamCorruptedException | ClassNotFoundException | ClassCastException e2) {
+                    Gdx.app.log("User", "Paquete Corrupto");
                 }
             }
         }catch (EOFException | SocketException e) {
             Gdx.app.log("User", "socket cerrado");
         } catch (IOException e) {
             Gdx.app.log("User", "Error al leer paquete", e);
-        } catch (ClassNotFoundException e) {
-            Gdx.app.log("User", "Error al convertir paquete", e);
         }finally {
             close();
         }

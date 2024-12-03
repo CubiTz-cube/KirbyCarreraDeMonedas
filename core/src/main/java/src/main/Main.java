@@ -38,7 +38,7 @@ public class Main extends Game {
         GAME,
         ENDGAME,
         MINIDUCK,
-        ODSPLEASE,
+        MINIODSPLEASE,
     }
 
     public Server server;
@@ -57,15 +57,13 @@ public class Main extends Game {
         assetManager = new AssetManager();
         assetManager.load("libgdx.png", Texture.class);
         assetManager.load("yoshi.jpg", Texture.class);
-        assetManager.load("perro.jpg", Texture.class);
-        assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("yoshiSword.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
+        assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);
-        assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyIdle.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyJump.png", Texture.class);
@@ -92,6 +90,8 @@ public class Main extends Game {
         assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
         assetManager.load("world/entities/basic/basicWalk.png", Texture.class);
         assetManager.load("world/particles/cloudParticle.png", Texture.class);
+        assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
+        assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
         assetManager.load("odsPng/ods (1).png", Texture.class);
         assetManager.load("odsPng/ods (2).png", Texture.class);
         assetManager.load("odsPng/ods (3).png", Texture.class);
@@ -128,7 +128,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-    changeScreen(Screens.INTRO);
+    changeScreen(Screens.GAME);
     }
 
     public void setName(String name) {
