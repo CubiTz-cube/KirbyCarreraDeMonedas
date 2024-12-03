@@ -46,7 +46,8 @@ public class ClientListener implements Runnable{
                     Packet.Types type = (Packet.Types) pack[0];
                     if (!type.equals(Packet.Types.ACTENTITYPOSITION) &&
                         !type.equals(Packet.Types.ACTOTHERPLAYER) &&
-                        !type.equals(Packet.Types.ACTENEMY))
+                        !type.equals(Packet.Types.ACTENEMY) &&
+                        !type.equals(Packet.Types.ACTBREAKBLOCK))
                         System.out.println(ConsoleColor.PURPLE + "[User " + id + "] Recibido: " + type + ConsoleColor.RESET);
 
                     switch (type) {

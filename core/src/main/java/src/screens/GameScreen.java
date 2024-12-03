@@ -239,7 +239,7 @@ public class GameScreen extends BaseScreen {
             System.out.println("Entity " + id + " no encontrada en la lista");
             return;
         }
-        block.setState(stateType);
+        block.setStateNoPacket(stateType);
     }
 
     public void actScore(Integer id, Integer score){

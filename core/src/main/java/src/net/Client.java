@@ -81,7 +81,8 @@ public class Client implements Runnable{
                 Packet.Types type = (Packet.Types) pack[0];
                 if (!type.equals(Packet.Types.ACTENTITYPOSITION) &&
                     !type.equals(Packet.Types.ACTOTHERPLAYER) &&
-                    !type.equals(Packet.Types.ACTENEMY)) System.out.println(ConsoleColor.CYAN + "[Client] Recibido: " + type + ConsoleColor.RESET);
+                    !type.equals(Packet.Types.ACTENEMY) &&
+                    !type.equals(Packet.Types.ACTBREAKBLOCK)) System.out.println(ConsoleColor.CYAN + "[Client] Recibido: " + type + ConsoleColor.RESET);
 
                 switch (type){
                     case NEWPLAYER:

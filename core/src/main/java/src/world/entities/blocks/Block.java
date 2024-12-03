@@ -45,12 +45,16 @@ public class Block extends Entity implements NoAutoPacketEntity {
     }
 
     public void setState(StateType stateType){
+        setStateNoPacket(stateType);
+        if (stateType != StateType.BREAK) return;
+        game.sendPacket(Packet.actBlock(getId(), StateType.BREAK));
+    }
+
+    public void setStateNoPacket(StateType stateType){
         switch (stateType){
             case LIVE -> stateMachine.setState(liveState);
             case BREAK -> stateMachine.setState(breakState);
         }
-        if (stateType != StateType.BREAK) return;
-        game.sendPacket(Packet.actBlock(getId(), StateType.BREAK));
     }
 
     public void setAnimation(AnimationType animationType){
