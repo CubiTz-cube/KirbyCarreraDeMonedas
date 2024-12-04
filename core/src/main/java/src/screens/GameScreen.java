@@ -156,9 +156,12 @@ public class GameScreen extends BaseScreen {
 
     public void addMainPlayer(){
         if (player != null) return;
-        Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
+        int index = random.nextInt(spawnPlayer.size());
+        Vector2 position = new Vector2(spawnPlayer.get(index));
+
         player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), this);
         stage.addActor(player);
+
         if (main.client == null) scorePlayers.put(-1, new ScorePlayer("TU"));
         else scorePlayers.put(-1, new ScorePlayer(main.client.getName()));
     }
@@ -435,6 +438,7 @@ public class GameScreen extends BaseScreen {
         camera.zoom = 1f;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) randomMirror(20);
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {
@@ -449,7 +453,8 @@ public class GameScreen extends BaseScreen {
 
     public void randomMirror(Integer id){
         int index = random.nextInt(spawnMirror.size());
-        Vector2 position = spawnMirror.get(index);
+        Vector2 position = new Vector2(spawnMirror.get(index));
+
         actEntityPos(id, position.x, position.y, 0f, 0f);
         sendPacket(Packet.actEntityPosition(id, position.x, position.y));
         mirrorIndicators.changeTargetPosition(id ,position);
