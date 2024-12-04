@@ -41,33 +41,40 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class GameScreen extends BaseScreen {
+    // Game
     private final Stage stage;
     private final World world;
     public ThreadSecureWorld threadSecureWorld;
 
+    // Tiled
     private final OrthogonalTiledMapRenderer tiledRenderer;
     private final TiledManager tiledManager;
 
+    // Factories
     public final EntityFactory entityFactory;
     public final StaticFactory staticFactory;
     public final ParticleFactory particleFactory;
 
+    // Entities
     private Player player;
     private final ArrayList<ActorBox2d> actors;
     private final HashMap<Integer, Entity> entities;
 
+    // Network
     private final Vector2 lastPosition;
     private Float sendTime;
     private final SecondsTimer timeGame;
     private final HashMap<Integer, ScorePlayer> scorePlayers;
 
+    // Spawn
     private final Random random;
     public Vector2 lobbyPlayer;
     public ArrayList<Vector2> spawnMirror;
     public ArrayList<Vector2> spawnPlayer;
 
-    private Table tableUI;
+    // UI
     private MirrorIndicatorManager mirrorIndicators;
+    private Table tableUI;
     private Label odsPointsLabel;
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
