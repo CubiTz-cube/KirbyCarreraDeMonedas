@@ -127,7 +127,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-    changeScreen(Screens.GAME);
+    changeScreen(Screens.MINIODSPLEASE);
     }
 
     public void setName(String name) {
