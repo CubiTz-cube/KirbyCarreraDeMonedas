@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
 import src.utils.SecondsTimer;
+import src.utils.borderIndicator.MirrorIndicatorManager;
 import src.utils.variables.ConsoleColor;
 import src.utils.ThreadSecureWorld;
 import src.utils.TiledManager;
@@ -65,6 +67,7 @@ public class GameScreen extends BaseScreen {
     public ArrayList<Vector2> spawnPlayer;
 
     private Table tableUI;
+    private MirrorIndicatorManager mirrorIndicators;
     private Label odsPointsLabel;
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
@@ -95,6 +98,7 @@ public class GameScreen extends BaseScreen {
         spawnMirror = new ArrayList<>();
         spawnPlayer = new ArrayList<>();
     }
+
     private void initUI(){
         tableUI = new Table();
         tableUI.setFillParent(true);
@@ -109,6 +113,9 @@ public class GameScreen extends BaseScreen {
         gameTimeLabel.setFontScale(2);
 
         chatWidget = new ChatWidget(main.getSkin());
+
+        mirrorIndicators = new MirrorIndicatorManager(main.getAssetManager().get("yoshi.jpg", Texture.class));
+        stage.addActor(mirrorIndicators);
 
         tableUI.top();
         tableUI.add(gameTimeLabel);
@@ -167,6 +174,7 @@ public class GameScreen extends BaseScreen {
         if (actor instanceof Entity e) entities.put(e.getId(), e);
         if (actor instanceof ActorBox2d a) actors.add(a);
         if (actor instanceof OtherPlayer o) scorePlayers.put(o.getId(), new ScorePlayer(o.getName()));
+        if (actor instanceof Mirror m) mirrorIndicators.add(m.getId(),m.getBody().getPosition());
 
         stage.addActor(actor);
     }
@@ -271,6 +279,7 @@ public class GameScreen extends BaseScreen {
     }
 
     public void removeActor(Actor actor){
+        if (actor instanceof Mirror m) mirrorIndicators.remove(m.getId());
         stage.getActors().removeValue(actor, true);
     }
 
@@ -349,12 +358,13 @@ public class GameScreen extends BaseScreen {
                 player.setCurrentState(Player.StateType.IDLE);
             });
         }else{
-            initUI();
             tiledManager.makeMap();
             addMainPlayer();
+            initUI();
             setScore(3);
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
+
                 Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
                 addEntity(Entity.Type.MIRROR, position, new Vector2(0,0));
             }
@@ -399,7 +409,8 @@ public class GameScreen extends BaseScreen {
     }
 
     private void actUI(){
-        odsPointsLabel.setText("ODS POINTS\n"+getScore());
+        mirrorIndicators.setCenterPositions(player.getBody().getPosition());
+        odsPointsLabel.setText("ODS POINTS\n"+getScore()+" "+(int)player.getX()+"|"+(int)player.getY());
         gameTimeLabel.setText("Game Time\n" + timeGame);
     }
 
@@ -441,6 +452,7 @@ public class GameScreen extends BaseScreen {
         Vector2 position = spawnMirror.get(index);
         actEntityPos(id, position.x, position.y, 0f, 0f);
         sendPacket(Packet.actEntityPosition(id, position.x, position.y));
+        mirrorIndicators.changeTargetPosition(id ,position);
     }
 
     public void sendPacket(Object[] packet) {

@@ -55,7 +55,6 @@ public class Main extends Game {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         assetManager = new AssetManager();
-        assetManager.load("libgdx.png", Texture.class);
         assetManager.load("yoshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("yoshiSword.png", Texture.class);
