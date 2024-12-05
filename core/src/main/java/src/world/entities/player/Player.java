@@ -56,8 +56,6 @@ public class Player extends PlayerCommon {
         filter.maskBits = ~CollisionFilters.MASK_OTHERPLAYER;
         fixture.setFilterData(filter);
 
-        setSpritePosModification(0f, getHeight()/4);
-
         initStates();
         setCurrentState(StateType.IDLE);
 

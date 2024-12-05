@@ -19,23 +19,10 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
         this.font = assetManager.get("ui/default.fnt", BitmapFont.class); // Obtén la fuente del AssetManager
         this.layout = new GlyphLayout();
 
-        BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
-        def.type = BodyDef.BodyType.StaticBody;
-        body = world.createBody(def);
-
-        PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width/4, shape.height/4);
-        fixture = body.createFixture(box, 1.5f);
-        fixture.setUserData(this);
-        box.dispose();
-
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.CATEGORY_OTHERPLAYER;
         filter.maskBits = CollisionFilters.MASK_PLAYER;
         fixture.setFilterData(filter);
-
-        setSpritePosModification(0f, getHeight()/4);
     }
 
     @Override

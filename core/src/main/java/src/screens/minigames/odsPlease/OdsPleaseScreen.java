@@ -2,9 +2,8 @@ package src.screens.minigames.odsPlease;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -18,27 +17,32 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class OdsPleaseScreen extends MinigameScreen {
+    private final Integer max = 9;
+
     private final Table backTable;
     private final Table frontTable;
 
-    private final ArrayList<Texture> odsTextures = new ArrayList<>();
     private final Random random;
 
+    private final ArrayList<Texture> odsTextures;
+    private final ArrayList<Texture> wrongOdsTextures;
+
     private final SpriteActor odsImage;
+    private final Label countLabel;
+
+    private Boolean odsReal;
+    private Integer countGood;
+    private Integer countBad;
 
     public OdsPleaseScreen(Main main, GameScreen game) {
         super(main, game);
-        random = new Random();
-
         backTable = new Table();
         frontTable = new Table();
-        backTable.setFillParent(true);
-        frontTable.setFillParent(true);
-        stageUI.addActor(backTable);
-        stageUI.addActor(frontTable);
-
-        timeMinigameLabel.setFontScale(2);
-        timeMinigameLabel.setColor(Color.BLACK);
+        random = new Random();
+        odsTextures = new ArrayList<>();
+        wrongOdsTextures = new ArrayList<>();
+        countGood = 0;
+        countBad = 0;
 
         odsTextures.add(main.getAssetManager().get("odsPng/ods (1).png", Texture.class));
         odsTextures.add(main.getAssetManager().get("odsPng/ods (2).png", Texture.class));
@@ -58,7 +62,15 @@ public class OdsPleaseScreen extends MinigameScreen {
         odsTextures.add(main.getAssetManager().get("odsPng/ods (16).png", Texture.class));
         odsTextures.add(main.getAssetManager().get("odsPng/ods (17).png", Texture.class));
 
-        odsImage = new SpriteActor(odsTextures.get(random.nextInt(odsTextures.size())));
+        wrongOdsTextures.add(main.getAssetManager().get("poshi.jpg", Texture.class));
+
+        backTable.setFillParent(true);
+        frontTable.setFillParent(true);
+
+        timeMinigameLabel.setFontScale(2);
+        timeMinigameLabel.setColor(Color.BLACK);
+
+        odsImage = new SpriteActor(main.getAssetManager().get("poshi.jpg", Texture.class));
         Image backgroundImage = new Image(main.getAssetManager().get("miniGames/odsPlease/Desk.png", Texture.class));
         Image background2Image = new Image(main.getAssetManager().get("miniGames/odsPlease/CheckpointBack.png", Texture.class));
 
@@ -78,6 +90,12 @@ public class OdsPleaseScreen extends MinigameScreen {
             }
         });
 
+        countLabel = new Label((countBad+countGood)+"/"+max+" Amonestaciones: " +countBad , main.getSkin());
+        countLabel.setFontScale(2);
+
+        stageUI.addActor(backTable);
+        stageUI.addActor(frontTable);
+
         backTable.add(background2Image).expand(1,1).fill(1,1);
         backTable.row();
         backTable.add(backgroundImage).expand(1,2).fill(1,1);
@@ -85,29 +103,53 @@ public class OdsPleaseScreen extends MinigameScreen {
 
         frontTable.debugAll();
         frontTable.top().add(timeMinigameLabel).colspan(2);
+        frontTable.add(countLabel).colspan(2);
         frontTable.row();
         frontTable.add(odsImage).width(512).height(310).colspan(2).padTop(250).padLeft(200);
         frontTable.row();
         frontTable.add(denyButton).width(256).height(128).colspan(1).padLeft(200);
         frontTable.add(passButton).width(256).height(128).colspan(1);
+
+        changeOdsImage();
     }
 
     private void passButton() {
+        if (!odsReal) countGood++;
+        else countBad++;
         changeOdsImage();
     }
 
     private void denyButton() {
+        if (odsReal) countGood++;
+        else countBad++;
         changeOdsImage();
     }
 
     private void changeOdsImage() {
-        odsImage.setTexture(odsTextures.get(random.nextInt(odsTextures.size())));
+        countLabel.setText((countBad+countGood)+"/"+max+" Amonestaciones: " +countBad);
+
+        if (countGood + countBad == max) {
+            game.setScore(game.getScore() + countGood/(max/3));
+            endMinigame();
+            return;
+        }
+
+        boolean select = random.nextBoolean();
+        if (select) odsImage.setTexture(wrongOdsTextures.get(random.nextInt(wrongOdsTextures.size())));
+        else odsImage.setTexture(odsTextures.get(random.nextInt(odsTextures.size())));
+
+        odsReal = select;
     }
 
     @Override
     public void show() {
         super.show();
         setVisibleAll(false);
+    }
+
+    @Override
+    public void hide() {
+        countGood = 0;
     }
 
     private void setVisibleAll(boolean visible) {

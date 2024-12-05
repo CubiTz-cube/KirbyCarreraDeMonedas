@@ -43,7 +43,9 @@ public class FlyState extends CanMoveState{
                 player.setAnimation(Player.AnimationType.FLYEND);
                 player.game.addEntity(Entity.Type.CLOUD,
                     player.getBody().getPosition().add(player.isFlipX() ? -1.2f : 1.2f,0),
-                    new Vector2((player.isFlipX() ? -1.5f : 1.5f) + player.getBody().getLinearVelocity().x,0));
+                    new Vector2((player.isFlipX() ? -1.5f : 1.5f) + player.getBody().getLinearVelocity().x,0),
+                    player.isFlipX()
+                );
             }
         }
 

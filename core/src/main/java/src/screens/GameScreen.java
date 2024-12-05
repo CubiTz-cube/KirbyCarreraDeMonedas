@@ -189,27 +189,34 @@ public class GameScreen extends BaseScreen {
         stage.addActor(actor);
     }
 
-    private void createEntityLogic(Entity.Type type, Vector2 position, Vector2 force, Integer id){
+    private void createEntityLogic(Entity.Type type, Vector2 position, Vector2 force, Integer id, Boolean flipX){
         if (entities.get(id) != null) {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
         threadSecureWorld.addModification(() -> {
-            ActorBox2d actorBox2d = entityFactory.create(type, world, position, id);
-            actorBox2d.getBody().applyLinearImpulse(force, actorBox2d.getBody().getWorldCenter(), true);
-            addActor(actorBox2d);
+            Entity newEntity = entityFactory.create(type, world, position, id);
+            newEntity.setFlipX(flipX);
+            newEntity.getBody().applyLinearImpulse(force, newEntity.getBody().getWorldCenter(), true);
+            addActor(newEntity);
         });
     }
 
     public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Integer id){
-        createEntityLogic(type, position, force, id);
+        createEntityLogic(type, position, force, id, false);
         main.setIds(id);
 
     }
 
     public void addEntity(Entity.Type type, Vector2 position, Vector2 force){
         int id = main.getIds();
-        createEntityLogic(type, position, force, id);
+        createEntityLogic(type, position, force, id, false);
+        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y));
+    }
+
+    public void addEntity(Entity.Type type, Vector2 position, Vector2 force, Boolean flipX){
+        int id = main.getIds();
+        createEntityLogic(type, position, force, id, flipX);
         sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y));
     }
 
@@ -420,7 +427,7 @@ public class GameScreen extends BaseScreen {
 
     private void actUI(){
         mirrorIndicators.setCenterPositions(player.getBody().getPosition());
-        odsPointsLabel.setText("ODS POINTS\n"+getScore()+" "+(int)player.getX()+"|"+(int)player.getY());
+        odsPointsLabel.setText("ODS POINTS\n"+getScore()+"\nx: "+(int)player.getX()+" y: "+(int)player.getY());
         gameTimeLabel.setText("Game Time\n" + timeGame);
     }
 

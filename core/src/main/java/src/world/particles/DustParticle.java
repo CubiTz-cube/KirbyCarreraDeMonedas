@@ -7,13 +7,13 @@ import com.badlogic.gdx.math.Rectangle;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 
-public class CloudParticle extends Particle{
+public class DustParticle extends Particle{
 
-    public CloudParticle(AssetManager assetManager, Rectangle shape, GameScreen game, Float maxTime) {
+    public DustParticle(AssetManager assetManager, Rectangle shape, GameScreen game, Float maxTime) {
         super(assetManager,shape, game, maxTime);
 
         Animation<TextureRegion> cloudAnimation = new Animation<>(0.08f,
-            SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 5));
+            SheetCutter.cutHorizontal(assetManager.get("world/particles/dustParticle.png"), 5));
         setAnimation(cloudAnimation);
     }
 }

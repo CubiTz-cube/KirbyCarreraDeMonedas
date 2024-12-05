@@ -10,7 +10,7 @@ import src.screens.uiScreens.UIScreen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public abstract class MinigameScreen extends UIScreen {
-    private final GameScreen game;
+    protected final GameScreen game;
 
     private Float timeStart;
     private Float timeGame;
@@ -73,6 +73,10 @@ public abstract class MinigameScreen extends UIScreen {
         background.setSize(width, height);
     }
 
+    public void endMinigame() {
+        main.changeScreen(Main.Screens.GAME);
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -95,7 +99,7 @@ public abstract class MinigameScreen extends UIScreen {
         }
 
         if (timeGame <= 1){
-            main.changeScreen(Main.Screens.GAME);
+            endMinigame();
         }
     }
 }

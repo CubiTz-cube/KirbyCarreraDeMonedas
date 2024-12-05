@@ -135,6 +135,8 @@ public abstract class PlayerCommon extends Entity {
         box.dispose();
         body.setFixedRotation(true);
 
+        setSpritePosModification(0f, getHeight()/4);
+
         initAnimations(assetManager);
         setAnimation(AnimationType.IDLE);
 

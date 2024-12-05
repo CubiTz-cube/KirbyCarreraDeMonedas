@@ -20,6 +20,7 @@ public class Particle extends Actor {
     private Float animateTime, actualTime;
     private Animation<TextureRegion> animation;
     private final GameScreen game;
+    private Boolean isFliX;
 
     private final Float maxTime;
 
@@ -35,6 +36,7 @@ public class Particle extends Actor {
         animateTime = 0f;//new Random().nextFloat(1);
         actualTime = 0f;
         sprite = new Sprite();
+        isFliX = false;
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         setBounds(shape.x * PIXELS_IN_METER, shape.y * PIXELS_IN_METER, shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
     }
@@ -43,11 +45,16 @@ public class Particle extends Actor {
         this.animation = animation;
     }
 
+    public void setFliX(Boolean fliX) {
+        isFliX = fliX;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         sprite.setRegion(animation.getKeyFrame(animateTime, false));
         sprite.setPosition(getX(), getY());
         sprite.setOriginCenter();
+        sprite.setFlip(isFliX, false);
         sprite.draw(batch);
 
         animateTime += Gdx.graphics.getDeltaTime();
