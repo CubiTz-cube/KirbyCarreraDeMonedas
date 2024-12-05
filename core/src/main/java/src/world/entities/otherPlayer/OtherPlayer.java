@@ -39,7 +39,7 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        layout.setText(font, name + " " + getId());
+        layout.setText(font, name);
         font.draw(batch, layout, getX() - layout.width / 4, getY() + sprite.getHeight() + layout.height/4);
     }
 

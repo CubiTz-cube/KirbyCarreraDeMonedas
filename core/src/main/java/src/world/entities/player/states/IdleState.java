@@ -19,7 +19,7 @@ public class IdleState extends CanBasicMoveState{
         super.update(delta);
 
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x != 0) player.setCurrentState(Player.StateType.WALK);
+        if (Math.abs(velocity.x) > 0.1f) player.setCurrentState(Player.StateType.WALK);
     }
 
     @Override
