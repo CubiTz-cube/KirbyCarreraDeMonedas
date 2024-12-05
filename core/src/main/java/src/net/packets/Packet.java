@@ -36,8 +36,8 @@ public class Packet {
         return new Object[]{Types.ACTENTITYPOSITION, id, x, y, 0f, 0f};
     }
 
-    public static Object[] newEntity(int id, Entity.Type type, float x, float y, float fx, float fy){
-        return new Object[]{Types.NEWENTITY, id, type, x, y, fx, fy};
+    public static Object[] newEntity(int id, Entity.Type type, float x, float y, float fx, float fy, boolean flipX){
+        return new Object[]{Types.NEWENTITY, id, type, x, y, fx, fy, flipX};
     }
 
     public static Object[] actEnemy(int id, Enemy.StateType state, float cronno, boolean flipX){

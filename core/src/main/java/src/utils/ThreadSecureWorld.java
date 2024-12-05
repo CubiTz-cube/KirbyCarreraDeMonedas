@@ -24,4 +24,8 @@ public class ThreadSecureWorld {
     public void addModification(Runnable modification) {
         modificationQueue.add(modification);
     }
+
+    public void clearModifications() {
+        modificationQueue.clear();
+    }
 }

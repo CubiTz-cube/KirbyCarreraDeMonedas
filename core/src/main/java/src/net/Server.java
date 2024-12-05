@@ -79,7 +79,7 @@ public class Server implements Runnable{
     public void close(){
         running = false;
         for (ClientListener user : users) {
-            user.close();
+            user.closeNoPacket();
         }
         serverSocket.dispose();
         pool.shutdownNow();

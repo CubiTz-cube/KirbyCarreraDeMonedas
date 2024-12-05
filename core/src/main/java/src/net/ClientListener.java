@@ -60,10 +60,10 @@ public class ClientListener implements Runnable{
                             }
                             break;
 
-                        case DISCONNECTPLAYER:
+                        /*case DISCONNECTPLAYER:
                             //Integer packId = (Integer) pack[1]; Devuelve -1
                             server.sendAll(Packet.disconnectPlayer(id), id);
-                            break;
+                            break;*/
 
                         case GAMESTART:
                             server.sendAll(Packet.gameStart(), -1);
@@ -86,7 +86,8 @@ public class ClientListener implements Runnable{
                             y = (float) pack[4];
                             fx = (float) pack[5];
                             fy = (float) pack[6];
-                            server.sendAll(Packet.newEntity(packId, packType, x, y, fx, fy), id);
+                            flipX = (Boolean) pack[7];
+                            server.sendAll(Packet.newEntity(packId, packType, x, y, fx, fy, flipX), id);
                             break;
 
                         case REMOVEENTITY:
@@ -128,14 +129,11 @@ public class ClientListener implements Runnable{
                             break;
                     }
                 }catch (StreamCorruptedException | ClassNotFoundException | ClassCastException e2) {
-                    Gdx.app.log("User", "Paquete Corrupto");
+                    Gdx.app.log("User", "Error con el paquete");
                 }
             }
-        }catch (EOFException | SocketException e) {
+        }catch (IOException e) {
             Gdx.app.log("User", "socket cerrado");
-        } catch (IOException e) {
-            Gdx.app.log("User", "Error al leer paquete", e);
-        }finally {
             close();
         }
     }
@@ -155,9 +153,13 @@ public class ClientListener implements Runnable{
 
     public void close(){
         if (!running) return;
-        System.out.println("[USER] Usuario desconectado " + name + " "+ id);
         server.sendAll(Packet.disconnectPlayer(id), id);
         server.sendAll(Packet.message("Server", name + " se ha desconectado"), id);
+        closeNoPacket();
+    }
+
+    public void closeNoPacket(){
+        if (!running) return;
         running = false;
         server.removeUser(this);
         try {

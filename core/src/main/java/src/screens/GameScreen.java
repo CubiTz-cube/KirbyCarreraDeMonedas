@@ -205,19 +205,21 @@ public class GameScreen extends BaseScreen {
     public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Integer id){
         createEntityLogic(type, position, force, id, false);
         main.setIds(id);
-
+    }
+    public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Integer id, Boolean flipX){
+        createEntityLogic(type, position, force, id, flipX);
+        main.setIds(id);
     }
 
     public void addEntity(Entity.Type type, Vector2 position, Vector2 force){
         int id = main.getIds();
         createEntityLogic(type, position, force, id, false);
-        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y));
+        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, false));
     }
-
     public void addEntity(Entity.Type type, Vector2 position, Vector2 force, Boolean flipX){
         int id = main.getIds();
         createEntityLogic(type, position, force, id, flipX);
-        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y));
+        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, flipX));
     }
 
     public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX){
@@ -320,6 +322,7 @@ public class GameScreen extends BaseScreen {
      */
     public void removeEntityNoPacket(Integer id){
         Entity entity = entities.get(id);
+        System.out.println("Eliminando entidad " + id);
         if (entity == null) {
             System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
             return;
@@ -335,19 +338,23 @@ public class GameScreen extends BaseScreen {
 
     public void clearAll(){
         stage.clear();
-        player.detach();
-        player = null;
-        for (ActorBox2d actor : actors) actor.detach();
         actors.clear();
         entities.clear();
         spawnMirror.clear();
+        for (ActorBox2d actor : actors) actor.detach();
+        if (player != null) player.detach();
+        player = null;
+
     }
 
     public void endGame(){
-        main.closeClient();
-        main.closeServer();
-        clearAll();
-        main.changeScreen(Main.Screens.ENDGAME);
+        threadSecureWorld.clearModifications();
+        threadSecureWorld.addModification(() -> {
+            main.changeScreen(Main.Screens.ENDGAME);
+            main.closeClient();
+            main.closeServer();
+            clearAll();
+        });
     }
 
     public void playMinigame(){
@@ -404,6 +411,8 @@ public class GameScreen extends BaseScreen {
 
             if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX()));
 
+            if (!main.client.isRunning()) disconnect();
+
             if (main.server != null){
 
                 if (sendTime >= 2f) {
@@ -436,8 +445,6 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        actLogic(delta);
-
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
 
         camera.zoom = 1.3f;
@@ -463,6 +470,8 @@ public class GameScreen extends BaseScreen {
                 }
             }
         }
+
+        actLogic(delta);
     }
 
     public void randomMirror(Integer id){
@@ -476,6 +485,10 @@ public class GameScreen extends BaseScreen {
 
     public void sendPacket(Object[] packet) {
         if (main.client != null) main.client.send(packet);
+    }
+
+    public void disconnect(){
+        endGame();
     }
 
     @Override

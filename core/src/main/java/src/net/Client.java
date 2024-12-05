@@ -109,7 +109,8 @@ public class Client implements Runnable{
                         y = (Float) pack[4];
                         fx = (Float) pack[5];
                         fy = (Float) pack[6];
-                        game.addEntityNoPacket(packType, new Vector2(x,y), new Vector2(fx,fy), packId);
+                        flipX = (Boolean) pack[7];
+                        game.addEntityNoPacket(packType, new Vector2(x,y), new Vector2(fx,fy), packId, flipX);
                         break;
 
                     case REMOVEENTITY:
@@ -172,6 +173,7 @@ public class Client implements Runnable{
     }
 
     public void send(Object[] data){
+        if (!running) return;
         try {
             out.writeObject(data);
         }catch (IOException e){
@@ -182,13 +184,13 @@ public class Client implements Runnable{
     public void close(){
         if (!running) return;
         running = false;
-        socket.dispose();
         try {
             out.close();
             in.close();
         } catch (IOException e) {
             Gdx.app.log("Client", "Error al cerrar socket: ", e);
         }
-
+        socket.dispose();
+        //game.disconnect();
     }
 }
