@@ -52,7 +52,7 @@ configure(subprojects) {
 }
 
 subprojects {
-  version = '1.0.0'
+  version = '0.6.0'
   ext.appName = 'KB-92'
   repositories {
     mavenCentral()
