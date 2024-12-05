@@ -29,7 +29,8 @@ public class StunState extends StatePlayer{
 
     @Override
     public void end() {
-        player.stunTime = 2;
+        player.stunTime = Player.DEFAULT_STUNT_TIME;
         player.setInvencible(2f);
+        player.lossPoints(3);
     }
 }

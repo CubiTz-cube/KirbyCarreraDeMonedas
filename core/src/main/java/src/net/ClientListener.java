@@ -107,14 +107,15 @@ public class ClientListener implements Runnable{
                             //Integer packId = (Integer) pack[1]; Devuelve -1
                             Player.AnimationType animationType = (Player.AnimationType) pack[2];
                             flipX = (boolean) pack[3];
-                            server.sendAll(Packet.actOtherPlayer(id, animationType, flipX), id);
+                            Player.StateType playerStateType = (Player.StateType) pack[4];
+                            server.sendAll(Packet.actOtherPlayer(id, animationType, flipX, playerStateType), id);
                             break;
 
                         case ACTBREAKBLOCK:
                             packId = (int) pack[1];
-                            BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
+                            BreakBlock.StateType blockStateType = (BreakBlock.StateType) pack[2];
 
-                            server.sendAll(Packet.actBlock(packId, stateType), id);
+                            server.sendAll(Packet.actBlock(packId, blockStateType), id);
                             break;
 
                         case ACTSCORE:

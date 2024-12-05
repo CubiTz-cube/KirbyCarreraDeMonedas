@@ -33,6 +33,7 @@ import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
 import src.main.Main;
+import src.world.entities.player.PlayerCommon;
 import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
 
@@ -202,10 +203,6 @@ public class GameScreen extends BaseScreen {
         });
     }
 
-    public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Integer id){
-        createEntityLogic(type, position, force, id, false);
-        main.setIds(id);
-    }
     public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Integer id, Boolean flipX){
         createEntityLogic(type, position, force, id, flipX);
         main.setIds(id);
@@ -222,7 +219,7 @@ public class GameScreen extends BaseScreen {
         sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, flipX));
     }
 
-    public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX){
+    public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX, PlayerCommon.StateType stateType){
         Entity entity = entities.get(id);
         if (entity == null) {
             System.out.println("Animation OtherPlayer Entity " + id + " no encontrada en la lista");
@@ -233,6 +230,7 @@ public class GameScreen extends BaseScreen {
             return;
         }
         otherPlayer.setAnimation(animationType);
+        otherPlayer.setCurrentState(stateType);
         otherPlayer.setFlipX(flipX);
     }
 
@@ -349,10 +347,10 @@ public class GameScreen extends BaseScreen {
 
     public void endGame(){
         threadSecureWorld.clearModifications();
+        main.closeClient();
+        main.closeServer();
         threadSecureWorld.addModification(() -> {
             main.changeScreen(Main.Screens.ENDGAME);
-            main.closeClient();
-            main.closeServer();
             clearAll();
         });
     }
@@ -409,9 +407,9 @@ public class GameScreen extends BaseScreen {
                 lastPosition.set(currentPosition);
             }
 
-            if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX()));
+            if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX(), player.getCurrentStateType()));
 
-            if (!main.client.isRunning()) disconnect();
+            if (!main.client.isRunning()) endGame();
 
             if (main.server != null){
 
@@ -459,7 +457,6 @@ public class GameScreen extends BaseScreen {
         camera.zoom = 1f;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) randomMirror(20);
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {
@@ -487,13 +484,9 @@ public class GameScreen extends BaseScreen {
         if (main.client != null) main.client.send(packet);
     }
 
-    public void disconnect(){
-        endGame();
-    }
-
     @Override
     public void dispose() {
-        stage.dispose();
+        clearAll();
         world.dispose();
         tiledManager.dispose();
     }

@@ -140,13 +140,14 @@ public class Client implements Runnable{
                         packId = (Integer) pack[1];
                         Player.AnimationType animationType = (Player.AnimationType) pack[2];
                         flipX = (Boolean) pack[3];
-                        game.actOtherPlayerAnimation(packId, animationType, flipX);
+                        Player.StateType playerStateType = (Player.StateType) pack[4];
+                        game.actOtherPlayerAnimation(packId, animationType, flipX, playerStateType);
                         break;
 
                     case ACTBREAKBLOCK:
                         packId = (Integer) pack[1];
-                        BreakBlock.StateType stateType = (BreakBlock.StateType) pack[2];
-                        game.actBlock(packId, stateType);
+                        BreakBlock.StateType blockStateType = (BreakBlock.StateType) pack[2];
+                        game.actBlock(packId, blockStateType);
                         break;
 
                     case ACTSCORE:

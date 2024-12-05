@@ -25,7 +25,22 @@ import java.util.ArrayList;
 import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public abstract class PlayerCommon extends Entity {
-    public float stunTime = 2;
+    public float speed = 12;
+    public float maxSpeed = 6;
+    public float stunTime = DEFAULT_STUNT_TIME;
+
+    public static final float DEFAULT_STUNT_TIME = 1f;
+    public static final float WALK_SPEED = 10f;
+    public static final float WALK_MAX_SPEED = 5f;
+    public static final float RUN_SPEED = 14f;
+    public static final float RUN_MAX_SPEED = 6.5f;
+    public static final float MAX_JUMP_TIME = 0.3f;
+    public static final float JUMP_IMPULSE = 9f;
+    public static final float JUMP_INAIR = 16f; // Se multiplica por deltaTime
+    public static final float FLY_IMPULSE = 6f;
+    public static final float DASH_IMPULSE = 15f;
+    public static final float ABSORB_FORCE = 12f;
+    public static final float BRAKE_FORCE = 280f;
 
     public enum StateType {
         IDLE,
@@ -41,7 +56,7 @@ public abstract class PlayerCommon extends Entity {
         CONSUME,
         STAR,
     }
-    private StateType currentStateType;
+    protected StateType currentStateType;
     private final StateMachine stateMachine;
     protected IdleState idleState;
     protected JumpState jumpState;

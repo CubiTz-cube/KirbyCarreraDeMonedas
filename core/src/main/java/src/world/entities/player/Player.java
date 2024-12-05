@@ -14,6 +14,7 @@ import src.world.ActorBox2d;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.objects.CoinOdsPoint;
 import src.world.entities.mirror.Mirror;
+import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.powers.PowerUp;
 import src.world.entities.player.states.*;
 import src.world.entities.projectiles.Projectil;
@@ -23,20 +24,6 @@ import src.world.statics.Spike;
 import java.util.Random;
 
 public class Player extends PlayerCommon {
-    public float speed = 12;
-    public float maxSpeed = 6;
-
-    public static final float WALK_SPEED = 10f;
-    public static final float WALK_MAX_SPEED = 5f;
-    public static final float RUN_SPEED = 14f;
-    public static final float RUN_MAX_SPEED = 6.5f;
-    public static final float MAX_JUMP_TIME = 0.3f;
-    public static final float JUMP_IMPULSE = 9f;
-    public static final float JUMP_INAIR = 16f; // Se multiplica por deltaTime
-    public static final float FLY_IMPULSE = 6f;
-    public static final float DASH_IMPULSE = 15f;
-    public static final float ABSORB_FORCE = 12f;
-    public static final float BRAKE_FORCE = 280f;
 
     private Boolean changeAnimation;
 
@@ -184,7 +171,6 @@ public class Player extends PlayerCommon {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
-            lossPoints(3);
 
         } else if (actor instanceof Mirror m) {
             game.threadSecureWorld.addModification(() -> {
@@ -195,7 +181,6 @@ public class Player extends PlayerCommon {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
-            lossPoints(3);
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             game.removeEntity(coin.getId());
@@ -206,14 +191,16 @@ public class Player extends PlayerCommon {
             setCurrentState(Player.StateType.STUN);
             body.setLinearVelocity(0,0);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
-            lossPoints(4);
         } else if (actor instanceof Lava) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             stunTime = 0.5f;
             setCurrentState(Player.StateType.STUN);
             body.setLinearVelocity(0,0);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
-            lossPoints(3);
+        }else if (actor instanceof OtherPlayer other){
+            if (getCurrentStateType() == StateType.STUN || invencible || other.getCurrentStateType() != StateType.DASH) return;
+            setCurrentState(Player.StateType.STUN);
+            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
         }
     }
 }

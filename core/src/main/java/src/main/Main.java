@@ -139,7 +139,7 @@ public class Main extends Game {
 
     public void setIp(String ip) {
         if (ip.isEmpty()) this.ip = "localhost";
-        this.ip = ip;
+        else this.ip = ip;
     }
 
     public String getIp() {

@@ -4,6 +4,7 @@ import src.world.entities.Entity;
 import src.world.entities.blocks.Block;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class Packet {
     public enum Types{
@@ -48,8 +49,8 @@ public class Packet {
         return new Object[]{Types.REMOVEENTITY, id};
     }
 
-    public static Object[] actOtherPlayer(int id, Player.AnimationType animationType, boolean flipX){
-        return new Object[]{Types.ACTOTHERPLAYER, id, animationType, flipX};
+    public static Object[] actOtherPlayer(int id, Player.AnimationType animationType, boolean flipX, PlayerCommon.StateType stateType){
+        return new Object[]{Types.ACTOTHERPLAYER, id, animationType, flipX, stateType};
     }
 
     public static Object[] actBlock(int id, Block.StateType stateType){
