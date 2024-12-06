@@ -68,6 +68,7 @@ public abstract class SpriteActorBox2d extends ActorBox2d{
         );
         if (currentAnimation != null) sprite.setRegion(currentAnimation.getKeyFrame(animateTime, false));
         sprite.setFlip(flipX, false);
+        sprite.setColor(getColor());
         sprite.setPosition(getX(), getY());
         sprite.setOriginCenter();
         sprite.draw(batch);

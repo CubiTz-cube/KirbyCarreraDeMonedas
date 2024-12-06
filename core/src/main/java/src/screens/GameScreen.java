@@ -276,6 +276,15 @@ public class GameScreen extends BaseScreen {
         scorePlayer.score = score;
     }
 
+    public void actEntityColor(Integer id, float r, float g, float b, float a){
+        Entity entity = entities.get(id);
+        if (entity == null) {
+            System.out.println("Entity " + id + " no encontrada en la lista para cambio de color");
+            return;
+        }
+        entity.setColor(r,g,b,a);
+    }
+
     public void removeActor(Actor actor){
         if (actor instanceof Mirror m) mirrorIndicators.remove(m.getId());
         stage.getActors().removeValue(actor, true);
@@ -408,6 +417,7 @@ public class GameScreen extends BaseScreen {
             }
 
             if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX(), player.getCurrentStateType()));
+            if (player.checkChangeColor()) main.client.send(Packet.actEntityColor(-1, player.getColor().r, player.getColor().g, player.getColor().b, player.getColor().a));
 
             if (!main.client.isRunning()) endGame();
 

@@ -13,6 +13,7 @@ public class StarState extends StatePlayer{
     @Override
     public void start() {
         player.setAnimation(Player.AnimationType.FLYEND);
+        player.throwEntity(Entity.Type.STAR, 3f);
         player.game.addEntity(Entity.Type.STAR,
             player.getBody().getPosition().add(player.isFlipX() ? -1.2f : 1.2f,0),
             new Vector2((player.isFlipX() ? -3f : 3f) + player.getBody().getLinearVelocity().x,0));

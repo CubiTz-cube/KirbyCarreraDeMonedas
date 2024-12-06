@@ -63,7 +63,8 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
 
     @Override
     public void detach() {
-        super.detach();
         body.destroyFixture(sensorFixture);
+        body.destroyFixture(fixture);
+        world.destroyBody(body);
     }
 }

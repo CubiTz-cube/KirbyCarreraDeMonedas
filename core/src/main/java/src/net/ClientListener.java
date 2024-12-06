@@ -124,6 +124,16 @@ public class ClientListener implements Runnable{
                             server.sendAll(Packet.actScore(id, score), id);
                             break;
 
+                        case ACTENTITYCOLOR:
+                            packId = (int) pack[1];
+                            float r = (float) pack[2];
+                            float g = (float) pack[3];
+                            float b = (float) pack[4];
+                            float a = (float) pack[5];
+                            if (packId == -1) server.sendAll(Packet.actEntityColor(id, r, g, b, a), id);
+                            else server.sendAll(Packet.actEntityColor(packId, r, g, b, a), id);
+                            break;
+
                         case MESSAGE:
                             String message = (String) pack[2];
                             server.sendAll(Packet.message(name, message), id);

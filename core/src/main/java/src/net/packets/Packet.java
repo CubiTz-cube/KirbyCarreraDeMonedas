@@ -1,5 +1,6 @@
 package src.net.packets;
 
+import com.badlogic.gdx.graphics.Color;
 import src.world.entities.Entity;
 import src.world.entities.blocks.Block;
 import src.world.entities.enemies.Enemy;
@@ -10,7 +11,7 @@ public class Packet {
     public enum Types{
         CONNECTPLAYER, DISCONNECTPLAYER, NEWPLAYER, GAMESTART,
         ACTENTITYPOSITION, NEWENTITY, REMOVEENTITY,
-        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK, ACTSCORE,
+        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK, ACTSCORE, ACTENTITYCOLOR,
         MESSAGE,
     }
 
@@ -59,6 +60,10 @@ public class Packet {
 
     public static Object[] actScore(int id,int score){
         return new Object[]{Types.ACTSCORE, id, score};
+    }
+
+    public static Object[] actEntityColor(int id, float r, float g, float b, float a){
+        return new Object[]{Types.ACTENTITYCOLOR, id, r, g, b, a};
     }
 
     public static Object[] message(String name ,String message){

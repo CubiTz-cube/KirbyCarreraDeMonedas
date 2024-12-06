@@ -11,6 +11,7 @@ import src.screens.GameScreen;
 import src.utils.CollisionFilters;
 import src.utils.variables.PlayerControl;
 import src.world.ActorBox2d;
+import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.objects.CoinOdsPoint;
 import src.world.entities.mirror.Mirror;
@@ -26,6 +27,7 @@ import java.util.Random;
 public class Player extends PlayerCommon {
 
     private Boolean changeAnimation;
+    private Boolean changeColor;
 
     public Enemy enemyAbsorded;
 
@@ -47,6 +49,8 @@ public class Player extends PlayerCommon {
         setCurrentState(StateType.IDLE);
 
         changeAnimation = false;
+        changeColor = false;
+
         invencibleTime = 0f;
         invencible = false;
     }
@@ -94,9 +98,23 @@ public class Player extends PlayerCommon {
         changeAnimation = true;
     }
 
+    @Override
+    public void setColor(Color color) {
+        super.setColor(color);
+        changeColor = true;
+    }
+
+    public Boolean checkChangeColor() {
+        if (changeColor) {
+            changeColor = false;
+            return true;
+        }
+        return false;
+    }
+
     public void setInvencible(Float time) {
         invencible = true;
-        sprite.setColor(Color.GOLD);
+        setColor(Color.GOLD);
         invencibleTime = time;
     }
 
@@ -109,11 +127,11 @@ public class Player extends PlayerCommon {
         super.act(delta);
         if (invencibleTime > 0) invencibleTime -= delta;
         else if (invencible){
-            sprite.setColor(Color.WHITE);
+            setColor(Color.WHITE);
             invencible = false;
         }
-        Vector2 velocity = body.getLinearVelocity();
 
+        Vector2 velocity = body.getLinearVelocity();
         if (getCurrentStateType() == StateType.DASH || getCurrentStateType() == StateType.STUN) return;
         if (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
             body.applyForce(-velocity.x * Player.BRAKE_FORCE * delta, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
@@ -146,6 +164,15 @@ public class Player extends PlayerCommon {
         }
         else if (enemyAbsorded == null) setCurrentState(Player.StateType.ABSORB);
         else setCurrentState(Player.StateType.STAR);
+    }
+
+    public void throwEntity(Entity.Type type, Float impulse){
+        float linearX = Math.abs(body.getLinearVelocity().x);
+        game.addEntity(type,
+            body.getPosition().add(isFlipX() ? -1.2f : 1.2f,0),
+            new Vector2((isFlipX() ? -impulse - linearX : impulse + linearX),0),
+            isFlipX()
+        );
     }
 
     @Override

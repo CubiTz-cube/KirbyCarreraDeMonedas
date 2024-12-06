@@ -155,6 +155,16 @@ public class Client implements Runnable{
                         int score = (int) pack[2];
                         game.actScore(packId, score);
                         break;
+
+                    case ACTENTITYCOLOR:
+                        packId = (Integer) pack[1];
+                        float r = (float) pack[2];
+                        float g = (float) pack[3];
+                        float b = (float) pack[4];
+                        float a = (float) pack[5];
+                        game.actEntityColor(packId, r, g, b, a);
+                        break;
+
                     case MESSAGE:
                         String packName = (String) pack[1];
                         String message = (String) pack[2];
@@ -192,6 +202,5 @@ public class Client implements Runnable{
             Gdx.app.log("Client", "Error al cerrar socket: ", e);
         }
         socket.dispose();
-        //game.disconnect();
     }
 }
