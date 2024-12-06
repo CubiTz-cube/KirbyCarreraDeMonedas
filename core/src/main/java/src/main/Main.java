@@ -19,12 +19,13 @@ import src.screens.uiScreens.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main extends Game {
     private AssetManager assetManager;
     private ArrayList<Screen> screensList;
     private Skin skin;
-    private int ids = 0;
+    private AtomicInteger ids;
     public enum Screens {
         INTRO,
         MENU,
@@ -53,6 +54,7 @@ public class Main extends Game {
     @Override
     public void create() {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        ids = new AtomicInteger(0);
 
         assetManager = new AssetManager();
         assetManager.load("yoshi.jpg", Texture.class);
@@ -146,20 +148,20 @@ public class Main extends Game {
         return ip;
     }
 
+    public void setIds(int ids) {
+        this.ids.set(ids);
+    }
+
+    public Integer getIds() {
+        return ids.incrementAndGet();
+    }
+
     public void setPort(Integer port) {
         this.port = port;
     }
 
     public Integer getPort() {
         return port;
-    }
-
-    public Integer getIds() {
-        return ++ids;
-    }
-
-    public void setIds(int ids) {
-        this.ids = ids;
     }
 
     public AssetManager getAssetManager() {

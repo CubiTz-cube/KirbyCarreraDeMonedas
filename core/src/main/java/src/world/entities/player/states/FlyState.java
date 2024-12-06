@@ -41,9 +41,11 @@ public class FlyState extends CanMoveState{
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
             if (player.getCurrentAnimationType() != Player.AnimationType.FLYEND) {
                 player.setAnimation(Player.AnimationType.FLYEND);
+
+                float linearX = Math.abs(player.getBody().getLinearVelocity().x);
                 player.game.addEntity(Entity.Type.CLOUD,
                     player.getBody().getPosition().add(player.isFlipX() ? -1.2f : 1.2f,0),
-                    new Vector2((player.isFlipX() ? -1.5f : 1.5f) + player.getBody().getLinearVelocity().x,0),
+                    new Vector2((player.isFlipX() ? -1.5f - linearX : 1.5f + linearX),0),
                     player.isFlipX()
                 );
             }

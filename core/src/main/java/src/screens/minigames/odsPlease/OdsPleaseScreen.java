@@ -145,11 +145,8 @@ public class OdsPleaseScreen extends MinigameScreen {
     public void show() {
         super.show();
         setVisibleAll(false);
-    }
-
-    @Override
-    public void hide() {
         countGood = 0;
+        countBad = 0;
     }
 
     private void setVisibleAll(boolean visible) {

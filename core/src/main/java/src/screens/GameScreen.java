@@ -276,6 +276,11 @@ public class GameScreen extends BaseScreen {
         scorePlayer.score = score;
     }
 
+    public void removeActor(Actor actor){
+        if (actor instanceof Mirror m) mirrorIndicators.remove(m.getId());
+        stage.getActors().removeValue(actor, true);
+    }
+
     /**
      * Elimina un actor del juego. Sin enviar paquete.
      * @param actor Actor a eliminar.
@@ -293,11 +298,6 @@ public class GameScreen extends BaseScreen {
             removeActor(actor);
             actor.detach();
         });
-    }
-
-    public void removeActor(Actor actor){
-        if (actor instanceof Mirror m) mirrorIndicators.remove(m.getId());
-        stage.getActors().removeValue(actor, true);
     }
 
     /**
