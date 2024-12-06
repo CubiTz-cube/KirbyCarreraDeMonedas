@@ -182,10 +182,11 @@ public class Player extends PlayerCommon {
                 game.playMinigame();
                 game.randomMirror(m.getId());
             });
-        } else if (actor instanceof Projectil) {
+        } else if (actor instanceof Projectil projectil) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            projectil.despawn();
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             game.removeEntity(coin.getId());
