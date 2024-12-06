@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import src.net.packets.Packet;
 import src.screens.GameScreen;
 import src.utils.constants.CollisionFilters;
 import src.utils.constants.PlayerControl;
@@ -25,9 +26,6 @@ import java.util.Random;
 
 public class Player extends PlayerCommon {
 
-    private Boolean changeAnimation;
-    private Boolean changeColor;
-
     public Enemy enemyAbsorded;
 
     public final GameScreen game;
@@ -46,9 +44,6 @@ public class Player extends PlayerCommon {
 
         initStates();
         setCurrentState(StateType.IDLE);
-
-        changeAnimation = false;
-        changeColor = false;
 
         invencibleTime = 0f;
         invencible = false;
@@ -80,35 +75,19 @@ public class Player extends PlayerCommon {
     @Override
     public void setAnimation(AnimationType animationType) {
         super.setAnimation(animationType);
-        changeAnimation = true;
-    }
-
-    public Boolean checkChangeAnimation() {
-        if (changeAnimation) {
-            changeAnimation = false;
-            return true;
-        }
-        return false;
+        if (game != null) game.sendPacket(Packet.actOtherPlayer(-1, getCurrentAnimationType(), isFlipX(), getCurrentStateType()));
     }
 
     @Override
     public void setFlipX(Boolean flipX) {
         super.setFlipX(flipX);
-        changeAnimation = true;
+        if (game != null) game.sendPacket(Packet.actOtherPlayer(-1, getCurrentAnimationType(), isFlipX(), getCurrentStateType()));
     }
 
     @Override
     public void setColor(Color color) {
         super.setColor(color);
-        changeColor = true;
-    }
-
-    public Boolean checkChangeColor() {
-        if (changeColor) {
-            changeColor = false;
-            return true;
-        }
-        return false;
+        if (game != null) game.sendPacket(Packet.actEntityColor(-1, getColor().r, getColor().g, getColor().b, getColor().a));
     }
 
     public void setInvencible(Float time) {

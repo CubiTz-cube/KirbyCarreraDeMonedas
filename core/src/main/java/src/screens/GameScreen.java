@@ -423,9 +423,6 @@ public class GameScreen extends BaseScreen {
                 lastPosition.set(currentPosition);
             }
 
-            if (player.checkChangeAnimation()) main.client.send(Packet.actOtherPlayer(-1, player.getCurrentAnimationType(), player.isFlipX(), player.getCurrentStateType()));
-            if (player.checkChangeColor()) main.client.send(Packet.actEntityColor(-1, player.getColor().r, player.getColor().g, player.getColor().b, player.getColor().a));
-
             if (!main.client.isRunning()) endGame();
 
             if (main.server != null){
@@ -489,8 +486,8 @@ public class GameScreen extends BaseScreen {
     }
 
     public void randomMirror(Integer id){
-        spawnMirror.unTakeSpawnPoint(id);
-        Vector2 position = spawnMirror.takeSpawnPoint(id);
+        System.out.println("Random Mirror");
+        Vector2 position = spawnMirror.reSpawn(id);
 
         actEntityPos(id, position.x, position.y, 0f, 0f);
         sendPacket(Packet.actEntityPosition(id, position.x, position.y));

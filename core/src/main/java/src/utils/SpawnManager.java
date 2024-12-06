@@ -42,6 +42,13 @@ public class SpawnManager {
         add(new Vector2(takenSpawnPoints.remove(id)));
     }
 
+    public Vector2 reSpawn(int id){
+        Vector2 lastSpawnPoint = new Vector2(takenSpawnPoints.remove(id));
+        Vector2 newSpawnPoint = takeSpawnPoint(id);
+        add(lastSpawnPoint);
+        return newSpawnPoint;
+    }
+
     public void clear() {
         spawnPoints.clear();
         takenSpawnPoints.clear();

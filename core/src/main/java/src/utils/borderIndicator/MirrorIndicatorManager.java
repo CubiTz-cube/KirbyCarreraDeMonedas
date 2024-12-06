@@ -1,5 +1,6 @@
 package src.utils.borderIndicator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -28,6 +29,10 @@ public class MirrorIndicatorManager extends Actor {
     }
 
     public void changeTargetPosition(Integer id,Vector2 targetPosition) {
+        if (!borderIndicators.containsKey(id)) {
+            Gdx.app.log("MirrorIndicatorManager", "id " + id + " no encontrada para cambiar su target position");
+            return;
+        }
         borderIndicators.get(id).setTargetPosition(targetPosition);
     }
 

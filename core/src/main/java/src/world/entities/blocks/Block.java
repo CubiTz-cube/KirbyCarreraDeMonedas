@@ -59,8 +59,8 @@ public class Block extends Entity implements NoAutoPacketEntity {
 
     public void setAnimation(AnimationType animationType){
         switch (animationType){
-            case LIVE -> sprite.setAlpha(1);
-            case BREAK -> sprite.setAlpha(0.5f);
+            case LIVE -> setColor(1,1,1,1);
+            case BREAK -> setColor(1,1,1,0.5f);
         }
     }
 

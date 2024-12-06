@@ -21,13 +21,13 @@ public class Star extends Projectil{
         body.setGravityScale(0);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width / 3, shape.height / 3);
+        box.setAsBox(shape.width / 4, shape.height / 4);
         fixture = body.createFixture(box, 1);
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
 
-        setSpritePosModification(0f, getHeight()/3);
+        setSpritePosModification(0f, getHeight()/4);
 
         Animation<TextureRegion> cloudAnimation = new Animation<>(0.08f,
             SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 5));

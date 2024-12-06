@@ -16,7 +16,6 @@ public class BorderIndicator extends Actor{
 
     public BorderIndicator(Texture texture, Vector2 targetPosition){
         sprite = new Sprite(texture);
-        setPosition(5800, 2450);
         sprite.setSize(PIXELS_IN_METER, PIXELS_IN_METER);
         this.targetPosition = targetPosition.scl(PIXELS_IN_METER);
         centerPosition = new Vector2(0, 0);
