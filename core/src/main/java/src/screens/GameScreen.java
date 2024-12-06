@@ -405,9 +405,6 @@ public class GameScreen extends BaseScreen {
                 tiledManager.makeEntities();
 
                 addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
-                addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
-                addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
-                addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
             }
         }
     }
