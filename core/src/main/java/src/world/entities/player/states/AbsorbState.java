@@ -3,7 +3,7 @@ package src.world.entities.player.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import src.utils.variables.PlayerControl;
+import src.utils.constants.PlayerControl;
 import src.world.entities.player.Player;
 
 import java.util.ArrayList;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import src.screens.GameScreen;
 
-import static src.utils.variables.Constants.PIXELS_IN_METER;
+import static src.utils.constants.Constants.PIXELS_IN_METER;
 
 public abstract class ActorBox2d extends Actor {
     protected final World world;

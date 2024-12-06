@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
-import static src.utils.variables.Constants.PIXELS_IN_METER;
+import static src.utils.constants.Constants.PIXELS_IN_METER;
 
 public abstract class SpriteActorBox2d extends ActorBox2d{
     protected Sprite sprite;

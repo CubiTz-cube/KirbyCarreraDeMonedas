@@ -5,12 +5,10 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.screens.GameScreen;
-import src.utils.CollisionFilters;
+import src.utils.constants.CollisionFilters;
 import src.utils.animation.SheetCutter;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.basic.states.*;
-
-import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class BasicEnemy extends Enemy {
     public enum AnimationType {

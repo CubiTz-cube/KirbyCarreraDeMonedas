@@ -1,4 +1,4 @@
-package src.utils.variables;
+package src.utils.constants;
 
 import com.badlogic.gdx.Input;
 

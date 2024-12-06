@@ -3,7 +3,7 @@ package src.world.entities.player.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import src.utils.variables.PlayerControl;
+import src.utils.constants.PlayerControl;
 import src.world.entities.player.Player;
 
 public abstract class CanMoveState extends StatePlayer{

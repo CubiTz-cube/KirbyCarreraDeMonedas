@@ -1,7 +1,7 @@
 package src.world.entities.player.states;
 
 import com.badlogic.gdx.Gdx;
-import src.utils.variables.PlayerControl;
+import src.utils.constants.PlayerControl;
 import src.world.entities.player.Player;
 
 public class DownState  extends StatePlayer{

@@ -18,8 +18,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
 import src.utils.SecondsTimer;
+import src.utils.SpawnManager;
 import src.utils.borderIndicator.MirrorIndicatorManager;
-import src.utils.variables.ConsoleColor;
+import src.utils.constants.ConsoleColor;
 import src.utils.ThreadSecureWorld;
 import src.utils.TiledManager;
 import src.world.ActorBox2d;
@@ -70,7 +71,7 @@ public class GameScreen extends BaseScreen {
     // Spawn
     private final Random random;
     public Vector2 lobbyPlayer;
-    public ArrayList<Vector2> spawnMirror;
+    public SpawnManager spawnMirror;
     public ArrayList<Vector2> spawnPlayer;
 
     // UI
@@ -103,7 +104,7 @@ public class GameScreen extends BaseScreen {
         timeGame = new SecondsTimer(0,15,0);
 
         random = new Random();
-        spawnMirror = new ArrayList<>();
+        spawnMirror = new SpawnManager();
         spawnPlayer = new ArrayList<>();
     }
 
@@ -217,6 +218,13 @@ public class GameScreen extends BaseScreen {
         int id = main.getIds();
         createEntityLogic(type, position, force, id, flipX);
         sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, flipX));
+    }
+
+    public void addEntitySpawn(Entity.Type type, Vector2 force, SpawnManager spawnManager){
+        int id = main.getIds();
+        Vector2 position = spawnManager.takeSpawnPoint(id);
+        createEntityLogic(type, position, force, id, false);
+        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, false));
     }
 
     public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX, PlayerCommon.StateType stateType){
@@ -396,8 +404,10 @@ public class GameScreen extends BaseScreen {
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
 
-                Vector2 position = spawnMirror.get(random.nextInt(spawnMirror.size()));
-                addEntity(Entity.Type.MIRROR, position, new Vector2(0,0));
+                addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
+                addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
+                addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
+                addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
             }
         }
     }
@@ -482,8 +492,8 @@ public class GameScreen extends BaseScreen {
     }
 
     public void randomMirror(Integer id){
-        int index = random.nextInt(spawnMirror.size());
-        Vector2 position = new Vector2(spawnMirror.get(index));
+        spawnMirror.unTakeSpawnPoint(id);
+        Vector2 position = spawnMirror.takeSpawnPoint(id);
 
         actEntityPos(id, position.x, position.y, 0f, 0f);
         sendPacket(Packet.actEntityPosition(id, position.x, position.y));

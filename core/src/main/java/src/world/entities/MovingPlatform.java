@@ -11,7 +11,7 @@ import src.screens.GameScreen;
 import src.world.ActorBox2d;
 import src.world.statics.MovingPlatfromLimiter;
 
-import static src.utils.variables.Constants.PIXELS_IN_METER;
+import static src.utils.constants.Constants.PIXELS_IN_METER;
 
 public class MovingPlatform extends Entity implements NoAutoPacketEntity {
 

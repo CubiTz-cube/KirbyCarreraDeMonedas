@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import src.utils.FrontRayCastCallback;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.StateMachine;
@@ -22,7 +21,7 @@ import src.world.entities.player.states.*;
 
 import java.util.ArrayList;
 
-import static src.utils.variables.Constants.PIXELS_IN_METER;
+import static src.utils.constants.Constants.PIXELS_IN_METER;
 
 public abstract class PlayerCommon extends Entity {
     public float speed = 12;

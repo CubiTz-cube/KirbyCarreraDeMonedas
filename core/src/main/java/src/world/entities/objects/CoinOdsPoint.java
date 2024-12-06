@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.screens.GameScreen;
-import src.utils.CollisionFilters;
+import src.utils.constants.CollisionFilters;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.statics.Lava;

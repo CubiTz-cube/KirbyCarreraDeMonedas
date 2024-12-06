@@ -6,16 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.screens.GameScreen;
-import src.utils.CollisionFilters;
+import src.utils.constants.CollisionFilters;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.enemies.sleeping.states.DamageStateSleepy;
 import src.world.entities.enemies.sword.states.AttackStateSword;
 import src.world.entities.enemies.sword.states.DamageStateSword;
 import src.world.entities.enemies.sword.states.IdleStateSword;
 import src.world.entities.enemies.sword.states.WalkStateSword;
 import src.world.entities.player.powers.PowerUp;
-
-import static src.utils.variables.Constants.PIXELS_IN_METER;
 
 public class SwordEnemy extends Enemy
 {

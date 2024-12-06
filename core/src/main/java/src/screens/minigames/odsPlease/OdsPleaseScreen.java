@@ -109,8 +109,6 @@ public class OdsPleaseScreen extends MinigameScreen {
         frontTable.row();
         frontTable.add(denyButton).width(256).height(128).colspan(1).padLeft(200);
         frontTable.add(passButton).width(256).height(128).colspan(1);
-
-        changeOdsImage();
     }
 
     private void passButton() {
@@ -147,6 +145,7 @@ public class OdsPleaseScreen extends MinigameScreen {
         setVisibleAll(false);
         countGood = 0;
         countBad = 0;
+        changeOdsImage();
     }
 
     private void setVisibleAll(boolean visible) {

@@ -11,7 +11,7 @@ import src.screens.GameScreen;
 import src.world.entities.Entity;
 import src.world.statics.StaticFactory;
 
-import static src.utils.variables.Constants.PIXELS_IN_METER;
+import static src.utils.constants.Constants.PIXELS_IN_METER;
 
 public class TiledManager {
     private final GameScreen game;

@@ -2,7 +2,7 @@ package src.world.entities.player.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import src.utils.variables.PlayerControl;
+import src.utils.constants.PlayerControl;
 import src.world.entities.Entity;
 import src.world.entities.player.Player;
 

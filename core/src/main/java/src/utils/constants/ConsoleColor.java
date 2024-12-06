@@ -1,4 +1,4 @@
-package src.utils.variables;
+package src.utils.constants;
 
 public class ConsoleColor {
     public static final String RESET = "\033[0m";  // Text Reset

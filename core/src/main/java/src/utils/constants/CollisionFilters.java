@@ -1,4 +1,4 @@
-package src.utils;
+package src.utils.constants;
 
 public class CollisionFilters {
     public static final short CATEGORY_PLAYER = 0x0001;
