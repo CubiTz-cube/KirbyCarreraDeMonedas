@@ -14,6 +14,7 @@ import src.world.entities.blocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
+import src.world.entities.player.powers.PowerUp;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -141,7 +142,8 @@ public class Client implements Runnable{
                         Player.AnimationType animationType = (Player.AnimationType) pack[2];
                         flipX = (Boolean) pack[3];
                         Player.StateType playerStateType = (Player.StateType) pack[4];
-                        game.actOtherPlayerAnimation(packId, animationType, flipX, playerStateType);
+                        PowerUp.Type powerType = (PowerUp.Type) pack[5];
+                        game.actOtherPlayerAnimation(packId, animationType, flipX, playerStateType, powerType);
                         break;
 
                     case ACTBREAKBLOCK:

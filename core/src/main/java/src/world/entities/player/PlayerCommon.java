@@ -253,7 +253,7 @@ public abstract class PlayerCommon extends Entity {
 
         if (currentPowerUp != null){
             setSecondCurrentAnimation(currentPowerUp.getSecondAnimation(animationType));
-        }
+        }else setSecondCurrentAnimation(null);
 
         switch (animationType){
             case IDLE -> setCurrentAnimation(idleAnimation);
@@ -309,7 +309,11 @@ public abstract class PlayerCommon extends Entity {
 
     public void setCurrentPowerUp(PowerUp.Type type){
         currentpowerUptype = type;
-        if (type == null) return;
+        if (type == null) {
+            currentPowerUp = null;
+            currentAnimationType = null;
+            return;
+        }
         currentPowerUp = switch (type){
             case BOMB -> powerBomb;
             case SLEEP -> powerSleep;
@@ -321,6 +325,10 @@ public abstract class PlayerCommon extends Entity {
 
     public PowerUp getCurrentPowerUp() {
         return currentPowerUp;
+    }
+
+    public PowerUp.Type getCurrentpowerUptype() {
+        return currentpowerUptype;
     }
 
     @Override

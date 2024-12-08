@@ -11,6 +11,7 @@ import src.world.entities.Entity;
 import src.world.entities.blocks.BreakBlock;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
+import src.world.entities.player.powers.PowerUp;
 
 public class ClientListener implements Runnable{
     private final Server server;
@@ -107,7 +108,8 @@ public class ClientListener implements Runnable{
                             Player.AnimationType animationType = (Player.AnimationType) pack[2];
                             flipX = (boolean) pack[3];
                             Player.StateType playerStateType = (Player.StateType) pack[4];
-                            server.sendAll(Packet.actOtherPlayer(id, animationType, flipX, playerStateType), id);
+                            PowerUp.Type powerType = (PowerUp.Type) pack[5];
+                            server.sendAll(Packet.actOtherPlayer(id, animationType, flipX, playerStateType, powerType), id);
                             break;
 
                         case ACTBREAKBLOCK:

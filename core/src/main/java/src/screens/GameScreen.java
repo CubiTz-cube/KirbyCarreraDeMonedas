@@ -35,6 +35,7 @@ import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
 import src.main.Main;
 import src.world.entities.player.PlayerCommon;
+import src.world.entities.player.powers.PowerUp;
 import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
 
@@ -81,6 +82,8 @@ public class GameScreen extends BaseScreen {
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
 
+    private Box2DDebugRenderer debugRenderer;
+
     public GameScreen(Main main){
         super(main);
         actors = new ArrayList<>();
@@ -106,6 +109,8 @@ public class GameScreen extends BaseScreen {
         random = new Random();
         spawnMirror = new SpawnManager();
         spawnPlayer = new ArrayList<>();
+
+        debugRenderer = new Box2DDebugRenderer();
     }
 
     private void initUI(){
@@ -140,7 +145,9 @@ public class GameScreen extends BaseScreen {
     }
 
     public Integer getScore() {
-        return scorePlayers.get(-1).score;
+        ScorePlayer scorePlayer = scorePlayers.get(-1);
+        if (scorePlayer != null) return scorePlayers.get(-1).score;
+        else return null;
     }
 
     public HashMap<Integer, ScorePlayer> getScorePlayers() {
@@ -227,7 +234,7 @@ public class GameScreen extends BaseScreen {
         sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, false));
     }
 
-    public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX, PlayerCommon.StateType stateType){
+    public void actOtherPlayerAnimation(Integer id, Player.AnimationType animationType, Boolean flipX, PlayerCommon.StateType stateType, PowerUp.Type powerType){
         Entity entity = entities.get(id);
         if (entity == null) {
             System.out.println("Animation OtherPlayer Entity " + id + " no encontrada en la lista");
@@ -239,6 +246,7 @@ public class GameScreen extends BaseScreen {
         }
         otherPlayer.setAnimation(animationType);
         otherPlayer.setCurrentState(stateType);
+        otherPlayer.setCurrentPowerUp(powerType);
         otherPlayer.setFlipX(flipX);
     }
 
@@ -352,13 +360,14 @@ public class GameScreen extends BaseScreen {
     }
 
     public void clearAll(){
+        for (ActorBox2d actor : actors) actor.detach();
+        if (player != null) player.detach();
+        player = null;
+
         stage.clear();
         actors.clear();
         entities.clear();
         spawnMirror.clear();
-        for (ActorBox2d actor : actors) actor.detach();
-        if (player != null) player.detach();
-        player = null;
 
     }
 
@@ -367,8 +376,8 @@ public class GameScreen extends BaseScreen {
         main.closeClient();
         main.closeServer();
         threadSecureWorld.addModification(() -> {
-            main.changeScreen(Main.Screens.ENDGAME);
             clearAll();
+            main.changeScreen(Main.Screens.ENDGAME);
         });
     }
 
@@ -469,6 +478,7 @@ public class GameScreen extends BaseScreen {
         actUI();
         stage.draw();
         camera.zoom = 1f;
+        debugRenderer.render(world, camera.projection.scale(6,6,1).translate(-100,-100,0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
 

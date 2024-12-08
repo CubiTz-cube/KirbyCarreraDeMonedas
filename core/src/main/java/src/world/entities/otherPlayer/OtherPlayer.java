@@ -60,11 +60,4 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
         layout.setText(font, name);
         font.draw(batch, layout, getX() - layout.width / 4, getY() + sprite.getHeight() + layout.height/4);
     }
-
-    @Override
-    public void detach() {
-        body.destroyFixture(sensorFixture);
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
-    }
 }

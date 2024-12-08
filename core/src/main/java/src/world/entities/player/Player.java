@@ -75,13 +75,13 @@ public class Player extends PlayerCommon {
     @Override
     public void setAnimation(AnimationType animationType) {
         super.setAnimation(animationType);
-        if (game != null) game.sendPacket(Packet.actOtherPlayer(-1, getCurrentAnimationType(), isFlipX(), getCurrentStateType()));
+        if (game != null) game.sendPacket(Packet.actOtherPlayer(-1, getCurrentAnimationType(), isFlipX(), getCurrentStateType(), getCurrentpowerUptype()));
     }
 
     @Override
     public void setFlipX(Boolean flipX) {
         super.setFlipX(flipX);
-        if (game != null) game.sendPacket(Packet.actOtherPlayer(-1, getCurrentAnimationType(), isFlipX(), getCurrentStateType()));
+        if (game != null) game.sendPacket(Packet.actOtherPlayer(-1, getCurrentAnimationType(), isFlipX(), getCurrentStateType(), getCurrentpowerUptype()));
     }
 
     @Override
@@ -118,13 +118,15 @@ public class Player extends PlayerCommon {
 
     public void lossPoints(Integer amount){
         int coins;
+        Integer score = game.getScore();
+        if (score == null) return;
         Random random = new Random();
 
-        if (game.getScore() > amount) {
+        if (score > amount) {
             coins = amount;
-            game.setScore(game.getScore() - coins);
+            game.setScore(score - coins);
         } else {
-            coins = game.getScore();
+            coins = score;
             game.setScore(0);
         }
 

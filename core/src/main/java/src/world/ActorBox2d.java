@@ -32,6 +32,11 @@ public abstract class ActorBox2d extends Actor {
 
     public void detach(){
         body.destroyFixture(fixture);
+        for (int i = 0; i< body.getFixtureList().size; i++){
+            body.destroyFixture(body.getFixtureList().get(i));
+        }
         world.destroyBody(body);
+
+        //System.out.println( this + " liberado del mundo " + fixture + body);
     }
 }
