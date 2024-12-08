@@ -21,7 +21,6 @@ public abstract class Entity extends SpriteActorBox2d {
         CLOUD,
         STAR,
         COIN,
-        BREAKBLOCK,
         PLATFORMXR,
         PLATFORMXL,
         PLATFORMYU,
@@ -31,6 +30,8 @@ public abstract class Entity extends SpriteActorBox2d {
         PLATFORMLU,
         PLATFORMLD,
         FALLBLOCK,
+        BREAKBLOCK,
+        //SWORDBREAKBLOCK,
         //WATERIMPULSE,
         //BOMBBREAKBLOCK,
     }
