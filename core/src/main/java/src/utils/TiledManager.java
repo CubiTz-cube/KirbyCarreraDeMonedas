@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import src.screens.GameScreen;
+import src.utils.constants.ConsoleColor;
 import src.world.entities.Entity;
 import src.world.statics.StaticFactory;
 
@@ -45,7 +46,7 @@ public class TiledManager {
                 game.addStatic(StaticFactory.Type.valueOf(type), new Rectangle(X/tiledSize, Y/tiledSize, W/tiledSize, H/tiledSize));
             }
             catch (IllegalArgumentException e) {
-                System.out.println("Tipo de static " + type + " no encontrado");
+                System.out.println(ConsoleColor.GRAY +  "Tipo de static " + type + " no encontrado" + ConsoleColor.RESET);
             }
 
         }
@@ -60,7 +61,7 @@ public class TiledManager {
             try{
                 game.addEntity(Entity.Type.valueOf(type), new Vector2(X, Y), new Vector2(0,0));
             }catch (IllegalArgumentException e) {
-                System.out.println("Tipo de entidad " + type + " no encontrado");
+                System.out.println(ConsoleColor.GRAY + "Tipo de entidad " + type + " no encontrado" + ConsoleColor.RESET);
             }
         }
     }

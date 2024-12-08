@@ -35,20 +35,20 @@
         },
         "maps/gameMap.tmx": {
             "expandedGroupLayers": [
-                13,
-                8
+                8,
+                13
             ],
             "expandedObjectLayers": [
+                4,
                 9,
                 8,
-                4,
                 7
             ],
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 2356.333333333333,
-                "y": 1570.6666666666665
+                "x": 3399.6666666666665,
+                "y": 2182.6666666666665
             }
         },
         "maps/garden.tsx": {
