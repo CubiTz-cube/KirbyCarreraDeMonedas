@@ -20,7 +20,7 @@ public class Platform extends Floor {
     public void act(float delta) {
 
         Player player = game.getPlayer();
-        boolean playerUnderPlatform = player.getY() < this.getY() + this.getHeight();
+        boolean playerUnderPlatform = player.getY() < this.getY() + this.getHeight() && player.getY() > this.getY() - 2 *this.getHeight();
         boolean playerDown = player.getCurrentStateType() == PlayerCommon.StateType.DOWN;
 
         if (!playerUnderPlatform && playerDown) {
@@ -32,3 +32,4 @@ public class Platform extends Floor {
         }
     }
 }
+
