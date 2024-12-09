@@ -7,26 +7,27 @@ import src.world.entities.enemies.sword.SwordEnemy;
 
 public class AttackStateSword extends StateEnemy<SwordEnemy>
 {
-    public AttackStateSword(SwordEnemy enemy)
-    {
+    public AttackStateSword(SwordEnemy enemy) {
         super(enemy);
     }
 
     @Override
-    public void start()
-    {
+    public void start() {
+        super.start();
+        enemy.setAnimation(SwordEnemy.AnimationType.ATTACK);
+    }
+
+    @Override
+    public void update(Float delta) {
+        
+        if (enemy.getActCrono() > 1) {
+            enemy.setState(Enemy.StateType.IDLE);
+        }
 
     }
 
     @Override
-    public void update(Float delta)
-    {
-
-    }
-
-    @Override
-    public void end()
-    {
+    public void end() {
 
     }
 }
