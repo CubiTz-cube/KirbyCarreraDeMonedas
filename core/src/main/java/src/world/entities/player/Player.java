@@ -173,6 +173,9 @@ public class Player extends PlayerCommon {
                 body.setLinearVelocity(0,0);
                 body.applyLinearImpulse(pushDirection.scl(5f), body.getWorldCenter(), true);
                 body.applyLinearImpulse(0,5f, body.getWorldCenter().x, body.getWorldCenter().y, true);
+                enemy.getBody().setLinearVelocity(0,0);
+                enemy.getBody().applyLinearImpulse(pushDirection.scl(-5f), body.getWorldCenter(), true);
+                enemy.getBody().applyLinearImpulse(0,5f, body.getWorldCenter().x, body.getWorldCenter().y, true);
                 setCurrentState(StateType.FALL);
                 return;
             }
