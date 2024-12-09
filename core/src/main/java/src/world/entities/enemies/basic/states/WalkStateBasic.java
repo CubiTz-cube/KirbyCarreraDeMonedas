@@ -28,7 +28,7 @@ public class WalkStateBasic extends StateEnemy<BasicEnemy> {
         }
 
         if (enemy.getActCrono() > 3) {
-            enemy.setState(SleepingEnemy.StateType.IDLE);
+            enemy.setState(Enemy.StateType.IDLE);
         }
     }
 
