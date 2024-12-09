@@ -17,6 +17,7 @@ import src.world.entities.objects.CoinOdsPoint;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.powers.PowerUp;
+import src.world.entities.player.powers.PowerWheel;
 import src.world.entities.player.states.*;
 import src.world.entities.projectiles.Projectil;
 import src.world.statics.Lava;
@@ -47,6 +48,7 @@ public class Player extends PlayerCommon {
 
         invencibleTime = 0f;
         invencible = false;
+        //setCurrentPowerUp(PowerUp.Type.WHEEL);
     }
 
     private void initStates(){
@@ -112,7 +114,7 @@ public class Player extends PlayerCommon {
         Vector2 velocity = body.getLinearVelocity();
         if (getCurrentStateType() == StateType.DASH || getCurrentStateType() == StateType.STUN) return;
         if (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
-            body.applyForce(-velocity.x * Player.BRAKE_FORCE * delta, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
+            body.applyForce(-velocity.x * brakeForce * delta, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
     }
 

@@ -660,7 +660,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#55ffff" id="5" name="spawn" visible="0">
+ <objectgroup color="#55ffff" id="5" name="spawn">
   <object id="29" name="Espejo" type="MIRROR" x="2880" y="672" width="32" height="32"/>
   <object id="238" name="Espejo" type="MIRROR" x="2144" y="1792" width="32" height="32"/>
   <object id="256" name="Espejo" type="MIRROR" x="3344" y="2000" width="32" height="32"/>
@@ -757,7 +757,7 @@
   <object id="642" name="fallBlock" type="FALLBLOCK" x="1440" y="1936" width="16" height="16"/>
   <object id="643" name="fallBlock" type="FALLBLOCK" x="1456" y="1936" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="7" name="static">
+ <objectgroup id="7" name="static" visible="0">
   <object id="116" name="plataform" type="PLATAFORM" x="2960" y="752" width="48" height="8"/>
   <object id="160" name="Pua" type="SPIKE" x="2032" y="1344" width="16" height="32"/>
   <object id="227" name="plataform" type="PLATAFORM" x="2960" y="816" width="48" height="8"/>
@@ -1107,13 +1107,13 @@
   <object id="700" x="1328" y="1440" width="320" height="16"/>
   <object id="701" x="1392" y="1456" width="208" height="16"/>
  </objectgroup>
- <objectgroup color="#aaff00" id="4" name="playerSpawn" visible="0">
-  <object id="101" name="Jugador" x="1744" y="1152" width="16" height="16"/>
+ <objectgroup color="#aaff00" id="4" name="playerSpawn">
+  <object id="101" name="Jugador" x="1696" y="1184" width="16" height="16"/>
   <object id="131" name="Lobby" type="LOBBY" x="3472" y="1168" width="16" height="16"/>
-  <object id="367" name="Jugador" x="2096" y="1152" width="16" height="16"/>
+  <object id="367" name="Jugador" x="2144" y="1184" width="16" height="16"/>
   <object id="368" name="Jugador" x="2288" y="1280" width="16" height="16"/>
   <object id="369" name="Jugador" x="1568" y="1280" width="16" height="16"/>
-  <object id="370" name="Jugador" x="1856" y="1136" width="16" height="16"/>
-  <object id="371" name="Jugador" x="1984" y="1136" width="16" height="16"/>
+  <object id="370" name="Jugador" x="1776" y="1280" width="16" height="16"/>
+  <object id="371" name="Jugador" x="2080" y="1280" width="16" height="16"/>
  </objectgroup>
 </map>

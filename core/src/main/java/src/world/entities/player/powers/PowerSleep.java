@@ -7,7 +7,7 @@ import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
 
 public class PowerSleep extends PowerUp {
-    private Animation<TextureRegion> powerSleepAnimation ;
+    private final Animation<TextureRegion> powerSleepAnimation ;
 
     public PowerSleep(PlayerCommon player) {
         super(player);
@@ -18,9 +18,15 @@ public class PowerSleep extends PowerUp {
 
     @Override
     public void start() {
+        super.start();
         player.stunTime = 5;
         player.setCurrentState(Player.StateType.STUN);
         player.setAnimation(Player.AnimationType.SLEEP);
+    }
+
+    @Override
+    public void end() {
+
     }
 
     @Override
@@ -35,6 +41,11 @@ public class PowerSleep extends PowerUp {
 
     @Override
     public void actionAir() {
+
+    }
+
+    @Override
+    public void update() {
 
     }
 

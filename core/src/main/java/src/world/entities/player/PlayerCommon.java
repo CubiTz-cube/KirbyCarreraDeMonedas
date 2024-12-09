@@ -27,6 +27,7 @@ public abstract class PlayerCommon extends Entity {
     public float speed = 12;
     public float maxSpeed = 6;
     public float stunTime = DEFAULT_STUNT_TIME;
+    public float brakeForce = DEFAULT_BRAKE_FORCE;
 
     public static final float DEFAULT_STUNT_TIME = 1f;
     public static final float WALK_SPEED = 10f;
@@ -39,7 +40,7 @@ public abstract class PlayerCommon extends Entity {
     public static final float FLY_IMPULSE = 6f;
     public static final float DASH_IMPULSE = 15f;
     public static final float ABSORB_FORCE = 12f;
-    public static final float BRAKE_FORCE = 280f;
+    public static final float DEFAULT_BRAKE_FORCE = 280f;
 
     public enum StateType {
         IDLE,
@@ -251,9 +252,12 @@ public abstract class PlayerCommon extends Entity {
     public void setAnimation(AnimationType animationType){
         currentAnimationType = animationType;
 
-        if (currentPowerUp != null){
+        if (currentPowerUp != null) {
             setSecondCurrentAnimation(currentPowerUp.getSecondAnimation(animationType));
-        }else setSecondCurrentAnimation(null);
+            Animation<TextureRegion> anima = currentPowerUp.getAnimation(animationType);
+            setCurrentAnimation(anima);
+            if (anima != null) return;
+        }
 
         switch (animationType){
             case IDLE -> setCurrentAnimation(idleAnimation);
@@ -279,6 +283,7 @@ public abstract class PlayerCommon extends Entity {
             case ABSORBFALL -> setCurrentAnimation(absorbFallAnimation);
             case ABSORBJUMP -> setCurrentAnimation(absorbJumpAnimation);
         }
+
     }
 
     public AnimationType getCurrentAnimationType() {
@@ -309,6 +314,7 @@ public abstract class PlayerCommon extends Entity {
 
     public void setCurrentPowerUp(PowerUp.Type type){
         currentpowerUptype = type;
+        if (currentPowerUp != null) currentPowerUp.end();
         if (type == null) {
             currentPowerUp = null;
             currentAnimationType = null;
@@ -345,6 +351,7 @@ public abstract class PlayerCommon extends Entity {
     @Override
     public void act(float delta) {
         stateMachine.update(delta);
+        if (currentPowerUp != null) currentPowerUp.update();
     }
 
     public ArrayList<Fixture> detectFrontFixtures(float distance) {

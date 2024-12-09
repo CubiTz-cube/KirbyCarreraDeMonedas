@@ -12,6 +12,11 @@ public class PowerBomb extends PowerUp{
 
     @Override
     public void start() {
+        super.start();
+    }
+
+    @Override
+    public void end() {
 
     }
 
@@ -27,6 +32,11 @@ public class PowerBomb extends PowerUp{
 
     @Override
     public void actionAir() {
+
+    }
+
+    @Override
+    public void update() {
 
     }
 

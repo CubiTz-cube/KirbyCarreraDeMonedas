@@ -15,13 +15,19 @@ public abstract class PowerUp
         this.player = player;
     }
 
-    public abstract void start();
+    public void start() {
+        player.setAnimation(player.getCurrentAnimationType());
+    }
+
+    public abstract void end();
 
     public abstract void actionIdle();
 
     public abstract void actionMove();
 
     public abstract void actionAir();
+
+    public abstract void update();
 
     public abstract Animation<TextureRegion> getAnimation(PlayerCommon.AnimationType type);
 

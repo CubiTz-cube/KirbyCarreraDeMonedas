@@ -11,6 +11,11 @@ public class PowerSword extends PowerUp {
 
     @Override
     public void start() {
+        super.start();
+    }
+
+    @Override
+    public void end() {
 
     }
 
@@ -26,6 +31,11 @@ public class PowerSword extends PowerUp {
 
     @Override
     public void actionAir() {
+
+    }
+
+    @Override
+    public void update() {
 
     }
 
