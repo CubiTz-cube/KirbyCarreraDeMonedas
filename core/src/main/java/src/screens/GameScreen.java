@@ -90,7 +90,7 @@ public class GameScreen extends BaseScreen {
         entities = new HashMap<>();
 
         entityFactory = new EntityFactory(this);
-        staticFactory = new StaticFactory();
+        staticFactory = new StaticFactory(this);
         particleFactory = new ParticleFactory();
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));

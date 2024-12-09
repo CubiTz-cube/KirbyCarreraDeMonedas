@@ -21,7 +21,7 @@ public class MovingPlatform extends Entity implements NoAutoPacketEntity {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(shape.x, shape.y);
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
 
         body = world.createBody(bodyDef);
 
