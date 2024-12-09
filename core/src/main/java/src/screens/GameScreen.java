@@ -469,7 +469,7 @@ public class GameScreen extends BaseScreen {
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
 
         camera.zoom = 1.3f;
-        camera.position.x = MathUtils.lerp(camera.position.x, player.getX(), 0.2f);
+        camera.position.x = MathUtils.lerp(camera.position.x, player.getX() + (player.isFlipX() ? -32 : 32), 0.10f);
         camera.position.y = MathUtils.lerp(camera.position.y, player.getY(), 0.3f);
         camera.update();
         tableUI.setPosition(camera.position.x - tableUI.getWidth()/2, camera.position.y - tableUI.getHeight()/2);

@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import src.utils.constants.PlayerControl;
+import src.world.entities.blocks.Block;
+import src.world.entities.blocks.BreakBlock;
 import src.world.entities.player.Player;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class AbsorbState extends StatePlayer{
 
         for (Fixture fix : fixtures){
             if (fix != null) player.attractFixture(fix, Player.ABSORB_FORCE);
+            assert fix != null;
+            if (fix.getUserData() instanceof BreakBlock block) block.setState(Block.StateType.BREAK);
         }
 
         Vector2 velocity = player.getBody().getLinearVelocity();
