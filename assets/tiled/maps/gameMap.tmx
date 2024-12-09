@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="240" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="916">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="240" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="917">
  <tileset firstgid="1" source="Bosque.tsx"/>
  <tileset firstgid="626" source="temple.tsx"/>
  <tileset firstgid="818" source="crypt.tsx"/>
@@ -761,6 +761,7 @@
   <object id="722" name="breakBlock" type="BREAKBLOCK" x="3136" y="1296" width="16" height="16"/>
   <object id="880" name="Enemigo Espada" type="SWORD" x="976" y="1808" width="16" height="16"/>
   <object id="881" name="Enemigo Espada" type="SWORD" x="2080" y="1808" width="16" height="16"/>
+  <object id="916" name="Enemigo Espada" type="SWORD" x="1639.33" y="1211.33" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="static">
   <object id="116" name="plataform" type="PLATAFORM" x="2960" y="752" width="48" height="8"/>

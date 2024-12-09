@@ -2,16 +2,29 @@ package src.world.entities.enemies.sword.states;
 
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
+import src.world.entities.enemies.sleeping.SleepingEnemy;
 import src.world.entities.enemies.sword.SwordEnemy;
 
-public class IdleStateSword  extends StateEnemy<SwordEnemy> {
+public class IdleStateSword  extends StateEnemy<SwordEnemy>
+{
+
+    private boolean flip = false;
     public IdleStateSword(SwordEnemy enemy) {
         super(enemy);
     }
 
     @Override
     public void update(Float delta) {
-        enemy.setState(Enemy.StateType.WALK);
+        if (enemy.getActCrono() > 1 && !flip) {
+            enemy.setFlipX(!enemy.getSprite().isFlipX());
+            flip = true;
+        }
+        if (enemy.getActCrono() > 2) {
+            enemy.setState(SleepingEnemy.StateType.ATTACK);
+        }
+        else if (enemy.getActCrono() > 3) {
+            enemy.setState(Enemy.StateType.WALK);
+        }
     }
 
     @Override
