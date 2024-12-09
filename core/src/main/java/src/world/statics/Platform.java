@@ -3,14 +3,13 @@ package src.world.statics;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.screens.GameScreen;
-import src.utils.constants.Constants;
 import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
 
 
 public class Platform extends Floor {
 
-    private GameScreen game;
+    private final GameScreen game;
     public Platform(World world, Rectangle shape,GameScreen game) {
         super(world, shape);
         this.game = game;
