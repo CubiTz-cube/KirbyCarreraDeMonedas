@@ -19,7 +19,7 @@ public abstract class CanBasicMoveState extends CanMoveState{
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
             player.doAction();
         }
-        if (Gdx.input.isKeyPressed(PlayerControl.JUMP) && player.getBody().getLinearVelocity().y == 0){
+        if (Gdx.input.isKeyPressed(PlayerControl.JUMP) && player.getBody().getLinearVelocity().y < 0.1 && player.getBody().getLinearVelocity().y > -0.1){
             player.setCurrentState(Player.StateType.JUMP);
         }
         if (Gdx.input.isKeyPressed(PlayerControl.DOWN)){

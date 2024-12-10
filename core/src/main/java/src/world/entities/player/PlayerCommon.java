@@ -36,7 +36,7 @@ public abstract class PlayerCommon extends Entity {
     public static final float RUN_MAX_SPEED = 6.5f;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 9f;
-    public static final float JUMP_INAIR = 16f; // Se multiplica por deltaTime
+    public static final float JUMP_INAIR = 20f; // Se multiplica por deltaTime
     public static final float FLY_IMPULSE = 6f;
     public static final float DASH_IMPULSE = 15f;
     public static final float ABSORB_FORCE = 12f;

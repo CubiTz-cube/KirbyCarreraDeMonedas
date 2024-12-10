@@ -48,8 +48,6 @@ public class Platform extends Floor {
         if (collision) fixture.setFilterData(playerCollisionFilter);
         else fixture.setFilterData(noPlayerCollisionFilter);
         playerCollision = collision;
-        System.out.println(game.threadSecureWorld.getAmountModifications() + " Collision con player: " + collision);
-
     }
 }
 
