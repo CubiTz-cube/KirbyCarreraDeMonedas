@@ -29,16 +29,17 @@ public class Platform extends Floor {
 
     @Override
     public void act(float delta) {
-
         Player player = game.getPlayer();
+
         boolean playerOnPlatform = player.getY() > this.getY() + this.getHeight();
         boolean playerDown = player.getCurrentStateType() == PlayerCommon.StateType.DOWN;
+        boolean playerQuiet = player.getBody().getLinearVelocity().y == 0;
 
-        if (playerOnPlatform && playerDown) {
+        if (playerCollision && playerOnPlatform && playerDown && playerQuiet) {
             game.threadSecureWorld.addModification(() -> setPlayerCollision(false));
         }
 
-        if (playerCollision!= playerOnPlatform){
+        if (playerCollision != playerOnPlatform && (!playerQuiet || !playerDown)){
             game.threadSecureWorld.addModification(() -> setPlayerCollision(playerOnPlatform));
         }
     }
@@ -47,7 +48,8 @@ public class Platform extends Floor {
         if (collision) fixture.setFilterData(playerCollisionFilter);
         else fixture.setFilterData(noPlayerCollisionFilter);
         playerCollision = collision;
-        System.out.println("Collision con player: " + collision);
+        System.out.println(game.threadSecureWorld.getAmountModifications() + " Collision con player: " + collision);
+
     }
 }
 

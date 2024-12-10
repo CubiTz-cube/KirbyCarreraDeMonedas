@@ -28,4 +28,8 @@ public class ThreadSecureWorld {
     public void clearModifications() {
         modificationQueue.clear();
     }
+
+    public Integer getAmountModifications(){
+        return modificationQueue.size();
+    }
 }
