@@ -3,12 +3,29 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "maps/gameMap.tmx",
+    "activeFile": "maps/testMap.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "Todos los archivos (*)",
     "fileStates": {
         "maps/Bosque.tsx": {
+            "scaleInDock": 1
+        },
+        "maps/TestMap.tmx": {
+            "expandedObjectLayers": [
+                4,
+                3,
+                6,
+                2
+            ],
+            "scale": 3,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 653.8333333333333,
+                "y": 545
+            }
+        },
+        "maps/TestMap.tmx#forest": {
             "scaleInDock": 1
         },
         "maps/aventure.tsx": {
@@ -39,16 +56,16 @@
                 13
             ],
             "expandedObjectLayers": [
+                5,
                 4,
-                9,
-                8,
+                6,
                 7
             ],
-            "scale": 1.5,
-            "selectedLayer": 2,
+            "scale": 0.75,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 3399.6666666666665,
-                "y": 2182.6666666666665
+                "x": 2246,
+                "y": 1350.6666666666665
             }
         },
         "maps/garden.tsx": {
@@ -72,15 +89,15 @@
         },
         "maps/mainMap.tmx": {
             "expandedObjectLayers": [
-                6,
                 4,
+                6,
                 3
             ],
             "scale": 0.75,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 480,
-                "y": 319.33333333333326
+                "x": 479.33333333333337,
+                "y": 318.66666666666663
             }
         },
         "maps/mainMap.tmx#forest": {
@@ -90,6 +107,17 @@
             "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "maps/testMap.tmx": {
+            "scale": 0.7708854166666665,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 480.6161745827985,
+                "y": 320.41078305519903
+            }
+        },
+        "maps/testMap.tmx#forest": {
+            "scaleInDock": 1
         },
         "maps/village.tsx": {
             "scaleInDock": 1,
@@ -104,14 +132,16 @@
     "map.tileWidth": 16,
     "map.width": 240,
     "openFiles": [
-        "maps/mainMap.tmx",
-        "maps/gameMap.tmx"
+        "maps/gameMap.tmx",
+        "maps/testMap.tmx"
     ],
     "project": "",
     "property.type": "color",
     "recentFiles": [
-        "maps/mainMap.tmx",
         "maps/gameMap.tmx",
+        "maps/testMap.tmx",
+        "maps/TestMap.tmx",
+        "maps/mainMap.tmx",
         "maps/temple.tsx",
         "maps/backForest.tsx",
         "maps/village.tsx",
@@ -119,8 +149,7 @@
         "maps/dungeon.tsx",
         "maps/cemetery.tsx",
         "maps/aventure.tsx",
-        "maps/crypt.tsx",
-        "maps/kirbyPrueba.tmx"
+        "maps/crypt.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

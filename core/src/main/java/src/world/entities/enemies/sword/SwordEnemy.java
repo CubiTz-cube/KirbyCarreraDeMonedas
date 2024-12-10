@@ -50,8 +50,8 @@ public class SwordEnemy extends Enemy
         body.setFixedRotation(true);
 
         Filter filter = new Filter();
-        filter.categoryBits = ~CollisionFilters.CATEGORY_ENEMY;
-        filter.maskBits = CollisionFilters.MASK_ENEMY;
+        filter.categoryBits = CollisionFilters.ENEMY;
+        filter.maskBits = (short)~CollisionFilters.ENEMY;
         fixture.setFilterData(filter);
 
         idleState = new IdleStateSword(this);

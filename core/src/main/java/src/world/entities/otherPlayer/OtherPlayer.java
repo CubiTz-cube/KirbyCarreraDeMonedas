@@ -22,8 +22,8 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
         this.layout = new GlyphLayout();
 
         Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.CATEGORY_OTHERPLAYER;
-        filter.maskBits = CollisionFilters.MASK_PLAYER;
+        filter.categoryBits = CollisionFilters.OTHERPLAYER;
+        filter.maskBits = (short)~CollisionFilters.PLAYER;
         fixture.setFilterData(filter);
 
         PolygonShape sensorShape = new PolygonShape();

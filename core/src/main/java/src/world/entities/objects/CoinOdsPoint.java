@@ -32,8 +32,8 @@ public class CoinOdsPoint extends Entity {
         body.setFixedRotation(true);
 
         Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.CATEGORY_COIN;
-        filter.maskBits = CollisionFilters.MASK_ENEMY;
+        filter.categoryBits = CollisionFilters.COIN;
+        filter.maskBits = (short)~(CollisionFilters.ENEMY | CollisionFilters.COIN);
         fixture.setFilterData(filter);
 
         /*PolygonShape sensorShape = new PolygonShape();

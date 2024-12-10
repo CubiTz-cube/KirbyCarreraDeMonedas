@@ -2,8 +2,10 @@ package src.world.entities.enemies;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.utils.constants.CollisionFilters;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
 import src.world.entities.player.powers.PowerUp;

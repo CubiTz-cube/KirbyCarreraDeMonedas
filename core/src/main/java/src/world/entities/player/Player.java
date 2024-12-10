@@ -39,8 +39,8 @@ public class Player extends PlayerCommon {
         this.game = game;
 
         Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.CATEGORY_PLAYER;
-        filter.maskBits = ~CollisionFilters.MASK_OTHERPLAYER;
+        filter.categoryBits = CollisionFilters.PLAYER;
+        filter.maskBits = (short)~CollisionFilters.OTHERPLAYER;
         fixture.setFilterData(filter);
 
         initStates();

@@ -35,12 +35,12 @@ public class BasicEnemy extends Enemy {
         box.dispose();
         body.setFixedRotation(true);
 
-        Filter filter = new Filter();
-        filter.categoryBits = ~CollisionFilters.CATEGORY_ENEMY;
-        filter.maskBits = CollisionFilters.MASK_ENEMY;
-        fixture.setFilterData(filter);
-
         setSpritePosModification(0f, getHeight()/4);
+
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionFilters.ENEMY;
+        filter.maskBits = (short)~CollisionFilters.ENEMY;
+        fixture.setFilterData(filter);
 
         idleState = new IdleStateBasic(this);
         walkState = new WalkStateBasic(this);
