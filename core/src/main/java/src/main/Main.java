@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -26,6 +27,7 @@ public class Main extends Game {
     private ArrayList<Screen> screensList;
     private Skin skin;
     private AtomicInteger ids;
+    public Color playerColor;
     public enum Screens {
         INTRO,
         MENU,
@@ -55,6 +57,7 @@ public class Main extends Game {
     public void create() {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         ids = new AtomicInteger(0);
+        playerColor = new Color(1f,0.4f,0.4f,1f);
 
         assetManager = new AssetManager();
         assetManager.load("yoshi.jpg", Texture.class);

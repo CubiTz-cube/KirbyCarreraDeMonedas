@@ -31,12 +31,16 @@ public class Player extends PlayerCommon {
 
     public final GameScreen game;
 
+    private final Color color;
     private Float invencibleTime;
     private Boolean invencible;
 
-    public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game) {
+    public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game, Color color) {
         super(world, shape, assetManager, -1);
         this.game = game;
+        this.color = color;
+
+        setColor(this.color);
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.PLAYER;
@@ -107,7 +111,7 @@ public class Player extends PlayerCommon {
         super.act(delta);
         if (invencibleTime > 0) invencibleTime -= delta;
         else if (invencible){
-            setColor(Color.WHITE);
+            setColor(color);
             invencible = false;
         }
 
@@ -174,8 +178,8 @@ public class Player extends PlayerCommon {
                 body.applyLinearImpulse(pushDirection.scl(5f), body.getWorldCenter(), true);
                 body.applyLinearImpulse(0,5f, body.getWorldCenter().x, body.getWorldCenter().y, true);
                 enemy.getBody().setLinearVelocity(0,0);
-                enemy.getBody().applyLinearImpulse(pushDirection.scl(-5f), body.getWorldCenter(), true);
-                enemy.getBody().applyLinearImpulse(0,5f, body.getWorldCenter().x, body.getWorldCenter().y, true);
+                enemy.getBody().applyLinearImpulse(pushDirection.scl(-2f), body.getWorldCenter(), true);
+                enemy.getBody().applyLinearImpulse(0,2f, body.getWorldCenter().x, body.getWorldCenter().y, true);
                 setCurrentState(StateType.FALL);
                 return;
             }

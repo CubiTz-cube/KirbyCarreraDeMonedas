@@ -176,7 +176,7 @@ public class GameScreen extends BaseScreen {
         int index = random.nextInt(spawnPlayer.size());
         Vector2 position = new Vector2(spawnPlayer.get(index));
 
-        player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), this);
+        player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), this, main.playerColor);
         stage.addActor(player);
 
         if (main.client == null) scorePlayers.put(-1, new ScorePlayer("TU"));
