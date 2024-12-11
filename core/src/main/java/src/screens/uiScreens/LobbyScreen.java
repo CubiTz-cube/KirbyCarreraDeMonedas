@@ -4,17 +4,19 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
+import src.net.PacketListener;
+import src.net.PlayerInfo;
 import src.net.packets.Packet;
 
-public class LobbyScreen extends UIScreen {
+public class LobbyScreen extends UIScreen implements PacketListener {
     private final Table playersTable;
     private Integer numPlayersConnected;
 
-    private Table table;
-    private Label titleLabel;
-    private ScrollPane scrollPane;
-    private TextButton playButton;
-    private TextButton backButton;
+    private final Table table;
+    private final Label titleLabel;
+    private final ScrollPane scrollPane;
+    private final TextButton playButton;
+    private final TextButton backButton;
 
     public LobbyScreen(Main main) {
         super(main);
@@ -63,24 +65,21 @@ public class LobbyScreen extends UIScreen {
             table.row();
         }
         table.add(backButton).width(200).height(50).pad(10);
+        main.client.addListener(this);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        if (numPlayersConnected != main.client.getPlayersConnected().size()) {
-            numPlayersConnected = main.client.getPlayersConnected().size();
-            updatePlayersTable();
-        }
-        if (main.client.gameStart){
-            main.changeScreen(Main.Screens.GAME);
-        }
     }
 
     private void updatePlayersTable() {
         playersTable.clear();
-        for (String player : main.client.getPlayersConnected().values()) {
-            playersTable.add(new Label(player, main.getSkin())).pad(25);
+        for (PlayerInfo player : main.client.getPlayersConnected().values()) {
+            Label nameLabel = new Label(player.getName(), main.getSkin());
+            nameLabel.setColor(player.getColor());
+            System.out.println("Color a la hora de crear la label de "+ player.getName() + " " + player.getColor());
+            playersTable.add(nameLabel).pad(25);
             playersTable.row();
         }
     }
@@ -89,5 +88,16 @@ public class LobbyScreen extends UIScreen {
     public void hide() {
         playersTable.clear();
         table.clear();
+    }
+
+    @Override
+    public void receivedPacket(Packet.Types type) {
+        if (type.equals(Packet.Types.NEWPLAYER) || type.equals(Packet.Types.DISCONNECTPLAYER) || type.equals(Packet.Types.ACTENTITYCOLOR)) {
+            numPlayersConnected = main.client.getPlayersConnected().size();
+            updatePlayersTable();
+        }
+        if (type.equals(Packet.Types.GAMESTART)){
+            main.changeScreen(Main.Screens.GAME);
+        }
     }
 }

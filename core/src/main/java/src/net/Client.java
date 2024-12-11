@@ -2,6 +2,7 @@ package src.net;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.net.Socket;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Client implements Runnable{
@@ -29,7 +31,7 @@ public class Client implements Runnable{
     private final Integer port;
 
     private final String name;
-    private final HashMap<Integer, String> playersConnected;
+    private final HashMap<Integer, PlayerInfo> playersConnected;
     public Boolean gameStart = false;
 
     private Socket socket;
@@ -37,17 +39,21 @@ public class Client implements Runnable{
     private ObjectInputStream in;
     private Boolean running = false;
 
+    private final ArrayList<PacketListener> listeners;
+
     public Client(GameScreen game, String ip, int port, String name){
         this.game = game;
         this.ip = ip;
         this.port = port;
         if (name.isEmpty()) this.name = "Sin nombre";
         else this.name = name;
+
         playersConnected = new HashMap<>();
-        playersConnected.put(-1, name);
+
+        listeners = new ArrayList<>();
     }
 
-    public HashMap<Integer, String> getPlayersConnected() {
+    public HashMap<Integer, PlayerInfo> getPlayersConnected() {
         return this.playersConnected;
     }
 
@@ -75,6 +81,7 @@ public class Client implements Runnable{
         float x,y ,fx, fy;
         boolean flipX;
         send(Packet.connectPlayer(name));
+        send(Packet.actEntityColor(-1, game.main.playerColor.r, game.main.playerColor.g, game.main.playerColor.b, game.main.playerColor.a));
         System.out.println(ConsoleColor.BLUE + "[Client] Conectado a servidor: " + socket.getRemoteAddress() + ConsoleColor.RESET);
         try {
             while (running) {
@@ -84,12 +91,11 @@ public class Client implements Runnable{
                     !type.equals(Packet.Types.ACTOTHERPLAYER) &&
                     !type.equals(Packet.Types.ACTENEMY) &&
                     !type.equals(Packet.Types.ACTBREAKBLOCK)) System.out.println(ConsoleColor.CYAN + "[Client] Recibido: " + type + ConsoleColor.RESET);
-
                 switch (type){
                     case NEWPLAYER:
                         packId = (Integer) pack[1];
                         String name = (String) pack[2];
-                        playersConnected.put(packId, name);
+                        playersConnected.put(packId, new PlayerInfo(name, new Color(Color.WHITE)));
                         game.addActor(new OtherPlayer(game.getWorld(), game.main.getAssetManager(), new Rectangle(0, 10, 1.5f, 1.5f), packId, name));
                         break;
 
@@ -164,15 +170,19 @@ public class Client implements Runnable{
                         float g = (float) pack[3];
                         float b = (float) pack[4];
                         float a = (float) pack[5];
+                        if (playersConnected.containsKey(packId)) playersConnected.get(packId).setColor(r, g, b, a);
+                        if (!gameStart) break;
                         game.actEntityColor(packId, r, g, b, a);
                         break;
 
                     case MESSAGE:
+                        if (!gameStart) break;
                         String packName = (String) pack[1];
                         String message = (String) pack[2];
                         game.addMessage(packName, message);
                         break;
                 }
+                notifyListenersPacket(type);
             }
         } catch (SocketException | EOFException e) {
             Gdx.app.log("Client", "Socket cerrado");
@@ -204,5 +214,15 @@ public class Client implements Runnable{
             Gdx.app.log("Client", "Error al cerrar socket: ", e);
         }
         socket.dispose();
+    }
+
+    public void addListener(PacketListener listener){
+        listeners.add(listener);
+    }
+
+    public void notifyListenersPacket(Packet.Types type){
+        for (PacketListener listener : listeners){
+            listener.receivedPacket(type);
+        }
     }
 }

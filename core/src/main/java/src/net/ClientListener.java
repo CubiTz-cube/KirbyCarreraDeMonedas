@@ -53,7 +53,7 @@ public class ClientListener implements Runnable{
                     switch (type) {
                         case CONNECTPLAYER:
                             name = (String) pack[1];
-                            server.sendAll(Packet.newPlayer(id, name), id);
+                            server.sendAll(Packet.newPlayer(id, name), -1);
                             for (ClientListener u : server.getUsers()) {
                                 if (u.id.equals(id)) continue;
                                 send(Packet.newPlayer(u.id, u.name));
@@ -126,7 +126,7 @@ public class ClientListener implements Runnable{
                             float g = (float) pack[3];
                             float b = (float) pack[4];
                             float a = (float) pack[5];
-                            if (packId == -1) server.sendAll(Packet.actEntityColor(id, r, g, b, a), id);
+                            if (packId == -1) server.sendAll(Packet.actEntityColor(id, r, g, b, a), -1);
                             else server.sendAll(Packet.actEntityColor(packId, r, g, b, a), id);
                             break;
 
@@ -182,7 +182,7 @@ public class ClientListener implements Runnable{
         try {
             out.writeObject(data);
         } catch (IOException e) {
-            System.out.println("USER Falla al enviar mensaje: " + e.getMessage());
+            System.out.println("[USER] Falla al enviar mensaje: " + e.getMessage());
         }
     }
 }
