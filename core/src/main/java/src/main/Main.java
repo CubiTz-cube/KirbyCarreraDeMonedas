@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -116,6 +117,8 @@ public class Main extends Game {
         assetManager.load("odsPng/ods (15).png", Texture.class);
         assetManager.load("odsPng/ods (16).png", Texture.class);
         assetManager.load("odsPng/ods (17).png", Texture.class);
+
+        assetManager.load("sound/kirbyAirShot.wav", Sound.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
@@ -135,7 +138,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MULTIPLAYER);
+        changeScreen(Screens.INTRO);
     }
 
     public void setName(String name) {

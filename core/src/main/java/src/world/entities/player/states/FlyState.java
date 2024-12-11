@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import src.utils.constants.PlayerControl;
 import src.world.entities.Entity;
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class FlyState extends CanMoveState{
     Float time = 0f;
@@ -42,6 +43,7 @@ public class FlyState extends CanMoveState{
             if (player.getCurrentAnimationType() != Player.AnimationType.FLYEND) {
                 player.setAnimation(Player.AnimationType.FLYEND);
                 player.throwEntity(Entity.Type.CLOUD, 1.5f);
+                player.playSound(PlayerCommon.soundType.AIRSHOT);
             }
         }
 

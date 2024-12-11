@@ -1,6 +1,7 @@
 package src.world.entities.player;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,6 +21,7 @@ import src.world.entities.player.powers.*;
 import src.world.entities.player.states.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static src.utils.constants.Constants.PIXELS_IN_METER;
 
@@ -41,6 +43,8 @@ public abstract class PlayerCommon extends Entity {
     public static final float DASH_IMPULSE = 15f;
     public static final float ABSORB_FORCE = 12f;
     public static final float DEFAULT_BRAKE_FORCE = 280f;
+
+    public AssetManager assetManager;
 
     public enum StateType {
         IDLE,
@@ -131,7 +135,11 @@ public abstract class PlayerCommon extends Entity {
     private PowerBomb powerBomb;
     private PowerWheel powerWheel;
 
-    public AssetManager assetManager;
+    public enum soundType{
+        AIRSHOT,
+    }
+    private Random random;
+    private Sound airShot;
 
     public PlayerCommon(World world, Rectangle shape, AssetManager assetManager, Integer id) {
         super(world, shape, assetManager, id, null);
@@ -153,12 +161,15 @@ public abstract class PlayerCommon extends Entity {
         setSpritePosModification(0f, getHeight()/4);
 
         initAnimations(assetManager);
-        setAnimation(AnimationType.IDLE);
-
         initPowers();
+        initSound();
+
+        setAnimation(AnimationType.IDLE);
 
         secondSprite = new Sprite();
         secondSprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
+
+        random = new Random();
     }
 
     private void initPowers(){
@@ -243,6 +254,10 @@ public abstract class PlayerCommon extends Entity {
 
         absorbJumpAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbJump.png"), 4));
+    }
+
+    private void initSound(){
+        airShot = assetManager.get("sound/kirbyAirShot.wav");
     }
 
     public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
@@ -335,6 +350,12 @@ public abstract class PlayerCommon extends Entity {
 
     public PowerUp.Type getCurrentpowerUptype() {
         return currentpowerUptype;
+    }
+
+    public void playSound(soundType type){
+        switch (type){
+            case AIRSHOT -> airShot.play(0.8f, 0.9f,0);
+        }
     }
 
     @Override
