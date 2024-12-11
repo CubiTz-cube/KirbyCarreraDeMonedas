@@ -17,12 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
-import src.utils.SecondsTimer;
-import src.utils.SpawnManager;
+import src.utils.*;
 import src.utils.borderIndicator.MirrorIndicatorManager;
 import src.utils.constants.ConsoleColor;
-import src.utils.ThreadSecureWorld;
-import src.utils.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
@@ -82,7 +79,9 @@ public class GameScreen extends BaseScreen {
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
 
-    private Box2DDebugRenderer debugRenderer;
+    private final Box2DDebugRenderer debugRenderer;
+
+    private final CameraShakeManager cameraShakeManager;
 
     public GameScreen(Main main){
         super(main);
@@ -111,6 +110,8 @@ public class GameScreen extends BaseScreen {
         spawnPlayer = new ArrayList<>();
 
         debugRenderer = new Box2DDebugRenderer();
+
+        cameraShakeManager = new CameraShakeManager((OrthographicCamera) stage.getCamera());
     }
 
     private void initUI(){
@@ -471,6 +472,7 @@ public class GameScreen extends BaseScreen {
         camera.zoom = 1.3f;
         camera.position.x = MathUtils.lerp(camera.position.x, player.getX() + (player.isFlipX() ? -32 : 32), 0.10f);
         camera.position.y = MathUtils.lerp(camera.position.y, player.getY(), 0.3f);
+        cameraShakeManager.update(delta);
         camera.update();
         tableUI.setPosition(camera.position.x - tableUI.getWidth()/2, camera.position.y - tableUI.getHeight()/2);
         tiledRenderer.setView(camera);
@@ -506,6 +508,10 @@ public class GameScreen extends BaseScreen {
 
     public void sendPacket(Object[] packet) {
         if (main.client != null) main.client.send(packet);
+    }
+
+    public void addCameraShake(Float time, Float force){
+        cameraShakeManager.addShake(time,force);
     }
 
     @Override

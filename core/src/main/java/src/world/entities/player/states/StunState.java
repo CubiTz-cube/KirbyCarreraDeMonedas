@@ -13,6 +13,7 @@ public class StunState extends StatePlayer{
     public void start() {
         time = 0f;
         player.setAnimation(Player.AnimationType.DAMAGE);
+        player.game.addCameraShake(0.2f, 10f);
     }
 
     @Override

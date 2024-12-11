@@ -5,11 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import src.utils.constants.PlayerControl;
 import src.world.entities.player.Player;
 
-public class FallState extends CanMoveState
-{
+public class FallState extends CanMoveState {
+    private Float fallForce;
 
     public FallState(Player player) {
         super(player);
+        fallForce = 0f;
     }
 
     @Override
@@ -27,6 +28,7 @@ public class FallState extends CanMoveState
         }
 
         Vector2 velocity = player.getBody().getLinearVelocity();
+        fallForce = Math.max(fallForce, Math.abs(velocity.y));
         if (velocity.y == 0){
             if (velocity.x == 0)  player.setCurrentState(Player.StateType.IDLE);
             else player.setCurrentState(Player.StateType.WALK);
@@ -37,6 +39,12 @@ public class FallState extends CanMoveState
     }
 
     @Override
-    public void end()
-    {}
+    public void end() {
+        float resultFallForce = fallForce / 2;
+        if (resultFallForce > 14f) {
+            System.out.println("Fall force: " + resultFallForce);
+            player.game.addCameraShake(0.1f, resultFallForce);
+        }
+        fallForce = 0f;
+    }
 }
