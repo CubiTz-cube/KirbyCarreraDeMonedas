@@ -24,6 +24,7 @@ import java.io.ObjectOutputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Client implements Runnable{
     private final GameScreen game;
@@ -31,7 +32,7 @@ public class Client implements Runnable{
     private final Integer port;
 
     private final String name;
-    private final HashMap<Integer, PlayerInfo> playersConnected;
+    private final ConcurrentHashMap<Integer, PlayerInfo> playersConnected;
     public Boolean gameStart = false;
 
     private Socket socket;
@@ -48,12 +49,12 @@ public class Client implements Runnable{
         if (name.isEmpty()) this.name = "Sin nombre";
         else this.name = name;
 
-        playersConnected = new HashMap<>();
+        playersConnected = new ConcurrentHashMap<>();
         playersConnected.put(-1, new PlayerInfo(this.name, game.main.playerColor));
         listeners = new ArrayList<>();
     }
 
-    public HashMap<Integer, PlayerInfo> getPlayersConnected() {
+    public ConcurrentHashMap<Integer, PlayerInfo> getPlayersConnected() {
         return this.playersConnected;
     }
 
@@ -97,6 +98,7 @@ public class Client implements Runnable{
                         String name = (String) pack[2];
                         playersConnected.put(packId, new PlayerInfo(name, new Color(Color.WHITE)));
                         game.addActor(new OtherPlayer(game.getWorld(), game.main.getAssetManager(), new Rectangle(0, 10, 1.5f, 1.5f), packId, name));
+                        send(Packet.actEntityColor(-1, game.main.playerColor.r, game.main.playerColor.g, game.main.playerColor.b, game.main.playerColor.a));
                         break;
 
                     case DISCONNECTPLAYER:

@@ -9,7 +9,7 @@ import src.main.Main;
 import src.net.PacketListener;
 import src.net.PlayerInfo;
 import src.net.packets.Packet;
-import src.utils.ColorField;
+import src.screens.components.ColorField;
 
 public class LobbyScreen extends UIScreen implements PacketListener {
     private final Table playersTable;

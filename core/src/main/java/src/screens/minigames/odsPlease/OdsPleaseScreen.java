@@ -11,7 +11,7 @@ import src.main.Main;
 import src.screens.GameScreen;
 import src.screens.minigames.MinigameScreen;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import src.utils.SpriteActor;
+import src.screens.components.SpriteAsActor;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -27,7 +27,7 @@ public class OdsPleaseScreen extends MinigameScreen {
     private final ArrayList<Texture> odsTextures;
     private final ArrayList<Texture> wrongOdsTextures;
 
-    private final SpriteActor odsImage;
+    private final SpriteAsActor odsImage;
     private final Label countLabel;
 
     private Boolean odsReal;
@@ -70,7 +70,7 @@ public class OdsPleaseScreen extends MinigameScreen {
         timeMinigameLabel.setFontScale(2);
         timeMinigameLabel.setColor(Color.BLACK);
 
-        odsImage = new SpriteActor(main.getAssetManager().get("poshi.jpg", Texture.class));
+        odsImage = new SpriteAsActor(main.getAssetManager().get("poshi.jpg", Texture.class));
         Image backgroundImage = new Image(main.getAssetManager().get("miniGames/odsPlease/Desk.png", Texture.class));
         Image background2Image = new Image(main.getAssetManager().get("miniGames/odsPlease/CheckpointBack.png", Texture.class));
 

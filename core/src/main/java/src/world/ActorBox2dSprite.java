@@ -13,14 +13,14 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import static src.utils.constants.Constants.PIXELS_IN_METER;
 
-public abstract class SpriteActorBox2d extends ActorBox2d{
+public abstract class ActorBox2dSprite extends ActorBox2d{
     protected Sprite sprite;
     private Float animateTime;
     private Animation<TextureRegion> currentAnimation;
     private Boolean flipX;
     private final Vector2 spritePosModification;
 
-    public SpriteActorBox2d(World world, Rectangle shape, AssetManager assetManager) {
+    public ActorBox2dSprite(World world, Rectangle shape, AssetManager assetManager) {
         super(world, shape);
         animateTime = 0f;
         flipX = false;

@@ -1,16 +1,17 @@
-package src.utils.borderIndicator;
+package src.utils.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import src.utils.BorderIndicator;
 
 import java.util.HashMap;
 
 public class MirrorIndicatorManager extends Actor {
     private final Texture texture;
-    private final HashMap<Integer,BorderIndicator> borderIndicators;
+    private final HashMap<Integer, BorderIndicator> borderIndicators;
 
     public MirrorIndicatorManager(Texture texture) {
         this.texture = texture;

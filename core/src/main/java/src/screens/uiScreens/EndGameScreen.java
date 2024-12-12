@@ -1,15 +1,13 @@
 package src.screens.uiScreens;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
 import src.screens.GameScreen;
-import src.screens.ScorePlayer;
+import src.utils.ScorePlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;

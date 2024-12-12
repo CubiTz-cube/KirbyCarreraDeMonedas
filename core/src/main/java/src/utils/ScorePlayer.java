@@ -1,4 +1,4 @@
-package src.screens;
+package src.utils;
 
 public class ScorePlayer implements Comparable<ScorePlayer> {
     public String name;

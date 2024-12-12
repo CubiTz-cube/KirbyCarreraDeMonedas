@@ -1,4 +1,4 @@
-package src.utils.borderIndicator;
+package src.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

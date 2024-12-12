@@ -17,9 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
+import src.screens.components.ChatWidget;
 import src.utils.*;
-import src.utils.borderIndicator.MirrorIndicatorManager;
+import src.utils.managers.MirrorIndicatorManager;
 import src.utils.constants.ConsoleColor;
+import src.utils.managers.CameraShakeManager;
+import src.utils.managers.SpawnManager;
+import src.utils.managers.TiledManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
@@ -73,6 +77,7 @@ public class GameScreen extends BaseScreen {
     public ArrayList<Vector2> spawnPlayer;
 
     // UI
+    private final CameraShakeManager cameraShakeManager;
     private MirrorIndicatorManager mirrorIndicators;
     private Table tableUI;
     private Label odsPointsLabel;
@@ -81,7 +86,6 @@ public class GameScreen extends BaseScreen {
 
     private final Box2DDebugRenderer debugRenderer;
 
-    private final CameraShakeManager cameraShakeManager;
 
     public GameScreen(Main main){
         super(main);

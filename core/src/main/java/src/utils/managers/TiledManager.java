@@ -1,4 +1,4 @@
-package src.utils;
+package src.utils.managers;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -12,7 +12,6 @@ import src.utils.constants.ConsoleColor;
 import src.world.entities.Entity;
 import src.world.statics.StaticFactory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static src.utils.constants.Constants.PIXELS_IN_METER;

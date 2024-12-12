@@ -1,14 +1,14 @@
-package src.utils;
+package src.screens.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class SpriteActor extends Actor {
+public class SpriteAsActor extends Actor {
     private final Sprite sprite;
 
-    public SpriteActor(Texture texture) {
+    public SpriteAsActor(Texture texture) {
         sprite = new Sprite(texture);
         setSize(sprite.getWidth(), sprite.getHeight());
     }

@@ -1,4 +1,4 @@
-package src.utils;
+package src.utils.managers;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
