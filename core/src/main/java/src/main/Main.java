@@ -118,6 +118,10 @@ public class Main extends Game {
         assetManager.load("miniGames/odsPlease/odsPng/ods (16).png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (17).png", Texture.class);
         assetManager.load("miniGames/odsPlease/BoothWall.png", Texture.class);
+        assetManager.load("miniGames/odsPlease/persons/persons1.png", Texture.class);
+        assetManager.load("miniGames/odsPlease/persons/persons2.png", Texture.class);
+        assetManager.load("miniGames/odsPlease/persons/persons3.png", Texture.class);
+        assetManager.load("miniGames/odsPlease/persons/persons4.png", Texture.class);
 
         assetManager.load("sound/kirbyAirShot.wav", Sound.class);
         System.out.println("Loading assets...");

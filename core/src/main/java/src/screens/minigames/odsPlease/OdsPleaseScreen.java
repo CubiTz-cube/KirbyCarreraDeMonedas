@@ -2,6 +2,7 @@ package src.screens.minigames.odsPlease;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -12,8 +13,10 @@ import src.screens.GameScreen;
 import src.screens.minigames.MinigameScreen;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import src.screens.components.SpriteAsActor;
+import src.utils.animation.SheetCutter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class OdsPleaseScreen extends MinigameScreen {
@@ -22,13 +25,14 @@ public class OdsPleaseScreen extends MinigameScreen {
     private final Table layer1Table;
     private final Table layer2Table;
     private final Table layer3Table;
+    private final Table layer4Table;
 
     private final Random random;
 
     private final ArrayList<Texture> odsTextures;
     private final ArrayList<Texture> wrongOdsTextures;
+    private final ArrayList<TextureRegion> personsTextures;
 
-    private SpriteAsActor odsImage;
     private Label countLabel;
 
     private Boolean odsReal;
@@ -42,36 +46,49 @@ public class OdsPleaseScreen extends MinigameScreen {
     private TextButton passButton;
     private TextButton denyButton;
 
+    private SpriteAsActor odsImage;
+    private SpriteAsActor personImage;
+
     public OdsPleaseScreen(Main main, GameScreen game) {
         super(main, game);
         layer1Table = new Table();
         layer2Table = new Table();
         layer3Table = new Table();
+        layer4Table = new Table();
         random = new Random();
         odsTextures = new ArrayList<>();
         wrongOdsTextures = new ArrayList<>();
+        personsTextures = new ArrayList<>();
         countGood = 0;
         countBad = 0;
 
-        initOds();
+        initSprites();
 
         initUIComponents();
 
+        stageUI.addActor(layer4Table);
         stageUI.addActor(layer3Table);
         stageUI.addActor(layer2Table);
         stageUI.addActor(layer1Table);
+
+        layer4Table.add().expand(1,1).fill(1,1);
+        layer4Table.row();
+        layer4Table.add(deskBackImage).grow();
+        layer4Table.add().expand(3,1).fill(3,1);
+        layer4Table.row();
+        layer4Table.add().expand(1,1).fill(1,1);
+
+        layer3Table.add().expand(1,3).fill(1,3);
+        layer3Table.row();
+        layer3Table.add(personImage).grow();
+        layer3Table.add().expand(6,1).fill(6,1);
+        layer3Table.row();
+        layer3Table.add().expand(1,3).fill(1,3);
 
         layer2Table.add(backgroundImage).expand(1,1).fill(1,1);
         layer2Table.row();
         layer2Table.add(deskImage).expand(1,2).fill(1,1);
         backgroundImage.toBack();
-
-        layer3Table.add().expand(1,1).fill(1,1);
-        layer3Table.row();
-        layer3Table.add(deskBackImage).grow();
-        layer3Table.add().expand(3,1).fill(3,1);
-        layer3Table.row();
-        layer3Table.add().expand(1,1).fill(1,1);
 
         layer1Table.top().add(timeMinigameLabel).colspan(2);
         layer1Table.add(countLabel).colspan(2);
@@ -80,11 +97,9 @@ public class OdsPleaseScreen extends MinigameScreen {
         layer1Table.row();
         layer1Table.add(denyButton).width(256).height(128).colspan(1).padLeft(200);
         layer1Table.add(passButton).width(256).height(128).colspan(1);
-
-        layer2Table.debugAll();
     }
 
-    private void initOds(){
+    private void initSprites(){
         odsTextures.add(main.getAssetManager().get("miniGames/odsPlease/odsPng/ods (1).png", Texture.class));
         odsTextures.add(main.getAssetManager().get("miniGames/odsPlease/odsPng/ods (2).png", Texture.class));
         odsTextures.add(main.getAssetManager().get("miniGames/odsPlease/odsPng/ods (3).png", Texture.class));
@@ -104,17 +119,25 @@ public class OdsPleaseScreen extends MinigameScreen {
         odsTextures.add(main.getAssetManager().get("miniGames/odsPlease/odsPng/ods (17).png", Texture.class));
 
         wrongOdsTextures.add(main.getAssetManager().get("poshi.jpg", Texture.class));
+
+        personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons1.png", Texture.class), 2, 2)));
+        personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons2.png", Texture.class), 2, 2)));
+        personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons3.png", Texture.class), 2, 2)));
+        personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons4.png", Texture.class), 2, 2)));
     }
 
     private void initUIComponents(){
         layer1Table.setFillParent(true);
         layer2Table.setFillParent(true);
         layer3Table.setFillParent(true);
+        layer4Table.setFillParent(true);
 
         timeMinigameLabel.setFontScale(2);
         timeMinigameLabel.setColor(Color.BLACK);
 
         odsImage = new SpriteAsActor(main.getAssetManager().get("poshi.jpg", Texture.class));
+        personImage = new SpriteAsActor(main.getAssetManager().get("poshi.jpg", Texture.class));
+        personImage.setSize(256,256);
 
         deskImage = new Image(main.getAssetManager().get("miniGames/odsPlease/Desk.png", Texture.class));
         backgroundImage = new Image(main.getAssetManager().get("miniGames/odsPlease/CheckpointBack.png", Texture.class));
@@ -144,12 +167,14 @@ public class OdsPleaseScreen extends MinigameScreen {
         if (!odsReal) countGood++;
         else countBad++;
         changeOdsImage();
+        changePersonImage();
     }
 
     private void denyButton() {
         if (odsReal) countGood++;
         else countBad++;
         changeOdsImage();
+        changePersonImage();
     }
 
     private void changeOdsImage() {
@@ -168,6 +193,10 @@ public class OdsPleaseScreen extends MinigameScreen {
         odsReal = select;
     }
 
+    private void changePersonImage() {
+        personImage.setTextureRegion(personsTextures.get(random.nextInt(personsTextures.size())));
+    }
+
     @Override
     public void show() {
         super.show();
@@ -175,6 +204,7 @@ public class OdsPleaseScreen extends MinigameScreen {
         countGood = 0;
         countBad = 0;
         changeOdsImage();
+        changePersonImage();
     }
 
     private void setVisibleAll(boolean visible) {
