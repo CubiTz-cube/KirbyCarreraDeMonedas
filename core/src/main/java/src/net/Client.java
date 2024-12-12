@@ -49,7 +49,7 @@ public class Client implements Runnable{
         else this.name = name;
 
         playersConnected = new HashMap<>();
-
+        playersConnected.put(-1, new PlayerInfo(this.name, game.main.playerColor));
         listeners = new ArrayList<>();
     }
 
@@ -131,7 +131,6 @@ public class Client implements Runnable{
                         y = (Float) pack[3];
                         fx = (Float) pack[4];
                         fy = (Float) pack[5];
-                        //System.out.println("Actualizar " + packId + " en " + x+ ", "+ y + " FX: " + fx + " | FY" + fy);
                         game.actEntityPos(packId, x, y, fx, fy);
                         break;
 
@@ -198,6 +197,7 @@ public class Client implements Runnable{
     public void send(Object[] data){
         if (!running) return;
         try {
+            //System.out.println(ConsoleColor.GREEN + "[Client] Enviado: " + data[0] + ConsoleColor.RESET);
             out.writeObject(data);
         }catch (IOException e){
             Gdx.app.log("Client", "Error al enviar mensaje", e);

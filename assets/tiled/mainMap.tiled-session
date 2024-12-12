@@ -56,10 +56,10 @@
                 13
             ],
             "expandedObjectLayers": [
+                5,
                 7,
-                4,
                 6,
-                5
+                4
             ],
             "scale": 1,
             "selectedLayer": 5,
@@ -110,14 +110,14 @@
         },
         "maps/testMap.tmx": {
             "expandedObjectLayers": [
-                4,
-                2
+                2,
+                4
             ],
             "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 673.5,
-                "y": 522.6666666666666
+                "x": 480,
+                "y": 320.16666666666663
             }
         },
         "maps/testMap.tmx#forest": {

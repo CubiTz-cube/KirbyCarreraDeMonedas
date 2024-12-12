@@ -112,12 +112,12 @@ public class GameScreen extends BaseScreen {
         debugRenderer = new Box2DDebugRenderer();
 
         cameraShakeManager = new CameraShakeManager((OrthographicCamera) stage.getCamera());
+        initUI();
     }
 
     private void initUI(){
         tableUI = new Table();
         tableUI.setFillParent(true);
-        stage.addActor(tableUI);
 
         odsPointsLabel = new Label("ODS POINTS\n"+0,main.getSkin());
         odsPointsLabel.setAlignment(Align.topRight);
@@ -130,8 +130,11 @@ public class GameScreen extends BaseScreen {
         chatWidget = new ChatWidget(main.getSkin());
 
         mirrorIndicators = new MirrorIndicatorManager(main.getAssetManager().get("yoshi.jpg", Texture.class));
-        stage.addActor(mirrorIndicators);
+    }
 
+    private void initStageUI(){
+        stage.addActor(tableUI);
+        stage.addActor(mirrorIndicators);
         tableUI.top();
         tableUI.add(gameTimeLabel);
         tableUI.add().expandX();
@@ -409,11 +412,10 @@ public class GameScreen extends BaseScreen {
         }else{
             tiledManager.makeMap();
             addMainPlayer();
-            initUI();
+            initStageUI();
             setScore(3);
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
-
                 addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
             }
         }
@@ -466,9 +468,9 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if (player == null) return;
 
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
-
         camera.zoom = 1.3f;
         camera.position.x = MathUtils.lerp(camera.position.x, player.getX() + (player.isFlipX() ? -32 : 32), 0.10f);
         camera.position.y = MathUtils.lerp(camera.position.y, player.getY(), 0.3f);
@@ -506,7 +508,7 @@ public class GameScreen extends BaseScreen {
         mirrorIndicators.changeTargetPosition(id ,position);
     }
 
-    public void sendPacket(Object[] packet) {
+    public synchronized void sendPacket(Object[] packet) {
         if (main.client != null) main.client.send(packet);
     }
 

@@ -53,7 +53,7 @@ public class ClientListener implements Runnable{
                     switch (type) {
                         case CONNECTPLAYER:
                             name = (String) pack[1];
-                            server.sendAll(Packet.newPlayer(id, name), -1);
+                            server.sendAll(Packet.newPlayer(id, name), id);
                             for (ClientListener u : server.getUsers()) {
                                 if (u.id.equals(id)) continue;
                                 send(Packet.newPlayer(u.id, u.name));

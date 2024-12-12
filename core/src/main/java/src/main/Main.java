@@ -58,7 +58,7 @@ public class Main extends Game {
     public void create() {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         ids = new AtomicInteger(0);
-        playerColor = new Color(1f,0.4f,0.4f,1f);
+        playerColor = new Color(Color.WHITE);
 
         assetManager = new AssetManager();
         assetManager.load("yoshi.jpg", Texture.class);

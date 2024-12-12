@@ -12,6 +12,9 @@ import src.utils.constants.ConsoleColor;
 import src.world.entities.Entity;
 import src.world.statics.StaticFactory;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static src.utils.constants.Constants.PIXELS_IN_METER;
 
 public class TiledManager {
@@ -53,7 +56,11 @@ public class TiledManager {
     }
 
     public void parsedEntityMap(MapObjects objects) {
+        ArrayList<MapObject> objectArray = new ArrayList<>();
         for (MapObject object : objects) {
+            objectArray.add(object);
+        }
+        for (MapObject object : objectArray) {
             String type = object.getProperties().get("type", String.class);
             float X = object.getProperties().get("x", Float.class) / tiledSize;
             float Y = object.getProperties().get("y", Float.class )/ tiledSize;
