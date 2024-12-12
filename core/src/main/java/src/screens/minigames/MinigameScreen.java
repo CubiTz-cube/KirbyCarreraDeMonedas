@@ -61,7 +61,7 @@ public abstract class MinigameScreen extends UIScreen {
     public void show() {
         super.show();
         timeStart = 0f;
-        timeGame = 15f;
+        timeGame = 150f;
         gameStarted = false;
         frontTable.setVisible(true);
         backTable.setVisible(true);

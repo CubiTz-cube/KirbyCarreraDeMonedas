@@ -100,23 +100,24 @@ public class Main extends Game {
         assetManager.load("world/particles/dustParticle.png", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
-        assetManager.load("odsPng/ods (1).png", Texture.class);
-        assetManager.load("odsPng/ods (2).png", Texture.class);
-        assetManager.load("odsPng/ods (3).png", Texture.class);
-        assetManager.load("odsPng/ods (4).png", Texture.class);
-        assetManager.load("odsPng/ods (5).png", Texture.class);
-        assetManager.load("odsPng/ods (6).png", Texture.class);
-        assetManager.load("odsPng/ods (7).png", Texture.class);
-        assetManager.load("odsPng/ods (8).png", Texture.class);
-        assetManager.load("odsPng/ods (9).png", Texture.class);
-        assetManager.load("odsPng/ods (10).png", Texture.class);
-        assetManager.load("odsPng/ods (11).png", Texture.class);
-        assetManager.load("odsPng/ods (12).png", Texture.class);
-        assetManager.load("odsPng/ods (13).png", Texture.class);
-        assetManager.load("odsPng/ods (14).png", Texture.class);
-        assetManager.load("odsPng/ods (15).png", Texture.class);
-        assetManager.load("odsPng/ods (16).png", Texture.class);
-        assetManager.load("odsPng/ods (17).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (1).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (2).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (3).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (4).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (5).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (6).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (7).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (8).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (9).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (10).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (11).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (12).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (13).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (14).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (15).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (16).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/odsPng/ods (17).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/BoothWall.png", Texture.class);
 
         assetManager.load("sound/kirbyAirShot.wav", Sound.class);
         System.out.println("Loading assets...");
@@ -138,7 +139,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.INTRO);
+        changeScreen(Screens.MINIODSPLEASE);
     }
 
     public void setName(String name) {
