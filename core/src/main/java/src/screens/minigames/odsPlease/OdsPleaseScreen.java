@@ -118,7 +118,7 @@ public class OdsPleaseScreen extends MinigameScreen {
         odsTextures.add(main.getAssetManager().get("miniGames/odsPlease/odsPng/ods (16).png", Texture.class));
         odsTextures.add(main.getAssetManager().get("miniGames/odsPlease/odsPng/ods (17).png", Texture.class));
 
-        wrongOdsTextures.add(main.getAssetManager().get("poshi.jpg", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (1).png", Texture.class));
 
         personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons1.png", Texture.class), 2, 2)));
         personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons2.png", Texture.class), 2, 2)));

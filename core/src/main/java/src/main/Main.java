@@ -117,6 +117,7 @@ public class Main extends Game {
         assetManager.load("miniGames/odsPlease/odsPng/ods (15).png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (16).png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (17).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (1).png", Texture.class);
         assetManager.load("miniGames/odsPlease/BoothWall.png", Texture.class);
         assetManager.load("miniGames/odsPlease/persons/persons1.png", Texture.class);
         assetManager.load("miniGames/odsPlease/persons/persons2.png", Texture.class);
@@ -143,7 +144,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MINIODSPLEASE);
+        changeScreen(Screens.INTRO);
     }
 
     public void setName(String name) {
