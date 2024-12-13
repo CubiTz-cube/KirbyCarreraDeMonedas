@@ -92,7 +92,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         for (PlayerInfo player : main.client.getPlayersConnected().values()) {
             Label nameLabel = new Label(player.getName(), main.getSkin());
             nameLabel.setColor(player.getColor());
-            System.out.println("Color a la hora de crear la label de "+ player.getName() + " " + player.getColor());
+            //System.out.println("Color a la hora de crear la label de "+ player.getName() + " " + player.getColor());
             playersTable.add(nameLabel).pad(25);
             playersTable.row();
         }

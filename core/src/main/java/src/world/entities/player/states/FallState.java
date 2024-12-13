@@ -42,7 +42,6 @@ public class FallState extends CanMoveState {
     public void end() {
         float resultFallForce = fallForce / 2;
         if (resultFallForce > 14f) {
-            System.out.println("Fall force: " + resultFallForce);
             player.game.addCameraShake(0.1f, resultFallForce);
         }
         fallForce = 0f;

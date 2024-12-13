@@ -30,6 +30,7 @@ public class SpawnManager {
 
         Vector2 newTakenSpawnPoint = new Vector2(spawnPoints.remove(random.nextInt(spawnPoints.size())));
         takenSpawnPoints.put(id, new Vector2(newTakenSpawnPoint));
+        System.out.println("Taken spawn point: " + newTakenSpawnPoint);
         return newTakenSpawnPoint;
     }
 
@@ -43,9 +44,14 @@ public class SpawnManager {
     }
 
     public Vector2 reSpawn(int id){
-        Vector2 lastSpawnPoint = new Vector2(takenSpawnPoints.remove(id));
+        System.out.println("Re-spawning id: " + id);
+        boolean contain = takenSpawnPoints.containsKey(id);
+
+        Vector2 lastSpawnPoint = null;
+        if (contain) lastSpawnPoint = new Vector2(takenSpawnPoints.remove(id));
+
         Vector2 newSpawnPoint = takeSpawnPoint(id);
-        add(lastSpawnPoint);
+        if (contain) add(lastSpawnPoint);
         return newSpawnPoint;
     }
 

@@ -52,20 +52,20 @@
         },
         "maps/gameMap.tmx": {
             "expandedGroupLayers": [
-                8,
-                13
+                13,
+                8
             ],
             "expandedObjectLayers": [
+                6,
                 5,
                 7,
-                6,
                 4
             ],
-            "scale": 1,
-            "selectedLayer": 5,
+            "scale": 0.5,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 1920.5,
-                "y": 1385
+                "x": 3405,
+                "y": 1760
             }
         },
         "maps/garden.tsx": {
@@ -113,11 +113,11 @@
                 2,
                 4
             ],
-            "scale": 3,
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 480,
-                "y": 320.16666666666663
+                "x": 448.5,
+                "y": 530
             }
         },
         "maps/testMap.tmx#forest": {

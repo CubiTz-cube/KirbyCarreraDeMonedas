@@ -85,7 +85,7 @@ public class GameScreen extends BaseScreen {
     private ChatWidget chatWidget;
 
     private final Box2DDebugRenderer debugRenderer;
-
+    private Boolean isLoad;
 
     public GameScreen(Main main){
         super(main);
@@ -116,7 +116,7 @@ public class GameScreen extends BaseScreen {
         debugRenderer = new Box2DDebugRenderer();
 
         cameraShakeManager = new CameraShakeManager((OrthographicCamera) stage.getCamera());
-        initUI();
+        isLoad = false;
     }
 
     private void initUI(){
@@ -137,6 +137,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void initStageUI(){
+        initUI();
         stage.addActor(tableUI);
         stage.addActor(mirrorIndicators);
         tableUI.top();
@@ -211,6 +212,7 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
+        System.out.println("Creando Entidad " + id);
         threadSecureWorld.addModification(() -> {
             Entity newEntity = entityFactory.create(type, world, position, id);
             newEntity.setFlipX(flipX);
@@ -224,15 +226,13 @@ public class GameScreen extends BaseScreen {
         main.setIds(id);
     }
 
-    public void addEntity(Entity.Type type, Vector2 position, Vector2 force){
-        int id = main.getIds();
-        createEntityLogic(type, position, force, id, false);
-        sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, false));
-    }
     public void addEntity(Entity.Type type, Vector2 position, Vector2 force, Boolean flipX){
         int id = main.getIds();
         createEntityLogic(type, position, force, id, flipX);
         sendPacket(Packet.newEntity(id, type, position.x, position.y, force.x, force.y, flipX));
+    }
+    public void addEntity(Entity.Type type, Vector2 position, Vector2 force){
+        addEntity(type, position, force, false);
     }
 
     public void addEntitySpawn(Entity.Type type, Vector2 force, SpawnManager spawnManager){
@@ -319,18 +319,7 @@ public class GameScreen extends BaseScreen {
      * @param actor Actor a eliminar.
      */
     public void removeActorBox2d(ActorBox2d actor){
-        threadSecureWorld.addModification(() -> {
-            if (actor == null) {
-                System.out.println(ConsoleColor.RED + "Actor no se pudo eliminar , es nulo" + ConsoleColor.RESET);
-                return;
-            }
-            if (actor instanceof Entity e) {
-                entities.remove(e.getId());
-            }
-            actors.remove(actor);
-            removeActor(actor);
-            actor.detach();
-        });
+
     }
 
     /**
@@ -338,13 +327,8 @@ public class GameScreen extends BaseScreen {
      * @param id Id de la entidad a eliminar.
      */
     public void removeEntity(Integer id){
-        Entity entity = entities.get(id);
-        if (entity == null) {
-            System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
-            return;
-        }
-        sendPacket(Packet.removeEntity(entity.getId()));
-        removeActorBox2d(entity);
+        removeEntityNoPacket(id);
+        sendPacket(Packet.removeEntity(id));
     }
 
     /**
@@ -352,13 +336,17 @@ public class GameScreen extends BaseScreen {
      * @param id Id de la entidad a eliminar.
      */
     public void removeEntityNoPacket(Integer id){
-        Entity entity = entities.get(id);
-        System.out.println("Eliminando entidad " + id);
-        if (entity == null) {
-            System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
-            return;
-        }
-        removeActorBox2d(entity);
+        threadSecureWorld.addModification(() -> {
+            Entity entity = entities.get(id);
+            if (entity == null) {
+                System.out.println(ConsoleColor.RED + "Entity " + id + " no se pudo eliminar ,no encontrada en la lista" + ConsoleColor.RESET);
+                return;
+            }
+            entities.remove(entity.getId());
+            actors.remove(entity);
+            removeActor(entity);
+            entity.detach();
+        });
     }
 
     public void addParticle(ParticleFactory.Type type, Vector2 position){
@@ -386,6 +374,7 @@ public class GameScreen extends BaseScreen {
         threadSecureWorld.addModification(() -> {
             clearAll();
             main.changeScreen(Main.Screens.ENDGAME);
+            isLoad = false;
         });
     }
 
@@ -414,6 +403,7 @@ public class GameScreen extends BaseScreen {
                 player.setCurrentState(Player.StateType.IDLE);
             });
         }else{
+            System.out.println("SHOW");
             tiledManager.makeMap();
             addMainPlayer();
             initStageUI();
@@ -422,6 +412,7 @@ public class GameScreen extends BaseScreen {
                 tiledManager.makeEntities();
                 addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
             }
+            isLoad = true;
         }
     }
 
@@ -472,7 +463,7 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (player == null) return;
+        if (!isLoad) return;
 
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
         camera.zoom = 1.3f;

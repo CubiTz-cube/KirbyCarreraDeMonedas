@@ -12,11 +12,11 @@ import src.world.entities.Entity;
 import src.world.statics.Lava;
 
 public class CoinOdsPoint extends Entity {
-    protected Game game;
-    //private final Fixture sensorFixture;
+    protected GameScreen game;
 
-    public CoinOdsPoint(World world, Rectangle shape, AssetManager assetManager, Integer id) {
+    public CoinOdsPoint(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.COIN);
+        this.game = game;
         sprite.setTexture(assetManager.get("world/entities/coin.png", Texture.class));
 
         BodyDef def = new BodyDef();
@@ -35,30 +35,17 @@ public class CoinOdsPoint extends Entity {
         filter.categoryBits = CollisionFilters.COIN;
         filter.maskBits = (short)~(CollisionFilters.ENEMY | CollisionFilters.COIN);
         fixture.setFilterData(filter);
-
-        /*PolygonShape sensorShape = new PolygonShape();
-        sensorShape.setAsBox(shape.width / 4, shape.height / 4);
-
-        FixtureDef sensorFixtureDef = new FixtureDef();
-        sensorFixtureDef.shape = sensorShape;
-        sensorFixtureDef.isSensor = true;
-
-        sensorFixture = body.createFixture(sensorFixtureDef);
-        sensorFixture.setUserData(this);
-        sensorShape.dispose();*/
     }
 
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         super.beginContactWith(actor, game);
         if(actor instanceof Lava) {
-            game.removeEntity(getId());
+            despawn();
         }
     }
 
-    @Override
-    public void detach() {
-        super.detach();
-        //body.destroyFixture(sensorFixture);
+    public synchronized void despawn(){
+        game.removeEntity(getId());
     }
 }

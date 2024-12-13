@@ -200,7 +200,7 @@ public class Player extends PlayerCommon {
             projectil.despawn();
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
-            game.removeEntity(coin.getId());
+            coin.despawn();
             game.setScore(game.getScore() + 1);
         } else if (actor instanceof Spike) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
