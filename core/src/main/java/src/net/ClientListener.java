@@ -174,7 +174,7 @@ public class ClientListener implements Runnable{
             out.close();
             socket.dispose();
         } catch (IOException e) {
-            Gdx.app.log("User", "Error al cerrar socket de User" + name, e);
+            Gdx.app.log("User", "Error al cerrar socket de User " + name, e);
         }
     }
 

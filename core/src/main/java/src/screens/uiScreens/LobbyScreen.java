@@ -80,6 +80,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         table.add(colorField);
         table.add(backButton).width(200).height(50).pad(10);
         main.client.addListener(this);
+        updatePlayersTable();
     }
 
     @Override
