@@ -61,11 +61,11 @@
                 7,
                 4
             ],
-            "scale": 0.5,
-            "selectedLayer": 7,
+            "scale": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 3405,
-                "y": 1760
+                "x": 2910.5,
+                "y": 915
             }
         },
         "maps/garden.tsx": {
@@ -110,6 +110,7 @@
         },
         "maps/testMap.tmx": {
             "expandedObjectLayers": [
+                3,
                 2,
                 4
             ],
