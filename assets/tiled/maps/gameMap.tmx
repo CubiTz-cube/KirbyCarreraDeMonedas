@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="240" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="917">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="240" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="920">
  <tileset firstgid="1" source="Bosque.tsx"/>
  <tileset firstgid="626" source="temple.tsx"/>
  <tileset firstgid="818" source="crypt.tsx"/>
@@ -660,7 +660,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#55ffff" id="5" name="spawn">
+ <objectgroup color="#55ffff" id="5" name="spawn" visible="0">
   <object id="29" name="Espejo" type="MIRROR" x="2880" y="672" width="32" height="32"/>
   <object id="238" name="Espejo" type="MIRROR" x="2144" y="1792" width="32" height="32"/>
   <object id="256" name="Espejo" type="MIRROR" x="3344" y="2000" width="32" height="32"/>
@@ -668,7 +668,7 @@
   <object id="276" name="Espejo" type="MIRROR" x="918.667" y="1798" width="32" height="32"/>
   <object id="277" name="Espejo" type="MIRROR" x="608" y="2096" width="32" height="32"/>
  </objectgroup>
- <objectgroup color="#ff5500" id="6" name="entity">
+ <objectgroup color="#ff5500" id="6" name="entity" visible="0">
   <object id="26" name="Enemigo Basico" type="BASIC" x="2928" y="1120" width="16" height="16"/>
   <object id="102" name="breakBlock" type="BREAKBLOCK" x="1680" y="1248" width="16" height="16"/>
   <object id="153" name="Enemigo Durmiente" type="SLEEPY" x="3024" y="960" width="16" height="16"/>
@@ -763,7 +763,7 @@
   <object id="881" name="Enemigo Espada" type="SWORD" x="2080" y="1808" width="16" height="16"/>
   <object id="916" name="Enemigo Espada" type="SWORD" x="1639.33" y="1211.33" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="7" name="static">
+ <objectgroup id="7" name="static" visible="0">
   <object id="116" name="plataform" type="PLATAFORM" x="2960" y="752" width="48" height="8"/>
   <object id="160" name="Pua" type="SPIKE" x="2040" y="1344" width="8" height="32"/>
   <object id="227" name="plataform" type="PLATAFORM" x="2960" y="816" width="48" height="8"/>
@@ -1282,8 +1282,10 @@
   <object id="913" name="Pua" type="SPIKE" x="3392" y="1696" width="32" height="8"/>
   <object id="914" name="Pua" type="SPIKE" x="3424" y="1696" width="32" height="8"/>
   <object id="915" name="Pua" type="SPIKE" x="3456" y="1696" width="16" height="8"/>
+  <object id="917" x="832" y="560" width="2080" height="16"/>
+  <object id="918" x="832" y="576" width="16" height="240"/>
  </objectgroup>
- <objectgroup color="#aaff00" id="4" name="playerSpawn">
+ <objectgroup color="#aaff00" id="4" name="playerSpawn" visible="0">
   <object id="101" name="Jugador" x="1696" y="1184" width="16" height="16"/>
   <object id="131" name="Lobby" type="LOBBY" x="3472" y="1168" width="16" height="16"/>
   <object id="367" name="Jugador" x="2144" y="1184" width="16" height="16"/>
