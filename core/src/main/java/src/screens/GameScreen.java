@@ -2,6 +2,7 @@ package src.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -84,6 +85,9 @@ public class GameScreen extends BaseScreen {
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
 
+    //Sounds
+    private Sound mirrorChangeSound;
+
     private final Box2DDebugRenderer debugRenderer;
     private Boolean isLoad;
 
@@ -112,6 +116,8 @@ public class GameScreen extends BaseScreen {
         random = new Random();
         spawnMirror = new SpawnManager();
         spawnPlayer = new ArrayList<>();
+
+        initSounds();
 
         debugRenderer = new Box2DDebugRenderer();
 
@@ -146,6 +152,10 @@ public class GameScreen extends BaseScreen {
         tableUI.add(odsPointsLabel);
         tableUI.row();
         tableUI.add(chatWidget).padTop(400).height(200).width(300).fill();
+    }
+
+    private void initSounds(){
+        mirrorChangeSound = main.getAssetManager().get("sound/portalChange.wav", Sound.class);
     }
 
     public void setScore(Integer score) {
@@ -497,6 +507,8 @@ public class GameScreen extends BaseScreen {
     public void randomMirror(Integer id){
         System.out.println("Random Mirror");
         Vector2 position = spawnMirror.reSpawn(id);
+        mirrorChangeSound.play();
+        sendPacket(Packet.message("Servidor",main.client.getName() + " ha entrado a un espejo."));
 
         actEntityPos(id, position.x, position.y, 0f, 0f);
         sendPacket(Packet.actEntityPosition(id, position.x, position.y));

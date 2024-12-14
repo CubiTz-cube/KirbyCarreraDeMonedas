@@ -153,7 +153,7 @@ public abstract class PlayerCommon extends Entity {
         REMOVESELECT,
     }
     private Random random;
-    private Sound soundAirShot;
+    private Sound airShotSound;
     private Sound soundAbsorb1;
     private Sound soundAbsorb2;
     private Sound soundDash;
@@ -285,7 +285,7 @@ public abstract class PlayerCommon extends Entity {
     }
 
     private void initSound(){
-        soundAirShot = assetManager.get("sound/kirby/kirbyAirShot.wav");
+        airShotSound = assetManager.get("sound/kirby/kirbyAirShot.wav");
         soundAbsorb1 = assetManager.get("sound/kirby/kirbyAbsorb1.wav");
         soundAbsorb2 = assetManager.get("sound/kirby/kirbyAbsorb2.wav");
         soundDash = assetManager.get("sound/kirby/kirbyDash.wav");
@@ -398,7 +398,7 @@ public abstract class PlayerCommon extends Entity {
 
     public void playSound(SoundType type){
         switch (type){
-            case AIRSHOT -> soundAirShot.play(1f, 0.9f,0);
+            case AIRSHOT -> airShotSound.play(1f, 0.9f,0);
             case ABSORB1 -> soundAbsorb1.play(1f, 1f,0);
             case ABSORB2 -> soundAbsorb2.play(1f, 1f,0);
             case DASH -> soundDash.play(1f, 1f,0);
