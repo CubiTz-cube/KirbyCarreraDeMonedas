@@ -27,9 +27,9 @@ public class SwordEnemy extends Enemy
         ATTACK
     }
 
-    /*private final Animation<TextureRegion> idleAnimation;
+    /*private final Animation<TextureRegion> idleAnimation;*/
     private final Animation<TextureRegion> walkAnimation;
-    private final Animation<TextureRegion> damageAnimation;*/
+    private final Animation<TextureRegion> damageAnimation;
     private Animation<TextureRegion> attackAnimation;
 
     public SwordEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
@@ -58,18 +58,21 @@ public class SwordEnemy extends Enemy
         walkState = new WalkStateSword(this);
         attackState = new AttackStateSword(this);
         damageState = new DamageStateSword(this);
-
         setState(StateType.IDLE);
 
+        walkAnimation = new Animation<TextureRegion>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
+        damageAnimation = new Animation<TextureRegion>(0.01f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyDamage.png"), 5));
         attackAnimation = new Animation<TextureRegion>(0.1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyAttack.png"), 4));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyAttack.png"), 6));
     }
 
     public void setAnimation(SwordEnemy.AnimationType type){
         switch (type){
-            /*case IDLE -> setCurrentAnimation(idleAnimation);
+            /*case IDLE -> setCurrentAnimation(idleAnimation);*/
             case WALK -> setCurrentAnimation(walkAnimation);
-            case DAMAGE -> setCurrentAnimation(damageAnimation);*/
+            case DAMAGE -> setCurrentAnimation(damageAnimation);
             case ATTACK -> setCurrentAnimation(attackAnimation);
         }
     }

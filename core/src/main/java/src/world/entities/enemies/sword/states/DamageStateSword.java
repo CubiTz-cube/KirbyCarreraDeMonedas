@@ -13,12 +13,15 @@ public class DamageStateSword extends StateEnemy<SwordEnemy> {
     @Override
     public void start() {
         super.start();
+        enemy.setAnimation(SwordEnemy.AnimationType.DAMAGE);
     }
 
     @Override
     public void update(Float delta) {
-        enemy.setState(BasicEnemy.StateType.IDLE);
-        if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
+        if (enemy.isAnimationFinish()) {
+            enemy.setState(BasicEnemy.StateType.IDLE);
+            if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
+        }
     }
 
     @Override

@@ -4,7 +4,6 @@ import src.utils.stateMachine.StateMachine;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.basic.BasicEnemy;
-import src.world.entities.enemies.sleeping.SleepingEnemy;
 
 public class IdleStateBasic extends StateEnemy<BasicEnemy> {
     private boolean flip = false;
@@ -26,7 +25,7 @@ public class IdleStateBasic extends StateEnemy<BasicEnemy> {
             flip = true;
         }
         if (enemy.getActCrono() > 2) {
-            enemy.setState(SleepingEnemy.StateType.WALK);
+            enemy.setState(Enemy.StateType.WALK);
         }
     }
 
