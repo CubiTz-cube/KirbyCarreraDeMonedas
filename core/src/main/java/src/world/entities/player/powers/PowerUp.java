@@ -19,7 +19,9 @@ public abstract class PowerUp
         player.setAnimation(player.getCurrentAnimationType());
     }
 
-    public abstract void end();
+    public void end(){
+        player.setSecondCurrentAnimation(null);
+    };
 
     public abstract void actionIdle();
 

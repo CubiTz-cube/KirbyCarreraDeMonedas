@@ -26,6 +26,7 @@ public class PowerWheel extends PowerUp{
 
     @Override
     public void end(){
+        super.end();
         player.maxSpeed = Player.RUN_MAX_SPEED;
         player.speed = Player.RUN_SPEED;
         player.brakeForce = Player.DEFAULT_BRAKE_FORCE;

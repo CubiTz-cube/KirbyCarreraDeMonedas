@@ -16,11 +16,6 @@ public class PowerBomb extends PowerUp{
     }
 
     @Override
-    public void end() {
-
-    }
-
-    @Override
     public void actionIdle() {
 
     }

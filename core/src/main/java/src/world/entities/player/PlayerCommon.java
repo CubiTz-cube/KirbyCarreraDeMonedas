@@ -302,10 +302,6 @@ public abstract class PlayerCommon extends Entity {
         soundRemoveSelect = assetManager.get("sound/kirby/kirbyRemovePower.wav");
     }
 
-    public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
-        this.secondCurrentAnimation = secondCurrentAnimation;
-    }
-
     public void setAnimation(AnimationType animationType){
         currentAnimationType = animationType;
 
@@ -341,6 +337,12 @@ public abstract class PlayerCommon extends Entity {
             case ABSORBJUMP -> setCurrentAnimation(absorbJumpAnimation);
         }
 
+    }
+
+    public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
+        System.out.println("Setting second animation " + secondCurrentAnimation);
+        System.out.println(currentpowerUptype);
+        this.secondCurrentAnimation = secondCurrentAnimation;
     }
 
     public AnimationType getCurrentAnimationType() {

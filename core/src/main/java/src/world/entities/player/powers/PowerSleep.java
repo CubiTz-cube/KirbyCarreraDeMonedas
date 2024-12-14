@@ -25,8 +25,7 @@ public class PowerSleep extends PowerUp {
     }
 
     @Override
-    public void end() {
-
+    public void update() {
     }
 
     @Override
@@ -41,11 +40,6 @@ public class PowerSleep extends PowerUp {
 
     @Override
     public void actionAir() {
-
-    }
-
-    @Override
-    public void update() {
 
     }
 
