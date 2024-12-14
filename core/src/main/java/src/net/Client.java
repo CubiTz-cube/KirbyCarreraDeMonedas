@@ -25,6 +25,8 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Client implements Runnable{
     private final GameScreen game;
@@ -41,6 +43,7 @@ public class Client implements Runnable{
     private Boolean running = false;
 
     private final ArrayList<PacketListener> listeners;
+    private final ExecutorService sendThread = Executors.newSingleThreadExecutor();
 
     public Client(GameScreen game, String ip, int port, String name){
         this.game = game;
@@ -198,17 +201,20 @@ public class Client implements Runnable{
 
     public void send(Object[] data){
         if (!running) return;
-        try {
-            //System.out.println(ConsoleColor.GREEN + "[Client] Enviado: " + data[0] + ConsoleColor.RESET);
-            out.writeObject(data);
-        }catch (IOException e){
-            Gdx.app.log("Client", "Error al enviar mensaje", e);
-        }
+        sendThread.submit(() -> {
+            try {
+                //System.out.println(ConsoleColor.GREEN + "[Client] Enviado: " + data[0] + ConsoleColor.RESET);
+                out.writeObject(data);
+            } catch (IOException e) {
+                Gdx.app.log("Client", "Error al enviar mensaje", e);
+            }
+        });
     }
 
     public void close(){
         if (!running) return;
         notifyCloseClient();
+        sendThread.shutdown();
         running = false;
         try {
             out.close();

@@ -426,7 +426,7 @@ public class GameScreen extends BaseScreen {
 
             Vector2 currentPosition = player.getBody().getPosition();
             if (!currentPosition.epsilonEquals(lastPosition, 0.05f)) { // Check for significant change
-                main.client.send(Packet.actEntityPosition(-1,currentPosition.x, currentPosition.y));
+                sendPacket(Packet.actEntityPosition(-1,currentPosition.x, currentPosition.y));
                 lastPosition.set(currentPosition);
             }
 
@@ -438,11 +438,11 @@ public class GameScreen extends BaseScreen {
                     for (Entity e: entities.values()){
                         if (e instanceof NoAutoPacketEntity) continue;
                         Body body = e.getBody();
-                        main.client.send(Packet.actEntityPosition(e.getId(), body.getPosition().x, body.getPosition().y,
+                        sendPacket(Packet.actEntityPosition(e.getId(), body.getPosition().x, body.getPosition().y,
                             body.getLinearVelocity().x , body.getLinearVelocity().y));
                         if (!(e instanceof Enemy enemy)) continue;
                         if (enemy.getCurrentStateType() == Enemy.StateType.IDLE) continue;
-                        if (enemy.checkChangeState()) main.client.send(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX()));
+                        if (enemy.checkChangeState()) sendPacket(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX()));
                     }
                     sendTime = 0f;
                 }
