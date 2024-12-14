@@ -75,6 +75,7 @@ public class Player extends PlayerCommon {
         PowerUp.Type powerType = enemyAbsorded.getPowerUp();
         enemyAbsorded = null;
         setCurrentState(PlayerCommon.StateType.IDLE);
+        if (powerType != null) playSound(SoundType.POWER);
         setCurrentPowerUp(powerType);
     }
 
@@ -186,6 +187,7 @@ public class Player extends PlayerCommon {
 
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
+            playSound(SoundType.NORMALDAMAGE);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
 
         } else if (actor instanceof Mirror m) {
@@ -196,22 +198,26 @@ public class Player extends PlayerCommon {
         } else if (actor instanceof Projectil projectil) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
+            playSound(SoundType.NORMALDAMAGE);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
             projectil.despawn();
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
+            playSound(SoundType.SCORE2);
             coin.despawn();
             game.setScore(game.getScore() + 1);
         } else if (actor instanceof Spike) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             stunTime = 0.5f;
             setCurrentState(Player.StateType.STUN);
+            playSound(SoundType.NORMALDAMAGE);
             body.setLinearVelocity(0,0);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
         } else if (actor instanceof Lava) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             stunTime = 0.5f;
             setCurrentState(Player.StateType.STUN);
+            playSound(SoundType.FIREDAMAGE);
             body.setLinearVelocity(0,0);
             body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
         }else if (actor instanceof OtherPlayer other){

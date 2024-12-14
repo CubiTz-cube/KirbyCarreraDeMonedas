@@ -1,6 +1,7 @@
 package src.world.entities.player.states;
 
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class StunState extends StatePlayer{
     private Float time = 0f;

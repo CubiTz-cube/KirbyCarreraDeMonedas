@@ -1,6 +1,7 @@
 package src.world.entities.player.states;
 
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class DashState extends StatePlayer{
     public DashState(Player player) {
@@ -10,6 +11,7 @@ public class DashState extends StatePlayer{
     @Override
     public void start() {
         player.setAnimation(Player.AnimationType.DASH);
+        player.playSound(Player.SoundType.DASH);
         player.getBody().applyLinearImpulse(
             player.getSprite().isFlipX() ? -Player.DASH_IMPULSE : Player.DASH_IMPULSE,
             0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import src.utils.constants.PlayerControl;
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class FallState extends CanMoveState {
     private Float fallForce;
@@ -43,6 +44,7 @@ public class FallState extends CanMoveState {
         float resultFallForce = fallForce / 2;
         if (resultFallForce > 14f) {
             player.game.addCameraShake(0.1f, resultFallForce);
+            player.playSound(Player.SoundType.HEAVYFALL);
         }
         fallForce = 0f;
     }

@@ -43,7 +43,7 @@ public class FlyState extends CanMoveState{
             if (player.getCurrentAnimationType() != Player.AnimationType.FLYEND) {
                 player.setAnimation(Player.AnimationType.FLYEND);
                 player.throwEntity(Entity.Type.CLOUD, 1.5f);
-                player.playSound(PlayerCommon.soundType.AIRSHOT);
+                player.playSound(PlayerCommon.SoundType.AIRSHOT);
             }
         }
 

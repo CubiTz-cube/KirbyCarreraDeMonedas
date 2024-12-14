@@ -3,6 +3,7 @@ package src.world.entities.player.states;
 import com.badlogic.gdx.Gdx;
 import src.utils.constants.PlayerControl;
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class JumpState extends CanMoveState{
     private Float jumpTime = 0f;
@@ -15,6 +16,7 @@ public class JumpState extends CanMoveState{
     public void start() {
         if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.JUMP);
         else player.setAnimation(Player.AnimationType.ABSORBJUMP);
+        player.playSound(Player.SoundType.JUMP);
         jumpTime = 0f;
         player.getBody().applyLinearImpulse(0, Player.JUMP_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }

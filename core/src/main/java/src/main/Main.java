@@ -130,7 +130,26 @@ public class Main extends Game {
         assetManager.load("miniGames/odsPlease/persons/persons3.png", Texture.class);
         assetManager.load("miniGames/odsPlease/persons/persons4.png", Texture.class);
 
-        assetManager.load("sound/kirbyAirShot.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyAirShot.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyItem.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyAbsorb1.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyAbsorb2.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyDash.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyFireDamage.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyHeavyFall.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyJump.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyNormalDamage.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyPower.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyScore1.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyScore2.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbySleep.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyStar.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyRemovePower.wav", Sound.class);
+        assetManager.load("sound/bomb.wav", Sound.class);
+        assetManager.load("sound/introLogo.wav", Sound.class);
+        assetManager.load("sound/portalChange.wav", Sound.class);
+        assetManager.load("sound/enemy/enemyDamage.wav", Sound.class);
+        assetManager.load("sound/enemy/enemyDead.wav", Sound.class);
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
