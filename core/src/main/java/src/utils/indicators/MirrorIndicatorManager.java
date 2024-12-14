@@ -1,11 +1,10 @@
-package src.utils.managers;
+package src.utils.indicators;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import src.utils.BorderIndicator;
 
 import java.util.HashMap;
 

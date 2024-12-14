@@ -1,4 +1,4 @@
-package src.utils;
+package src.utils.indicators;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

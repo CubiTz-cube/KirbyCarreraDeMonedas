@@ -1,5 +1,6 @@
 package src.screens.uiScreens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -13,7 +14,6 @@ import src.screens.components.ColorField;
 
 public class LobbyScreen extends UIScreen implements PacketListener {
     private final Table playersTable;
-    private Integer numPlayersConnected;
 
     private final Table table;
     private final Label titleLabel;
@@ -68,7 +68,6 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     @Override
     public void show() {
         super.show();
-        numPlayersConnected = 0;
         table.add(titleLabel).pad(10);
         table.row();
         table.add(scrollPane).expand().fill();
@@ -112,8 +111,12 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         }
         if (main.client.gameStart) return;
         if (type.equals(Packet.Types.NEWPLAYER) || type.equals(Packet.Types.DISCONNECTPLAYER) || type.equals(Packet.Types.ACTENTITYCOLOR)) {
-            numPlayersConnected = main.client.getPlayersConnected().size();
             updatePlayersTable();
         }
+    }
+
+    @Override
+    public void closeClient(){
+        Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.MULTIPLAYER));
     }
 }

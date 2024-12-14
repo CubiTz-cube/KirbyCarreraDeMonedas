@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
 import src.screens.GameScreen;
+import src.screens.components.LayersManager;
 import src.screens.minigames.MinigameScreen;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import src.screens.components.SpriteAsActor;
@@ -24,10 +25,7 @@ import java.util.Random;
 public class OdsPleaseScreen extends MinigameScreen {
     private final Integer max = 9;
 
-    private final Table layer1Table;
-    private final Table layer2Table;
-    private final Table layer3Table;
-    private final Table layer4Table;
+    private final LayersManager layersManager;
 
     private final Random random;
 
@@ -53,10 +51,7 @@ public class OdsPleaseScreen extends MinigameScreen {
 
     public OdsPleaseScreen(Main main, GameScreen game) {
         super(main, game);
-        layer1Table = new Table();
-        layer2Table = new Table();
-        layer3Table = new Table();
-        layer4Table = new Table();
+        layersManager = new LayersManager(stageUI, 5);
         random = new Random();
         odsTextures = new ArrayList<>();
         wrongOdsTextures = new ArrayList<>();
@@ -65,40 +60,39 @@ public class OdsPleaseScreen extends MinigameScreen {
         countBad = 0;
 
         initSprites();
-
         initUIComponents();
 
-        stageUI.addActor(layer4Table);
-        stageUI.addActor(layer3Table);
-        stageUI.addActor(layer2Table);
-        stageUI.addActor(layer1Table);
+        layersManager.setZindex(4);
+        layersManager.getLayer().add().expand(1,1).fill(1,1);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(deskBackImage).grow();
+        layersManager.getLayer().add().expand(3,1).fill(3,1);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add().expand(1,1).fill(1,1);
 
-        layer4Table.add().expand(1,1).fill(1,1);
-        layer4Table.row();
-        layer4Table.add(deskBackImage).grow();
-        layer4Table.add().expand(3,1).fill(3,1);
-        layer4Table.row();
-        layer4Table.add().expand(1,1).fill(1,1);
+        layersManager.setZindex(3);
+        layersManager.getLayer().add().expand(1,3).fill(1,3);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(personImage).grow();
+        layersManager.getLayer().add().expand(6,1).fill(6,1);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add().expand(1,3).fill(1,3);
 
-        layer3Table.add().expand(1,3).fill(1,3);
-        layer3Table.row();
-        layer3Table.add(personImage).grow();
-        layer3Table.add().expand(6,1).fill(6,1);
-        layer3Table.row();
-        layer3Table.add().expand(1,3).fill(1,3);
-
-        layer2Table.add(backgroundImage).expand(1,1).fill(1,1);
-        layer2Table.row();
-        layer2Table.add(deskImage).expand(1,2).fill(1,1);
+        layersManager.setZindex(2);
+        layersManager.getLayer().add(backgroundImage).expand(1,1).fill(1,1);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(deskImage).expand(1,2).fill(1,1);
         backgroundImage.toBack();
 
-        layer1Table.top().add(timeMinigameLabel).colspan(2);
-        layer1Table.add(countLabel).colspan(2);
-        layer1Table.row();
-        layer1Table.add(odsImage).width(512).height(310).colspan(2).padTop(250).padLeft(200);
-        layer1Table.row();
-        layer1Table.add(denyButton).width(256).height(128).colspan(1).padLeft(200);
-        layer1Table.add(passButton).width(256).height(128).colspan(1);
+        layersManager.setZindex(1);
+        layersManager.getLayer().top().add(timeMinigameLabel).colspan(2);
+        layersManager.getLayer().add(countLabel).colspan(2);
+
+        layersManager.setZindex(0);
+        layersManager.getLayer().add(odsImage).width(512).height(310).colspan(2).padTop(250).padLeft(200);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(denyButton).width(256).height(128).colspan(1).padLeft(200);
+        layersManager.getLayer().add(passButton).width(256).height(128).colspan(1);
     }
 
     private void initSprites(){
@@ -135,10 +129,6 @@ public class OdsPleaseScreen extends MinigameScreen {
     }
 
     private void initUIComponents(){
-        layer1Table.setFillParent(true);
-        layer2Table.setFillParent(true);
-        layer3Table.setFillParent(true);
-        layer4Table.setFillParent(true);
 
         timeMinigameLabel.setFontScale(2);
         timeMinigameLabel.setColor(Color.BLACK);
@@ -209,23 +199,18 @@ public class OdsPleaseScreen extends MinigameScreen {
     @Override
     public void show() {
         super.show();
-        setVisibleAll(false);
+        layersManager.setVisible(false);
         countGood = 0;
         countBad = 0;
         changeOdsImage();
         changePersonImage();
     }
 
-    private void setVisibleAll(boolean visible) {
-        layer2Table.setVisible(visible);
-        layer1Table.setVisible(visible);
-    }
-
     @Override
     public void render(float delta) {
         super.render(delta);
         if (!isGameStarted()) return;
-        if (!layer1Table.isVisible()) setVisibleAll(true);
+        if (!layersManager.isVisible()) layersManager.setVisible(true);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             passButton();

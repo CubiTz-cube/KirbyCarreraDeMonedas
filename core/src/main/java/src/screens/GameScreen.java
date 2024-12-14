@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
 import src.screens.components.ChatWidget;
 import src.utils.*;
-import src.utils.managers.MirrorIndicatorManager;
+import src.utils.indicators.MirrorIndicatorManager;
 import src.utils.constants.ConsoleColor;
 import src.utils.managers.CameraShakeManager;
 import src.utils.managers.SpawnManager;

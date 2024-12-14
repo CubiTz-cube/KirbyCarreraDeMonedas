@@ -208,6 +208,7 @@ public class Client implements Runnable{
 
     public void close(){
         if (!running) return;
+        notifyCloseClient();
         running = false;
         try {
             out.close();
@@ -225,6 +226,12 @@ public class Client implements Runnable{
     public void notifyListenersPacket(Packet.Types type){
         for (PacketListener listener : listeners){
             listener.receivedPacket(type);
+        }
+    }
+
+    public void notifyCloseClient(){
+        for (PacketListener listener : listeners){
+            listener.closeClient();
         }
     }
 }
