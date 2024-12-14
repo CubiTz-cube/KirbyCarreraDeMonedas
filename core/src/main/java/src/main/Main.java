@@ -118,6 +118,12 @@ public class Main extends Game {
         assetManager.load("miniGames/odsPlease/odsPng/ods (16).png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (17).png", Texture.class);
         assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (1).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (2).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (3).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (3B).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (4).png", Texture.class);
+        //assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (5).png", Texture.class);
+        assetManager.load("miniGames/odsPlease/wrongOds/wrongOds (16).png", Texture.class);
         assetManager.load("miniGames/odsPlease/BoothWall.png", Texture.class);
         assetManager.load("miniGames/odsPlease/persons/persons1.png", Texture.class);
         assetManager.load("miniGames/odsPlease/persons/persons2.png", Texture.class);

@@ -1,5 +1,7 @@
 package src.screens.minigames.odsPlease;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -119,6 +121,12 @@ public class OdsPleaseScreen extends MinigameScreen {
         odsTextures.add(main.getAssetManager().get("miniGames/odsPlease/odsPng/ods (17).png", Texture.class));
 
         wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (1).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (2).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (3).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (3B).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (4).png", Texture.class));
+        //wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (5).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (16).png", Texture.class));
 
         personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons1.png", Texture.class), 2, 2)));
         personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons2.png", Texture.class), 2, 2)));
@@ -143,7 +151,7 @@ public class OdsPleaseScreen extends MinigameScreen {
         backgroundImage = new Image(main.getAssetManager().get("miniGames/odsPlease/CheckpointBack.png", Texture.class));
         deskBackImage = new Image(main.getAssetManager().get("miniGames/odsPlease/BoothWall.png", Texture.class));
 
-        passButton = new TextButton("Pass", main.getSkin());
+        passButton = new TextButton("Pass (D)", main.getSkin());
         passButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -151,7 +159,7 @@ public class OdsPleaseScreen extends MinigameScreen {
             }
         });
 
-        denyButton = new TextButton("Deny", main.getSkin());
+        denyButton = new TextButton("Deny (A)", main.getSkin());
         denyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -164,15 +172,15 @@ public class OdsPleaseScreen extends MinigameScreen {
     }
 
     private void passButton() {
-        if (!odsReal) countGood++;
-        else countBad++;
+        if (odsReal) countGood++;
+        else {countBad++; shakeCamera(0.3f,4);}
         changeOdsImage();
         changePersonImage();
     }
 
     private void denyButton() {
-        if (odsReal) countGood++;
-        else countBad++;
+        if (!odsReal) countGood++;
+        else {countBad++; shakeCamera(0.3f,4);}
         changeOdsImage();
         changePersonImage();
     }
@@ -186,11 +194,12 @@ public class OdsPleaseScreen extends MinigameScreen {
             return;
         }
 
-        boolean select = random.nextBoolean();
-        if (select) odsImage.setTexture(wrongOdsTextures.get(random.nextInt(wrongOdsTextures.size())));
+        int select = random.nextInt(3);
+        if (select == 2) odsImage.setTexture(wrongOdsTextures.get(random.nextInt(wrongOdsTextures.size())));
         else odsImage.setTexture(odsTextures.get(random.nextInt(odsTextures.size())));
 
-        odsReal = select;
+        odsReal = select != 2;
+        System.out.println("odsReal: " + odsReal);
     }
 
     private void changePersonImage() {
@@ -217,5 +226,11 @@ public class OdsPleaseScreen extends MinigameScreen {
         super.render(delta);
         if (!isGameStarted()) return;
         if (!layer1Table.isVisible()) setVisibleAll(true);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            passButton();
+        }else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            denyButton();
+        }
     }
 }

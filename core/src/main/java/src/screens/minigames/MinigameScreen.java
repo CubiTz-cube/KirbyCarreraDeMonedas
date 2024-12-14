@@ -1,5 +1,8 @@
 package src.screens.minigames;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -8,9 +11,12 @@ import src.screens.GameScreen;
 import src.screens.uiScreens.UIScreen;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import src.utils.managers.CameraShakeManager;
 
 public abstract class MinigameScreen extends UIScreen {
     protected final GameScreen game;
+    private final CameraShakeManager cameraShake;
+    private Float initialX, initialY;
 
     private Float timeStart;
     private Float timeGame;
@@ -33,6 +39,9 @@ public abstract class MinigameScreen extends UIScreen {
         timeStart = 0f;
         timeGame = 0f;
         gameStarted = false;
+        cameraShake = new CameraShakeManager((OrthographicCamera) stageUI.getCamera());
+        this.initialX = stageUI.getCamera().position.x;
+        this.initialY = stageUI.getCamera().position.y;
 
         backTable = new Table();
         backTable.setFillParent(true);
@@ -79,7 +88,14 @@ public abstract class MinigameScreen extends UIScreen {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
+        Gdx.gl.glClearColor(0,0,0, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stageUI.act(delta);
+        stageUI.draw();
+
+        stageUI.getCamera().position.x = initialX;
+        stageUI.getCamera().position.y = initialY;
+        cameraShake.update(delta);
         game.actLogic(delta);
 
         if (timeStart >= 1){
@@ -101,5 +117,9 @@ public abstract class MinigameScreen extends UIScreen {
         if (timeGame <= 1){
             endMinigame();
         }
+    }
+
+    public void shakeCamera(float duration, float intensity){
+        cameraShake.addShake(duration,intensity);
     }
 }
