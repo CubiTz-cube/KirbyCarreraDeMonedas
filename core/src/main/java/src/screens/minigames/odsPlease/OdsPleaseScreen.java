@@ -119,7 +119,13 @@ public class OdsPleaseScreen extends MinigameScreen {
         wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (3).png", Texture.class));
         wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (3B).png", Texture.class));
         wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (4).png", Texture.class));
-        //wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (5).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (5).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (6).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (7).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (8).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (9).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (10).png", Texture.class));
+        wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (12).png", Texture.class));
         wrongOdsTextures.add(main.getAssetManager().get("miniGames/odsPlease/wrongOds/wrongOds (16).png", Texture.class));
 
         personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons1.png", Texture.class), 2, 2)));
@@ -184,11 +190,11 @@ public class OdsPleaseScreen extends MinigameScreen {
             return;
         }
 
-        int select = random.nextInt(3);
-        if (select == 2) odsImage.setTexture(wrongOdsTextures.get(random.nextInt(wrongOdsTextures.size())));
+        int select = random.nextInt(6);
+        if (select < 2) odsImage.setTexture(wrongOdsTextures.get(random.nextInt(wrongOdsTextures.size())));
         else odsImage.setTexture(odsTextures.get(random.nextInt(odsTextures.size())));
 
-        odsReal = select != 2;
+        odsReal = select >= 2;
         System.out.println("odsReal: " + odsReal);
     }
 
