@@ -131,6 +131,7 @@ public class ClientListener implements Runnable{
                             break;
 
                         case MESSAGE:
+                            String name = (String) pack[1];
                             String message = (String) pack[2];
                             server.sendAll(Packet.message(name, message), id);
                             break;
