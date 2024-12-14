@@ -40,8 +40,6 @@ public abstract class MinigameScreen extends UIScreen {
         timeGame = 0f;
         gameStarted = false;
         cameraShake = new CameraShakeManager((OrthographicCamera) stageUI.getCamera());
-        this.initialX = stageUI.getCamera().position.x;
-        this.initialY = stageUI.getCamera().position.y;
 
         backTable = new Table();
         backTable.setFillParent(true);
@@ -69,6 +67,8 @@ public abstract class MinigameScreen extends UIScreen {
     @Override
     public void show() {
         super.show();
+        this.initialX = stageUI.getCamera().position.x;
+        this.initialY = stageUI.getCamera().position.y;
         timeStart = 0f;
         timeGame = 150f;
         gameStarted = false;
