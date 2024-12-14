@@ -65,6 +65,8 @@ public class Main extends Game {
         assetManager.load("yozhi.jpg", Texture.class);
         assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("yoshiSword.png", Texture.class);
+        assetManager.load("world/entities/sword/swordEnemyWalk.png", Texture.class);
+        assetManager.load("world/entities/sword/swordEnemyDamage.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyAttack.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);

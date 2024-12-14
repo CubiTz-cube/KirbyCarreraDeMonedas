@@ -14,6 +14,13 @@ public class WalkStateSword extends StateEnemy<SwordEnemy>
     }
 
     @Override
+    public void start()
+    {
+        super.start();
+        enemy.setAnimation(SwordEnemy.AnimationType.WALK);
+    }
+
+    @Override
     public void update(Float delta)
     {
         Vector2 velocity = enemy.getBody().getLinearVelocity();
@@ -23,7 +30,7 @@ public class WalkStateSword extends StateEnemy<SwordEnemy>
         }
 
         if (enemy.getActCrono() > 3) {
-            enemy.setState(Enemy.StateType.IDLE);
+            enemy.setState(Enemy.StateType.ATTACK);
         }
     }
 

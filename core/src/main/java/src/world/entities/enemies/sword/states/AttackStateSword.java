@@ -19,11 +19,10 @@ public class AttackStateSword extends StateEnemy<SwordEnemy>
 
     @Override
     public void update(Float delta) {
-        
+
         if (enemy.getActCrono() > 1) {
             enemy.setState(Enemy.StateType.IDLE);
         }
-
     }
 
     @Override
