@@ -8,11 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.HashMap;
 
-public class MirrorIndicatorManager extends Actor {
+public class IndicatorManager extends Actor {
     private final Texture texture;
     private final HashMap<Integer, BorderIndicator> borderIndicators;
 
-    public MirrorIndicatorManager(Texture texture) {
+    public IndicatorManager(Texture texture) {
         this.texture = texture;
         borderIndicators = new HashMap<>();
     }
@@ -30,7 +30,7 @@ public class MirrorIndicatorManager extends Actor {
 
     public void changeTargetPosition(Integer id,Vector2 targetPosition) {
         if (!borderIndicators.containsKey(id)) {
-            Gdx.app.log("MirrorIndicatorManager", "id " + id + " no encontrada para cambiar su target position");
+            Gdx.app.log("IndicatorManager", "id " + id + " no encontrada para cambiar su target position");
             return;
         }
         borderIndicators.get(id).setTargetPosition(targetPosition);
@@ -38,6 +38,10 @@ public class MirrorIndicatorManager extends Actor {
 
     public void remove(Integer id) {
         borderIndicators.remove(id);
+    }
+
+    public void clear() {
+        borderIndicators.clear();
     }
 
     @Override

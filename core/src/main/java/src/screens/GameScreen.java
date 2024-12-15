@@ -20,7 +20,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
 import src.screens.components.ChatWidget;
 import src.utils.*;
-import src.utils.indicators.MirrorIndicatorManager;
+import src.utils.constants.Constants;
+import src.utils.indicators.BorderIndicator;
+import src.utils.indicators.IndicatorManager;
 import src.utils.constants.ConsoleColor;
 import src.utils.managers.CameraShakeManager;
 import src.utils.managers.SpawnManager;
@@ -42,6 +44,7 @@ import src.world.particles.ParticleFactory;
 import src.world.statics.StaticFactory;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -79,7 +82,9 @@ public class GameScreen extends BaseScreen {
 
     // UI
     private final CameraShakeManager cameraShakeManager;
-    private MirrorIndicatorManager mirrorIndicators;
+    private IndicatorManager mirrorIndicators;
+    private BorderIndicator maxScoreIndicator;
+    private Integer idTargetMaxScore;
     private Table tableUI;
     private Label odsPointsLabel;
     private Label gameTimeLabel;
@@ -117,6 +122,8 @@ public class GameScreen extends BaseScreen {
         spawnMirror = new SpawnManager();
         spawnPlayer = new ArrayList<>();
 
+        idTargetMaxScore = -1;
+
         initSounds();
 
         debugRenderer = new Box2DDebugRenderer();
@@ -139,13 +146,16 @@ public class GameScreen extends BaseScreen {
 
         chatWidget = new ChatWidget(main.getSkin());
 
-        mirrorIndicators = new MirrorIndicatorManager(main.getAssetManager().get("yoshi.jpg", Texture.class));
+        mirrorIndicators = new IndicatorManager(main.getAssetManager().get("yoshi.jpg", Texture.class));
+        maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("yoshi.jpg", Texture.class), new Vector2(0,0));
+        maxScoreIndicator.setVisible(false);
     }
 
     private void initStageUI(){
         initUI();
         stage.addActor(tableUI);
         stage.addActor(mirrorIndicators);
+        stage.addActor(maxScoreIndicator);
         tableUI.top();
         tableUI.add(gameTimeLabel);
         tableUI.add().expandX();
@@ -197,8 +207,8 @@ public class GameScreen extends BaseScreen {
         player = new Player(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), main.getAssetManager(), this, main.playerColor);
         stage.addActor(player);
 
-        if (main.client == null) scorePlayers.put(-1, new ScorePlayer("TU"));
-        else scorePlayers.put(-1, new ScorePlayer(main.client.getName()));
+        if (main.client == null) scorePlayers.put(-1, new ScorePlayer(-1,"TU"));
+        else scorePlayers.put(-1, new ScorePlayer(-1,main.client.getName()));
     }
 
     public void addStatic(StaticFactory.Type type, Rectangle bounds){
@@ -211,7 +221,7 @@ public class GameScreen extends BaseScreen {
     public void addActor(Actor actor){
         if (actor instanceof Entity e) entities.put(e.getId(), e);
         if (actor instanceof ActorBox2d a) actors.add(a);
-        if (actor instanceof OtherPlayer o) scorePlayers.put(o.getId(), new ScorePlayer(o.getName()));
+        if (actor instanceof OtherPlayer o) scorePlayers.put(o.getId(), new ScorePlayer(o.getId(),o.getName()));
         if (actor instanceof Mirror m) mirrorIndicators.add(m.getId(),m.getBody().getPosition());
 
         stage.addActor(actor);
@@ -308,6 +318,17 @@ public class GameScreen extends BaseScreen {
             return;
         }
         scorePlayer.score = score;
+
+        ScorePlayer maxScorePlayer = scorePlayers.values().stream()
+            .max(Comparator.comparingInt(s -> s.score))
+            .orElse(null);
+
+        if (maxScorePlayer != null && maxScorePlayer.id != -1) {
+            idTargetMaxScore = maxScorePlayer.id;
+            maxScoreIndicator.setVisible(true);
+        }
+        else maxScoreIndicator.setVisible(false);
+
     }
 
     public void actEntityColor(Integer id, float r, float g, float b, float a){
@@ -464,6 +485,10 @@ public class GameScreen extends BaseScreen {
     }
 
     private void actUI(){
+        if (idTargetMaxScore != -1) {
+            maxScoreIndicator.setTargetPosition(entities.get(idTargetMaxScore).getBody().getPosition());
+        }
+        maxScoreIndicator.setCenterPosition(player.getBody().getPosition());
         mirrorIndicators.setCenterPositions(player.getBody().getPosition());
         odsPointsLabel.setText("ODS POINTS\n"+getScore()+"\nx: "+(int)player.getX()+" y: "+(int)player.getY());
         gameTimeLabel.setText("Game Time\n" + timeGame);
