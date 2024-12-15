@@ -13,6 +13,7 @@ public class DamageStateSleepy extends StateEnemy<SleepingEnemy> {
     @Override
     public void start() {
         super.start();
+        enemy.setAnimation(SleepingEnemy.AnimationType.DAMAGE);
     }
 
     @Override

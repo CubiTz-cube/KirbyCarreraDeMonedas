@@ -11,6 +11,11 @@ public class IdleStateSleepy extends StateEnemy<SleepingEnemy>
     }
 
     @Override
+    public void start() {
+        super.start();
+        enemy.setAnimation(SleepingEnemy.AnimationType.IDLE);
+    }
+    @Override
     public void update(Float delta) {
 
     }
