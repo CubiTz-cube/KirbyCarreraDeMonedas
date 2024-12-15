@@ -340,8 +340,6 @@ public abstract class PlayerCommon extends Entity {
     }
 
     public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
-        System.out.println("Setting second animation " + secondCurrentAnimation);
-        System.out.println(currentpowerUptype);
         this.secondCurrentAnimation = secondCurrentAnimation;
     }
 
