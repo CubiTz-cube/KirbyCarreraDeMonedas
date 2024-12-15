@@ -30,7 +30,7 @@ public class Star extends Projectil{
         setSpritePosModification(0f, getHeight()/4);
 
         Animation<TextureRegion> cloudAnimation = new Animation<>(0.08f,
-            SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 8));
+            SheetCutter.cutHorizontal(assetManager.get("world/particles/starParticle.png"), 4));
         setCurrentAnimation(cloudAnimation);
     }
 }

@@ -7,7 +7,7 @@ import src.screens.GameScreen;
 
 public class ParticleFactory {
     public enum Type{
-        CLOUD
+        CLOUD,
     }
 
     public Actor create(Type type, Vector2 position, GameScreen game){

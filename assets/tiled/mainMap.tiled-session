@@ -57,15 +57,15 @@
             ],
             "expandedObjectLayers": [
                 6,
-                5,
                 7,
-                4
+                4,
+                5
             ],
             "scale": 1,
-            "selectedLayer": 2,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 2910.5,
-                "y": 915
+                "x": 1569.5,
+                "y": 1840
             }
         },
         "maps/garden.tsx": {
@@ -110,15 +110,15 @@
         },
         "maps/testMap.tmx": {
             "expandedObjectLayers": [
+                4,
                 3,
-                2,
-                4
+                2
             ],
-            "scale": 0.33,
+            "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 719.6969696969696,
-                "y": 736.3636363636365
+                "x": 515.6666666666666,
+                "y": 562
             }
         },
         "maps/testMap.tmx#forest": {

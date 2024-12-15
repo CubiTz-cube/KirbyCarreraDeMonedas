@@ -39,7 +39,6 @@ public class BorderIndicator extends Actor{
 
     @Override
     public void act(float delta) {
-        System.out.println(targetPosition);
         Vector2 direction = new Vector2(targetPosition.scl(PIXELS_IN_METER)).sub(centerPosition).nor();
         float angle = direction.angleDeg();
         setRotation(angle);

@@ -70,6 +70,7 @@ public class Main extends Game {
         assetManager.load("world/entities/sword/swordEnemyAttack.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
+        assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);
@@ -98,8 +99,11 @@ public class Main extends Game {
         assetManager.load("world/entities/mirror/mirrorLoop.png", Texture.class);
         assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
         assetManager.load("world/entities/basic/basicWalk.png", Texture.class);
+        assetManager.load("world/entities/blocks/fallBlock.png", Texture.class);
+        assetManager.load("world/entities/blocks/fallBlockBreak.png", Texture.class);
         assetManager.load("world/particles/cloudParticle.png", Texture.class);
         assetManager.load("world/particles/dustParticle.png", Texture.class);
+        assetManager.load("world/particles/starParticle.png", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (1).png", Texture.class);

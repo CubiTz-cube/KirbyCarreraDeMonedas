@@ -147,7 +147,7 @@ public class GameScreen extends BaseScreen {
         chatWidget = new ChatWidget(main.getSkin());
 
         mirrorIndicators = new IndicatorManager(main.getAssetManager().get("yoshi.jpg", Texture.class));
-        maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("yoshi.jpg", Texture.class), new Vector2(0,0));
+        maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
         maxScoreIndicator.setVisible(false);
     }
 
