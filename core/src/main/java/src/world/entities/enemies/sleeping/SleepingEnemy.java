@@ -37,11 +37,13 @@ public class SleepingEnemy extends Enemy
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width / 2, shape.height / 2);
+        box.setAsBox(shape.width / 4, shape.height / 4);
         fixture = body.createFixture(box, 1);
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
+
+        setSpritePosModification(0f, getHeight()/4);
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.ENEMY;

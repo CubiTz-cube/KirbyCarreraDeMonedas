@@ -8,6 +8,9 @@
     ],
     "file.lastUsedOpenFilter": "Todos los archivos (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "maps/Bosque.tsx": {
             "scaleInDock": 1
         },
@@ -37,6 +40,19 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "maps/backgroundMontaint.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "maps/backgroundMoon.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/backgroundSpace.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "maps/cemetery.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 1,
@@ -50,22 +66,27 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "maps/fondo.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "maps/gameMap.tmx": {
             "expandedGroupLayers": [
                 13,
                 8
             ],
             "expandedObjectLayers": [
+                5,
                 6,
                 7,
-                4,
-                5
+                4
             ],
             "scale": 1,
-            "selectedLayer": 5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1569.5,
-                "y": 1840
+                "x": 1920,
+                "y": 1279.5
             }
         },
         "maps/garden.tsx": {
@@ -110,15 +131,15 @@
         },
         "maps/testMap.tmx": {
             "expandedObjectLayers": [
-                4,
                 3,
+                4,
                 2
             ],
-            "scale": 1.5,
-            "selectedLayer": 6,
+            "scale": 0.5,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 359,
-                "y": 587.3333333333333
+                "x": 480,
+                "y": 319
             }
         },
         "maps/testMap.tmx#forest": {
@@ -129,7 +150,7 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/German Carreño/Documents/CODE/KB-92/assets/background",
+    "last.imagePath": "C:/Users/dacm/Documents/CODE/KB-92/assets/background",
     "map.height": 160,
     "map.lastUsedFormat": "tmx",
     "map.renderOrder": "2",
@@ -138,28 +159,31 @@
     "map.width": 240,
     "openFiles": [
         "maps/gameMap.tmx",
-        "maps/testMap.tmx"
+        "maps/testMap.tmx",
+        "maps/backgroundMontaint.tsx",
+        "maps/backgroundMoon.tsx",
+        "maps/backgroundSpace.tsx"
     ],
     "project": "",
     "property.type": "color",
     "recentFiles": [
+        "maps/backgroundSpace.tsx",
+        "maps/backgroundMoon.tsx",
+        "maps/backgroundMontaint.tsx",
         "maps/testMap.tmx",
         "maps/gameMap.tmx",
+        "maps/fondo.tsx",
         "maps/TestMap.tmx",
         "maps/mainMap.tmx",
         "maps/temple.tsx",
         "maps/backForest.tsx",
         "maps/village.tsx",
-        "maps/garden.tsx",
-        "maps/dungeon.tsx",
-        "maps/cemetery.tsx",
-        "maps/aventure.tsx",
-        "maps/crypt.tsx"
+        "maps/garden.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,
         "width": 16
     },
-    "tileset.type": 1
+    "tileset.type": 0
 }

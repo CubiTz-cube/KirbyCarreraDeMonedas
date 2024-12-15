@@ -27,8 +27,8 @@ public class EntityFactory {
         AssetManager assetManager = game.main.getAssetManager();
         return switch (type) {
             case BASIC -> new BasicEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
-            case SLEEPY -> new SleepingEnemy(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case SWORD -> new SwordEnemy(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case SLEEPY -> new SleepingEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
+            case SWORD -> new SwordEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
