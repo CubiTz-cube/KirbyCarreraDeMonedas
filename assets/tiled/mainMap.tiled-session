@@ -42,7 +42,7 @@
         },
         "maps/backgroundMontaint.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 0.5,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "maps/backgroundMoon.tsx": {
@@ -77,13 +77,13 @@
                 8
             ],
             "expandedObjectLayers": [
-                5,
                 6,
-                7,
-                4
+                4,
+                5,
+                7
             ],
             "scale": 1,
-            "selectedLayer": 1,
+            "selectedLayer": 3,
             "viewCenter": {
                 "x": 1920,
                 "y": 1279.5
@@ -131,8 +131,8 @@
         },
         "maps/testMap.tmx": {
             "expandedObjectLayers": [
-                3,
                 4,
+                3,
                 2
             ],
             "scale": 0.5,
@@ -161,17 +161,16 @@
         "maps/gameMap.tmx",
         "maps/testMap.tmx",
         "maps/backgroundMontaint.tsx",
-        "maps/backgroundMoon.tsx",
-        "maps/backgroundSpace.tsx"
+        "maps/backgroundMoon.tsx"
     ],
     "project": "",
     "property.type": "color",
     "recentFiles": [
-        "maps/backgroundSpace.tsx",
         "maps/backgroundMoon.tsx",
         "maps/backgroundMontaint.tsx",
         "maps/testMap.tmx",
         "maps/gameMap.tmx",
+        "maps/backgroundSpace.tsx",
         "maps/fondo.tsx",
         "maps/TestMap.tmx",
         "maps/mainMap.tmx",
