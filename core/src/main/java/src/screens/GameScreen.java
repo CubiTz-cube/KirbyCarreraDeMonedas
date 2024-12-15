@@ -146,7 +146,7 @@ public class GameScreen extends BaseScreen {
 
         chatWidget = new ChatWidget(main.getSkin());
 
-        mirrorIndicators = new IndicatorManager(main.getAssetManager().get("yoshi.jpg", Texture.class));
+        mirrorIndicators = new IndicatorManager(main.getAssetManager().get("ui/indicators/mirrorIndicator.png", Texture.class));
         maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
         maxScoreIndicator.setVisible(false);
     }
@@ -533,7 +533,7 @@ public class GameScreen extends BaseScreen {
         System.out.println("Random Mirror");
         Vector2 position = spawnMirror.reSpawn(id);
         mirrorChangeSound.play();
-        sendPacket(Packet.message("Servidor",main.client.getName() + " ha entrado a un espejo."));
+        if (main.client != null) sendPacket(Packet.message("Servidor",main.client.getName() + " ha entrado a un espejo."));
 
         actEntityPos(id, position.x, position.y, 0f, 0f);
         sendPacket(Packet.actEntityPosition(id, position.x, position.y));

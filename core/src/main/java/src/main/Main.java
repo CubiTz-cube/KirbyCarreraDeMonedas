@@ -71,6 +71,7 @@ public class Main extends Game {
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
+        assetManager.load("ui/indicators/mirrorIndicator.png", Texture.class);
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);

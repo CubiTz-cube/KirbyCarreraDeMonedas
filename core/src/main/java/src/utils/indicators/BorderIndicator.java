@@ -40,8 +40,6 @@ public class BorderIndicator extends Actor{
     @Override
     public void act(float delta) {
         Vector2 direction = new Vector2(targetPosition.scl(PIXELS_IN_METER)).sub(centerPosition).nor();
-        float angle = direction.angleDeg();
-        setRotation(angle);
 
         float distance = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 2f - getWidth() / 2f;
         setPosition(centerPosition.x + direction.x * distance - getWidth() / 2f,
