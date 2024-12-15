@@ -115,10 +115,10 @@
                 2
             ],
             "scale": 1.5,
-            "selectedLayer": 5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 515.6666666666666,
-                "y": 562
+                "x": 359,
+                "y": 587.3333333333333
             }
         },
         "maps/testMap.tmx#forest": {
