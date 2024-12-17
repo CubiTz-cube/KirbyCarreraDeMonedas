@@ -74,12 +74,15 @@ public abstract class MinigameScreen extends UIScreen {
         gameStarted = false;
         frontTable.setVisible(true);
         backTable.setVisible(true);
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
         background.setSize(width, height);
+        initialX = width / 2f;
+        initialY = height / 2f;
     }
 
     public void endMinigame() {
