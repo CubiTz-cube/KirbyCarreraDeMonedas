@@ -30,11 +30,11 @@ public class SwordEnemy extends Enemy
     /*private final Animation<TextureRegion> idleAnimation;*/
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> damageAnimation;
-    private Animation<TextureRegion> attackAnimation;
+    private final Animation<TextureRegion> attackAnimation;
 
     public SwordEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
     {
-        super(world, shape, assetManager, id, game, Type.SWORD, PowerUp.Type.SWORD, 3);
+        super(world, shape, assetManager, id, game, Type.SWORD, PowerUp.Type.SWORD, 15);
         sprite.setTexture(assetManager.get("world/entities/sword/swordEnemyIdle.png", Texture.class));
 
         BodyDef def = new BodyDef();
@@ -62,11 +62,11 @@ public class SwordEnemy extends Enemy
         damageState = new DamageStateSword(this);
         setState(StateType.IDLE);
 
-        walkAnimation = new Animation<TextureRegion>(0.1f,
+        walkAnimation = new Animation<>(0.1f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
-        damageAnimation = new Animation<TextureRegion>(0.01f,
+        damageAnimation = new Animation<>(0.01f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyDamage.png"), 5));
-        attackAnimation = new Animation<TextureRegion>(0.1f,
+        attackAnimation = new Animation<>(0.1f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyAttack.png"), 6));
     }
 

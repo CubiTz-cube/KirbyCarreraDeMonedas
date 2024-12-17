@@ -21,7 +21,7 @@ public class BasicEnemy extends Enemy {
     private final Animation<TextureRegion> damageAnimation;
 
     public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager,id, game, Type.BASIC, null,3);
+        super(world, shape, assetManager,id, game, Type.BASIC, null,9);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);

@@ -4,24 +4,37 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.utils.Box2dUtils;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
+import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
 
 public class Projectil extends Entity {
     protected GameScreen game;
     private Boolean despawn;
+    private final Integer damage;
 
-    public Projectil(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game) {
+    public Projectil(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game, Integer damage) {
         super(world, shape, assetManager, id, type);
         this.game = game;
         despawn = false;
+        this.damage = damage;
     }
 
     @Override
     public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
-        if (actor instanceof Player) return;
+        if (actor instanceof Enemy enemy){
+            enemy.takeDamage(damage);
+            Box2dUtils.knockbackBody(enemy.getBody(), body, damage);
+        } else if (actor instanceof Player player) {
+            if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible()) return;
+            player.coinDrop = damage;
+            player.setCurrentState(Player.StateType.STUN);
+            player.playSound(PlayerCommon.SoundType.NORMALDAMAGE);
+            Box2dUtils.knockbackBody(getBody(), body, damage);
+        }
         despawn();
     }
 

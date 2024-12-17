@@ -8,13 +8,16 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.utils.Box2dUtils;
 import src.utils.animation.SheetCutter;
+import src.world.ActorBox2d;
+import src.world.entities.enemies.Enemy;
 
 public class Cloud extends Projectil {
     private Float timeDespawn;
 
     public Cloud(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager, id, Type.CLOUD, game);
+        super(world, shape, assetManager, id, Type.CLOUD, game, 3);
         timeDespawn = 0f;
 
         BodyDef def = new BodyDef();

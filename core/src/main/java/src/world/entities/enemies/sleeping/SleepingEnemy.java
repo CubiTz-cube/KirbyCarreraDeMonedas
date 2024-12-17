@@ -29,7 +29,7 @@ public class SleepingEnemy extends Enemy
 
     public SleepingEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
     {
-        super(world, shape, assetManager,id, game, Type.SLEEPY, PowerUp.Type.SLEEP, 3);
+        super(world, shape, assetManager,id, game, Type.SLEEPY, PowerUp.Type.SLEEP, 9);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);

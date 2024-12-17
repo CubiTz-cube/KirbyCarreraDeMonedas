@@ -14,6 +14,7 @@ public class StarState extends StatePlayer{
     public void start() {
         player.setAnimation(Player.AnimationType.FLYEND);
         player.playSound(Player.SoundType.STAR);
+        player.game.addCameraShake(0.2f, 5f);
         player.throwEntity(Entity.Type.STAR, 3f);
         player.enemyAbsorded = null;
     }

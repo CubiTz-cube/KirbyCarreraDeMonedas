@@ -33,7 +33,8 @@ public class StunState extends StatePlayer{
     public void end() {
         player.stunTime = Player.DEFAULT_STUNT_TIME;
         player.setInvencible(2f);
-        player.lossPoints(3);
+        player.lossPoints(player.coinDrop);
         player.setCurrentPowerUp(null);
+        player.coinDrop = Player.DEFAULT_COIN_DROP;
     }
 }

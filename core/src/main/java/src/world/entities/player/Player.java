@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
+import src.utils.Box2dUtils;
 import src.utils.constants.CollisionFilters;
 import src.utils.constants.PlayerControl;
 import src.world.ActorBox2d;
@@ -26,6 +27,8 @@ import src.world.statics.Spike;
 import java.util.Random;
 
 public class Player extends PlayerCommon {
+    public Integer coinDrop = 3;
+    public static final Integer DEFAULT_COIN_DROP = 3;
 
     public Enemy enemyAbsorded;
 
@@ -164,7 +167,6 @@ public class Player extends PlayerCommon {
 
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
-        Vector2 pushDirection = body.getPosition().cpy().sub(actor.getBody().getPosition()).nor();
         if (actor instanceof Enemy enemy) {
             if (getCurrentStateType() == StateType.ABSORB){
                 enemyAbsorded = enemy;
@@ -174,13 +176,10 @@ public class Player extends PlayerCommon {
             }
 
             if (getCurrentStateType() == StateType.DASH && enemy.getCurrentStateType() != Enemy.StateType.DAMAGE){
-                enemy.takeDamage(1);
-                body.setLinearVelocity(0,0);
-                body.applyLinearImpulse(pushDirection.scl(5f), body.getWorldCenter(), true);
-                body.applyLinearImpulse(0,5f, body.getWorldCenter().x, body.getWorldCenter().y, true);
-                enemy.getBody().setLinearVelocity(0,0);
-                enemy.getBody().applyLinearImpulse(pushDirection.scl(-2f), body.getWorldCenter(), true);
-                enemy.getBody().applyLinearImpulse(0,2f, body.getWorldCenter().x, body.getWorldCenter().y, true);
+                enemy.takeDamage(2);
+                Box2dUtils.knockbackBody(body, enemy.getBody(), 5f);
+                Box2dUtils.knockbackBody(enemy.getBody(), body, 2f);
+                setInvencible(0.5f);
                 setCurrentState(StateType.FALL);
                 return;
             }
@@ -188,42 +187,34 @@ public class Player extends PlayerCommon {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             setCurrentState(Player.StateType.STUN);
             playSound(SoundType.NORMALDAMAGE);
-            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            Box2dUtils.knockbackBody(body, enemy.getBody(), 10f);
 
         } else if (actor instanceof Mirror m) {
             game.threadSecureWorld.addModification(() -> {
                 game.playMinigame();
                 game.randomMirror(m.getId());
             });
-        } else if (actor instanceof Projectil projectil) {
-            if (getCurrentStateType() == StateType.STUN || invencible) return;
-            setCurrentState(Player.StateType.STUN);
-            playSound(SoundType.NORMALDAMAGE);
-            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
-            projectil.despawn();
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             playSound(SoundType.SCORE2);
             coin.despawn();
             game.setScore(game.getScore() + 1);
-        } else if (actor instanceof Spike) {
+        } else if (actor instanceof Spike spike) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             stunTime = 0.5f;
             setCurrentState(Player.StateType.STUN);
             playSound(SoundType.NORMALDAMAGE);
-            body.setLinearVelocity(0,0);
-            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
-        } else if (actor instanceof Lava) {
+            Box2dUtils.knockbackBody(body, spike.getBody(), 10f);
+        } else if (actor instanceof Lava lava) {
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             stunTime = 0.5f;
             setCurrentState(Player.StateType.STUN);
             playSound(SoundType.FIREDAMAGE);
-            body.setLinearVelocity(0,0);
-            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            Box2dUtils.knockbackBody(body, lava.getBody(), 10f);
         }else if (actor instanceof OtherPlayer other){
             if (getCurrentStateType() == StateType.STUN || invencible || other.getCurrentStateType() != StateType.DASH) return;
             setCurrentState(Player.StateType.STUN);
-            body.applyLinearImpulse(pushDirection.scl(15f), body.getWorldCenter(), true);
+            Box2dUtils.knockbackBody(body, other.getBody(), 10f);
         }
     }
 }
