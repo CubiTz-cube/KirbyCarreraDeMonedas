@@ -13,6 +13,7 @@ public class StarState extends StatePlayer{
     @Override
     public void start() {
         player.setAnimation(Player.AnimationType.FLYEND);
+        player.playSound(Player.SoundType.STAR);
         player.throwEntity(Entity.Type.STAR, 3f);
         player.enemyAbsorded = null;
     }

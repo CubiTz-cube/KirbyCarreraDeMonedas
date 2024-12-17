@@ -70,6 +70,7 @@ public class Main extends Game {
         assetManager.load("world/entities/sword/swordEnemyWalk.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyDamage.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyAttack.png", Texture.class);
+        assetManager.load("world/entities/sword/swordEnemyIdle.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
@@ -184,7 +185,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MINIODSPLEASE);
+        changeScreen(Screens.INTRO);
     }
 
     public void setName(String name) {

@@ -35,7 +35,7 @@ public class SwordEnemy extends Enemy
     public SwordEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
     {
         super(world, shape, assetManager, id, game, Type.SWORD, PowerUp.Type.SWORD, 3);
-        sprite.setTexture(assetManager.get("yoshiSword.png", Texture.class));
+        sprite.setTexture(assetManager.get("world/entities/sword/swordEnemyIdle.png", Texture.class));
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
