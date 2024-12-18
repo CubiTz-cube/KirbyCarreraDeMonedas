@@ -1,6 +1,5 @@
 package src.world.entities.enemies.basic.states;
 
-import src.utils.stateMachine.StateMachine;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
 import src.world.entities.enemies.basic.BasicEnemy;

@@ -29,8 +29,12 @@ public class WalkStateSword extends StateEnemy<SwordEnemy>
                 enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
         }
 
-        if (enemy.getActCrono() > 3) {
+        if (enemy.getActCrono() > 1.5f){
             enemy.setState(Enemy.StateType.ATTACK);
+        }
+
+        if (enemy.getActCrono() > 3) {
+            enemy.setState(Enemy.StateType.IDLE);
         }
     }
 

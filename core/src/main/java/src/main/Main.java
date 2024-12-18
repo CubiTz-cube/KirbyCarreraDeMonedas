@@ -63,10 +63,11 @@ public class Main extends Game {
         assetManager = new AssetManager();
         assetManager.load("yoshi.jpg", Texture.class);
         assetManager.load("yozhi.jpg", Texture.class);
+        assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyIdle.png", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyDamage.png", Texture.class);
-        assetManager.load("poshi.jpg", Texture.class);
-        assetManager.load("yoshiSword.png", Texture.class);
+        assetManager.load("world/entities/fly/flyIdle.png", Texture.class);
+        assetManager.load("world/entities/fly/flyDamage.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyWalk.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyDamage.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyAttack.png", Texture.class);
