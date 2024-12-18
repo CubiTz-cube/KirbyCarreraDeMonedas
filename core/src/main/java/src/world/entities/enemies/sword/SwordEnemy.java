@@ -27,7 +27,7 @@ public class SwordEnemy extends Enemy
         ATTACK
     }
 
-    /*private final Animation<TextureRegion> idleAnimation;*/
+    private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> damageAnimation;
     private final Animation<TextureRegion> attackAnimation;
@@ -62,6 +62,8 @@ public class SwordEnemy extends Enemy
         damageState = new DamageStateSword(this);
         setState(StateType.IDLE);
 
+        idleAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
         walkAnimation = new Animation<>(0.1f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
         damageAnimation = new Animation<>(0.01f,
@@ -72,7 +74,7 @@ public class SwordEnemy extends Enemy
 
     public void setAnimation(SwordEnemy.AnimationType type){
         switch (type){
-            /*case IDLE -> setCurrentAnimation(idleAnimation);*/
+            case IDLE -> setCurrentAnimation(idleAnimation);
             case WALK -> setCurrentAnimation(walkAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
             case ATTACK -> setCurrentAnimation(attackAnimation);

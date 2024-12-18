@@ -1,31 +1,31 @@
-package src.world.entities.enemies.basic.states;
+package src.world.entities.enemies.fly.states;
 
 import com.badlogic.gdx.math.Vector2;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.basic.BasicEnemy;
+import src.world.entities.enemies.fly.FlyEnemy;
 
-public class WalkStateBasic extends StateEnemy<BasicEnemy> {
+public class WalkStateFly extends StateEnemy<FlyEnemy> {
 
-    public WalkStateBasic(BasicEnemy enemy) {
+    public WalkStateFly(FlyEnemy enemy) {
         super(enemy);
     }
 
     @Override
     public void start() {
         super.start();
-        enemy.setAnimation(BasicEnemy.AnimationType.WALK);
+        enemy.setAnimation(FlyEnemy.AnimationType.WALK);
     }
 
     @Override
     public void update(Float delta) {
         Vector2 velocity = enemy.getBody().getLinearVelocity();
         if (Math.abs(velocity.x) < enemy.speed) {
-            enemy.getBody().applyForce(enemy.getSprite().isFlipX()? -5 : 5, 0,
+            enemy.getBody().applyForce(0, enemy.getSprite().isFlipX()? 0 : 21,
                 enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
         }
 
-        if (enemy.getActCrono() > 3) {
+        if (enemy.getActCrono() > 0.9f) {
             enemy.setState(Enemy.StateType.IDLE);
         }
     }
