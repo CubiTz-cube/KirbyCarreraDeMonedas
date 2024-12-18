@@ -195,7 +195,11 @@ public class OdsPleaseScreen extends MinigameScreen {
         else odsImage.setTexture(odsTextures.get(random.nextInt(odsTextures.size())));
 
         odsReal = select >= 2;
-        System.out.println("odsReal: " + odsReal);
+
+        if (countBad >= 3) {
+            game.setScore(game.getScore() + countGood/(max/3));
+            endMinigame();
+        }
     }
 
     private void changePersonImage() {

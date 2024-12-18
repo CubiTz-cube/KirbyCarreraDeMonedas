@@ -112,6 +112,8 @@ public class Main extends Game {
         assetManager.load("world/particles/cloudParticle.png", Texture.class);
         assetManager.load("world/particles/dustParticle.png", Texture.class);
         assetManager.load("world/particles/starParticle.png", Texture.class);
+        assetManager.load("world/particles/swordParticle.png", Texture.class);
+        assetManager.load("world/particles/kirbySwordParticle.png", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (1).png", Texture.class);

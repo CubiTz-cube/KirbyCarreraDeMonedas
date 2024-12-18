@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import src.net.packets.Packet;
 import src.screens.components.ChatWidget;
+import src.screens.components.LayersManager;
 import src.utils.*;
 import src.utils.constants.Constants;
 import src.utils.indicators.BorderIndicator;
@@ -85,6 +86,8 @@ public class GameScreen extends BaseScreen {
     private IndicatorManager mirrorIndicators;
     private BorderIndicator maxScoreIndicator;
     private Integer idTargetMaxScore;
+
+    //private LayersManager layersManager;
     private Table tableUI;
     private Label odsPointsLabel;
     private Label gameTimeLabel;
@@ -133,6 +136,8 @@ public class GameScreen extends BaseScreen {
     }
 
     private void initUI(){
+        //layersManager = new LayersManager(stage, 5);
+
         tableUI = new Table();
         tableUI.setFillParent(true);
 

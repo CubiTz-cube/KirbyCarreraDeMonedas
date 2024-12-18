@@ -145,6 +145,12 @@ public class Player extends PlayerCommon {
         }
     }
 
+    public void dropPower(){
+        if (currentpowerUptype == null) return;
+        //game.addEntity(Type.POWERUP, body.getPosition(), new Vector2(0,0), currentpowerUptype);
+        setCurrentPowerUp(null);
+    }
+
     public void doAction(){
         if (currentpowerUptype != null) {
             PowerUp power = getCurrentPowerUp();
@@ -184,7 +190,7 @@ public class Player extends PlayerCommon {
                 return;
             }
 
-            if (getCurrentStateType() == StateType.STUN || invencible) return;
+            if (getCurrentStateType() == StateType.STUN || invencible || enemy.getCurrentStateType() != Enemy.StateType.DAMAGE) return;
             setCurrentState(Player.StateType.STUN);
             playSound(SoundType.NORMALDAMAGE);
             Box2dUtils.knockbackBody(body, enemy.getBody(), 10f);

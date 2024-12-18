@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import src.utils.animation.SheetCutter;
+import src.world.entities.Entity;
+import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
 
 public class PowerSword extends PowerUp {
@@ -41,7 +43,9 @@ public class PowerSword extends PowerUp {
 
     @Override
     public void actionIdle() {
+        Player mainPlayer = (Player) player;
 
+        mainPlayer.throwEntity(Entity.Type.SWORDPLAYER,0f);
     }
 
     @Override

@@ -14,6 +14,8 @@ import src.world.entities.blocks.FallBlock;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.projectiles.Cloud;
 import src.world.entities.projectiles.Star;
+import src.world.entities.projectiles.SwordProyectil;
+
 import static java.lang.Math.sqrt;
 
 public class EntityFactory {
@@ -32,6 +34,8 @@ public class EntityFactory {
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case SWORDPLAYER -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
+            case SWORDENEMY -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDENEMY, game, assetManager.get("world/particles/swordParticle.png"));
             case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case FALLBLOCK -> new FallBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
