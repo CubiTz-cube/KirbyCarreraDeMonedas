@@ -5,7 +5,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
-import src.world.entities.objects.CoinOdsPoint;
+import src.world.entities.enemies.fly.FlyEnemy;
+import src.world.entities.items.CoinOdsPoint;
+import src.world.entities.items.PowerItem;
 import src.world.entities.blocks.BreakBlock;
 import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
@@ -14,6 +16,8 @@ import src.world.entities.blocks.FallBlock;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.projectiles.Cloud;
 import src.world.entities.projectiles.Star;
+import src.world.entities.projectiles.SwordProyectil;
+
 import static java.lang.Math.sqrt;
 
 public class EntityFactory {
