@@ -14,13 +14,12 @@ import src.utils.constants.PlayerControl;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.objects.CoinOdsPoint;
+import src.world.entities.items.CoinOdsPoint;
+import src.world.entities.items.PowerItem;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.powers.PowerUp;
-import src.world.entities.player.powers.PowerWheel;
 import src.world.entities.player.states.*;
-import src.world.entities.projectiles.Projectil;
 import src.world.statics.Lava;
 import src.world.statics.Spike;
 
@@ -37,6 +36,8 @@ public class Player extends PlayerCommon {
     private final Color color;
     private Float invencibleTime;
     private Boolean invencible;
+
+    private Random random;
 
     public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game, Color color) {
         super(world, shape, assetManager, -1);
@@ -55,6 +56,8 @@ public class Player extends PlayerCommon {
 
         invencibleTime = 0f;
         invencible = false;
+
+        random = new Random();
         //setCurrentPowerUp(PowerUp.Type.WHEEL);
     }
 
@@ -130,7 +133,6 @@ public class Player extends PlayerCommon {
         int coins;
         Integer score = game.getScore();
         if (score == null) return;
-        Random random = new Random();
 
         if (score > amount) {
             coins = amount;
@@ -147,7 +149,11 @@ public class Player extends PlayerCommon {
 
     public void dropPower(){
         if (currentpowerUptype == null) return;
-        //game.addEntity(Type.POWERUP, body.getPosition(), new Vector2(0,0), currentpowerUptype);
+        switch (currentpowerUptype){
+            case BOMB -> game.addEntity(Type.POWERBOMB, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
+            case WHEEL -> game.addEntity(Type.POWERWHEEL, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
+            case SWORD -> game.addEntity(Type.POWERSWORD, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
+        }
         setCurrentPowerUp(null);
     }
 
@@ -190,7 +196,7 @@ public class Player extends PlayerCommon {
                 return;
             }
 
-            if (getCurrentStateType() == StateType.STUN || invencible || enemy.getCurrentStateType() != Enemy.StateType.DAMAGE) return;
+            if (getCurrentStateType() == StateType.STUN || invencible || enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) return;
             setCurrentState(Player.StateType.STUN);
             playSound(SoundType.NORMALDAMAGE);
             Box2dUtils.knockbackBody(body, enemy.getBody(), 10f);
@@ -200,6 +206,13 @@ public class Player extends PlayerCommon {
                 game.playMinigame();
                 game.randomMirror(m.getId());
             });
+        } else if (actor instanceof PowerItem power){
+            if (getCurrentStateType() == StateType.STUN || invencible || getCurrentStateType() != StateType.ABSORB) return;
+            playSound(SoundType.POWER);
+            power.despawn();
+            //enemyAbsorded = power;
+            setCurrentState(Player.StateType.IDLE);
+            setCurrentPowerUp(power.getPowerType());
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             playSound(SoundType.SCORE2);

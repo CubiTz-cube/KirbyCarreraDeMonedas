@@ -1,6 +1,5 @@
-package src.world.entities.objects;
+package src.world.entities.items;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,12 +10,10 @@ import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.statics.Lava;
 
-public class CoinOdsPoint extends Entity {
-    protected GameScreen game;
+public class CoinOdsPoint extends Item {
 
     public CoinOdsPoint(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager, id, Type.COIN);
-        this.game = game;
+        super(world, shape, assetManager, id, Type.COIN, game);
         sprite.setTexture(assetManager.get("world/entities/coin.png", Texture.class));
 
         BodyDef def = new BodyDef();
@@ -32,20 +29,8 @@ public class CoinOdsPoint extends Entity {
         body.setFixedRotation(true);
 
         Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.COIN;
-        filter.maskBits = (short)~(CollisionFilters.ENEMY | CollisionFilters.COIN);
+        filter.categoryBits = CollisionFilters.ITEM;
+        filter.maskBits = (short)~(CollisionFilters.ENEMY | CollisionFilters.ITEM);
         fixture.setFilterData(filter);
-    }
-
-    @Override
-    public void beginContactWith(ActorBox2d actor, GameScreen game) {
-        super.beginContactWith(actor, game);
-        if(actor instanceof Lava) {
-            despawn();
-        }
-    }
-
-    public synchronized void despawn(){
-        game.removeEntity(getId());
     }
 }
