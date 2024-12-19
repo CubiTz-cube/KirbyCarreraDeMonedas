@@ -119,7 +119,7 @@ public class GameScreen extends BaseScreen {
         lastPosition = new Vector2();
         sendTime = 0f;
         scorePlayers = new HashMap<>();
-        timeGame = new SecondsTimer(0,15,0);
+        timeGame = new SecondsTimer(0,5,0);
 
         random = new Random();
         spawnMirror = new SpawnManager();
@@ -552,6 +552,15 @@ public class GameScreen extends BaseScreen {
     public void addCameraShake(Float time, Float force){
         cameraShakeManager.addShake(time,force);
     }
+
+    /*public void respawnEnemy(){
+        for (Entity e: entities.values()){
+            if (e instanceof Enemy){
+                removeEntity(e.getId());
+            }
+        }
+
+    }*/
 
     @Override
     public void dispose() {
