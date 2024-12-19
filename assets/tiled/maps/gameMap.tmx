@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="240" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="947">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="240" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="1102">
  <tileset firstgid="1" source="Bosque.tsx"/>
  <tileset firstgid="626" source="temple.tsx"/>
  <tileset firstgid="818" source="crypt.tsx"/>
@@ -670,20 +670,13 @@
   <object id="276" name="Espejo" type="MIRROR" x="918.667" y="1798" width="32" height="32"/>
   <object id="277" name="Espejo" type="MIRROR" x="608" y="2096" width="32" height="32"/>
  </objectgroup>
- <objectgroup color="#ff5500" id="6" name="entity">
-  <object id="26" name="Enemigo Basico" type="BASIC" x="2928" y="1120" width="16" height="16"/>
+ <objectgroup color="#ff5500" id="6" name="entity" visible="0">
   <object id="102" name="breakBlock" type="BREAKBLOCK" x="1696" y="1248" width="16" height="16"/>
-  <object id="153" name="Enemigo Durmiente" type="SLEEPY" x="3024" y="960" width="16" height="16"/>
-  <object id="155" name="Enemigo Espada" type="SWORD" x="647.803" y="2201.9" width="16" height="16"/>
   <object id="208" name="breakBlock" type="BREAKBLOCK" x="1696" y="1264" width="16" height="16"/>
   <object id="209" name="breakBlock" type="BREAKBLOCK" x="1696" y="1280" width="16" height="16"/>
   <object id="210" name="breakBlock" type="BREAKBLOCK" x="2144" y="1248" width="16" height="16"/>
   <object id="211" name="breakBlock" type="BREAKBLOCK" x="2144" y="1264" width="16" height="16"/>
   <object id="212" name="breakBlock" type="BREAKBLOCK" x="2144" y="1280" width="16" height="16"/>
-  <object id="213" name="Bomber" type="BOMBER" x="3152" y="1104" width="16" height="16"/>
-  <object id="217" name="Enemigo Durmiente" type="SLEEPY" x="1984" y="1040" width="16" height="16"/>
-  <object id="218" name="Enemigo Basico" type="BASIC" x="3024" y="864" width="16" height="16"/>
-  <object id="239" name="Enemigo Dragon Hielo" type="DRAGON" x="832" y="2256" width="32" height="32"/>
   <object id="240" name="fallBlock" type="FALLBLOCK" x="3280" y="2160" width="16" height="16"/>
   <object id="241" name="fallBlock" type="FALLBLOCK" x="3296" y="2160" width="16" height="16"/>
   <object id="242" name="fallBlock" type="FALLBLOCK" x="3312" y="2160" width="16" height="16"/>
@@ -699,57 +692,6 @@
   <object id="252" name="fallBlock" type="FALLBLOCK" x="3472" y="2160" width="16" height="16"/>
   <object id="253" name="fallBlock" type="FALLBLOCK" x="3488" y="2160" width="16" height="16"/>
   <object id="254" name="fallBlock" type="FALLBLOCK" x="3504" y="2160" width="16" height="16"/>
-  <object id="257" name="Enemigo Espada" type="SWORD" x="3408" y="2032" width="16" height="16"/>
-  <object id="258" name="Enemigo Rueda" type="WHEEL" x="3248" y="2144" width="16" height="16"/>
-  <object id="271" name="Enemigo Torreta" type="TURRET" x="2432" y="2048" width="16" height="16"/>
-  <object id="273" name="Enemigo Torreta" type="TURRET" x="2432" y="2096" width="16" height="16"/>
-  <object id="274" name="Enemigo Torreta" type="TURRET" x="3520" y="2128" width="16" height="16"/>
-  <object id="278" name="Enemigo Durmiente" type="SLEEPY" x="1984" y="912" width="16" height="16"/>
-  <object id="279" name="Enemigo Durmiente" type="SLEEPY" x="1856" y="880" width="16" height="16"/>
-  <object id="280" name="Enemigo Durmiente" type="SLEEPY" x="1856" y="1008" width="16" height="16"/>
-  <object id="281" name="Enemigo Durmiente" type="SLEEPY" x="1840" y="736" width="16" height="16"/>
-  <object id="282" name="Enemigo Durmiente" type="SLEEPY" x="2000" y="736" width="16" height="16"/>
-  <object id="283" name="Enemigo Durmiente" type="SLEEPY" x="1456" y="896" width="16" height="16"/>
-  <object id="284" name="Enemigo Basico" type="BASIC" x="1344" y="832" width="16" height="16"/>
-  <object id="286" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1248" width="16" height="16"/>
-  <object id="288" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1264" width="16" height="16"/>
-  <object id="289" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1280" width="16" height="16"/>
-  <object id="290" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1408" y="816" width="16" height="16"/>
-  <object id="291" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1408" y="832" width="16" height="16"/>
-  <object id="292" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2800" y="1264" width="16" height="16"/>
-  <object id="293" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2816" y="1264" width="16" height="16"/>
-  <object id="294" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2800" y="1280" width="16" height="16"/>
-  <object id="295" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2816" y="1280" width="16" height="16"/>
-  <object id="296" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2800" y="1296" width="16" height="16"/>
-  <object id="297" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2816" y="1296" width="16" height="16"/>
-  <object id="298" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="1488" y="816" width="16" height="16"/>
-  <object id="299" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="1488" y="832" width="16" height="16"/>
-  <object id="300" name="Enemigo Basico" type="BASIC" x="1472" y="1296" width="16" height="16"/>
-  <object id="301" name="Enemigo Basico" type="BASIC" x="2608" y="1328" width="16" height="16"/>
-  <object id="302" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1712" width="16" height="16"/>
-  <object id="303" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1616" width="16" height="16"/>
-  <object id="304" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1520" width="16" height="16"/>
-  <object id="305" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1808" width="16" height="16"/>
-  <object id="306" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1904" width="16" height="16"/>
-  <object id="307" name="Enemigo Mosca" type="FLYBUG" x="1920" y="2000" width="16" height="16"/>
-  <object id="308" name="Enemigo Mosca" type="FLYBUG" x="1920" y="2096" width="16" height="16"/>
-  <object id="309" name="Enemigo Mosca" type="FLYBUG" x="2128" y="2112" width="16" height="16"/>
-  <object id="310" name="Enemigo Mosca" type="FLYBUG" x="2144" y="2112" width="16" height="16"/>
-  <object id="311" name="Enemigo Mosca" type="FLYBUG" x="2160" y="2096" width="16" height="16"/>
-  <object id="312" name="Enemigo Mosca" type="FLYBUG" x="2176" y="2096" width="16" height="16"/>
-  <object id="313" name="Enemigo Mosca" type="FLYBUG" x="2192" y="2080" width="16" height="16"/>
-  <object id="314" name="Enemigo Mosca" type="FLYBUG" x="2208" y="2080" width="16" height="16"/>
-  <object id="315" name="Enemigo Mosca" type="FLYBUG" x="2224" y="2064" width="16" height="16"/>
-  <object id="316" name="Enemigo Mosca" type="FLYBUG" x="2240" y="2064" width="16" height="16"/>
-  <object id="317" name="Enemigo Mosca" type="FLYBUG" x="2256" y="2048" width="16" height="16"/>
-  <object id="318" name="Enemigo Mosca" type="FLYBUG" x="2272" y="2048" width="16" height="16"/>
-  <object id="319" name="Enemigo Mosca" type="FLYBUG" x="2288" y="2032" width="16" height="16"/>
-  <object id="320" name="Enemigo Mosca" type="FLYBUG" x="2304" y="2032" width="16" height="16"/>
-  <object id="321" name="Enemigo Mosca" type="FLYBUG" x="2320" y="2016" width="16" height="16"/>
-  <object id="322" name="Enemigo Mosca" type="FLYBUG" x="2336" y="2016" width="16" height="16"/>
-  <object id="323" name="Enemigo Mosca" type="FLYBUG" x="2352" y="2000" width="16" height="16"/>
-  <object id="324" name="Enemigo Mosca" type="FLYBUG" x="2368" y="2000" width="16" height="16"/>
-  <object id="325" name="Enemigo Rueda" type="WHEEL" x="1472" y="2272" width="16" height="16"/>
   <object id="639" name="fallBlock" type="FALLBLOCK" x="1392" y="1936" width="16" height="16"/>
   <object id="640" name="fallBlock" type="FALLBLOCK" x="1408" y="1936" width="16" height="16"/>
   <object id="641" name="fallBlock" type="FALLBLOCK" x="1424" y="1936" width="16" height="16"/>
@@ -758,25 +700,85 @@
   <object id="720" name="breakBlock" type="BREAKBLOCK" x="3136" y="1264" width="16" height="16"/>
   <object id="721" name="breakBlock" type="BREAKBLOCK" x="3136" y="1280" width="16" height="16"/>
   <object id="722" name="breakBlock" type="BREAKBLOCK" x="3136" y="1296" width="16" height="16"/>
-  <object id="880" name="Enemigo Espada" type="SWORD" x="976" y="1808" width="16" height="16"/>
-  <object id="881" name="Enemigo Espada" type="SWORD" x="2080" y="1808" width="16" height="16"/>
-  <object id="916" name="Enemigo Espada" type="SWORD" x="1616" y="1280" width="16" height="16"/>
-  <object id="920" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2800" y="736" width="16" height="16"/>
-  <object id="921" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2816" y="736" width="16" height="16"/>
-  <object id="922" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2832" y="736" width="16" height="16"/>
-  <object id="923" name="Enemigo Espada" type="SWORD" x="3040" y="704" width="16" height="16"/>
-  <object id="932" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1456" width="16" height="16"/>
-  <object id="933" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1520" width="16" height="16"/>
-  <object id="934" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1584" width="16" height="16"/>
-  <object id="935" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1648" width="16" height="16"/>
-  <object id="939" name="Enemigo Mosca" type="FLYBUG" x="1744" y="832" width="16" height="16"/>
-  <object id="940" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1712" width="16" height="16"/>
-  <object id="941" name="Enemigo Mosca" type="FLYBUG" x="1440" y="1792" width="16" height="16"/>
-  <object id="942" name="Enemigo Mosca" type="FLYBUG" x="1424" y="2080" width="16" height="16"/>
-  <object id="943" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1424" width="16" height="16"/>
-  <object id="944" name="Enemigo Mosca" type="FLYBUG" x="2192" y="1456" width="16" height="16"/>
-  <object id="945" name="Enemigo Mosca" type="FLYBUG" x="2816" y="1840" width="16" height="16"/>
-  <object id="946" name="Enemigo Mosca" type="FLYBUG" x="2800" y="1840" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup color="#ffc9c9" id="18" name="enemy">
+  <object id="1025" name="Enemigo Espada" type="SWORD" x="1616" y="1280" width="16" height="16"/>
+  <object id="1026" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2800" y="736" width="16" height="16"/>
+  <object id="1027" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2816" y="736" width="16" height="16"/>
+  <object id="1028" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2832" y="736" width="16" height="16"/>
+  <object id="1029" name="Enemigo Espada" type="SWORD" x="3040" y="704" width="16" height="16"/>
+  <object id="1030" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1456" width="16" height="16"/>
+  <object id="1031" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1520" width="16" height="16"/>
+  <object id="1032" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1584" width="16" height="16"/>
+  <object id="1033" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1648" width="16" height="16"/>
+  <object id="1034" name="Enemigo Mosca" type="FLYBUG" x="1744" y="832" width="16" height="16"/>
+  <object id="1035" name="Enemigo Mosca" type="FLYBUG" x="1056" y="1712" width="16" height="16"/>
+  <object id="1036" name="Enemigo Mosca" type="FLYBUG" x="1440" y="1792" width="16" height="16"/>
+  <object id="1037" name="Enemigo Mosca" type="FLYBUG" x="1424" y="2080" width="16" height="16"/>
+  <object id="1038" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1424" width="16" height="16"/>
+  <object id="1039" name="Enemigo Mosca" type="FLYBUG" x="2192" y="1456" width="16" height="16"/>
+  <object id="1040" name="Enemigo Mosca" type="FLYBUG" x="2816" y="1840" width="16" height="16"/>
+  <object id="1041" name="Enemigo Mosca" type="FLYBUG" x="2800" y="1840" width="16" height="16"/>
+  <object id="1042" name="Enemigo Espada" type="SWORD" x="3408" y="2016" width="16" height="16"/>
+  <object id="1043" name="Enemigo Rueda" type="WHEEL" x="3248" y="2128" width="16" height="16"/>
+  <object id="1044" name="Enemigo Torreta" type="TURRET" x="2432" y="2032" width="16" height="16"/>
+  <object id="1045" name="Enemigo Torreta" type="TURRET" x="2432" y="2080" width="16" height="16"/>
+  <object id="1046" name="Enemigo Torreta" type="TURRET" x="3520" y="2112" width="16" height="16"/>
+  <object id="1047" name="Enemigo Durmiente" type="SLEEPY" x="1984" y="896" width="16" height="16"/>
+  <object id="1048" name="Enemigo Durmiente" type="SLEEPY" x="1856" y="864" width="16" height="16"/>
+  <object id="1049" name="Enemigo Durmiente" type="SLEEPY" x="1856" y="992" width="16" height="16"/>
+  <object id="1050" name="Enemigo Durmiente" type="SLEEPY" x="1840" y="720" width="16" height="16"/>
+  <object id="1051" name="Enemigo Durmiente" type="SLEEPY" x="2000" y="720" width="16" height="16"/>
+  <object id="1052" name="Enemigo Durmiente" type="SLEEPY" x="1456" y="880" width="16" height="16"/>
+  <object id="1053" name="Enemigo Basico" type="BASIC" x="1344" y="816" width="16" height="16"/>
+  <object id="1054" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1232" width="16" height="16"/>
+  <object id="1055" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1248" width="16" height="16"/>
+  <object id="1056" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1264" width="16" height="16"/>
+  <object id="1057" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1408" y="800" width="16" height="16"/>
+  <object id="1058" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1408" y="816" width="16" height="16"/>
+  <object id="1059" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2800" y="1248" width="16" height="16"/>
+  <object id="1060" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2816" y="1248" width="16" height="16"/>
+  <object id="1061" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2800" y="1264" width="16" height="16"/>
+  <object id="1062" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2816" y="1264" width="16" height="16"/>
+  <object id="1063" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2800" y="1280" width="16" height="16"/>
+  <object id="1064" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="2816" y="1280" width="16" height="16"/>
+  <object id="1065" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="1488" y="800" width="16" height="16"/>
+  <object id="1066" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="1488" y="816" width="16" height="16"/>
+  <object id="1067" name="Enemigo Basico" type="BASIC" x="1472" y="1280" width="16" height="16"/>
+  <object id="1068" name="Enemigo Basico" type="BASIC" x="2608" y="1312" width="16" height="16"/>
+  <object id="1069" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1696" width="16" height="16"/>
+  <object id="1070" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1600" width="16" height="16"/>
+  <object id="1071" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1504" width="16" height="16"/>
+  <object id="1072" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1792" width="16" height="16"/>
+  <object id="1073" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1888" width="16" height="16"/>
+  <object id="1074" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1984" width="16" height="16"/>
+  <object id="1075" name="Enemigo Mosca" type="FLYBUG" x="1920" y="2080" width="16" height="16"/>
+  <object id="1076" name="Enemigo Mosca" type="FLYBUG" x="2128" y="2096" width="16" height="16"/>
+  <object id="1077" name="Enemigo Mosca" type="FLYBUG" x="2144" y="2096" width="16" height="16"/>
+  <object id="1078" name="Enemigo Mosca" type="FLYBUG" x="2160" y="2080" width="16" height="16"/>
+  <object id="1079" name="Enemigo Mosca" type="FLYBUG" x="2176" y="2080" width="16" height="16"/>
+  <object id="1080" name="Enemigo Mosca" type="FLYBUG" x="2192" y="2064" width="16" height="16"/>
+  <object id="1081" name="Enemigo Mosca" type="FLYBUG" x="2208" y="2064" width="16" height="16"/>
+  <object id="1082" name="Enemigo Mosca" type="FLYBUG" x="2224" y="2048" width="16" height="16"/>
+  <object id="1083" name="Enemigo Mosca" type="FLYBUG" x="2240" y="2048" width="16" height="16"/>
+  <object id="1084" name="Enemigo Mosca" type="FLYBUG" x="2256" y="2032" width="16" height="16"/>
+  <object id="1085" name="Enemigo Mosca" type="FLYBUG" x="2272" y="2032" width="16" height="16"/>
+  <object id="1086" name="Enemigo Mosca" type="FLYBUG" x="2288" y="2016" width="16" height="16"/>
+  <object id="1087" name="Enemigo Mosca" type="FLYBUG" x="2304" y="2016" width="16" height="16"/>
+  <object id="1088" name="Enemigo Mosca" type="FLYBUG" x="2320" y="2000" width="16" height="16"/>
+  <object id="1089" name="Enemigo Mosca" type="FLYBUG" x="2336" y="2000" width="16" height="16"/>
+  <object id="1090" name="Enemigo Mosca" type="FLYBUG" x="2352" y="1984" width="16" height="16"/>
+  <object id="1091" name="Enemigo Mosca" type="FLYBUG" x="2368" y="1984" width="16" height="16"/>
+  <object id="1092" name="Enemigo Rueda" type="WHEEL" x="1472" y="2256" width="16" height="16"/>
+  <object id="1093" name="Enemigo Espada" type="SWORD" x="976" y="1792" width="16" height="16"/>
+  <object id="1094" name="Enemigo Espada" type="SWORD" x="2080" y="1792" width="16" height="16"/>
+  <object id="1095" name="Enemigo Basico" type="BASIC" x="2936.2" y="1120" width="16" height="16"/>
+  <object id="1096" name="Enemigo Durmiente" type="SLEEPY" x="3032.2" y="960" width="16" height="16"/>
+  <object id="1097" name="Enemigo Espada" type="SWORD" x="656" y="2201.9" width="16" height="16"/>
+  <object id="1098" name="Bomber" type="BOMBER" x="3160.2" y="1104" width="16" height="16"/>
+  <object id="1099" name="Enemigo Durmiente" type="SLEEPY" x="1992.2" y="1040" width="16" height="16"/>
+  <object id="1100" name="Enemigo Basico" type="BASIC" x="3032.2" y="864" width="16" height="16"/>
+  <object id="1101" name="Enemigo Dragon Hielo" type="DRAGON" x="840.197" y="2256" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="7" name="static" visible="0">
   <object id="116" name="plataform" type="PLATAFORM" x="2960" y="752" width="48" height="8"/>

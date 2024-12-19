@@ -543,6 +543,8 @@ public class GameScreen extends BaseScreen {
         actEntityPos(id, position.x, position.y, 0f, 0f);
         sendPacket(Packet.actEntityPosition(id, position.x, position.y));
         mirrorIndicators.changeTargetPosition(id ,position);
+
+        respawnEnemy();
     }
 
     public synchronized void sendPacket(Object[] packet) {
@@ -553,14 +555,14 @@ public class GameScreen extends BaseScreen {
         cameraShakeManager.addShake(time,force);
     }
 
-    /*public void respawnEnemy(){
+    public void respawnEnemy(){
         for (Entity e: entities.values()){
             if (e instanceof Enemy){
                 removeEntity(e.getId());
             }
         }
-
-    }*/
+        tiledManager.makeEnemy();
+    }
 
     @Override
     public void dispose() {

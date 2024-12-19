@@ -111,5 +111,10 @@ public class TiledManager {
 
     public void makeEntities() {
         parsedEntityMap(tiledmap.getLayers().get("entity").getObjects());
+        parsedEntityMap(tiledmap.getLayers().get("enemy").getObjects());
+    }
+
+    public void makeEnemy() {
+        parsedEntityMap(tiledmap.getLayers().get("enemy").getObjects());
     }
 }

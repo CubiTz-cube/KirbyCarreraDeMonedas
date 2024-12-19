@@ -162,7 +162,7 @@ public class ClientListener implements Runnable{
     public void close(){
         if (!running) return;
         server.sendAll(Packet.disconnectPlayer(id), id);
-        server.sendAll(Packet.message("Server", name + " se ha desconectado"), id);
+        server.sendAll(Packet.message("Servidor", name + " se ha desconectado"), id);
         closeNoPacket();
     }
 
