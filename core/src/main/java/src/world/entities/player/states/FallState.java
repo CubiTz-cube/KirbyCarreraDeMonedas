@@ -35,6 +35,7 @@ public class FallState extends CanMoveState {
             else player.setCurrentState(Player.StateType.WALK);
         }
         if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP) && player.enemyAbsorded == null){
+            fallForce = 0f;
             player.setCurrentState(Player.StateType.FLY);
         }
     }
