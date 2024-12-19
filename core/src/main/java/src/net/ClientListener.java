@@ -98,6 +98,15 @@ public class ClientListener implements Runnable{
                             server.sendAll(Packet.actEnemy(packId, state, cronno, flipX), id);
                             break;
 
+                        case ACTDAMAGEENEMY:
+                            packId = (int) pack[1];
+                            int damage = (int) pack[2];
+                            fx = (float) pack[3];
+                            fy = (float) pack[4];
+                            float knockback = (float) pack[5];
+                            server.sendAll(Packet.actDamageEnemy(packId, damage, fx, fy, knockback), id);
+                            break;
+
                         case ACTOTHERPLAYER:
                             //Integer packId = (Integer) pack[1]; Devuelve -1
                             Player.AnimationType animationType = (Player.AnimationType) pack[2];
@@ -173,9 +182,10 @@ public class ClientListener implements Runnable{
         try {
             in.close();
             out.close();
-            socket.dispose();
         } catch (IOException e) {
             Gdx.app.log("User", "Error al cerrar socket de User " + name, e);
+        }finally {
+            socket.dispose();
         }
     }
 

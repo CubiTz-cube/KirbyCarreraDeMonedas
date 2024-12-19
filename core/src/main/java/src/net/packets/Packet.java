@@ -12,7 +12,7 @@ public class Packet {
     public enum Types{
         CONNECTPLAYER, DISCONNECTPLAYER, NEWPLAYER, GAMESTART,
         ACTENTITYPOSITION, NEWENTITY, REMOVEENTITY,
-        ACTENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK, ACTSCORE, ACTENTITYCOLOR,
+        ACTENEMY, ACTDAMAGEENEMY, ACTOTHERPLAYER, ACTBREAKBLOCK, ACTSCORE, ACTENTITYCOLOR,
         MESSAGE,
     }
 
@@ -45,6 +45,10 @@ public class Packet {
 
     public static Object[] actEnemy(int id, Enemy.StateType state, float cronno, boolean flipX){
         return new Object[]{Types.ACTENEMY, id, state, cronno, flipX};
+    }
+
+    public static Object[] actDamageEnemy(int id, int damage, float forceX, float forceY, float knockback){
+        return new Object[]{Types.ACTDAMAGEENEMY, id, damage, forceX, forceY, knockback};
     }
 
     public static Object[] removeEntity(int id){

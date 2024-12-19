@@ -307,6 +307,33 @@ public class GameScreen extends BaseScreen {
         enemy.setActCrono(cronno);
     }
 
+    public void actDamageEnemy(Integer receiverId, Body attacker, Integer damage, Float knockback) {
+        if (!entities.containsKey(receiverId)) {
+            System.out.println("Entity " + receiverId + " no encontrada en la lista para actualizar dano");
+            return;
+        }
+        Body receiver = entities.get(receiverId).getBody();
+        Vector2 pushDirection = attacker.getPosition().cpy().sub(receiver.getPosition()).nor();
+
+        actDamageEnemyNoPacket(receiverId, damage, pushDirection.x, pushDirection.y, knockback);
+
+        sendPacket(Packet.actDamageEnemy(receiverId, damage, pushDirection.x, pushDirection.y, knockback));
+    }
+
+    public void actDamageEnemyNoPacket(Integer id, Integer damage, Float forceX, Float forceY, Float knockback){
+        if (!entities.containsKey(id)) {
+            System.out.println("Entity " + id + " no encontrada en la lista para actualizar dano");
+            return;
+        }
+        Enemy enemy = (Enemy) entities.get(id);
+        threadSecureWorld.addModification(() -> {
+            enemy.takeDamage(damage);
+            enemy.getBody().setLinearVelocity(0,0);
+            enemy.getBody().applyLinearImpulse(forceX* -knockback, forceY* -knockback, enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
+            enemy.getBody().applyLinearImpulse(0,knockback, enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
+        });
+    }
+
     public void actBlock(Integer id, Block.StateType stateType){
         Block block = (Block) entities.get(id);
         if (block == null) {
@@ -490,7 +517,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void actUI(){
-        if (idTargetMaxScore != -1) {
+        if (idTargetMaxScore != -1 && entities.containsKey(idTargetMaxScore)) {
             maxScoreIndicator.setTargetPosition(entities.get(idTargetMaxScore).getBody().getPosition());
         }
         maxScoreIndicator.setCenterPosition(player.getBody().getPosition());

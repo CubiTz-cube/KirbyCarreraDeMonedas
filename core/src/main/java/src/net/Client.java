@@ -147,6 +147,15 @@ public class Client implements Runnable{
                         game.actEnemy(packId, state,cronno, flipX);
                         break;
 
+                    case ACTDAMAGEENEMY:
+                        packId = (int) pack[1];
+                        int damage = (int) pack[2];
+                        fx = (float) pack[3];
+                        fy = (float) pack[4];
+                        float knockback = (float) pack[5];
+                        game.actDamageEnemyNoPacket(packId, damage, fx, fy, knockback);
+                        break;
+
                     case ACTOTHERPLAYER:
                         packId = (Integer) pack[1];
                         Player.AnimationType animationType = (Player.AnimationType) pack[2];
