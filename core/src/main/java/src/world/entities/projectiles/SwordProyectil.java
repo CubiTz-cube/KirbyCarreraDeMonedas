@@ -4,9 +4,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.utils.constants.CollisionFilters;
 
 public class SwordProyectil extends Projectil{
     private Float timeDespawn;
@@ -28,6 +30,11 @@ public class SwordProyectil extends Projectil{
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
+
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionFilters.PROJECTIL;
+        filter.maskBits = (short)~CollisionFilters.ITEM;
+        fixture.setFilterData(filter);
     }
 
     @Override

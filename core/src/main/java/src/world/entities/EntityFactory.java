@@ -14,6 +14,7 @@ import src.world.entities.enemies.sleeping.SleepingEnemy;
 import src.world.entities.enemies.sword.SwordEnemy;
 import src.world.entities.blocks.FallBlock;
 import src.world.entities.mirror.Mirror;
+import src.world.entities.player.powers.PowerUp;
 import src.world.entities.projectiles.Cloud;
 import src.world.entities.projectiles.Star;
 import src.world.entities.projectiles.SwordProyectil;

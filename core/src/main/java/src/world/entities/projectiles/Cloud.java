@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
+import src.utils.constants.CollisionFilters;
 
 public class Cloud extends Projectil {
     private Float timeDespawn;
@@ -31,6 +33,11 @@ public class Cloud extends Projectil {
         body.setFixedRotation(true);
 
         setSpritePosModification(0f, getHeight()/4);
+
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionFilters.PROJECTIL;
+        filter.maskBits = (short)~CollisionFilters.ITEM;
+        fixture.setFilterData(filter);
 
         Animation<TextureRegion> cloudAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 8));
