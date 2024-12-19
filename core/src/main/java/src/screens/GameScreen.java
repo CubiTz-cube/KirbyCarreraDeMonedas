@@ -470,7 +470,7 @@ public class GameScreen extends BaseScreen {
 
             if (main.server != null){
 
-                if (sendTime >= 2f) {
+                if (sendTime >= 1f) {
                     for (Entity e: entities.values()){
                         if (e instanceof NoAutoPacketEntity) continue;
                         Body body = e.getBody();
@@ -535,7 +535,6 @@ public class GameScreen extends BaseScreen {
     }
 
     public void randomMirror(Integer id){
-        System.out.println("Random Mirror");
         Vector2 position = spawnMirror.reSpawn(id);
         mirrorChangeSound.play();
         if (main.client != null) sendPacket(Packet.message("Servidor",main.client.getName() + " ha entrado a un espejo."));

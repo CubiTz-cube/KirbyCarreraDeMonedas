@@ -26,6 +26,7 @@ public class Projectil extends Entity {
     @Override
     public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy){
+            if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) return;
             enemy.takeDamage(damage);
             Box2dUtils.knockbackBody(enemy.getBody(), body, damage);
         } else if (actor instanceof Player player) {
