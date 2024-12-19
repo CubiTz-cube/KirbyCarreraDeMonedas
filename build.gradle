@@ -52,8 +52,8 @@ configure(subprojects) {
 }
 
 subprojects {
-  version = '0.6.0'
-  ext.appName = 'KB-92'
+  version = '0.7.0'
+  ext.appName = 'Kirby CubiTz'
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
