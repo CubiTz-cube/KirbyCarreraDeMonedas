@@ -3,12 +3,14 @@ package src.world.entities.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
 import src.utils.Box2dUtils;
+import src.utils.FrontRayCastCallback;
 import src.utils.constants.CollisionFilters;
 import src.utils.constants.PlayerControl;
 import src.world.ActorBox2d;
@@ -23,6 +25,7 @@ import src.world.entities.player.states.*;
 import src.world.statics.Lava;
 import src.world.statics.Spike;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Player extends PlayerCommon {
@@ -111,6 +114,49 @@ public class Player extends PlayerCommon {
 
     public Boolean isInvencible(){
         return invencible;
+    }
+
+    public ArrayList<Fixture> detectFrontFixtures(float distance) {
+        ArrayList<Fixture> hitFixtures = new ArrayList<>();
+        Vector2 startPoint = body.getPosition();
+
+        Vector2 endPoint = new Vector2(startPoint.x + distance, startPoint.y);
+        FrontRayCastCallback callback = new FrontRayCastCallback();
+        world.rayCast(callback, startPoint, endPoint);
+        if (callback.getHitFixture() != null) {
+            hitFixtures.add(callback.getHitFixture());
+        }
+
+        endPoint.set(startPoint.x + distance * MathUtils.cosDeg(35), startPoint.y + distance * MathUtils.sinDeg(35));
+        callback = new FrontRayCastCallback();
+        world.rayCast(callback, startPoint, endPoint);
+        if (callback.getHitFixture() != null) {
+            hitFixtures.add(callback.getHitFixture());
+        }
+
+        endPoint.set(startPoint.x + distance * MathUtils.cosDeg(-35), startPoint.y + distance * MathUtils.sinDeg(-35));
+        callback = new FrontRayCastCallback();
+        world.rayCast(callback, startPoint, endPoint);
+        if (callback.getHitFixture() != null) {
+            hitFixtures.add(callback.getHitFixture());
+        }
+
+        return hitFixtures;
+    }
+
+    public void attractFixture(Fixture fixture, Float forceMagnitude) {
+        Vector2 playerPosition = body.getPosition();
+        Vector2 fixturePosition = fixture.getBody().getPosition();
+
+        Vector2 direction = playerPosition.cpy().sub(fixturePosition).nor();
+        float distance = playerPosition.dst(fixturePosition);
+        Vector2 force = direction.scl(forceMagnitude * distance);
+        fixture.getBody().applyForceToCenter(force, true);
+
+        if (fixture.getBody().getUserData() instanceof Entity entity){
+            System.out.println("Attracting entity send packtet");
+            game.sendPacket(Packet.actDamageEnemy(entity.getId(), 0, force.x, force.y, 1));
+        }
     }
 
     @Override

@@ -430,42 +430,4 @@ public abstract class PlayerCommon extends Entity {
         stateMachine.update(delta);
         if (currentPowerUp != null) currentPowerUp.update();
     }
-
-    public ArrayList<Fixture> detectFrontFixtures(float distance) {
-        ArrayList<Fixture> hitFixtures = new ArrayList<>();
-        Vector2 startPoint = body.getPosition();
-
-        Vector2 endPoint = new Vector2(startPoint.x + distance, startPoint.y);
-        FrontRayCastCallback callback = new FrontRayCastCallback();
-        world.rayCast(callback, startPoint, endPoint);
-        if (callback.getHitFixture() != null) {
-            hitFixtures.add(callback.getHitFixture());
-        }
-
-        endPoint.set(startPoint.x + distance * MathUtils.cosDeg(35), startPoint.y + distance * MathUtils.sinDeg(35));
-        callback = new FrontRayCastCallback();
-        world.rayCast(callback, startPoint, endPoint);
-        if (callback.getHitFixture() != null) {
-            hitFixtures.add(callback.getHitFixture());
-        }
-
-        endPoint.set(startPoint.x + distance * MathUtils.cosDeg(-35), startPoint.y + distance * MathUtils.sinDeg(-35));
-        callback = new FrontRayCastCallback();
-        world.rayCast(callback, startPoint, endPoint);
-        if (callback.getHitFixture() != null) {
-            hitFixtures.add(callback.getHitFixture());
-        }
-
-        return hitFixtures;
-    }
-
-    public void attractFixture(Fixture fixture, Float forceMagnitude) {
-        Vector2 playerPosition = body.getPosition();
-        Vector2 fixturePosition = fixture.getBody().getPosition();
-
-        Vector2 direction = playerPosition.cpy().sub(fixturePosition).nor();
-        float distance = playerPosition.dst(fixturePosition);
-        Vector2 force = direction.scl(forceMagnitude * distance);
-        fixture.getBody().applyForceToCenter(force, true);
-    }
 }
