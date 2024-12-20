@@ -105,6 +105,7 @@ public class Main extends Game {
         assetManager.load("world/entities/kirby/absorb/kirbyAbsorbWalk.png", Texture.class);
         assetManager.load("world/entities/kirby/absorb/kirbyAbsorbFall.png", Texture.class);
         assetManager.load("world/entities/kirby/absorb/kirbyAbsorbJump.png", Texture.class);
+        assetManager.load("world/entities/kirby/sword/kirbyIdleSword.png", Texture.class);
         assetManager.load("world/entities/mirror/mirrorLoop.png", Texture.class);
         assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
         assetManager.load("world/entities/basic/basicWalk.png", Texture.class);
@@ -192,7 +193,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.INTRO);
+        changeScreen(Screens.GAME);
     }
 
     public void setName(String name) {

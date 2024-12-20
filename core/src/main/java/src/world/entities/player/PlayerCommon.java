@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import src.utils.FrontRayCastCallback;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.StateMachine;
@@ -169,24 +166,27 @@ public abstract class PlayerCommon extends Entity {
     private Sound starSound;
     private Sound removeSelectSound;
 
-    public PlayerCommon(World world, Rectangle shape, AssetManager assetManager, Integer id) {
-        super(world, shape, assetManager, id, null);
+    protected float bodyWidth, bodyHeight;
+
+    public PlayerCommon(World world, Float x, Float y, AssetManager assetManager, Integer id) {
+        super(world, new Rectangle(x,y,2.25f,2.25f), assetManager, id, null);
+        bodyHeight = bodyWidth = 2.25f;
         this.assetManager = assetManager;
         stateMachine = new StateMachine();
 
         BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
+        def.position.set(x + (bodyWidth-1) / 2, y + (bodyHeight-1)/ 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
         CircleShape box = new CircleShape();
-        box.setRadius(shape.width/4);
+        box.setRadius(bodyWidth/6);
         fixture = body.createFixture(box, 1.9f);
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
 
-        setSpritePosModification(0f, getHeight()/4);
+        setSpritePosModification(0f, getHeight()/3);
 
         initAnimations(assetManager);
         initPowers();
@@ -195,7 +195,7 @@ public abstract class PlayerCommon extends Entity {
         setAnimation(AnimationType.IDLE);
 
         secondSprite = new Sprite();
-        secondSprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
+        secondSprite.setSize(bodyWidth * PIXELS_IN_METER, bodyHeight * PIXELS_IN_METER);
 
         random = new Random();
     }
@@ -418,6 +418,7 @@ public abstract class PlayerCommon extends Entity {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (secondCurrentAnimation != null) secondSprite.setRegion(secondCurrentAnimation.getKeyFrame(getAnimateTime(), false));
+        else secondSprite.setTexture(null);
         if (secondSprite.getTexture() == null) return;
         secondSprite.setFlip(isFlipX(), false);
         secondSprite.setPosition(getX(), getY());

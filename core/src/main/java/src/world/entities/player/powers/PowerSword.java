@@ -14,6 +14,8 @@ public class PowerSword extends PowerUp {
     private Animation<TextureRegion> upFlyAnimation;
     private Animation<TextureRegion> walkAnimation;
 
+    private Animation<TextureRegion> idleSwordAnimation;
+
     public PowerSword(PlayerCommon player) {
         super(player);
         initAnimations();
@@ -34,6 +36,9 @@ public class PowerSword extends PowerUp {
         walkAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/hold/kirbyWalkHold.png"), 10));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        idleSwordAnimation = new Animation<>(1,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyIdleSword.png"), 1));
     }
 
     @Override
@@ -76,6 +81,12 @@ public class PowerSword extends PowerUp {
 
     @Override
     public Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type) {
-        return null;
+        return switch (type){
+            case IDLE -> idleSwordAnimation;
+            case DOWN -> null;
+            case FLYUP -> null;
+            case WALK -> null;
+            default -> null;
+        };
     }
 }

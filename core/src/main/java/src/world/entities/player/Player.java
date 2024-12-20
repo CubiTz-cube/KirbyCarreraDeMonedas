@@ -42,8 +42,8 @@ public class Player extends PlayerCommon {
 
     private Random random;
 
-    public Player(World world, Rectangle shape, AssetManager assetManager, GameScreen game, Color color) {
-        super(world, shape, assetManager, -1);
+    public Player(World world, Float x, Float y, AssetManager assetManager, GameScreen game, Color color) {
+        super(world, x,y, assetManager, -1);
         this.game = game;
         this.color = color;
 
