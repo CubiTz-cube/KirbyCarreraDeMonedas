@@ -7,7 +7,7 @@ import src.world.entities.player.PlayerCommon;
 
 public abstract class PowerUp
 {
-    public enum Type{ SLEEP, SWORD, BOMB, WHEEL}
+    public enum Type{ SLEEP, SWORD, BOMB, WHEEL, NONE}
     protected PlayerCommon player;
 
     public PowerUp(PlayerCommon player)

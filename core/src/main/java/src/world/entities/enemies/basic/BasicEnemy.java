@@ -9,6 +9,7 @@ import src.utils.constants.CollisionFilters;
 import src.utils.animation.SheetCutter;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.basic.states.*;
+import src.world.entities.player.powers.PowerUp;
 
 public class BasicEnemy extends Enemy {
     public enum AnimationType {
@@ -21,7 +22,7 @@ public class BasicEnemy extends Enemy {
     private final Animation<TextureRegion> damageAnimation;
 
     public BasicEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager,id, game, Type.BASIC, null,9);
+        super(world, shape, assetManager,id, game, Type.BASIC, PowerUp.Type.NONE,9);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);

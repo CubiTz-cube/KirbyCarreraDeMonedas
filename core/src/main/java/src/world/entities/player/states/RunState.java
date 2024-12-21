@@ -15,7 +15,7 @@ public class RunState extends CanBasicMoveState{
     }
 
     private void playRunAnimation(){
-        if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.RUN);
+        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.RUN);
         else player.setAnimation(Player.AnimationType.ABSORBRUN);
     }
 
@@ -58,7 +58,7 @@ public class RunState extends CanBasicMoveState{
             timeInverse = 0f;
         }
 
-        if (player.enemyAbsorded != null) return;
+        if (!player.isEnemyAbsorb()) return;
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.LEFT) && !isLeft){
             player.setAnimation(Player.AnimationType.CHANGERUN);

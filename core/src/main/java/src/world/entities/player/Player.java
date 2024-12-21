@@ -32,7 +32,7 @@ public class Player extends PlayerCommon {
     public Integer coinDrop = 3;
     public static final Integer DEFAULT_COIN_DROP = 3;
 
-    public Enemy enemyAbsorded;
+    public PowerUp.Type powerAbsorded;
 
     public final GameScreen game;
 
@@ -79,12 +79,16 @@ public class Player extends PlayerCommon {
         starState = new StarState(this);
     }
 
+    public Boolean isEnemyAbsorb(){
+        return powerAbsorded == null;
+    }
+
     public void consumeEnemy() {
-        if (enemyAbsorded == null) return;
-        PowerUp.Type powerType = enemyAbsorded.getPowerUp();
-        enemyAbsorded = null;
+        if (powerAbsorded == null) return;
+        PowerUp.Type powerType = powerAbsorded;
+        powerAbsorded = null;
         setCurrentState(PlayerCommon.StateType.IDLE);
-        if (powerType != null) playSound(SoundType.POWER);
+        if (powerType != PowerUp.Type.NONE) playSound(SoundType.POWER);
         setCurrentPowerUp(powerType);
     }
 
@@ -153,9 +157,8 @@ public class Player extends PlayerCommon {
         Vector2 force = direction.scl(forceMagnitude * distance);
         fixture.getBody().applyForceToCenter(force, true);
 
-        if (fixture.getBody().getUserData() instanceof Entity entity){
-            System.out.println("Attracting entity send packtet");
-            game.sendPacket(Packet.actDamageEnemy(entity.getId(), 0, force.x, force.y, 1));
+        if (fixture.getUserData() instanceof Enemy enemy){
+            game.sendPacket(Packet.actDamageEnemy(enemy.getId(), 0, force.x, force.y, 1));
         }
     }
 
@@ -210,7 +213,7 @@ public class Player extends PlayerCommon {
             else if (getCurrentStateType() == StateType.RUN) power.actionMove();
             else if (getCurrentStateType() == StateType.JUMP || getCurrentStateType() == StateType.FALL) power.actionAir();
         }
-        else if (enemyAbsorded == null) setCurrentState(Player.StateType.ABSORB);
+        else if (powerAbsorded == null) setCurrentState(Player.StateType.ABSORB);
         else setCurrentState(Player.StateType.STAR);
     }
 
@@ -227,7 +230,7 @@ public class Player extends PlayerCommon {
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy) {
             if (getCurrentStateType() == StateType.ABSORB){
-                enemyAbsorded = enemy;
+                powerAbsorded = enemy.getPowerType();
                 game.removeEntity(enemy.getId());
                 setCurrentState(Player.StateType.IDLE);
                 return;
@@ -254,10 +257,9 @@ public class Player extends PlayerCommon {
         } else if (actor instanceof PowerItem power){
             if (getCurrentStateType() == StateType.STUN || invencible || getCurrentStateType() != StateType.ABSORB) return;
             playSound(SoundType.POWER);
-            power.despawn();
-            //enemyAbsorded = power;
+            powerAbsorded = power.getPowerType();
             setCurrentState(Player.StateType.IDLE);
-            setCurrentPowerUp(power.getPowerType());
+            power.despawn();
         } else if (actor instanceof CoinOdsPoint coin){
             if (getCurrentStateType() == StateType.STUN || invencible) return;
             playSound(SoundType.SCORE2);

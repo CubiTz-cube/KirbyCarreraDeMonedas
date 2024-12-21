@@ -16,7 +16,7 @@ public class FallState extends CanMoveState {
 
     @Override
     public void start() {
-        if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.FALLSIMPLE);
+        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.FALLSIMPLE);
         else player.setAnimation(Player.AnimationType.ABSORBFALL);
     }
 
@@ -34,7 +34,7 @@ public class FallState extends CanMoveState {
             if (velocity.x == 0)  player.setCurrentState(Player.StateType.IDLE);
             else player.setCurrentState(Player.StateType.WALK);
         }
-        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP) && player.enemyAbsorded == null){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP) && !player.isEnemyAbsorb()){
             fallForce = 0f;
             player.setCurrentState(Player.StateType.FLY);
         }

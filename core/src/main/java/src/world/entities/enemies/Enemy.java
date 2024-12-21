@@ -49,7 +49,7 @@ public abstract class Enemy extends Entity {
         this.actCrono = actCrono;
     }
 
-    public PowerUp.Type getPowerUp() {
+    public PowerUp.Type getPowerType() {
         return powerUp;
     }
 

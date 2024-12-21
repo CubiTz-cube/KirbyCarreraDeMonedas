@@ -14,7 +14,7 @@ public class JumpState extends CanMoveState{
 
     @Override
     public void start() {
-        if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.JUMP);
+        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.JUMP);
         else player.setAnimation(Player.AnimationType.ABSORBJUMP);
         player.playSound(Player.SoundType.JUMP);
         jumpTime = 0f;
@@ -33,12 +33,12 @@ public class JumpState extends CanMoveState{
             jumpTime += delta;
             player.getBody().applyLinearImpulse(0, Player.JUMP_INAIR * delta, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
         }
-        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP) && player.enemyAbsorded == null){
+        if (Gdx.input.isKeyJustPressed(PlayerControl.JUMP) && player.isEnemyAbsorb()){
             player.setCurrentState(Player.StateType.FLY);
         }
         if (player.getBody().getLinearVelocity().y < 0){
             player.setCurrentState(Player.StateType.FALL);
-            if (player.enemyAbsorded == null) player.setAnimation(Player.AnimationType.FALL);
+            if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.FALL);
         }
     }
 

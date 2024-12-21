@@ -372,7 +372,7 @@ public abstract class PlayerCommon extends Entity {
     public void setCurrentPowerUp(PowerUp.Type type){
         currentpowerUptype = type;
         if (currentPowerUp != null) currentPowerUp.end();
-        if (type == null) {
+        if (type == PowerUp.Type.NONE || type == null) {
             currentPowerUp = null;
             currentAnimationType = null;
             return;
@@ -382,6 +382,7 @@ public abstract class PlayerCommon extends Entity {
             case SLEEP -> powerSleep;
             case SWORD -> powerSword;
             case WHEEL -> powerWheel;
+            default -> null;
         };
         currentPowerUp.start();
     }
