@@ -9,6 +9,7 @@ import src.world.entities.player.PlayerCommon;
 public class PowerWheel extends PowerUp{
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> dashAnimation;
+    private final Animation<TextureRegion> idleAnimation;
 
     public PowerWheel(PlayerCommon player) {
         super(player);
@@ -20,6 +21,10 @@ public class PowerWheel extends PowerUp{
         dashAnimation  = new Animation<>(0.07f,
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/wheel/kirbyDashWheel.png"), 5));
         dashAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        idleAnimation  = new Animation<>(1f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/wheel/kirbyIdleWheel.png"), 1));
+        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
     }
 
     @Override
@@ -41,8 +46,7 @@ public class PowerWheel extends PowerUp{
 
     @Override
     public void actionMove() {
-        player.maxSpeed = Player.RUN_MAX_SPEED + 3;
-        player.speed = Player.RUN_SPEED + 3;
+
     }
 
     @Override
@@ -52,7 +56,10 @@ public class PowerWheel extends PowerUp{
 
     @Override
     public void update() {
-
+        if (player.getCurrentStateType() == PlayerCommon.StateType.RUN){
+            player.maxSpeed = Player.RUN_MAX_SPEED + 3;
+            player.speed = Player.RUN_SPEED + 3;
+        }
     }
 
     @Override
@@ -66,6 +73,9 @@ public class PowerWheel extends PowerUp{
 
     @Override
     public Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type) {
-        return null;
+        return switch (type){
+            case IDLE -> idleAnimation;
+            default -> null;
+        };
     }
 }

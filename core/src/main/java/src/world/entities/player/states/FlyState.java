@@ -19,7 +19,7 @@ public class FlyState extends CanMoveState{
         player.setAnimation(Player.AnimationType.FLY);
         player.speed = Player.WALK_SPEED;
         player.maxSpeed = Player.WALK_MAX_SPEED;
-        player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x, 0);
+        player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().x*0.75f, 0);
         player.getBody().setGravityScale(0.6f);
         player.getBody().applyLinearImpulse(0, Player.FLY_IMPULSE, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
