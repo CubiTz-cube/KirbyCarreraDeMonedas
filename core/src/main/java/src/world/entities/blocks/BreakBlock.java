@@ -16,7 +16,8 @@ public class BreakBlock extends Block {
 
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
-        if (actor instanceof Projectil) {
+        if (actor instanceof Projectil proyectil) {
+            if (proyectil.getDamage() == 0) return;
             setState(StateType.BREAK);
         }
     }

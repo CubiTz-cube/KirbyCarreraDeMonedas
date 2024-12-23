@@ -15,12 +15,7 @@ import src.world.entities.enemies.sword.SwordEnemy;
 import src.world.entities.blocks.FallBlock;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.player.powers.PowerUp;
-import src.world.entities.projectiles.Cloud;
-import src.world.entities.projectiles.Star;
-import src.world.entities.projectiles.SwordProyectil;
-import src.world.entities.projectiles.SwordRunProyectil;
-
-import static java.lang.Math.sqrt;
+import src.world.entities.projectiles.*;
 
 public class EntityFactory {
     private final GameScreen game;
@@ -39,6 +34,8 @@ public class EntityFactory {
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case BOMB -> new Bomb(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case BOMBEXPLOSION -> new BombExplosion(world, new Rectangle(position.x, position.y, 4f, 4f), assetManager, id, game);
             case SWORDPROPLAYER -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
             case SWORDRUNPROPLAYER -> new SwordRunProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDRUNPROPLAYER, game);
             case SWORDPROENEMY -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROENEMY, game, assetManager.get("world/particles/swordParticle.png"));

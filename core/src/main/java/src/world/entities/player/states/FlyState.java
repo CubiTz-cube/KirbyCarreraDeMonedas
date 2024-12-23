@@ -42,7 +42,7 @@ public class FlyState extends CanMoveState{
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
             if (player.getCurrentAnimationType() != Player.AnimationType.FLYEND) {
                 player.setAnimation(Player.AnimationType.FLYEND);
-                player.throwEntity(Entity.Type.CLOUD, 1.5f);
+                player.throwEntity(Entity.Type.CLOUD, 1.5f,0f);
                 player.playSound(PlayerCommon.SoundType.AIRSHOT);
             }
         }

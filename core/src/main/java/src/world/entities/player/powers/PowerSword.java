@@ -51,14 +51,14 @@ public class PowerSword extends PowerUp {
     @Override
     public void actionIdle() {
         Player mainPlayer = (Player) player;
-        mainPlayer.throwEntity(Entity.Type.SWORDPROPLAYER,5f);
+        mainPlayer.throwEntity(Entity.Type.SWORDPROPLAYER,5f,0f);
     }
 
     @Override
     public void actionMove() {
         if (cooldown > 0) return;
         Player mainPlayer = (Player) player;
-        mainPlayer.throwEntity(Entity.Type.SWORDRUNPROPLAYER,25f);
+        mainPlayer.throwEntity(Entity.Type.SWORDRUNPROPLAYER,25f,0f);
         cooldown = 1f;
     }
 

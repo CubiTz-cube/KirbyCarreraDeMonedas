@@ -19,6 +19,7 @@ public abstract class Entity extends ActorBox2dSprite {
         CLOUD,
         STAR,
         BOMB,
+        BOMBEXPLOSION,
         SWORDRUNPROPLAYER,
         SWORDPROPLAYER,
         SWORDPROENEMY,

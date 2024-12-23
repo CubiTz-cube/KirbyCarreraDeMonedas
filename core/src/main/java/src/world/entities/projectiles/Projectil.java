@@ -23,13 +23,17 @@ public class Projectil extends Entity {
         this.damage = damage;
     }
 
+    public Integer getDamage() {
+        return damage;
+    }
+
     @Override
     public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy){
-            if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) return;
+            if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE  || damage == 0) return;
             game.actDamageEnemy(enemy.getId(), body, damage, damage.floatValue());
         } else if (actor instanceof Player player) {
-            if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible()) return;
+            if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible() || damage == 0) return;
             player.coinDrop = damage;
             player.setCurrentState(Player.StateType.STUN);
             player.playSound(PlayerCommon.SoundType.NORMALDAMAGE);
