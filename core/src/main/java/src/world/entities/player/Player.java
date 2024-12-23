@@ -69,7 +69,7 @@ public class Player extends PlayerCommon {
         invencible = false;
 
         random = new Random();
-        setCurrentPowerUp(PowerUp.Type.BOMB);
+        //setCurrentPowerUp(PowerUp.Type.BOMB);
     }
 
     private void initStates(){
