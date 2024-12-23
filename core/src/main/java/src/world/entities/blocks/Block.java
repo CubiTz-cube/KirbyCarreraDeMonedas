@@ -15,6 +15,7 @@ import src.world.entities.blocks.states.LiveState;
 
 public class Block extends Entity implements NoAutoPacketEntity {
     public enum StateType {LIVE,BREAK}
+    private StateType currentStateType;
     private final StateMachine stateMachine;
     private final LiveState liveState;
     private final BreakState breakState;
@@ -51,10 +52,15 @@ public class Block extends Entity implements NoAutoPacketEntity {
     }
 
     public void setStateNoPacket(StateType stateType){
+        currentStateType = stateType;
         switch (stateType){
             case LIVE -> stateMachine.setState(liveState);
             case BREAK -> stateMachine.setState(breakState);
         }
+    }
+
+    public StateType getCurrentStateType() {
+        return currentStateType;
     }
 
     public void setAnimation(AnimationType animationType){

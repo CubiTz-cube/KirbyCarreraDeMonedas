@@ -250,6 +250,10 @@ public class GameScreen extends BaseScreen {
         createEntityLogic(type, position, force, id, flipX);
         main.setIds(id);
     }
+    public void addEntityNoPacket(Entity.Type type, Vector2 position, Vector2 force, Boolean flipX){
+        int id = main.getIds();
+        createEntityLogic(type, position, force, id, flipX);
+    }
 
     public void addEntity(Entity.Type type, Vector2 position, Vector2 force, Boolean flipX){
         int id = main.getIds();

@@ -39,12 +39,6 @@ public class SwordRunProyectil extends Projectil{
     }
 
     @Override
-    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
-        super.beginContactWith(actor, game);
-        despawn();
-    }
-
-    @Override
     public void act(float delta) {
         timeDespawn += delta;
         if (timeDespawn > 1f) {

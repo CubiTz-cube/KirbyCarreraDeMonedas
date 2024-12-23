@@ -303,6 +303,7 @@ public abstract class PlayerCommon extends Entity {
     }
 
     public void setAnimation(AnimationType animationType){
+        if (animationType == null) return;
         currentAnimationType = animationType;
 
         if (currentPowerUp != null) {
