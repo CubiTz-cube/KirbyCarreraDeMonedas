@@ -61,7 +61,7 @@ public class Player extends PlayerCommon {
         invencible = false;
 
         random = new Random();
-        //setCurrentPowerUp(PowerUp.Type.WHEEL);
+        setCurrentPowerUp(PowerUp.Type.WHEEL);
     }
 
     private void initStates(){
@@ -80,7 +80,7 @@ public class Player extends PlayerCommon {
     }
 
     public Boolean isEnemyAbsorb(){
-        return powerAbsorded == null;
+        return powerAbsorded != null;
     }
 
     public void consumeEnemy() {

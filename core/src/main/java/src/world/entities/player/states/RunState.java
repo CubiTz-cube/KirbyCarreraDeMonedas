@@ -15,8 +15,8 @@ public class RunState extends CanBasicMoveState{
     }
 
     private void playRunAnimation(){
-        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.RUN);
-        else player.setAnimation(Player.AnimationType.ABSORBRUN);
+        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.ABSORBRUN);
+        else player.setAnimation(Player.AnimationType.RUN);
     }
 
     @Override

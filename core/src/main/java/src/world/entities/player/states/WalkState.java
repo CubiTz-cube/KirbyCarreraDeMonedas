@@ -12,8 +12,8 @@ public class WalkState extends CanBasicMoveState{
 
     @Override
     public void start() {
-        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.WALK);
-        else player.setAnimation(Player.AnimationType.ABSORBWALK);
+        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.ABSORBWALK);
+        else player.setAnimation(Player.AnimationType.WALK);
 
         player.speed = Player.WALK_SPEED;
         player.maxSpeed =  Player.WALK_MAX_SPEED;

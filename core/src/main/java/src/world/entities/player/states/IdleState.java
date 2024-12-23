@@ -10,8 +10,8 @@ public class IdleState extends CanBasicMoveState{
 
     @Override
     public void start() {
-        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.IDLE);
-        else player.setAnimation(Player.AnimationType.ABSORBIDLE);
+        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.ABSORBIDLE);
+        else player.setAnimation(Player.AnimationType.IDLE);
     }
 
     @Override

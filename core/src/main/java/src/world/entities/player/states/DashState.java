@@ -34,7 +34,7 @@ public class DashState extends StatePlayer{
                 timeParticle = 0f;
             }
         }else {
-            player.setCurrentState(Player.StateType.IDLE);
+            player.setCurrentState(Player.StateType.RUN);
         }
     }
 

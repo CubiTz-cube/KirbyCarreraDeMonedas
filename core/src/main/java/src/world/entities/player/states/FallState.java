@@ -16,8 +16,8 @@ public class FallState extends CanMoveState {
 
     @Override
     public void start() {
-        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.FALLSIMPLE);
-        else player.setAnimation(Player.AnimationType.ABSORBFALL);
+        if (player.isEnemyAbsorb()) player.setAnimation(Player.AnimationType.ABSORBFALL);
+        else player.setAnimation(Player.AnimationType.FALLSIMPLE);
     }
 
     @Override
