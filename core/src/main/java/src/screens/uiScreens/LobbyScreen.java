@@ -117,6 +117,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
 
     @Override
     public void closeClient(){
+        if (main.client.gameStart) return;
         Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.MULTIPLAYER));
     }
 }

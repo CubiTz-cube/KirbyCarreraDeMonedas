@@ -25,7 +25,6 @@ public class RunState extends CanBasicMoveState{
 
         player.speed =  Player.RUN_SPEED;
         player.maxSpeed =  Player.RUN_MAX_SPEED;
-        //player.getBody().applyLinearImpulse(player.isFlipX() ? -2 : 2, 0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
 
         isLeft = player.isFlipX();
         timeActivateParticle = 0.3f;
