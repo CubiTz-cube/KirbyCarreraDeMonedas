@@ -41,6 +41,14 @@ public class Player extends PlayerCommon {
     private Boolean invencible;
 
     private Random random;
+    public enum ThrowDirection{
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        RIGHTUP,
+        RIGHTDOWN,
+    }
 
     public Player(World world, Float x, Float y, AssetManager assetManager, GameScreen game, Color color) {
         super(world, x,y, assetManager, -1);
@@ -222,6 +230,30 @@ public class Player extends PlayerCommon {
         game.addEntity(type,
             body.getPosition().add(isFlipX() ? -1.2f : 1.2f,0),
             new Vector2((isFlipX() ? -impulse - linearX : impulse + linearX),0),
+            isFlipX()
+        );
+    }
+    public void throwEntity(Entity.Type type, Float impulse, ThrowDirection direction){
+        float linearX = Math.abs(body.getLinearVelocity().x);
+        Vector2 spawnPos = switch (direction) {
+            case LEFT -> body.getPosition().add(-1.2f,0);
+            case RIGHT -> body.getPosition().add(1.2f,0);
+            case UP -> body.getPosition().add(0,1.2f);
+            case DOWN -> body.getPosition().add(0,-1.2f);
+            case RIGHTUP -> body.getPosition().add(1.2f,1.2f);
+            case RIGHTDOWN -> body.getPosition().add(1.2f,-1.2f);
+        };
+        Vector2 impulseVector = switch (direction) {
+            case LEFT -> new Vector2(-impulse - linearX,0);
+            case RIGHT -> new Vector2(impulse + linearX,0);
+            case UP -> new Vector2(0,impulse + linearX);
+            case DOWN -> new Vector2(0,-impulse - linearX);
+            case RIGHTUP -> new Vector2(impulse + linearX,impulse + linearX);
+            case RIGHTDOWN -> new Vector2(impulse + linearX,-impulse - linearX);
+        };
+        game.addEntity(type,
+            spawnPos,
+            impulseVector,
             isFlipX()
         );
     }

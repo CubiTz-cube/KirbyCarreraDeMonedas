@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
+import src.world.ActorBox2d;
 
 public class Cloud extends Projectil {
     private Float timeDespawn;
@@ -42,6 +43,12 @@ public class Cloud extends Projectil {
         Animation<TextureRegion> cloudAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 8));
         setCurrentAnimation(cloudAnimation);
+    }
+
+    @Override
+    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
+        super.beginContactWith(actor, game);
+        despawn();
     }
 
     @Override

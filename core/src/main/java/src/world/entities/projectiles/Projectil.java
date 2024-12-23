@@ -35,7 +35,6 @@ public class Projectil extends Entity {
             player.playSound(PlayerCommon.SoundType.NORMALDAMAGE);
             Box2dUtils.knockbackBody(getBody(), body, damage);
         }
-        despawn();
     }
 
     public synchronized void despawn(){

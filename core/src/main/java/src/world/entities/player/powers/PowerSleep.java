@@ -26,7 +26,7 @@ public class PowerSleep extends PowerUp {
     }
 
     @Override
-    public void update() {
+    public void update(Float delta) {
     }
 
     @Override

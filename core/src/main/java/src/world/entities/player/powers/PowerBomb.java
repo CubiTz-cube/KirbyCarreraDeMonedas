@@ -31,7 +31,7 @@ public class PowerBomb extends PowerUp{
     }
 
     @Override
-    public void update() {
+    public void update(Float delta) {
 
     }
 

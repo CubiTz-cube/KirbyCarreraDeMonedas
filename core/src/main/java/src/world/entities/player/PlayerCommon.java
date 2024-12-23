@@ -149,7 +149,7 @@ public abstract class PlayerCommon extends Entity {
         STAR,
         REMOVESELECT,
     }
-    private Random random;
+    private final Random random;
     private Sound airShotSound;
     private Sound absorb1Sound;
     private Sound absorb2Sound;
@@ -430,6 +430,6 @@ public abstract class PlayerCommon extends Entity {
     @Override
     public void act(float delta) {
         stateMachine.update(delta);
-        if (currentPowerUp != null) currentPowerUp.update();
+        if (currentPowerUp != null) currentPowerUp.update(delta);
     }
 }

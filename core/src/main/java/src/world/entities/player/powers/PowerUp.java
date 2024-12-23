@@ -29,7 +29,7 @@ public abstract class PowerUp
 
     public abstract void actionAir();
 
-    public abstract void update();
+    public abstract void update(Float delta);
 
     public abstract Animation<TextureRegion> getAnimation(PlayerCommon.AnimationType type);
 

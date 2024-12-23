@@ -18,6 +18,7 @@ import src.world.entities.player.powers.PowerUp;
 import src.world.entities.projectiles.Cloud;
 import src.world.entities.projectiles.Star;
 import src.world.entities.projectiles.SwordProyectil;
+import src.world.entities.projectiles.SwordRunProyectil;
 
 import static java.lang.Math.sqrt;
 
@@ -38,8 +39,9 @@ public class EntityFactory {
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case SWORDPLAYER -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
-            case SWORDENEMY -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDENEMY, game, assetManager.get("world/particles/swordParticle.png"));
+            case SWORDPROPLAYER -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
+            case SWORDRUNPROPLAYER -> new SwordRunProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDRUNPROPLAYER, game);
+            case SWORDPROENEMY -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROENEMY, game, assetManager.get("world/particles/swordParticle.png"));
             case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case POWERSWORD -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.SWORD);
             case POWERWHEEL -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.WHEEL);

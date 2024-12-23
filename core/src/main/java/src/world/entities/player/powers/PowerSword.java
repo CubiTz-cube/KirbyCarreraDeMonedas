@@ -16,6 +16,8 @@ public class PowerSword extends PowerUp {
 
     private Animation<TextureRegion> idleSwordAnimation;
 
+    private Float cooldown = 0f;
+
     public PowerSword(PlayerCommon player) {
         super(player);
         initAnimations();
@@ -49,23 +51,26 @@ public class PowerSword extends PowerUp {
     @Override
     public void actionIdle() {
         Player mainPlayer = (Player) player;
-
-        mainPlayer.throwEntity(Entity.Type.SWORDPLAYER,0f);
+        mainPlayer.throwEntity(Entity.Type.SWORDPROPLAYER,5f);
     }
 
     @Override
     public void actionMove() {
-
+        if (cooldown > 0) return;
+        Player mainPlayer = (Player) player;
+        mainPlayer.throwEntity(Entity.Type.SWORDRUNPROPLAYER,25f);
+        cooldown = 1f;
     }
 
     @Override
     public void actionAir() {
-
     }
 
     @Override
-    public void update() {
-
+    public void update(Float delta) {
+        if (cooldown > 0){
+            cooldown -= delta;
+        }
     }
 
     @Override

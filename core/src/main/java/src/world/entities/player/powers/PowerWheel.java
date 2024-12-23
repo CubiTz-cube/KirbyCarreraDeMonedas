@@ -41,21 +41,21 @@ public class PowerWheel extends PowerUp{
 
     @Override
     public void actionIdle() {
-
+        player.setCurrentState(Player.StateType.DASH);
     }
 
     @Override
     public void actionMove() {
-
+        actionIdle();
     }
 
     @Override
     public void actionAir() {
-
+        actionIdle();
     }
 
     @Override
-    public void update() {
+    public void update(Float delta) {
         if (player.getCurrentStateType() == PlayerCommon.StateType.RUN){
             player.maxSpeed = Player.RUN_MAX_SPEED + 3;
             player.speed = Player.RUN_SPEED + 3;

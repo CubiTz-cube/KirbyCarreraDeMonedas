@@ -44,4 +44,10 @@ public class Star extends Projectil{
         idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
         setCurrentAnimation(idleAnimation);
     }
+
+    @Override
+    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
+        super.beginContactWith(actor, game);
+        despawn();
+    }
 }
