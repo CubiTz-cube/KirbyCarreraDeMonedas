@@ -47,4 +47,10 @@ public class LayersManager {
     public Boolean isVisible() {
         return layers.get(0).isVisible();
     }
+
+    public void setPosition(float x, float y) {
+        for (Table layer : layers) {
+            layer.setPosition(x, y);
+        }
+    }
 }
