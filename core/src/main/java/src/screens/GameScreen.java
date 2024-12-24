@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.net.packets.Packet;
 import src.screens.components.ChatWidget;
 import src.screens.components.LayersManager;
+import src.screens.components.SpriteAsActor;
 import src.utils.*;
 import src.utils.constants.Constants;
 import src.utils.indicators.BorderIndicator;
@@ -53,6 +54,7 @@ import java.util.Random;
 public class GameScreen extends BaseScreen {
     // Game
     private final Stage stage;
+    private final Stage stageUI;
     private final World world;
     public ThreadSecureWorld threadSecureWorld;
 
@@ -92,8 +94,8 @@ public class GameScreen extends BaseScreen {
     private Label odsPointsLabel;
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
-
-    private Float cameraZoom;
+    private SpriteAsActor imagePower;
+    private SpriteAsActor imagePowerName;
 
     //Sounds
     private Sound mirrorChangeSound;
@@ -111,6 +113,7 @@ public class GameScreen extends BaseScreen {
         particleFactory = new ParticleFactory();
 
         stage = new Stage(new ScreenViewport());
+        stageUI = new Stage(new ScreenViewport());
         world = new World(new Vector2(0, -30f), true);
         threadSecureWorld = new ThreadSecureWorld(world);
 
@@ -135,11 +138,10 @@ public class GameScreen extends BaseScreen {
 
         cameraShakeManager = new CameraShakeManager((OrthographicCamera) stage.getCamera());
         isLoad = false;
-        cameraZoom = 1f;
     }
 
     private void initUI(){
-        layersManager = new LayersManager(stage, 5);
+        layersManager = new LayersManager(stageUI, 5);
 
         odsPointsLabel = new Label("ODS POINTS\n"+0,main.getSkin());
         odsPointsLabel.setAlignment(Align.topRight);
@@ -155,8 +157,11 @@ public class GameScreen extends BaseScreen {
         maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
         maxScoreIndicator.setVisible(false);
 
-        stage.addActor(mirrorIndicators);
-        stage.addActor(maxScoreIndicator);
+        imagePower = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
+        imagePowerName = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
+
+        stageUI.addActor(mirrorIndicators);
+        stageUI.addActor(maxScoreIndicator);
 
         layersManager.setZindex(0);
         layersManager.getLayer().top();
@@ -167,6 +172,14 @@ public class GameScreen extends BaseScreen {
         layersManager.setZindex(1);
         //layersManager.getLayer().bottom();
         layersManager.getLayer().add(chatWidget).padTop(400).height(200).width(300).fill();
+
+        layersManager.setZindex(2);
+        layersManager.getLayer().top();
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(imagePower).width(128).height(128).row();
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(imagePowerName).width(128).height(64);
+        layersManager.getLayer().row().expandY();
     }
 
     private void initSounds(){
@@ -428,6 +441,7 @@ public class GameScreen extends BaseScreen {
         player = null;
 
         stage.clear();
+        stageUI.clear();
         actors.clear();
         entities.clear();
         spawnMirror.clear();
@@ -525,8 +539,11 @@ public class GameScreen extends BaseScreen {
         }
         maxScoreIndicator.setCenterPosition(player.getBody().getPosition());
         mirrorIndicators.setCenterPositions(player.getBody().getPosition());
+
         odsPointsLabel.setText("ODS POINTS\n"+getScore()+"\nx: "+(int)player.getX()+" y: "+(int)player.getY());
         gameTimeLabel.setText("Game Time\n" + timeGame);
+
+
     }
 
     @Override
@@ -536,17 +553,25 @@ public class GameScreen extends BaseScreen {
         if (!isLoad) return;
 
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
-        camera.zoom = cameraZoom + 0.3f;
+        OrthographicCamera cameraUI = (OrthographicCamera) stageUI.getCamera();
+
         camera.position.x = MathUtils.lerp(camera.position.x, player.getX() + (player.isFlipX() ? -32 : 32), 0.10f);
         camera.position.y = MathUtils.lerp(camera.position.y, player.getY(), 0.3f);
+
+        cameraUI.position.x = camera.position.x;
+        cameraUI.position.y = camera.position.y;
+
         cameraShakeManager.update(delta);
         camera.update();
-        layersManager.setPosition(camera.position.x - layersManager.getLayer().getWidth()/2, camera.position.y - layersManager.getLayer().getHeight()/2);
+        cameraUI.update();
+
+        layersManager.setPosition(cameraUI.position.x - layersManager.getLayer().getWidth()/2, cameraUI.position.y - layersManager.getLayer().getHeight()/2);
         tiledRenderer.setView(camera);
+
         tiledRenderer.render();
         actUI();
         stage.draw();
-        camera.zoom = cameraZoom;
+        stageUI.draw();
         //debugRenderer.render(world, camera.projection.scale(6,6,1).translate(-100,-100,0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
@@ -566,12 +591,16 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        float cameraZoom = 1280.0f / width;
+        if (cameraZoom > 1.3f) cameraZoom = 1.3f;
         OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
+        camera.zoom = cameraZoom;
+
+        stage.getViewport().update(width,  height, false);
+        stageUI.getViewport().update(width,  height, false);
+
         camera.position.x = player.getX() + (player.isFlipX() ? -32 : 32);
         camera.position.y = player.getY();
-        cameraZoom = (float)Math.pow(1280.0 / width, 1.3);
-        if (cameraZoom > 1.3f) cameraZoom = 1.3f;
     }
 
     public void randomMirror(Integer id){
