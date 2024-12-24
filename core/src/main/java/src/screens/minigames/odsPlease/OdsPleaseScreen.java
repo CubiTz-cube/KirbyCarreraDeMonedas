@@ -139,8 +139,8 @@ public class OdsPleaseScreen extends MinigameScreen {
         timeMinigameLabel.setFontScale(2);
         timeMinigameLabel.setColor(Color.BLACK);
 
-        odsImage = new SpriteAsActor(main.getAssetManager().get("poshi.jpg", Texture.class));
-        personImage = new SpriteAsActor(main.getAssetManager().get("poshi.jpg", Texture.class));
+        odsImage = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
+        personImage = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
         personImage.setSize(256,256);
 
         deskImage = new Image(main.getAssetManager().get("miniGames/odsPlease/Desk.png", Texture.class));
