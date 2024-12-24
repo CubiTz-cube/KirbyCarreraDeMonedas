@@ -568,7 +568,7 @@ public class GameScreen extends BaseScreen {
         actUI();
         stage.draw();
         stageUI.draw();
-        debugRenderer.render(world, camera.projection.scale(6,6,1).translate(-100,-100,0));
+        //debugRenderer.render(world, camera.projection.scale(6,6,1).translate(-100,-100,0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
 
