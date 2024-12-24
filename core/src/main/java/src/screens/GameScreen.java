@@ -160,8 +160,8 @@ public class GameScreen extends BaseScreen {
 
         imagePower = new PowerView(main.getAssetManager());
 
-        stageUI.addActor(mirrorIndicators);
-        stageUI.addActor(maxScoreIndicator);
+        stage.addActor(mirrorIndicators);
+        stage.addActor(maxScoreIndicator);
 
         layersManager.setZindex(0);
         layersManager.getLayer().top();
