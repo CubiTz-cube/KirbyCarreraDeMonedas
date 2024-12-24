@@ -43,8 +43,8 @@ public class FallState extends CanMoveState {
     @Override
     public void end() {
         float resultFallForce = fallForce / 2;
-        if (resultFallForce > 14f) {
-            player.game.addCameraShake(0.1f, resultFallForce);
+        if (resultFallForce > 13f) {
+            player.game.addCameraShake(0.1f, resultFallForce*1.5f);
             player.playSound(Player.SoundType.HEAVYFALL);
         }
         fallForce = 0f;
