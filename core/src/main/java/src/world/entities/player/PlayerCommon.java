@@ -29,9 +29,9 @@ public abstract class PlayerCommon extends Entity {
     public float brakeForce = DEFAULT_BRAKE_FORCE;
 
     public static final float DEFAULT_STUNT_TIME = 1f;
-    public static final float WALK_SPEED = 10f;
+    public static final float WALK_SPEED = 14f;
     public static final float WALK_MAX_SPEED = 5f;
-    public static final float RUN_SPEED = 14f;
+    public static final float RUN_SPEED = 18f;
     public static final float RUN_MAX_SPEED = 6.5f;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 8f;
