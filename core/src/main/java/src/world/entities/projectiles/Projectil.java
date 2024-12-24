@@ -10,6 +10,8 @@ import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
+import src.world.statics.Floor;
+import src.world.statics.FloorPoly;
 
 public class Projectil extends Entity {
     protected GameScreen game;
@@ -32,15 +34,14 @@ public class Projectil extends Entity {
         if (actor instanceof Enemy enemy){
             if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE  || damage == 0) return;
             game.actDamageEnemy(enemy.getId(), body, damage, damage.floatValue());
-            despawn();
         } else if (actor instanceof Player player) {
             if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible() || damage == 0) return;
             player.coinDrop = damage;
             player.setCurrentState(Player.StateType.STUN);
             player.playSound(PlayerCommon.SoundType.NORMALDAMAGE);
             Box2dUtils.knockbackBody(getBody(), body, damage);
-            despawn();
         }
+        despawn();
     }
 
     public synchronized void despawn(){

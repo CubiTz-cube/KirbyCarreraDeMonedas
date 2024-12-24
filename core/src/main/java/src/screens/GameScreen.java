@@ -21,9 +21,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.net.packets.Packet;
 import src.screens.components.ChatWidget;
 import src.screens.components.LayersManager;
+import src.screens.components.PowerView;
 import src.screens.components.SpriteAsActor;
 import src.utils.*;
 import src.utils.constants.Constants;
+import src.utils.constants.PlayerControl;
 import src.utils.indicators.BorderIndicator;
 import src.utils.indicators.IndicatorManager;
 import src.utils.constants.ConsoleColor;
@@ -94,8 +96,7 @@ public class GameScreen extends BaseScreen {
     private Label odsPointsLabel;
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
-    private SpriteAsActor imagePower;
-    private SpriteAsActor imagePowerName;
+    private PowerView imagePower;
 
     //Sounds
     private Sound mirrorChangeSound;
@@ -157,8 +158,7 @@ public class GameScreen extends BaseScreen {
         maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
         maxScoreIndicator.setVisible(false);
 
-        imagePower = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
-        imagePowerName = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
+        imagePower = new PowerView(main.getAssetManager());
 
         stageUI.addActor(mirrorIndicators);
         stageUI.addActor(maxScoreIndicator);
@@ -174,12 +174,9 @@ public class GameScreen extends BaseScreen {
         layersManager.getLayer().add(chatWidget).padTop(400).height(200).width(300).fill();
 
         layersManager.setZindex(2);
-        layersManager.getLayer().top();
+        layersManager.getLayer().bottom();
         layersManager.getLayer().add().expandX();
-        layersManager.getLayer().add(imagePower).width(128).height(128).row();
-        layersManager.getLayer().add().expandX();
-        layersManager.getLayer().add(imagePowerName).width(128).height(64);
-        layersManager.getLayer().row().expandY();
+        layersManager.getLayer().add(imagePower).width(120).height(33).row();
     }
 
     private void initSounds(){
@@ -542,8 +539,7 @@ public class GameScreen extends BaseScreen {
 
         odsPointsLabel.setText("ODS POINTS\n"+getScore()+"\nx: "+(int)player.getX()+" y: "+(int)player.getY());
         gameTimeLabel.setText("Game Time\n" + timeGame);
-
-
+        imagePower.setPower(player.getCurrentpowerUptype());
     }
 
     @Override
