@@ -2,17 +2,21 @@ package src.utils.managers;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import src.screens.GameScreen;
 import src.utils.constants.ConsoleColor;
 import src.world.entities.Entity;
+import src.world.statics.FloorPoly;
 import src.world.statics.StaticFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static src.utils.constants.Constants.PIXELS_IN_METER;
 
@@ -34,6 +38,31 @@ public class TiledManager {
 
     public void parsedStaticMap(MapObjects objects) {
         for (MapObject object : objects) {
+            if (object instanceof PolygonMapObject polygonObject) {
+                Polygon polygon = polygonObject.getPolygon();
+
+                // Obtener los atributos del polígono
+                float[] vertices = polygon.getVertices();
+                float x = polygon.getX();
+                float y = polygon.getY();
+                float rotation = polygon.getRotation();
+
+                // Procesar los atributos según sea necesario
+                System.out.println("Polígono encontrado con vértices: " + Arrays.toString(vertices));
+                System.out.println("Posición: (" + x + ", " + y + ")");
+                System.out.println("Rotación: " + rotation);
+
+                Vector2[] verticesVector = new Vector2[vertices.length/2];
+                for (int i = 0; i < vertices.length; i+=2) {
+                    verticesVector[i/2] = new Vector2(vertices[i]/tiledSize, vertices[i+1]/tiledSize);
+                }
+
+                FloorPoly newFloorPoly = new FloorPoly(game.getWorld(),
+                    new Rectangle(x/tiledSize, y/tiledSize, 1, 1),
+                    verticesVector);
+                game.addActor(newFloorPoly);
+            }
+
             String type = object.getProperties().get("type", String.class);
             Float X = (Float) object.getProperties().get("x");
             Float Y = (Float) object.getProperties().get("y");
