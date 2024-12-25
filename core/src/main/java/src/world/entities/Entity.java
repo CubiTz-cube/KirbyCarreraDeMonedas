@@ -10,7 +10,7 @@ public abstract class Entity extends ActorBox2dSprite {
         BASIC,
         SLEEPY,
         SWORD,
-        //WHEEL,
+        WHEEL,
         //BOMBER,
         //TURRET,
         //DRAGON,
