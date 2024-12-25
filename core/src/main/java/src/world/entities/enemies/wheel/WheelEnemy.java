@@ -1,6 +1,7 @@
-package src.world.entities.enemies.fly;
+package src.world.entities.enemies.wheel;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,36 +13,36 @@ import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.enemies.fly.states.DamageStateFly;
-import src.world.entities.enemies.fly.states.WalkStateFly;
-import src.world.entities.enemies.fly.states.IdleStateFly;
+import src.world.entities.enemies.sword.SwordEnemy;
+import src.world.entities.enemies.wheel.states.DamageStateWheel;
+import src.world.entities.enemies.wheel.states.IdleStateWheel;
+import src.world.entities.enemies.wheel.states.WalkStateWheel;
 import src.world.entities.player.powers.PowerUp;
 
-public class FlyEnemy extends Enemy
+public class WheelEnemy extends Enemy
 {
-
     public enum AnimationType {
         IDLE,
         WALK,
-        DAMAGE,
-        DEAD
+        DAMAGE
     }
 
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> damageAnimation;
 
-    public FlyEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager,id, game, Type.BASIC, PowerUp.Type.NONE,9);
+    public WheelEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
+    {
+        super(world, shape, assetManager, id, game, Type.WHEEL, PowerUp.Type.WHEEL, 15);
+        sprite.setTexture(assetManager.get("world/entities/wheel/wheelIdle.png", Texture.class));
 
         BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
+        def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
-        body.setGravityScale(0);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width/4, shape.height/4);
+        box.setAsBox(shape.width / 4, shape.height / 4);
         fixture = body.createFixture(box, 1);
         fixture.setUserData(this);
         box.dispose();
@@ -54,34 +55,25 @@ public class FlyEnemy extends Enemy
         filter.maskBits = (short)~CollisionFilters.ENEMY;
         fixture.setFilterData(filter);
 
-        idleState = new IdleStateFly(this);
-        walkState = new WalkStateFly(this);
-        damageState = new DamageStateFly(this);
+        idleState = new IdleStateWheel(this);
+        walkState = new WalkStateWheel(this);
+        damageState = new DamageStateWheel(this);
+
+        idleAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelIdle.png"), 2));
+        walkAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelWalk.png"), 3));
+        damageAnimation = new Animation<>(0.01f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelDamage.png"), 4));
+
         setState(StateType.IDLE);
-
-        idleAnimation = new Animation<>(0.12f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyIdle.png"), 4));
-
-        walkAnimation = new Animation<>(0.12f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyIdle.png"), 4));
-        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
-
-        damageAnimation = new Animation<>(0.25f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyDamage.png"), 4));
-
-        setCurrentAnimation(walkAnimation);
     }
-
-    public void setAnimation(AnimationType type) {
+    public void setAnimation(WheelEnemy.AnimationType type)
+    {
         switch (type) {
             case IDLE -> setCurrentAnimation(idleAnimation);
             case WALK -> setCurrentAnimation(walkAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
         }
     }
-
-    public void act(float delta) {
-        super.act(delta);
-    }
-
 }

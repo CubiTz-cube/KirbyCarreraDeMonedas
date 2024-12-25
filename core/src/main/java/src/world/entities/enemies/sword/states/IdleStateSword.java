@@ -8,6 +8,7 @@ public class IdleStateSword  extends StateEnemy<SwordEnemy>
 {
 
     private boolean flip = false;
+
     public IdleStateSword(SwordEnemy enemy) {
         super(enemy);
     }

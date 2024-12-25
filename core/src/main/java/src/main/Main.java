@@ -72,6 +72,9 @@ public class Main extends Game {
         assetManager.load("world/entities/sword/swordEnemyDamage.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyAttack.png", Texture.class);
         assetManager.load("world/entities/sword/swordEnemyIdle.png", Texture.class);
+        assetManager.load("world/entities/wheel/wheelIdle.png", Texture.class);
+        assetManager.load("world/entities/wheel/wheelWalk.png", Texture.class);
+        assetManager.load("world/entities/wheel/wheelDamage.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);

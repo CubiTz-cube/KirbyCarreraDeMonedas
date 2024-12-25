@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.world.entities.enemies.fly.FlyEnemy;
+import src.world.entities.enemies.wheel.WheelEnemy;
 import src.world.entities.items.CoinOdsPoint;
 import src.world.entities.items.PowerItem;
 import src.world.entities.blocks.BreakBlock;
@@ -31,6 +32,7 @@ public class EntityFactory {
             case SLEEPY -> new SleepingEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case SWORD -> new SwordEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case FLYBUG -> new FlyEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
+            case WHEEL -> new WheelEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
