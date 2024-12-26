@@ -46,8 +46,6 @@ public class Player extends PlayerCommon {
         RIGHT,
         UP,
         DOWN,
-        RIGHTUP,
-        RIGHTDOWN,
     }
 
     public Player(World world, Float x, Float y, AssetManager assetManager, GameScreen game, Color color) {
@@ -228,33 +226,29 @@ public class Player extends PlayerCommon {
     public void throwEntity(Entity.Type type, Float impulseX, Float impulseY){
         float linearX = Math.abs(body.getLinearVelocity().x);
         game.addEntity(type,
-            body.getPosition().add(isFlipX() ? -1.2f : 1.2f,0),
+            new Vector2( body.getPosition().add(isFlipX() ? -1.2f : 1.2f,0)),
             new Vector2((isFlipX() ? -impulseX - linearX : impulseX + linearX),impulseY),
             isFlipX()
         );
     }
-    public void throwEntity(Entity.Type type, Float impulseX, Float impulseY, ThrowDirection direction){
+    public void throwEntity(Entity.Type type, Float impulse, ThrowDirection direction){
         float linearX = Math.abs(body.getLinearVelocity().x);
-        Vector2 spawnPos = switch (direction) {
+        Vector2 spawnPos = new Vector2( switch (direction) {
             case LEFT -> body.getPosition().add(-1.2f,0);
             case RIGHT -> body.getPosition().add(1.2f,0);
             case UP -> body.getPosition().add(0,1.2f);
             case DOWN -> body.getPosition().add(0,-1.2f);
-            case RIGHTUP -> body.getPosition().add(1.2f,1.2f);
-            case RIGHTDOWN -> body.getPosition().add(1.2f,-1.2f);
-        };
+        });
         Vector2 impulseVector = switch (direction) {
-            case LEFT -> new Vector2(-impulseX - linearX,0);
-            case RIGHT -> new Vector2(impulseX + linearX,0);
-            case UP -> new Vector2(0,impulseY);
-            case DOWN -> new Vector2(0,-impulseY);
-            case RIGHTUP -> new Vector2(impulseX + linearX,impulseY);
-            case RIGHTDOWN -> new Vector2(impulseX + linearX,-impulseY);
+            case LEFT -> new Vector2(-impulse + linearX,0);
+            case RIGHT -> new Vector2(impulse + linearX,0);
+            case UP -> new Vector2(0,impulse);
+            case DOWN -> new Vector2(0,-impulse);
         };
         game.addEntity(type,
             spawnPos,
             impulseVector,
-            isFlipX()
+            direction == ThrowDirection.LEFT
         );
     }
 
