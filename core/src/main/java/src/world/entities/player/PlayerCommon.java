@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.FrontRayCastCallback;
 import src.utils.animation.SheetCutter;
+import src.utils.managers.SoundManager;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
 import src.world.entities.player.powers.*;
@@ -400,21 +401,21 @@ public abstract class PlayerCommon extends Entity {
 
     public void playSound(SoundType type){
         switch (type){
-            case AIRSHOT -> airShotSound.play(1f, 0.9f,0);
-            case ABSORB1 -> absorb1Sound.play(1f, 1f,0);
-            case ABSORB2 -> absorb2Sound.play(1f, 1f,0);
-            case DASH -> dashSound.play(1f, 1f,0);
-            case FIREDAMAGE -> fireDamageSound.play(1f, 1f,0);
-            case NORMALDAMAGE -> normalDamageSound.play(1f, 1f,0);
-            case HEAVYFALL -> heavyFallSound.play(1f, 1f,0);
-            case ITEM -> itemSound.play(1f, 1f,0);
-            case JUMP -> jumpSound.play(1f, 1f,0);
-            case POWER -> powerSound.play(1f, 1f,0);
-            case SCORE1 -> score1Sound.play(1f, 1f,0);
-            case SCORE2 -> score2Sound.play(1f, random.nextFloat(0.5f,1),0);
-            case SLEEP -> sleepSound.play(1f, 1f,0);
-            case STAR -> starSound.play(1f, 1f,0);
-            case REMOVESELECT -> removeSelectSound.play(1f, 1f,0);
+            case AIRSHOT -> SoundManager.playSound(airShotSound, 0.9f);
+            case ABSORB1 -> SoundManager.playSound(absorb1Sound, 1f);
+            case ABSORB2 -> SoundManager.playSound(absorb2Sound, 1f);
+            case DASH -> SoundManager.playSound(dashSound, 1f);
+            case FIREDAMAGE -> SoundManager.playSound(fireDamageSound, 1f);
+            case NORMALDAMAGE -> SoundManager.playSound(normalDamageSound, 1f);
+            case HEAVYFALL -> SoundManager.playSound(heavyFallSound, 1f);
+            case ITEM -> SoundManager.playSound(itemSound, 1f);
+            case JUMP -> SoundManager.playSound(jumpSound, 1f);
+            case POWER -> SoundManager.playSound(powerSound, 1f);
+            case SCORE1 -> SoundManager.playSound(score1Sound, 1f);
+            case SCORE2 -> SoundManager.playSound(score2Sound, 1f);
+            case SLEEP -> SoundManager.playSound(sleepSound, 1f);
+            case STAR -> SoundManager.playSound(starSound, 1f);
+            case REMOVESELECT -> SoundManager.playSound(removeSelectSound, 1f);
         }
     }
 

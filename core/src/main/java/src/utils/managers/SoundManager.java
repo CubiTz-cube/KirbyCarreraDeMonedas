@@ -11,9 +11,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SoundManager implements Music.OnCompletionListener {
-    public Float volume = 1f;
-    public Float volumeMusic = 1f;
-    public Float volumeSound = 1f;
+    public static Float volume = 1f;
+    public static Float volumeMusic = 1f;
+    public static Float volumeSound = 1f;
 
     private Random random;
     private HashMap<String,ArrayList<Music>> soundTracks;
@@ -28,7 +28,7 @@ public class SoundManager implements Music.OnCompletionListener {
         musicThread = Executors.newSingleThreadExecutor();
     }
 
-    public void playSound(Sound sound, Float pitch){
+    public static void playSound(Sound sound, Float pitch){
         sound.play(volume * volumeSound, pitch, 0);
     }
 
