@@ -201,6 +201,15 @@ public class Main extends Game {
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
 
+        soundManager = new SoundManager();
+        SoundManager.setVolume(0.1f);
+        soundManager.addSoundTrack(soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), soundTrackType.MENU.toString());
+
         screensList  = new ArrayList<>();
         screensList.add(new IntroScreen(this));
         screensList.add(new MenuScreen(this));
@@ -215,17 +224,9 @@ public class Main extends Game {
         screensList.add(new EndGameScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
-        changeScreen(Screens.GAME);
 
-        soundManager = new SoundManager();
-        soundManager.volume = 0.1f;
-        soundManager.addSoundTrack(soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), soundTrackType.MENU.toString());
 
+        changeScreen(Screens.INTRO);
         soundManager.setSoundTracks(soundTrackType.MENU.toString());
     }
 

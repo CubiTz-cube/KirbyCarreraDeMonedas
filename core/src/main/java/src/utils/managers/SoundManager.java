@@ -11,16 +11,46 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SoundManager implements Music.OnCompletionListener {
-    public static Float volume = 1f;
-    public static Float volumeMusic = 1f;
-    public static Float volumeSound = 1f;
+    private static Float volume = 1f;
+    private static Float volumeMusic = 1f;
+    private static Float volumeSound = 1f;
 
     private Random random;
     private HashMap<String,ArrayList<Music>> soundTracks;
     private String currentSoundTrack;
 
-    private Music currentMusic;
+    private static Music currentMusic;
     private final ExecutorService musicThread;
+
+    public static void setVolume(Float volume) {
+        SoundManager.volume = volume;
+        if (currentMusic != null) {
+            currentMusic.setVolume(volume * volumeMusic);
+        }
+    }
+
+    public static Float getVolume() {
+        return volume;
+    }
+
+    public static void setVolumeMusic(Float volumeMusic) {
+        SoundManager.volumeMusic = volumeMusic;
+        if (currentMusic != null) {
+            currentMusic.setVolume(volume * volumeMusic);
+        }
+    }
+
+    public static Float getVolumeMusic() {
+        return volumeMusic;
+    }
+
+    public static void setVolumeSound(Float volumeSound) {
+        SoundManager.volumeSound = volumeSound;
+    }
+
+    public static Float getVolumeSound() {
+        return volumeSound;
+    }
 
     public SoundManager(){
         random = new Random();
