@@ -270,7 +270,7 @@ public class Player extends PlayerCommon {
 
             if (getCurrentStateType() == StateType.DASH && enemy.getCurrentStateType() != Enemy.StateType.DAMAGE){
                 Box2dUtils.knockbackBody(body, enemy.getBody(), 5f);
-                game.actDamageEnemy(enemy.getId(), body, 2, 2f);
+                game.actDamageEnemy(enemy.getId(), body, dashDamage, 2f);
                 setInvencible(0.5f);
                 setCurrentState(StateType.FALL);
                 return;

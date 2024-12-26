@@ -31,12 +31,14 @@ public class PowerWheel extends PowerUp{
     public void start() {
         super.start();
         player.brakeForce = Player.DEFAULT_BRAKE_FORCE - 180;
+        player.dashDamage = 6;
     }
 
     @Override
     public void end() {
         super.end();
         player.brakeForce = Player.DEFAULT_BRAKE_FORCE;
+        player.dashDamage = Player.DEFAULT_DASH_DAMAGE;
     }
 
     @Override

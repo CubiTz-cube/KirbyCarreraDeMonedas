@@ -27,7 +27,9 @@ public abstract class PlayerCommon extends Entity {
     public float maxSpeed = 6;
     public float stunTime = DEFAULT_STUNT_TIME;
     public float brakeForce = DEFAULT_BRAKE_FORCE;
+    public int dashDamage = DEFAULT_DASH_DAMAGE;
 
+    public static final int DEFAULT_DASH_DAMAGE = 1;
     public static final float DEFAULT_STUNT_TIME = 1f;
     public static final float WALK_SPEED = 14f;
     public static final float WALK_MAX_SPEED = 5f;
@@ -35,7 +37,7 @@ public abstract class PlayerCommon extends Entity {
     public static final float RUN_MAX_SPEED = 6.5f;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 8f;
-    public static final float JUMP_INAIR = 20f; // Se multiplica por deltaTime
+    public static final float JUMP_INAIR = 25f; // Se multiplica por deltaTime
     public static final float FLY_IMPULSE = 6f;
     public static final float DASH_IMPULSE = 15f;
     public static final float ABSORB_FORCE = 12f;
