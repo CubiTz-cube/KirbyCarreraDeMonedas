@@ -90,6 +90,13 @@ public class Main extends Game {
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
         assetManager.load("ui/indicators/mirrorIndicator.png", Texture.class);
         assetManager.load("ui/icons/powerIcons.png", Texture.class);
+        assetManager.load("ui/buttons/info.png", Texture.class);
+        assetManager.load("ui/buttons/infoHover.png", Texture.class);
+        assetManager.load("ui/buttons/exit.png", Texture.class);
+        assetManager.load("ui/buttons/exitHover.png", Texture.class);
+        assetManager.load("ui/bg/lineBg.png", Texture.class);
+        assetManager.load("ui/bg/aroBg.png", Texture.class);
+
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);
