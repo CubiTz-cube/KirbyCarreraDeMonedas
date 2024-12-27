@@ -18,8 +18,14 @@ public class MenuScreen extends UIScreen {
 
     public MenuScreen(Main main) {
         super(main);
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/static/BricolageGrotesque_48pt-Regular.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
         fontBri = FontCreator.createFont(48, Color.WHITE, generator);
+
+        Image bgImage = new Image(main.getAssetManager().get("ui/bg/menuBg.png", Texture.class));
+
+        Texture kirbyTexture = main.getAssetManager().get("ui/bg/kirbyBg.png", Texture.class);
+        kirbyTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        Image kirbyImage = new Image(kirbyTexture);
 
         Texture lineTexture = main.getAssetManager().get("ui/bg/lineBg.png", Texture.class);
         lineTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -67,8 +73,11 @@ public class MenuScreen extends UIScreen {
 
         drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/button.png", Texture.class));
         drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/buttonHover.png", Texture.class));
-        ImageTextButton.ImageTextButtonStyle imageTextButtonStyle = new ImageTextButton.ImageTextButtonStyle(drawableUp, drawableHover, drawableHover, fontBri);
+        ImageTextButton.ImageTextButtonStyle imageTextButtonStyle = new ImageTextButton.ImageTextButtonStyle();
+        imageTextButtonStyle.up = drawableUp;
+        imageTextButtonStyle.font = fontBri;
         imageTextButtonStyle.over = drawableHover;
+        imageTextButtonStyle.overFontColor = new Color(0.01f,0.15f,0.58f,1f);
 
         ImageTextButton playButton = new ImageTextButton("Jugar", imageTextButtonStyle);
         playButton.addListener(new ClickListener() {
@@ -94,7 +103,7 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        LayersManager layersManager = new LayersManager(stageUI, 5);
+        LayersManager layersManager = new LayersManager(stageUI, 7);
 
         layersManager.setZindex(0);
         layersManager.getLayer().top();
@@ -105,7 +114,7 @@ public class MenuScreen extends UIScreen {
         layersManager.getLayer().top();
         layersManager.getLayer().add().expandX();
         layersManager.getLayer().add(infoButton).size(64);
-        layersManager.getLayer().add(exitButton).size(64).pad(20);
+        layersManager.getLayer().add(exitButton).size(64).pad(25);
 
         layersManager.setZindex(2);
         layersManager.getLayer().top();
@@ -114,18 +123,26 @@ public class MenuScreen extends UIScreen {
 
         layersManager.setZindex(3);
         layersManager.getLayer().top();
-        layersManager.getLayer().add(lineImage).expandX().fillX().padTop(55);
+        layersManager.getLayer().add(lineImage).expandX().fillX().padTop(65);
 
         layersManager.setZindex(4);
-        layersManager.getLayer().setDebug(true);
         layersManager.getLayer().left();
-        layersManager.getLayer().padLeft(270);
-        layersManager.getLayer().padTop(150);
-        layersManager.getLayer().add(playButton).width(400).pad(10);
+        layersManager.getLayer().padLeft(250);
+        layersManager.getLayer().padTop(130);
+        layersManager.getLayer().add(playButton).width(600).pad(10);
         layersManager.getLayer().row();
-        layersManager.getLayer().add(multiplayerButton).width(400).pad(10);
+        layersManager.getLayer().add(multiplayerButton).width(600).pad(10);
         layersManager.getLayer().row();
-        layersManager.getLayer().add(optionButton).width(250).left().pad(10);
+        layersManager.getLayer().add(optionButton).width(400).left().pad(10);
+
+        layersManager.setZindex(5);
+        layersManager.getLayer().right();
+        layersManager.getLayer().add().expand(0,6);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(kirbyImage).expandY().fill(1,1).bottom().pad(25);
+
+        layersManager.setZindex(6);
+        layersManager.getLayer().add(bgImage).grow();
     }
 
     @Override
