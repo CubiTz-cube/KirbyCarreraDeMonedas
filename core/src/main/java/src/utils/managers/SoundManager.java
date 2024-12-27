@@ -121,6 +121,7 @@ public class SoundManager implements Music.OnCompletionListener {
 
     @Override
     public void onCompletion(Music music) {
+        System.out.println("Music completed");
         music.setOnCompletionListener(null);
         playSoundTrack();
     }

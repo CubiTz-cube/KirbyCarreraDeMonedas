@@ -18,8 +18,7 @@ public abstract class CanBasicMoveState extends CanMoveState{
         Vector2 velocity = player.getBody().getLinearVelocity();
 
         if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)){
-            player.throwEntity(Entity.Type.COIN,0f,0f);
-            //player.doAction();
+            player.doAction();
         }
         if (Gdx.input.isKeyPressed(PlayerControl.JUMP) && player.getBody().getLinearVelocity().y < 0.1 && player.getBody().getLinearVelocity().y > -0.1){
             player.setCurrentState(Player.StateType.JUMP);
