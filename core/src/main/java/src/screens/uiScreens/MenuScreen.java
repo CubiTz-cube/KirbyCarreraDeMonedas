@@ -1,22 +1,25 @@
 package src.screens.uiScreens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import src.main.Main;
 import src.screens.components.LayersManager;
+import src.utils.FontCreator;
 
 public class MenuScreen extends UIScreen {
+    private final BitmapFont fontBri;
 
     public MenuScreen(Main main) {
         super(main);
-        Skin skin = main.getSkin();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/static/BricolageGrotesque_48pt-Regular.ttf"));
+        fontBri = FontCreator.createFont(48, Color.WHITE, generator);
 
         Texture lineTexture = main.getAssetManager().get("ui/bg/lineBg.png", Texture.class);
         lineTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -62,7 +65,12 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        TextButton playButton = new TextButton("Jugar", skin);
+        drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/button.png", Texture.class));
+        drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/buttonHover.png", Texture.class));
+        ImageTextButton.ImageTextButtonStyle imageTextButtonStyle = new ImageTextButton.ImageTextButtonStyle(drawableUp, drawableHover, drawableHover, fontBri);
+        imageTextButtonStyle.over = drawableHover;
+
+        ImageTextButton playButton = new ImageTextButton("Jugar", imageTextButtonStyle);
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -70,7 +78,7 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        TextButton multiplayerButton = new TextButton("Multijugador", skin);
+        ImageTextButton multiplayerButton = new ImageTextButton("Multijugador", imageTextButtonStyle);
         multiplayerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -78,7 +86,7 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        TextButton optionButton = new TextButton("Configuracion", skin);
+        ImageTextButton optionButton = new ImageTextButton("ajustes", imageTextButtonStyle);
         optionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -106,13 +114,23 @@ public class MenuScreen extends UIScreen {
 
         layersManager.setZindex(3);
         layersManager.getLayer().top();
-        layersManager.getLayer().add(lineImage).padTop(55);
+        layersManager.getLayer().add(lineImage).expandX().fillX().padTop(55);
 
         layersManager.setZindex(4);
-        layersManager.getLayer().add(playButton).width(200).height(50).pad(10);
+        layersManager.getLayer().setDebug(true);
+        layersManager.getLayer().left();
+        layersManager.getLayer().padLeft(270);
+        layersManager.getLayer().padTop(150);
+        layersManager.getLayer().add(playButton).width(400).pad(10);
         layersManager.getLayer().row();
-        layersManager.getLayer().add(multiplayerButton).width(200).height(50).pad(10);
+        layersManager.getLayer().add(multiplayerButton).width(400).pad(10);
         layersManager.getLayer().row();
-        layersManager.getLayer().add(optionButton).width(200).height(50).pad(10);
+        layersManager.getLayer().add(optionButton).width(250).left().pad(10);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        fontBri.dispose();
     }
 }

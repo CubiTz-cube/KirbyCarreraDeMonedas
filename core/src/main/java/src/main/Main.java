@@ -94,8 +94,12 @@ public class Main extends Game {
         assetManager.load("ui/buttons/infoHover.png", Texture.class);
         assetManager.load("ui/buttons/exit.png", Texture.class);
         assetManager.load("ui/buttons/exitHover.png", Texture.class);
+        assetManager.load("ui/buttons/button.png", Texture.class);
+        assetManager.load("ui/buttons/buttonHover.png", Texture.class);
         assetManager.load("ui/bg/lineBg.png", Texture.class);
         assetManager.load("ui/bg/aroBg.png", Texture.class);
+        assetManager.load("ui/bg/aroColorBg.png", Texture.class);
+        assetManager.load("ui/bg/aroColorBg.png", Texture.class);
 
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
