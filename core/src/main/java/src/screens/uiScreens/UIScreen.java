@@ -27,7 +27,7 @@ public abstract class UIScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.93f,0.71f,0.83f, 1f);
+        Gdx.gl.glClearColor(1f,1f,1f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stageUI.act(delta);

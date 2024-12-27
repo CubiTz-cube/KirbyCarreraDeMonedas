@@ -176,7 +176,7 @@ public class GameScreen extends BaseScreen {
         layersManager.setZindex(2);
         layersManager.getLayer().bottom();
         layersManager.getLayer().add().expandX();
-        layersManager.getLayer().add(imagePower).width(120).height(33).row();
+        layersManager.getLayer().add(imagePower).width(182).height(50).row();
     }
 
     private void initSounds(){
