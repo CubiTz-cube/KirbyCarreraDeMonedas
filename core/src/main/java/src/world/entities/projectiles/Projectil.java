@@ -38,7 +38,7 @@ public class Projectil extends Entity {
             if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible() || damage == 0) return;
             player.coinDrop = damage;
             player.setCurrentState(Player.StateType.STUN);
-            player.playSound(PlayerCommon.SoundType.NORMALDAMAGE);
+            player.playSound(Player.SoundType.NORMALDAMAGE);
             Box2dUtils.knockbackBody(getBody(), body, damage);
         }
         despawn();

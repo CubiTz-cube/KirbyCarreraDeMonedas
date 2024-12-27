@@ -22,7 +22,8 @@ public class PowerSleep extends PowerUp {
         player.stunTime = 5;
         player.setCurrentState(Player.StateType.STUN);
         player.setAnimation(Player.AnimationType.SLEEP);
-        player.playSound(PlayerCommon.SoundType.SLEEP);
+        Player mainPlayer = (Player) this.player;
+        mainPlayer.playSound(Player.SoundType.SLEEP);
     }
 
     @Override

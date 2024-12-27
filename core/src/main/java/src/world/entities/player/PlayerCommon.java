@@ -11,7 +11,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.utils.FrontRayCastCallback;
+import src.utils.SoundPicthUp;
 import src.utils.animation.SheetCutter;
+import src.utils.managers.SoundManager;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
 import src.world.entities.player.powers.*;
@@ -27,7 +29,9 @@ public abstract class PlayerCommon extends Entity {
     public float maxSpeed = 6;
     public float stunTime = DEFAULT_STUNT_TIME;
     public float brakeForce = DEFAULT_BRAKE_FORCE;
+    public int dashDamage = DEFAULT_DASH_DAMAGE;
 
+    public static final int DEFAULT_DASH_DAMAGE = 1;
     public static final float DEFAULT_STUNT_TIME = 1f;
     public static final float WALK_SPEED = 14f;
     public static final float WALK_MAX_SPEED = 5f;
@@ -35,7 +39,7 @@ public abstract class PlayerCommon extends Entity {
     public static final float RUN_MAX_SPEED = 6.5f;
     public static final float MAX_JUMP_TIME = 0.3f;
     public static final float JUMP_IMPULSE = 8f;
-    public static final float JUMP_INAIR = 20f; // Se multiplica por deltaTime
+    public static final float JUMP_INAIR = 25f; // Se multiplica por deltaTime
     public static final float FLY_IMPULSE = 6f;
     public static final float DASH_IMPULSE = 15f;
     public static final float ABSORB_FORCE = 12f;
@@ -132,40 +136,6 @@ public abstract class PlayerCommon extends Entity {
     private PowerBomb powerBomb;
     private PowerWheel powerWheel;
 
-    public enum SoundType{
-        AIRSHOT,
-        ABSORB1,
-        ABSORB2,
-        DASH,
-        FIREDAMAGE,
-        NORMALDAMAGE,
-        HEAVYFALL,
-        ITEM,
-        JUMP,
-        POWER,
-        SCORE1,
-        SCORE2,
-        SLEEP,
-        STAR,
-        REMOVESELECT,
-    }
-    private final Random random;
-    private Sound airShotSound;
-    private Sound absorb1Sound;
-    private Sound absorb2Sound;
-    private Sound dashSound;
-    private Sound fireDamageSound;
-    private Sound normalDamageSound;
-    private Sound heavyFallSound;
-    private Sound itemSound;
-    private Sound jumpSound;
-    private Sound powerSound;
-    private Sound score1Sound;
-    private Sound score2Sound;
-    private Sound sleepSound;
-    private Sound starSound;
-    private Sound removeSelectSound;
-
     protected float bodyWidth, bodyHeight;
 
     public PlayerCommon(World world, Float x, Float y, AssetManager assetManager, Integer id) {
@@ -190,14 +160,11 @@ public abstract class PlayerCommon extends Entity {
 
         initAnimations(assetManager);
         initPowers();
-        initSound();
 
         setAnimation(AnimationType.IDLE);
 
         secondSprite = new Sprite();
         secondSprite.setSize(bodyWidth * PIXELS_IN_METER, bodyHeight * PIXELS_IN_METER);
-
-        random = new Random();
     }
 
     private void initPowers(){
@@ -282,24 +249,6 @@ public abstract class PlayerCommon extends Entity {
 
         absorbJumpAnimation = new Animation<>(0.06f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/absorb/kirbyAbsorbJump.png"), 4));
-    }
-
-    private void initSound(){
-        airShotSound = assetManager.get("sound/kirby/kirbyAirShot.wav");
-        absorb1Sound = assetManager.get("sound/kirby/kirbyAbsorb1.wav");
-        absorb2Sound = assetManager.get("sound/kirby/kirbyAbsorb2.wav");
-        dashSound = assetManager.get("sound/kirby/kirbyDash.wav");
-        fireDamageSound = assetManager.get("sound/kirby/kirbyFireDamage.wav");
-        normalDamageSound = assetManager.get("sound/kirby/kirbyNormalDamage.wav");
-        heavyFallSound = assetManager.get("sound/kirby/kirbyHeavyFall.wav");
-        itemSound = assetManager.get("sound/kirby/kirbyItem.wav");
-        jumpSound = assetManager.get("sound/kirby/kirbyJump.wav");
-        powerSound = assetManager.get("sound/kirby/kirbyPower.wav");
-        score1Sound = assetManager.get("sound/kirby/kirbyScore1.wav");
-        score2Sound = assetManager.get("sound/kirby/kirbyScore2.wav");
-        sleepSound = assetManager.get("sound/kirby/kirbySleep.wav");
-        starSound = assetManager.get("sound/kirby/kirbyStar.wav");
-        removeSelectSound = assetManager.get("sound/kirby/kirbyRemovePower.wav");
     }
 
     public void setAnimation(AnimationType animationType){
@@ -394,26 +343,6 @@ public abstract class PlayerCommon extends Entity {
 
     public PowerUp.Type getCurrentpowerUptype() {
         return currentpowerUptype;
-    }
-
-    public void playSound(SoundType type){
-        switch (type){
-            case AIRSHOT -> airShotSound.play(1f, 0.9f,0);
-            case ABSORB1 -> absorb1Sound.play(1f, 1f,0);
-            case ABSORB2 -> absorb2Sound.play(1f, 1f,0);
-            case DASH -> dashSound.play(1f, 1f,0);
-            case FIREDAMAGE -> fireDamageSound.play(1f, 1f,0);
-            case NORMALDAMAGE -> normalDamageSound.play(1f, 1f,0);
-            case HEAVYFALL -> heavyFallSound.play(1f, 1f,0);
-            case ITEM -> itemSound.play(1f, 1f,0);
-            case JUMP -> jumpSound.play(1f, 1f,0);
-            case POWER -> powerSound.play(1f, 1f,0);
-            case SCORE1 -> score1Sound.play(1f, 1f,0);
-            case SCORE2 -> score2Sound.play(1f, random.nextFloat(0.5f,1),0);
-            case SLEEP -> sleepSound.play(1f, 1f,0);
-            case STAR -> starSound.play(1f, 1f,0);
-            case REMOVESELECT -> removeSelectSound.play(1f, 1f,0);
-        }
     }
 
     @Override

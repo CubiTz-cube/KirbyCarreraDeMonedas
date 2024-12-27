@@ -66,8 +66,8 @@ public class PowerSword extends PowerUp {
     @Override
     public void actionAir() {
         Player mainPlayer = (Player) player;
-        mainPlayer.throwEntity(Entity.Type.SWORDPROPLAYER,-5f,0f, Player.ThrowDirection.LEFT);
-        mainPlayer.throwEntity(Entity.Type.SWORDPROPLAYER,5f,0f, Player.ThrowDirection.RIGHT);
+        mainPlayer.throwEntity(Entity.Type.SWORDPROPLAYER,5f, Player.ThrowDirection.LEFT);
+        mainPlayer.throwEntity(Entity.Type.SWORDPROPLAYER,5f, Player.ThrowDirection.RIGHT);
         cooldown = 0.5f;
     }
 

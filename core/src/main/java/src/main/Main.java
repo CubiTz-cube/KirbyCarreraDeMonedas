@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +18,10 @@ import src.screens.minigames.odsPlease.OdsPleaseScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
+import src.utils.managers.SoundManager;
 
+import javax.sound.midi.Soundbank;
+import javax.sound.midi.SoundbankResource;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,6 +58,12 @@ public class Main extends Game {
     private String ip;
     private Integer port;
 
+    public SoundManager soundManager;
+    public enum soundTrackType {
+        MENU,
+        GAME,
+    }
+
     @Override
     public void create() {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
@@ -80,13 +90,6 @@ public class Main extends Game {
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
         assetManager.load("ui/indicators/mirrorIndicator.png", Texture.class);
         assetManager.load("ui/icons/powerIcons.png", Texture.class);
-        assetManager.load("ui/buttons/info.png", Texture.class);
-        assetManager.load("ui/buttons/infoHover.png", Texture.class);
-        assetManager.load("ui/buttons/exit.png", Texture.class);
-        assetManager.load("ui/buttons/exitHover.png", Texture.class);
-        assetManager.load("ui/bg/lineBg.png", Texture.class);
-        assetManager.load("ui/bg/aroBg.png", Texture.class);
-
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);
@@ -168,6 +171,12 @@ public class Main extends Game {
         assetManager.load("miniGames/odsPlease/persons/persons3.png", Texture.class);
         assetManager.load("miniGames/odsPlease/persons/persons4.png", Texture.class);
 
+        assetManager.load("music/meow.mp3", Music.class);
+        assetManager.load("music/anomalocaris.mp3", Music.class);
+        assetManager.load("music/arthropluera.mp3", Music.class);
+        assetManager.load("music/caterpillar.mp3", Music.class);
+        assetManager.load("music/crocodile.mp3", Music.class);
+
         assetManager.load("sound/kirby/kirbyAirShot.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyItem.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyAbsorb1.wav", Sound.class);
@@ -192,6 +201,15 @@ public class Main extends Game {
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
 
+        soundManager = new SoundManager();
+        SoundManager.setVolumeMusic(0.1f);
+        soundManager.addSoundTrack(soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), soundTrackType.MENU.toString());
+
         screensList  = new ArrayList<>();
         screensList.add(new IntroScreen(this));
         screensList.add(new MenuScreen(this));
@@ -207,7 +225,8 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MENU);
+        changeScreen(Screens.INTRO);
+        soundManager.setSoundTracks(soundTrackType.MENU.toString());
     }
 
     public void setName(String name) {
@@ -298,5 +317,6 @@ public class Main extends Game {
         for (Screen screen : screensList) {
             screen.dispose();
         }
+        soundManager.dispose();
     }
 }

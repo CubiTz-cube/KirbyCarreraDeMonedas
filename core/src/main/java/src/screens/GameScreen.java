@@ -587,16 +587,21 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void resize(int width, int height) {
-        float cameraZoom = 1280.0f / width;
-        if (cameraZoom > 1.3f) cameraZoom = 1.3f;
-        OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
-        camera.zoom = cameraZoom;
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                float cameraZoom = 1280.0f / width;
+                if (cameraZoom > 1.3f) cameraZoom = 1.3f;
+                OrthographicCamera camera = (OrthographicCamera) stage.getCamera();
+                camera.zoom = cameraZoom;
 
-        stage.getViewport().update(width,  height, false);
-        stageUI.getViewport().update(width,  height, false);
+                stage.getViewport().update(width, height, false);
+                stageUI.getViewport().update(width, height, false);
 
-        camera.position.x = player.getX() + (player.isFlipX() ? -32 : 32);
-        camera.position.y = player.getY();
+                camera.position.x = player.getX() + (player.isFlipX() ? -32 : 32);
+                camera.position.y = player.getY();
+            }
+        });
     }
 
     public void randomMirror(Integer id){
