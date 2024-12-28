@@ -100,7 +100,7 @@ public abstract class Enemy extends Entity {
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Lava lava){
-            takeDamage(5);
+            takeDamage(99);
         }
     }
 }
