@@ -1,20 +1,21 @@
 package src.screens.uiScreens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
-import src.utils.managers.SoundManager;
+import src.utils.sound.SingleSoundManager;
+import src.utils.sound.SoundManager;
 
 public class OptionScreen extends UIScreen {
 
     public OptionScreen(Main main) {
         super(main);
         Skin skin = main.getSkin();
+
+        SoundManager soundManager = SingleSoundManager.getInstance();
 
         Table table = new Table();
         table.setFillParent(true);
@@ -32,36 +33,33 @@ public class OptionScreen extends UIScreen {
         Label volumeLabel = new Label("General", skin);
 
         Slider volumeSlider = new Slider(0, 1, 0.01f, false, skin);
-        volumeSlider.setValue(SoundManager.getVolume());
+        volumeSlider.setValue(soundManager.getVolume());
         volumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SoundManager.setVolume(volumeSlider.getValue());
-                System.out.println("Volume: " + SoundManager.getVolume());
+                soundManager.setVolume(volumeSlider.getValue());
             }
         });
 
         Label volumeMusicLabel = new Label("Musica", skin);
 
         Slider volumenMusicSlider = new Slider(0, 1, 0.01f, false, skin);
-        volumenMusicSlider.setValue(SoundManager.getVolumeMusic());
+        volumenMusicSlider.setValue(soundManager.getVolumeMusic());
         volumenMusicSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SoundManager.setVolumeMusic(volumenMusicSlider.getValue());
-                System.out.println("Volume: " + SoundManager.getVolumeMusic());
+                soundManager.setVolumeMusic(volumenMusicSlider.getValue());
             }
         });
 
         Label volumeSoundLabel = new Label("Sonidos", skin);
 
         Slider volumenSoundSlider = new Slider(0, 1, 0.01f, false, skin);
-        volumenSoundSlider.setValue(SoundManager.getVolumeSound());
+        volumenSoundSlider.setValue(soundManager.getVolumeSound());
         volumenSoundSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SoundManager.setVolumeSound(volumenSoundSlider.getValue());
-                System.out.println("Volume: " + SoundManager.getVolumeSound());
+                soundManager.setVolumeSound(volumenSoundSlider.getValue());
             }
         });
 

@@ -1,4 +1,4 @@
-package src.utils.managers;
+package src.utils.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -11,44 +11,44 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SoundManager implements Music.OnCompletionListener {
-    private static Float volume = 1f;
-    private static Float volumeMusic = 1f;
-    private static Float volumeSound = 1f;
+    private Float volume = 1f;
+    private Float volumeMusic = 1f;
+    private Float volumeSound = 1f;
 
-    private Random random;
-    private HashMap<String,ArrayList<Music>> soundTracks;
+    private final Random random;
+    private final HashMap<String,ArrayList<Music>> soundTracks;
     private String currentSoundTrack;
 
-    private static Music currentMusic;
+    private Music currentMusic;
     private final ExecutorService musicThread;
 
-    public static void setVolume(Float volume) {
-        SoundManager.volume = volume;
+    public void setVolume(Float volume) {
+        this.volume = volume;
         if (currentMusic != null) {
             currentMusic.setVolume(volume * volumeMusic);
         }
     }
 
-    public static Float getVolume() {
+    public Float getVolume() {
         return volume;
     }
 
-    public static void setVolumeMusic(Float volumeMusic) {
-        SoundManager.volumeMusic = volumeMusic;
+    public void setVolumeMusic(Float volumeMusic) {
+        this.volumeMusic = volumeMusic;
         if (currentMusic != null) {
             currentMusic.setVolume(volume * volumeMusic);
         }
     }
 
-    public static Float getVolumeMusic() {
+    public Float getVolumeMusic() {
         return volumeMusic;
     }
 
-    public static void setVolumeSound(Float volumeSound) {
-        SoundManager.volumeSound = volumeSound;
+    public void setVolumeSound(Float volumeSound) {
+        this.volumeSound = volumeSound;
     }
 
-    public static Float getVolumeSound() {
+    public Float getVolumeSound() {
         return volumeSound;
     }
 
@@ -58,20 +58,25 @@ public class SoundManager implements Music.OnCompletionListener {
         musicThread = Executors.newSingleThreadExecutor();
     }
 
-    public static void playSound(Sound sound, Float pitch){
+    public void playSound(Sound sound, Float pitch){
         sound.play(volume * volumeSound, pitch, 0);
     }
 
-    public synchronized void playMusic(Music music){
+    public void playMusic(Music music){
         music.setVolume(0);
         music.setOnCompletionListener(this);
         musicThread.submit(() -> {
             fadeOutMusic();
             currentMusic = music;
-            music.play();
+            Gdx.app.postRunnable(() -> {
+                music.play();
+                System.out.println("Music started");
+            });
 
             while (music.getVolume() < volume * volumeMusic) {
-                music.setVolume(music.getVolume() + 0.005f);
+                float newVolume = music.getVolume() + 0.005f;
+                if (newVolume > volume * volumeMusic) newVolume = volume * volumeMusic;
+                music.setVolume(newVolume);
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -82,23 +87,22 @@ public class SoundManager implements Music.OnCompletionListener {
     }
 
     public synchronized void stopMusic(){
-        musicThread.submit(() -> {
-            fadeOutMusic();
-        });
+        musicThread.submit(this::fadeOutMusic);
     }
 
     private void fadeOutMusic() {
-        if (currentMusic != null) {
-            while (currentMusic.getVolume() > 0) {
-                currentMusic.setVolume(currentMusic.getVolume() - 0.005f);
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    Gdx.app.log("SoundManager", "Error al detrener la música");
-                }
+        if (currentMusic == null) return;
+        while (currentMusic.getVolume() > 0) {
+            float newVolume = currentMusic.getVolume() - 0.005f;
+            if (newVolume < 0) newVolume = 0;
+            currentMusic.setVolume(newVolume);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                Gdx.app.log("SoundManager", "Error al detener la música");
             }
-            currentMusic.stop();
         }
+        currentMusic.stop();
     }
 
     public void addSoundTrack(String name){
@@ -121,9 +125,7 @@ public class SoundManager implements Music.OnCompletionListener {
 
     @Override
     public void onCompletion(Music music) {
-        System.out.println("Music completed");
         playSoundTrack();
-        music.setOnCompletionListener(null);
     }
 
     public void dispose(){

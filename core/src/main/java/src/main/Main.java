@@ -18,10 +18,9 @@ import src.screens.minigames.odsPlease.OdsPleaseScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
-import src.utils.managers.SoundManager;
+import src.utils.sound.SingleSoundManager;
+import src.utils.sound.SoundManager;
 
-import javax.sound.midi.Soundbank;
-import javax.sound.midi.SoundbankResource;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -214,8 +213,8 @@ public class Main extends Game {
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
 
-        soundManager = new SoundManager();
-        SoundManager.setVolumeMusic(0.0f);
+        soundManager = SingleSoundManager.getInstance();
+        soundManager.setVolumeMusic(0.1f);
         soundManager.addSoundTrack(soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());

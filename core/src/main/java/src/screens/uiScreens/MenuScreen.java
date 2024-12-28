@@ -12,9 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import src.main.Main;
 import src.screens.components.LayersManager;
 import src.utils.FontCreator;
+import src.utils.sound.SingleSoundManager;
 
 public class MenuScreen extends UIScreen {
     private final BitmapFont fontBri;
+
+    private ImageTextButton multiplayerButton;
+    private ImageTextButton optionButton;
 
     public MenuScreen(Main main) {
         super(main);
@@ -87,15 +91,16 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        ImageTextButton multiplayerButton = new ImageTextButton("Multijugador", imageTextButtonStyle);
+        multiplayerButton = new ImageTextButton("Multijugador", imageTextButtonStyle);
         multiplayerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.changeScreen(Main.Screens.MULTIPLAYER);
+                //main.changeScreen(Main.Screens.MULTIPLAYER);
+                SingleSoundManager.getInstance().onCompletion(null);
             }
         });
 
-        ImageTextButton optionButton = new ImageTextButton("ajustes", imageTextButtonStyle);
+        optionButton = new ImageTextButton("ajustes", imageTextButtonStyle);
         optionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -129,11 +134,12 @@ public class MenuScreen extends UIScreen {
         layersManager.getLayer().left();
         layersManager.getLayer().padLeft(250);
         layersManager.getLayer().padTop(130);
-        layersManager.getLayer().add(playButton).width(600).pad(10);
+        layersManager.getLayer().add(playButton).expand(1,0).fill().left().pad(10);
+        layersManager.getLayer().add().width(460);
         layersManager.getLayer().row();
-        layersManager.getLayer().add(multiplayerButton).width(600).pad(10);
+        layersManager.getLayer().add(multiplayerButton).expand(1,0).fill().left().pad(10);
         layersManager.getLayer().row();
-        layersManager.getLayer().add(optionButton).width(400).left().pad(10);
+        layersManager.getLayer().add(optionButton).expandX().fill(0.1f,0).left().pad(10);
 
         layersManager.setZindex(5);
         layersManager.getLayer().right();

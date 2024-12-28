@@ -5,7 +5,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.net.packets.Packet;
@@ -15,7 +14,8 @@ import src.utils.FrontRayCastCallback;
 import src.utils.SoundPicthUp;
 import src.utils.constants.CollisionFilters;
 import src.utils.constants.PlayerControl;
-import src.utils.managers.SoundManager;
+import src.utils.sound.SingleSoundManager;
+import src.utils.sound.SoundManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
@@ -311,22 +311,23 @@ public class Player extends PlayerCommon {
     }
 
     public void playSound(SoundType type){
+        SoundManager soundManager = SingleSoundManager.getInstance();
         switch (type){
-            case AIRSHOT -> SoundManager.playSound(airShotSound, 0.9f);
-            case ABSORB1 -> SoundManager.playSound(absorb1Sound, 1f);
-            case ABSORB2 -> SoundManager.playSound(absorb2Sound, 1f);
-            case DASH -> SoundManager.playSound(dashSound, 1f);
-            case FIREDAMAGE -> SoundManager.playSound(fireDamageSound, 1f);
-            case NORMALDAMAGE -> SoundManager.playSound(normalDamageSound, 1f);
-            case HEAVYFALL -> SoundManager.playSound(heavyFallSound, 1f);
-            case ITEM -> SoundManager.playSound(itemSound, 1f);
-            case JUMP -> SoundManager.playSound(jumpSound, 1f);
-            case POWER -> SoundManager.playSound(powerSound, 1f);
-            case SCORE1 -> SoundManager.playSound(score1Sound, 1f);
-            case COIN -> SoundManager.playSound(coinSound, 1f);
-            case SLEEP -> SoundManager.playSound(sleepSound, 1f);
-            case STAR -> SoundManager.playSound(starSound, 1f);
-            case REMOVESELECT -> SoundManager.playSound(removeSelectSound, 1f);
+            case AIRSHOT -> soundManager.playSound(airShotSound, 0.9f);
+            case ABSORB1 -> soundManager.playSound(absorb1Sound, 1f);
+            case ABSORB2 -> soundManager.playSound(absorb2Sound, 1f);
+            case DASH -> soundManager.playSound(dashSound, 1f);
+            case FIREDAMAGE -> soundManager.playSound(fireDamageSound, 1f);
+            case NORMALDAMAGE -> soundManager.playSound(normalDamageSound, 1f);
+            case HEAVYFALL -> soundManager.playSound(heavyFallSound, 1f);
+            case ITEM -> soundManager.playSound(itemSound, 1f);
+            case JUMP -> soundManager.playSound(jumpSound, 1f);
+            case POWER -> soundManager.playSound(powerSound, 1f);
+            case SCORE1 -> soundManager.playSound(score1Sound, 1f);
+            case COIN -> soundManager.playSound(coinSound, 1f);
+            case SLEEP -> soundManager.playSound(sleepSound, 1f);
+            case STAR -> soundManager.playSound(starSound, 1f);
+            case REMOVESELECT -> soundManager.playSound(removeSelectSound, 1f);
         }
     }
 

@@ -1,26 +1,17 @@
 package src.world.entities.player;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import src.utils.FrontRayCastCallback;
-import src.utils.SoundPicthUp;
 import src.utils.animation.SheetCutter;
-import src.utils.managers.SoundManager;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
 import src.world.entities.player.powers.*;
 import src.world.entities.player.states.*;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 import static src.utils.constants.Constants.PIXELS_IN_METER;
 
