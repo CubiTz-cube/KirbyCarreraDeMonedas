@@ -119,7 +119,7 @@ public abstract class PlayerCommon extends Entity {
     private final Sprite secondSprite;
     private Animation<TextureRegion> secondCurrentAnimation;
 
-    protected PowerUp.Type currentpowerUptype;
+    protected PowerUp.Type currentpowerUptype = PowerUp.Type.NONE;
     private PowerUp currentPowerUp;
 
     private PowerSleep powerSleep;

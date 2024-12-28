@@ -32,7 +32,6 @@ public class BombExplosion extends Projectil{
         body.setFixedRotation(true);
 
         Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.PROJECTIL;
         filter.maskBits = (short)(~CollisionFilters.ITEM & ~CollisionFilters.STATIC);
         fixture.setFilterData(filter);
     }

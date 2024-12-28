@@ -32,10 +32,10 @@ public class Projectil extends Entity {
     @Override
     public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof Enemy enemy){
-            if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE  || damage == 0) return;
+            if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE  || damage == 0) {despawn(); return;}
             game.actDamageEnemy(enemy.getId(), body, damage, damage.floatValue());
         } else if (actor instanceof Player player) {
-            if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible() || damage == 0) return;
+            if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible() || damage == 0) {despawn(); return;}
             player.coinDrop = damage;
             player.setCurrentState(Player.StateType.STUN);
             player.playSound(Player.SoundType.NORMALDAMAGE);

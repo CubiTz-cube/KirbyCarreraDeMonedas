@@ -93,7 +93,7 @@ public class Player extends PlayerCommon {
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.PLAYER;
-        filter.maskBits = (short)~CollisionFilters.OTHERPLAYER;
+        filter.maskBits = (short)(~CollisionFilters.OTHERPLAYER & ~CollisionFilters.PROJECTIL);
         fixture.setFilterData(filter);
 
         initStates();
@@ -105,7 +105,7 @@ public class Player extends PlayerCommon {
         invencible = false;
 
         random = new Random();
-        //setCurrentPowerUp(PowerUp.Type.BOMB);
+        setCurrentPowerUp(PowerUp.Type.BOMB);
     }
 
     private void initStates(){
@@ -261,17 +261,17 @@ public class Player extends PlayerCommon {
     }
 
     public void dropPower(){
-        if (currentpowerUptype == null) return;
+        if (currentpowerUptype == PowerUp.Type.NONE) return;
         switch (currentpowerUptype){
             case BOMB -> game.addEntity(Type.POWERBOMB, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
             case WHEEL -> game.addEntity(Type.POWERWHEEL, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
             case SWORD -> game.addEntity(Type.POWERSWORD, body.getPosition(), new Vector2(random.nextFloat(-3,3),random.nextFloat(-5,5)));
         }
-        setCurrentPowerUp(null);
+        setCurrentPowerUp(PowerUp.Type.NONE);
     }
 
     public void doAction(){
-        if (currentpowerUptype != null) {
+        if (currentpowerUptype != PowerUp.Type.NONE) {
             PowerUp power = getCurrentPowerUp();
             if (getCurrentStateType() == StateType.IDLE || getCurrentStateType() == StateType.WALK ) power.actionIdle();
             else if (getCurrentStateType() == StateType.RUN) power.actionMove();
