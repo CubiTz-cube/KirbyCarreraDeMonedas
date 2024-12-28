@@ -1,5 +1,6 @@
 package src.screens.components;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,6 +24,16 @@ public class SpriteAsActor extends Actor {
         super.setSize(width, height);
         this.width = width;
         this.height = height;
+    }
+
+    @Override
+    public void setColor(Color color) {
+        sprite.setColor(color);
+    }
+
+    @Override
+    public void setColor(float r, float g, float b, float a) {
+        sprite.setColor(r, g, b, a);
     }
 
     @Override

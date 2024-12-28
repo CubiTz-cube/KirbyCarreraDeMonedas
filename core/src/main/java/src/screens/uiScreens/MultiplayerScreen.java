@@ -15,12 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
 import src.screens.components.LayersManager;
+import src.screens.components.SpriteAsActor;
 import src.utils.FontCreator;
 import src.utils.constants.MyColors;
 
 public class MultiplayerScreen extends BlueCircleScreen {
     private final BitmapFont fontBri;
     private final BitmapFont fontInter;
+
+    private final SpriteAsActor kirbyImage;
 
     public MultiplayerScreen(Main main) {
         super(main, "Multijugador", null, Main.Screens.MENU);
@@ -32,7 +35,7 @@ public class MultiplayerScreen extends BlueCircleScreen {
         FreeTypeFontGenerator generatorInter = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
         fontInter = FontCreator.createFont(40, Color.WHITE, generatorInter, new FreeTypeFontGenerator.FreeTypeFontParameter());
 
-        LayersManager layersManager = new LayersManager(stageUI, 7);
+        LayersManager layersManager = new LayersManager(stageUI, 3);
 
         Drawable drawableBg = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/input.png", Texture.class));
 
@@ -45,6 +48,9 @@ public class MultiplayerScreen extends BlueCircleScreen {
 
         TextField nameTextField = new TextField("Sin nombre", textFieldStyle);
         nameTextField.setAlignment(Align.center);
+
+        Label nameLabel = new Label("Nombre", new Label.LabelStyle(fontBri, MyColors.BLUE));
+        nameLabel.setAlignment(Align.center);
 
         TextureRegionDrawable drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/button.png", Texture.class));
         TextureRegionDrawable drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/buttonHover.png", Texture.class));
@@ -73,16 +79,39 @@ public class MultiplayerScreen extends BlueCircleScreen {
             }
         });
 
+        kirbyImage = new SpriteAsActor(main.getAssetManager().get("ui/bg/kirbyIdleBg.png", Texture.class));
+
         layersManager.setZindex(0);
         layersManager.getLayer().left();
-        layersManager.getLayer().add(nameTextField).width(500).expandY().padLeft(40);
+        layersManager.getLayer().pad(40);
+        layersManager.getLayer().padBottom(40);
+        layersManager.getLayer().add(nameLabel).expand(2,0).fill();
+        layersManager.getLayer().add().expand(3,0);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(nameTextField).expand(2,0).fill();
+        layersManager.getLayer().add().expand(3,0);
 
         layersManager.setZindex(1);
         layersManager.getLayer().bottom();
         layersManager.getLayer().pad(20);
-        layersManager.getLayer().add(joinButton).width(500).pad(10).expandX().right();
+        layersManager.getLayer().padBottom(40);
+        layersManager.getLayer().add().expand(8,0);
+        layersManager.getLayer().add(joinButton).pad(10).expandX().fill();
         layersManager.getLayer().row();
-        layersManager.getLayer().add(createButton).width(500).pad(10).expandX().right();
+        layersManager.getLayer().add().expand(8,0);
+        layersManager.getLayer().add(createButton).pad(10).expandX().fill();
+
+        layersManager.setZindex(2);
+        layersManager.getLayer().bottom();
+        layersManager.getLayer().add(kirbyImage).size(184, 166).expandX();
+        layersManager.getLayer().add().expandX();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        System.out.println("Color " + main.playerColor);
+        kirbyImage.setColor(main.playerColor);
     }
 
     @Override

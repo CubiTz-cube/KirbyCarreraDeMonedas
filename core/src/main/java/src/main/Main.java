@@ -102,6 +102,7 @@ public class Main extends Game {
         assetManager.load("ui/bg/aroColorBg.png", Texture.class);
         assetManager.load("ui/bg/menuBg.png", Texture.class);
         assetManager.load("ui/bg/kirbyBg.png", Texture.class);
+        assetManager.load("ui/bg/kirbyIdleBg.png", Texture.class);
 
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
@@ -215,7 +216,7 @@ public class Main extends Game {
         System.out.println("Assets loaded.");
 
         soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.2f);
+        soundManager.setVolumeMusic(0.1f);
         soundManager.addSoundTrack(soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());
