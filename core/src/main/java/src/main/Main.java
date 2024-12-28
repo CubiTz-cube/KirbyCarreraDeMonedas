@@ -214,7 +214,7 @@ public class Main extends Game {
         System.out.println("Assets loaded.");
 
         soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.0f);
+        soundManager.setVolumeMusic(0.2f);
         soundManager.addSoundTrack(soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());
@@ -237,7 +237,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.INFO);
+        changeScreen(Screens.INTRO);
         soundManager.setSoundTracks(soundTrackType.MENU.toString());
     }
 

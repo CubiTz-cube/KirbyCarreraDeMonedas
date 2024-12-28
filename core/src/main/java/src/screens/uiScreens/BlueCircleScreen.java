@@ -19,6 +19,8 @@ import src.utils.FontCreator;
 import src.utils.constants.MyColors;
 
 public class BlueCircleScreen extends UIScreen{
+    private BitmapFont fontBri;
+
     private Main.Screens backPage;
 
     public BlueCircleScreen(Main main, String title, Image bgImage, Main.Screens backPage) {
@@ -31,7 +33,7 @@ public class BlueCircleScreen extends UIScreen{
         parameter.shadowColor = MyColors.BLUE;
         parameter.shadowOffsetX = -2;
         parameter.shadowOffsetY = 2;
-        BitmapFont fontBri = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
+        fontBri = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
 
         LayersManager layersManager = new LayersManager(stageUI, 5);
 
@@ -101,5 +103,11 @@ public class BlueCircleScreen extends UIScreen{
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(backPage);
         }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        fontBri.dispose();
     }
 }

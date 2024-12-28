@@ -97,7 +97,7 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        ImageTextButton optionButton = new ImageTextButton("ajustes", imageTextButtonStyle);
+        ImageTextButton optionButton = new ImageTextButton("Ajustes", imageTextButtonStyle);
         optionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -129,6 +129,7 @@ public class MenuScreen extends UIScreen {
 
         layersManager.setZindex(4);
         layersManager.getLayer().left();
+        layersManager.getLayer().setDebug(true);
         layersManager.getLayer().padLeft(250);
         layersManager.getLayer().padTop(130);
         layersManager.getLayer().add(playButton).expand(1,0).fill().left().pad(10);
@@ -136,7 +137,7 @@ public class MenuScreen extends UIScreen {
         layersManager.getLayer().row();
         layersManager.getLayer().add(multiplayerButton).expand(1,0).fill().left().pad(10);
         layersManager.getLayer().row();
-        layersManager.getLayer().add(optionButton).expandX().fill(0.1f,0).left().pad(10);
+        layersManager.getLayer().add(optionButton).expandX().fillX().left().pad(10);
 
         layersManager.setZindex(5);
         layersManager.getLayer().right();
