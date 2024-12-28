@@ -16,16 +16,15 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
 import src.world.entities.player.powers.PowerUp;
-
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 
 public class Client implements Runnable{
@@ -44,6 +43,7 @@ public class Client implements Runnable{
 
     private final ArrayList<PacketListener> listeners;
     private final ExecutorService sendThread = Executors.newSingleThreadExecutor();
+    private final ConcurrentLinkedQueue<Object[]> packetQueue = new ConcurrentLinkedQueue<>();
 
     public Client(GameScreen game, String ip, int port, String name){
         this.game = game;
@@ -87,6 +87,20 @@ public class Client implements Runnable{
         send(Packet.connectPlayer(name));
         send(Packet.actEntityColor(-1, game.main.playerColor.r, game.main.playerColor.g, game.main.playerColor.b, game.main.playerColor.a));
         System.out.println(ConsoleColor.BLUE + "[Client] Conectado a servidor: " + socket.getRemoteAddress() + ConsoleColor.RESET);
+
+        sendThread.submit(() -> {
+            while (running){
+                if (packetQueue.isEmpty()) continue;
+                Object[] pack = packetQueue.poll();
+                try {
+                    //System.out.println(ConsoleColor.GREEN + "[Client] Enviado: " + data[0] + ConsoleColor.RESET);
+                    out.writeObject(pack);
+                } catch (IOException e) {
+                    Gdx.app.log("Client", "Error al enviar mensaje", e);
+                }
+            }
+        });
+
         try {
             while (running) {
                 Object[] pack = (Object[])in.readObject();
@@ -210,14 +224,7 @@ public class Client implements Runnable{
 
     public void send(Object[] data){
         if (!running) return;
-        sendThread.submit(() -> {
-            try {
-                //System.out.println(ConsoleColor.GREEN + "[Client] Enviado: " + data[0] + ConsoleColor.RESET);
-                out.writeObject(data);
-            } catch (IOException e) {
-                Gdx.app.log("Client", "Error al enviar mensaje", e);
-            }
-        });
+        packetQueue.add(data);
     }
 
     public void close(){

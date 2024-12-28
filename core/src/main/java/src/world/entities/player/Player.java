@@ -93,7 +93,7 @@ public class Player extends PlayerCommon {
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.PLAYER;
-        filter.maskBits = (short)(~CollisionFilters.OTHERPLAYER & ~CollisionFilters.PROJECTIL);
+        filter.maskBits = (short)~CollisionFilters.OTHERPLAYER;
         fixture.setFilterData(filter);
 
         initStates();

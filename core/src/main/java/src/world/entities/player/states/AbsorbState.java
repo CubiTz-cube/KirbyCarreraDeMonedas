@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import src.utils.constants.PlayerControl;
 import src.world.entities.blocks.Block;
 import src.world.entities.blocks.BreakBlock;
+import src.world.entities.otherPlayer.OtherPlayer;
 import src.world.entities.player.Player;
 
 import java.util.ArrayList;
@@ -28,8 +29,9 @@ public class AbsorbState extends StatePlayer{
         else fixtures = player.detectFrontFixtures(2.5f);
 
         for (Fixture fix : fixtures){
-            if (fix != null) player.attractFixture(fix, Player.ABSORB_FORCE);
-            assert fix != null;
+            if (fix == null) continue;
+            if (fix.getUserData() instanceof OtherPlayer) continue;
+            player.attractFixture(fix, Player.ABSORB_FORCE);
             if (fix.getUserData() instanceof BreakBlock block) block.setState(Block.StateType.BREAK);
         }
 

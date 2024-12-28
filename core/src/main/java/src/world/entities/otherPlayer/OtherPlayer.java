@@ -18,7 +18,7 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
     public OtherPlayer(World world, AssetManager assetManager, Float x, Float y, Integer id, String name){
         super(world, x,y, assetManager,id);
         this.name = name;
-        this.font = assetManager.get("ui/default.fnt", BitmapFont.class); // Obtén la fuente del AssetManager
+        this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
         this.layout = new GlyphLayout();
 
         Filter filter = new Filter();
@@ -27,7 +27,7 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
         fixture.setFilterData(filter);
 
         PolygonShape sensorShape = new PolygonShape();
-        sensorShape.setAsBox(bodyWidth / 2, bodyHeight / 2);
+        sensorShape.setRadius(bodyWidth/6);
 
         FixtureDef sensorFixtureDef = new FixtureDef();
         sensorFixtureDef.shape = sensorShape;

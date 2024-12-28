@@ -392,14 +392,6 @@ public class GameScreen extends BaseScreen {
     }
 
     /**
-     * Elimina un actor del juego. Sin enviar paquete.
-     * @param actor Actor a eliminar.
-     */
-    public void removeActorBox2d(ActorBox2d actor){
-
-    }
-
-    /**
      * Elimina una entidad del juego. Envia paquete.
      * @param id Id de la entidad a eliminar.
      */
@@ -616,7 +608,7 @@ public class GameScreen extends BaseScreen {
         respawnEnemy();
     }
 
-    public synchronized void sendPacket(Object[] packet) {
+    public void sendPacket(Object[] packet) {
         if (main.client != null) main.client.send(packet);
     }
 
