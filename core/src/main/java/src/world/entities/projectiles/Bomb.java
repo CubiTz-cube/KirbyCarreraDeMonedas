@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
+import src.world.ActorBox2d;
 import src.world.entities.Entity;
 
 public class Bomb extends Projectil {
@@ -49,5 +50,10 @@ public class Bomb extends Projectil {
             game.addEntityNoPacket(Type.BOMBEXPLOSION, body.getPosition().add(-1.5f, -1.5f),new Vector2(0,0), false);
             despawn();
         }
+    }
+
+    @Override
+    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
+
     }
 }

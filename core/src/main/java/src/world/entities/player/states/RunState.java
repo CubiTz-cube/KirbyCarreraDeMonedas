@@ -28,6 +28,9 @@ public class RunState extends CanBasicMoveState{
 
         isLeft = player.isFlipX();
         timeActivateParticle = 0.3f;
+        player.getBody().applyLinearImpulse(
+            player.getSprite().isFlipX() ? -2 : 2,
+            0, player.getBody().getWorldCenter().x, player.getBody().getWorldCenter().y, true);
     }
 
     @Override
