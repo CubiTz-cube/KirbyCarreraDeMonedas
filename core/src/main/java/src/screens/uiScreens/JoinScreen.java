@@ -1,30 +1,32 @@
 package src.screens.uiScreens;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
+import src.screens.components.LayersManager;
+import src.utils.constants.MyColors;
 
 public class JoinScreen extends BlueCircleScreen {
     public JoinScreen(Main main) {
         super(main, "Unirse Servidor", null, Main.Screens.MULTIPLAYER);
-        Skin skin = main.getSkin();
 
-        Table table = new Table();
-        table.setFillParent(true);
-        stageUI.addActor(table);
+        LayersManager layersManager = new LayersManager(stageUI, 3);
 
-        TextField ipTextField = new TextField("localhost", skin);
+        TextField ipTextField = new TextField("localhost", myTextFieldStyle);
         ipTextField.setAlignment(Align.center);
 
-        TextField portTextField = new TextField("1234", skin);
+        TextField portTextField = new TextField("1234", myTextFieldStyle);
         portTextField.setAlignment(Align.center);
 
-        TextButton joinButton = new TextButton("Unirse", skin);
+        Label ipLabel = new Label("Ip", new Label.LabelStyle(fontBri, MyColors.BLUE));
+        ipLabel.setAlignment(Align.center);
+
+        Label portLabel = new Label("Puerto", new Label.LabelStyle(fontBri, MyColors.BLUE));
+        portLabel.setAlignment(Align.center);
+
+        ImageTextButton joinButton = new ImageTextButton("Unirse", myImageTextbuttonStyle);
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -32,25 +34,22 @@ public class JoinScreen extends BlueCircleScreen {
                 main.setIp(ipTextField.getText());
                 main.startClient(main.getIp(), main.getPort());
                 main.changeScreen(Main.Screens.CONNECTING);
-                System.out.println("Unirse");
             }
         });
 
-        TextButton backButton = new TextButton("Volver", skin);
-        backButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                main.changeScreen(Main.Screens.MULTIPLAYER);
-            }
-        });
+        layersManager.setZindex(0);
+        layersManager.getLayer().center();
+        layersManager.getLayer().pad(40);
+        layersManager.getLayer().add(ipLabel).expandX().fill().padRight(10);
+        layersManager.getLayer().add(portLabel).expandX().fill().padLeft(10);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(ipTextField).expandX().fill().padRight(10);
+        layersManager.getLayer().add(portTextField).expandX().fill().padLeft(10);
 
-        table.add(ipTextField).width(400).height(50).pad(10);
-        table.row();
-        table.add(portTextField).width(400).height(50).pad(10);
-        table.row();
-        table.add(joinButton).width(200).height(80).pad(10);
-        table.row();
-        table.add(backButton).width(200).height(50).pad(10);
+        layersManager.setZindex(1);
+        layersManager.getLayer().bottom();
+        layersManager.getLayer().padBottom(80);
+        layersManager.getLayer().add(joinButton).expandX().width(600);
 
     }
 }

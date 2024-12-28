@@ -19,7 +19,7 @@ import src.utils.FontCreator;
 import src.utils.constants.MyColors;
 
 public class BlueCircleScreen extends UIScreen{
-    private BitmapFont fontBri;
+    private BitmapFont fontBriBorder;
 
     private Main.Screens backPage;
 
@@ -33,11 +33,11 @@ public class BlueCircleScreen extends UIScreen{
         parameter.shadowColor = MyColors.BLUE;
         parameter.shadowOffsetX = -2;
         parameter.shadowOffsetY = 2;
-        fontBri = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
+        fontBriBorder = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
 
         LayersManager layersManager = new LayersManager(stageUI, 5);
 
-        Label titleLabel = new Label(title, new Label.LabelStyle(fontBri, Color.WHITE));
+        Label titleLabel = new Label(title, new Label.LabelStyle(fontBriBorder, Color.WHITE));
         titleLabel.setAlignment(Align.center);
 
         Texture lineTexture = main.getAssetManager().get("ui/bg/lineBg.png", Texture.class);
@@ -108,6 +108,6 @@ public class BlueCircleScreen extends UIScreen{
     @Override
     public void dispose() {
         super.dispose();
-        fontBri.dispose();
+        fontBriBorder.dispose();
     }
 }

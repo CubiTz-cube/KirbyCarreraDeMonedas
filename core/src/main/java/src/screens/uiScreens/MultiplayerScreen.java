@@ -20,48 +20,21 @@ import src.utils.FontCreator;
 import src.utils.constants.MyColors;
 
 public class MultiplayerScreen extends BlueCircleScreen {
-    private final BitmapFont fontBri;
-    private final BitmapFont fontInter;
-
     private final SpriteAsActor kirbyImage;
 
     public MultiplayerScreen(Main main) {
         super(main, "Multijugador", null, Main.Screens.MENU);
         Skin skin = main.getSkin();
 
-        FreeTypeFontGenerator generatorBri = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        fontBri = FontCreator.createFont(48, Color.WHITE, generatorBri, new FreeTypeFontGenerator.FreeTypeFontParameter());
-
-        FreeTypeFontGenerator generatorInter = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
-        fontInter = FontCreator.createFont(40, Color.WHITE, generatorInter, new FreeTypeFontGenerator.FreeTypeFontParameter());
-
         LayersManager layersManager = new LayersManager(stageUI, 3);
 
-        Drawable drawableBg = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/input.png", Texture.class));
-
-        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
-        textFieldStyle.font = fontInter;
-        textFieldStyle.fontColor = MyColors.BLUE;
-        textFieldStyle.background = drawableBg;
-        textFieldStyle.cursor = skin.getDrawable("textFieldCursor");
-        textFieldStyle.selection = skin.getDrawable("selection");
-
-        TextField nameTextField = new TextField("Sin nombre", textFieldStyle);
+        TextField nameTextField = new TextField("Sin nombre", myTextFieldStyle);
         nameTextField.setAlignment(Align.center);
 
         Label nameLabel = new Label("Nombre", new Label.LabelStyle(fontBri, MyColors.BLUE));
         nameLabel.setAlignment(Align.center);
 
-        TextureRegionDrawable drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/button.png", Texture.class));
-        TextureRegionDrawable drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/buttonHover.png", Texture.class));
-
-        ImageTextButton.ImageTextButtonStyle imageTextButtonStyle = new ImageTextButton.ImageTextButtonStyle();
-        imageTextButtonStyle.up = drawableUp;
-        imageTextButtonStyle.font = fontBri;
-        imageTextButtonStyle.over = drawableHover;
-        imageTextButtonStyle.overFontColor = MyColors.BLUE;
-
-        ImageTextButton joinButton = new ImageTextButton("Unirse", imageTextButtonStyle);
+        ImageTextButton joinButton = new ImageTextButton("Unirse", myImageTextbuttonStyle);
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -70,7 +43,7 @@ public class MultiplayerScreen extends BlueCircleScreen {
             }
         });
 
-        ImageTextButton createButton = new ImageTextButton("Crear", imageTextButtonStyle);
+        ImageTextButton createButton = new ImageTextButton("Crear", myImageTextbuttonStyle);
         createButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -112,12 +85,5 @@ public class MultiplayerScreen extends BlueCircleScreen {
         super.show();
         System.out.println("Color " + main.playerColor);
         kirbyImage.setColor(main.playerColor);
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        fontBri.dispose();
-        fontInter.dispose();
     }
 }

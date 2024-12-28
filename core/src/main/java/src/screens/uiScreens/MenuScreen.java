@@ -16,13 +16,8 @@ import src.utils.constants.MyColors;
 import src.utils.sound.SingleSoundManager;
 
 public class MenuScreen extends UIScreen {
-    private final BitmapFont fontBri;
-
     public MenuScreen(Main main) {
         super(main);
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        fontBri = FontCreator.createFont(48, Color.WHITE, generator, new FreeTypeFontGenerator.FreeTypeFontParameter());
-
         Image bgImage = new Image(main.getAssetManager().get("ui/bg/menuBg.png", Texture.class));
 
         Texture kirbyTexture = main.getAssetManager().get("ui/bg/kirbyBg.png", Texture.class);
@@ -45,11 +40,11 @@ public class MenuScreen extends UIScreen {
         TextureRegionDrawable drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/infoHover.png", Texture.class));
         drawableHover.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         drawableUp.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.imageUp = drawableUp;
-        style.imageOver = drawableHover;
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.imageUp = drawableUp;
+        imageButtonStyle.imageOver = drawableHover;
 
-        ImageButton infoButton = new ImageButton(style);
+        ImageButton infoButton = new ImageButton(imageButtonStyle);
         infoButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -61,11 +56,11 @@ public class MenuScreen extends UIScreen {
         drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/exitHover.png", Texture.class));
         drawableHover.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         drawableUp.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        style = new ImageButton.ImageButtonStyle();
-        style.imageUp = drawableUp;
-        style.imageOver = drawableHover;
+        imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.imageUp = drawableUp;
+        imageButtonStyle.imageOver = drawableHover;
 
-        ImageButton exitButton = new ImageButton(style);
+        ImageButton exitButton = new ImageButton(imageButtonStyle);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -73,15 +68,7 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/button.png", Texture.class));
-        drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/buttonHover.png", Texture.class));
-        ImageTextButton.ImageTextButtonStyle imageTextButtonStyle = new ImageTextButton.ImageTextButtonStyle();
-        imageTextButtonStyle.up = drawableUp;
-        imageTextButtonStyle.font = fontBri;
-        imageTextButtonStyle.over = drawableHover;
-        imageTextButtonStyle.overFontColor = MyColors.BLUE;
-
-        ImageTextButton playButton = new ImageTextButton("Jugar", imageTextButtonStyle);
+        ImageTextButton playButton = new ImageTextButton("Jugar", myImageTextbuttonStyle);
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -89,7 +76,7 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        ImageTextButton multiplayerButton = new ImageTextButton("Multijugador", imageTextButtonStyle);
+        ImageTextButton multiplayerButton = new ImageTextButton("Multijugador", myImageTextbuttonStyle);
         multiplayerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -97,7 +84,7 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        ImageTextButton optionButton = new ImageTextButton("Ajustes", imageTextButtonStyle);
+        ImageTextButton optionButton = new ImageTextButton("Ajustes", myImageTextbuttonStyle);
         optionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -146,11 +133,5 @@ public class MenuScreen extends UIScreen {
 
         layersManager.setZindex(6);
         layersManager.getLayer().add(bgImage).grow();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        fontBri.dispose();
     }
 }
