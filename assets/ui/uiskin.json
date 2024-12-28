@@ -272,6 +272,7 @@ WindowStyle: {
 
     Color: {
         white: { r: 1, g: 1, b: 1, a: 1 },
+        myBlue: { r:0.01,g:0.15,b:0.58,a:1},
         gray: { r: 0.5, g: 0.5, b: 0.5, a: 1 },
         black: { r: 0, g: 0, b: 0, a: 1 },
 
@@ -339,7 +340,7 @@ WindowStyle: {
         textField: { name: rect, color: up },
         textFieldDown: { name: rect, color: over },
         textFieldDisabled: { name: rect, color: disabled },
-        textFieldCursor: { name: dot, color: font },
+        textFieldCursor: { name: dot, color: myBlue },
         tooltip: { name: rect, color: up },
         touchpad: { name: rect, color: over },
         touchpadKnob: { name: check-on, color: down },

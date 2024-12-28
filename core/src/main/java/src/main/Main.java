@@ -95,6 +95,7 @@ public class Main extends Game {
         assetManager.load("ui/buttons/exitHover.png", Texture.class);
         assetManager.load("ui/buttons/button.png", Texture.class);
         assetManager.load("ui/buttons/buttonHover.png", Texture.class);
+        assetManager.load("ui/buttons/input.png", Texture.class);
         assetManager.load("ui/bg/lineBg.png", Texture.class);
         assetManager.load("ui/bg/pinkLineBg.png", Texture.class);
         assetManager.load("ui/bg/aroBg.png", Texture.class);
@@ -237,7 +238,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.GAME);
+        changeScreen(Screens.MULTIPLAYER);
         soundManager.setSoundTracks(soundTrackType.MENU.toString());
     }
 

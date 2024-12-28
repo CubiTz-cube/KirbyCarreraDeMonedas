@@ -129,7 +129,6 @@ public class MenuScreen extends UIScreen {
 
         layersManager.setZindex(4);
         layersManager.getLayer().left();
-        layersManager.getLayer().setDebug(true);
         layersManager.getLayer().padLeft(250);
         layersManager.getLayer().padTop(130);
         layersManager.getLayer().add(playButton).expand(1,0).fill().left().pad(10);
