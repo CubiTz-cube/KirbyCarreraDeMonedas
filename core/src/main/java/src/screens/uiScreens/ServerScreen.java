@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
 
-public class ServerScreen extends UIScreen {
+public class ServerScreen extends BlueCircleScreen {
     public ServerScreen(Main main) {
-        super(main);
+        super(main, "Crear Servidor", null, Main.Screens.MULTIPLAYER);
         Skin skin = main.getSkin();
 
         Table table = new Table();

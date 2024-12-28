@@ -9,10 +9,10 @@ import src.main.Main;
 import src.utils.sound.SingleSoundManager;
 import src.utils.sound.SoundManager;
 
-public class OptionScreen extends UIScreen {
+public class OptionScreen extends BlueCircleScreen {
 
     public OptionScreen(Main main) {
-        super(main);
+        super(main, "Ajustes", null, Main.Screens.MENU);
         Skin skin = main.getSkin();
 
         SoundManager soundManager = SingleSoundManager.getInstance();

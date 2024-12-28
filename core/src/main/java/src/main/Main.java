@@ -96,8 +96,8 @@ public class Main extends Game {
         assetManager.load("ui/buttons/button.png", Texture.class);
         assetManager.load("ui/buttons/buttonHover.png", Texture.class);
         assetManager.load("ui/bg/lineBg.png", Texture.class);
+        assetManager.load("ui/bg/pinkLineBg.png", Texture.class);
         assetManager.load("ui/bg/aroBg.png", Texture.class);
-        assetManager.load("ui/bg/aroColorBg.png", Texture.class);
         assetManager.load("ui/bg/aroColorBg.png", Texture.class);
         assetManager.load("ui/bg/menuBg.png", Texture.class);
         assetManager.load("ui/bg/kirbyBg.png", Texture.class);
@@ -214,7 +214,7 @@ public class Main extends Game {
         System.out.println("Assets loaded.");
 
         soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.1f);
+        soundManager.setVolumeMusic(0.0f);
         soundManager.addSoundTrack(soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());
@@ -237,7 +237,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
 
-        changeScreen(Screens.MENU);
+        changeScreen(Screens.INFO);
         soundManager.setSoundTracks(soundTrackType.MENU.toString());
     }
 

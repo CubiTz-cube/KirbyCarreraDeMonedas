@@ -12,18 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import src.main.Main;
 import src.screens.components.LayersManager;
 import src.utils.FontCreator;
+import src.utils.constants.MyColors;
 import src.utils.sound.SingleSoundManager;
 
 public class MenuScreen extends UIScreen {
     private final BitmapFont fontBri;
 
-    private ImageTextButton multiplayerButton;
-    private ImageTextButton optionButton;
-
     public MenuScreen(Main main) {
         super(main);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        fontBri = FontCreator.createFont(48, Color.WHITE, generator);
+        fontBri = FontCreator.createFont(48, Color.WHITE, generator, new FreeTypeFontGenerator.FreeTypeFontParameter());
 
         Image bgImage = new Image(main.getAssetManager().get("ui/bg/menuBg.png", Texture.class));
 
@@ -81,7 +79,7 @@ public class MenuScreen extends UIScreen {
         imageTextButtonStyle.up = drawableUp;
         imageTextButtonStyle.font = fontBri;
         imageTextButtonStyle.over = drawableHover;
-        imageTextButtonStyle.overFontColor = new Color(0.01f,0.15f,0.58f,1f);
+        imageTextButtonStyle.overFontColor = MyColors.BLUE;
 
         ImageTextButton playButton = new ImageTextButton("Jugar", imageTextButtonStyle);
         playButton.addListener(new ClickListener() {
@@ -91,16 +89,15 @@ public class MenuScreen extends UIScreen {
             }
         });
 
-        multiplayerButton = new ImageTextButton("Multijugador", imageTextButtonStyle);
+        ImageTextButton multiplayerButton = new ImageTextButton("Multijugador", imageTextButtonStyle);
         multiplayerButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //main.changeScreen(Main.Screens.MULTIPLAYER);
-                SingleSoundManager.getInstance().onCompletion(null);
+                main.changeScreen(Main.Screens.MULTIPLAYER);
             }
         });
 
-        optionButton = new ImageTextButton("ajustes", imageTextButtonStyle);
+        ImageTextButton optionButton = new ImageTextButton("ajustes", imageTextButtonStyle);
         optionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -112,14 +109,14 @@ public class MenuScreen extends UIScreen {
 
         layersManager.setZindex(0);
         layersManager.getLayer().top();
-        layersManager.getLayer().add(logoImage).size(128).pad(20);
-        layersManager.getLayer().add().expandX();
-
-        layersManager.setZindex(1);
-        layersManager.getLayer().top();
         layersManager.getLayer().add().expandX();
         layersManager.getLayer().add(infoButton).size(64);
         layersManager.getLayer().add(exitButton).size(64).pad(25);
+
+        layersManager.setZindex(1);
+        layersManager.getLayer().top();
+        layersManager.getLayer().add(logoImage).size(128).pad(20);
+        layersManager.getLayer().add().expandX();
 
         layersManager.setZindex(2);
         layersManager.getLayer().top();

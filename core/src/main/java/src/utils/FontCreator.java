@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class FontCreator {
-    public static BitmapFont createFont(int size, Color color, FreeTypeFontGenerator generator) {
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    public static BitmapFont createFont(int size, Color color, FreeTypeFontGenerator generator, FreeTypeFontGenerator.FreeTypeFontParameter parameter) {
         parameter.size = size;
         parameter.color = color;
         parameter.incremental = true;

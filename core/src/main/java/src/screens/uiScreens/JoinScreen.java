@@ -9,9 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
 
-public class JoinScreen extends UIScreen {
+public class JoinScreen extends BlueCircleScreen {
     public JoinScreen(Main main) {
-        super(main);
+        super(main, "Unirse Servidor", null, Main.Screens.MULTIPLAYER);
         Skin skin = main.getSkin();
 
         Table table = new Table();

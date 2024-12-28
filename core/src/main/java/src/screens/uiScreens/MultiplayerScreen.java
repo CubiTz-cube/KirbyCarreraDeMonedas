@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
 
-public class MultiplayerScreen extends UIScreen {
+public class MultiplayerScreen extends BlueCircleScreen {
 
     public MultiplayerScreen(Main main) {
-        super(main);
+        super(main, "Multijugador", null, Main.Screens.MENU);
         Skin skin = main.getSkin();
 
         Table table = new Table();
