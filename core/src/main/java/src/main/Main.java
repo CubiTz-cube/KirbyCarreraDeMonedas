@@ -190,6 +190,8 @@ public class Main extends Game {
         assetManager.load("music/arthropluera.mp3", Music.class);
         assetManager.load("music/caterpillar.mp3", Music.class);
         assetManager.load("music/crocodile.mp3", Music.class);
+        assetManager.load("music/coffee.mp3", Music.class);
+        assetManager.load("music/waiting.mp3", Music.class);
 
         assetManager.load("sound/kirby/kirbyAirShot.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyItem.wav", Sound.class);
@@ -223,6 +225,8 @@ public class Main extends Game {
         soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/coffee.mp3"), soundTrackType.MENU.toString());
+        soundManager.addMusicToSoundTrack(assetManager.get("music/waiting.mp3"), soundTrackType.MENU.toString());
 
         screensList  = new ArrayList<>();
         screensList.add(new IntroScreen(this));
