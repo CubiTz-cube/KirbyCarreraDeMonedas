@@ -19,6 +19,8 @@ import src.world.entities.blocks.FallBlock;
 import src.world.entities.mirror.Mirror;
 import src.world.entities.player.powers.PowerUp;
 import src.world.entities.projectiles.*;
+import src.world.entities.projectiles.enemyProyectiles.IceEnemyProyectile;
+import src.world.entities.projectiles.enemyProyectiles.SwordEnemyProyectile;
 
 public class EntityFactory {
     private final GameScreen game;
@@ -38,14 +40,14 @@ public class EntityFactory {
             case BOMBER -> new BombEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case DRAGON -> new DragonEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
-            case CLOUD -> new Cloud(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case STAR -> new Star(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case BOMB -> new Bomb(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case ICE -> new Ice(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case BOMBEXPLOSION -> new BombExplosion(world, new Rectangle(position.x, position.y, 4f, 4f), assetManager, id, game);
-            case SWORDPROPLAYER -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
-            case SWORDRUNPROPLAYER -> new SwordRunProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDRUNPROPLAYER, game);
-            case SWORDPROENEMY -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROENEMY, game, assetManager.get("world/particles/swordParticle.png"));
+            case CLOUD -> new CloudProyectile(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case STAR -> new StarProyectile(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case BOMB -> new BombProyectile(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case ICE -> new IceEnemyProyectile(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case BOMBEXPLOSION -> new BombExplosionProyectile(world, new Rectangle(position.x, position.y, 4f, 4f), assetManager, id, game);
+            case SWORDPROPLAYER -> new SwordProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
+            case SWORDRUNPROPLAYER -> new SwordRunProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDRUNPROPLAYER, game);
+            case SWORDPROENEMY -> new SwordEnemyProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROENEMY, game, assetManager.get("world/particles/swordParticle.png"));
             case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case POWERSWORD -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.SWORD);
             case POWERWHEEL -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.WHEEL);

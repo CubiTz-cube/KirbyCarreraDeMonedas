@@ -15,12 +15,11 @@ public class AttackStateSword extends StateEnemy<SwordEnemy>
     public void start() {
         super.start();
         enemy.setAnimation(SwordEnemy.AnimationType.ATTACK);
+        enemy.throwEntity(Entity.Type.SWORDPROENEMY, 4f, 0f);
     }
 
     @Override
     public void update(Float delta) {
-        enemy.throwEntity(Entity.Type.SWORDPROENEMY, 0f, 0f);
-
         if (enemy.getActCrono() > 1) {
             enemy.setState(Enemy.StateType.IDLE);
         }

@@ -1,10 +1,9 @@
-package src.world.entities.projectiles;
+package src.world.entities.projectiles.enemyProyectiles;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -12,13 +11,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
-import src.world.ActorBox2d;
-import src.world.entities.Entity;
+import src.world.entities.projectiles.Projectil;
 
-public class Bomb extends Projectil {
+public class IceEnemyProyectile extends Projectil {
 
-    public Bomb(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager, id, Type.BOMB, game, 0);
+    public IceEnemyProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+        super(world, shape, assetManager, id, Type.BOMB, game, 3);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
@@ -36,24 +34,18 @@ public class Bomb extends Projectil {
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.PROJECTIL;
-        filter.maskBits = (short)~CollisionFilters.ITEM;
+        filter.maskBits = (short)(~CollisionFilters.ITEM & ~CollisionFilters.ENEMY);
         fixture.setFilterData(filter);
 
-        Animation<TextureRegion> bombAnimation = new Animation<>(0.2f,
-            SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 8));
+        Animation<TextureRegion> bombAnimation = new Animation<>(0.5f,
+            SheetCutter.cutHorizontal(assetManager.get("world/particles/iceParticle.png"), 6));
         setCurrentAnimation(bombAnimation);
     }
 
     @Override
     public void act(float delta) {
         if (isAnimationFinish()) {
-            game.addEntityNoPacket(Type.BOMBEXPLOSION, body.getPosition().add(-1.5f, -1.5f),new Vector2(0,0), false);
             despawn();
         }
-    }
-
-    @Override
-    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
-
     }
 }

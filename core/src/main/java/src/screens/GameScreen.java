@@ -247,7 +247,7 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Creando Entidad " + id);
+        System.out.println("Creando Entidad " + id + " Tipo: " + type);
         threadSecureWorld.addModification(() -> {
             Entity newEntity = entityFactory.create(type, world, position, id);
             newEntity.setFlipX(flipX);
@@ -568,7 +568,7 @@ public class GameScreen extends BaseScreen {
         actUI();
         stage.draw();
         stageUI.draw();
-        //debugRenderer.render(world, camera.projection.scale(6,6,1).translate(-100,-100,0));
+        debugRenderer.render(world, camera.projection.scale(6,6,1));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
 

@@ -11,14 +11,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
-import src.world.ActorBox2d;
 
-public class Cloud extends Projectil {
-    private Float timeDespawn;
-
-    public Cloud(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager, id, Type.CLOUD, game, 3);
-        timeDespawn = 0f;
+public class BombExplosionProyectile extends Projectil{
+    public BombExplosionProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+        super(world, shape, assetManager, id, Type.BOMBEXPLOSION, game, 10);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
@@ -36,26 +32,16 @@ public class Cloud extends Projectil {
         setSpritePosModification(0f, getHeight()/4);
 
         Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.PROJECTIL;
-        filter.maskBits = (short)~CollisionFilters.ITEM;
+        filter.maskBits = (short)(~CollisionFilters.ITEM & ~CollisionFilters.STATIC);
         fixture.setFilterData(filter);
 
-        Animation<TextureRegion> cloudAnimation = new Animation<>(0.06f,
-            SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 8));
+        Animation<TextureRegion> cloudAnimation = new Animation<>(0.05f,
+            SheetCutter.cutHorizontal(assetManager.get("world/particles/bombParticle.png"), 5));
         setCurrentAnimation(cloudAnimation);
     }
 
     @Override
-    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
-        super.beginContactWith(actor, game);
-        despawn();
-    }
-
-    @Override
     public void act(float delta) {
-        timeDespawn += delta;
-        if (timeDespawn > 0.5f) {
-            despawn();
-        }
+        if (isAnimationFinish()) despawn();
     }
 }

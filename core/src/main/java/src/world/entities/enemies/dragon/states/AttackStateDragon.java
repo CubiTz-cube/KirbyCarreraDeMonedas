@@ -15,12 +15,11 @@ public class AttackStateDragon extends StateEnemy<DragonEnemy> {
     public void start() {
         super.start();
         enemy.setAnimation(DragonEnemy.AnimationType.ATTACK);
+        enemy.throwEntity(Entity.Type.ICE, 8f,0f);
     }
 
     @Override
     public void update(Float delta) {
-        enemy.throwEntity(Entity.Type.ICE, 8f,0f);
-
         if (enemy.getActCrono() > 0.5f) {
             enemy.setState(Enemy.StateType.IDLE);
         }

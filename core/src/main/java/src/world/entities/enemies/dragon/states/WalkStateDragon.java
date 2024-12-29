@@ -14,17 +14,17 @@ public class WalkStateDragon extends StateEnemy<DragonEnemy> {
     public void start()
     {
         super.start();
-        enemy.setAnimation(DragonEnemy.AnimationType.WALK);
+        //enemy.setAnimation(DragonEnemy.AnimationType.WALK);
     }
 
     @Override
     public void update(Float delta)
     {
-        Vector2 velocity = enemy.getBody().getLinearVelocity();
+        /*Vector2 velocity = enemy.getBody().getLinearVelocity();
         if (Math.abs(velocity.x) < enemy.speed) {
             enemy.getBody().applyForce(enemy.getSprite().isFlipX()? -10 : 10, 0,
                 enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
-        }
+        }*/
 
         if (enemy.getActCrono() > 0.5f){
             enemy.setState(Enemy.StateType.ATTACK);

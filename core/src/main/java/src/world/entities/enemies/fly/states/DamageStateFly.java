@@ -13,6 +13,7 @@ public class DamageStateFly extends StateEnemy<FlyEnemy> {
     public void start() {
         super.start();
         enemy.setAnimation(FlyEnemy.AnimationType.DAMAGE);
+        enemy.getBody().setGravityScale(1);
     }
 
     @Override
