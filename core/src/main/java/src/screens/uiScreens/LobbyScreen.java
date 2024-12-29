@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import src.main.Main;
 import src.net.PacketListener;
 import src.net.PlayerInfo;
@@ -30,7 +31,9 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     private final ColorField colorField;
 
     private final BitmapFont fontBriBorder;
-    private final SpriteAsActor mainKirbyImage;
+    private final BitmapFont nameInterBorder;
+
+    private final Image mainKirbyImage;
     private final Label mainKirbyName;
 
     public LobbyScreen(Main main) {
@@ -50,7 +53,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.borderWidth = 3;
         parameter.borderColor = Color.BLACK;
-        BitmapFont nameInterBorder = FontCreator.createFont(32, MyColors.PINK, generatorInter, parameter);
+        nameInterBorder = FontCreator.createFont(32, MyColors.PINK, generatorInter, parameter);
 
         Label titleLabel = new Label("Partida", new Label.LabelStyle(fontBriBorder, Color.WHITE));
         titleLabel.setAlignment(Align.center);
@@ -63,11 +66,17 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         lineTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         Image lineImage = new Image(lineTexture);
 
-        Image aroColorImage = new Image(main.getAssetManager().get("ui/bg/aroColorPlayerBg.png", Texture.class));
+        Texture aroColorTexture = main.getAssetManager().get("ui/bg/aroColorPlayerBg.png", Texture.class);
+        lineTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        Image aroColorImage = new Image(aroColorTexture);
+        aroColorImage.setScaling(Scaling.fit);
+        aroColorImage.setAlign(Align.bottomLeft);
 
-        mainKirbyName = new Label("Sin nombre", new Label.LabelStyle(nameInterBorder, main.playerColor));
+        mainKirbyName = new Label("Sin nombre", new Label.LabelStyle(nameInterBorder, MyColors.PINK));
         mainKirbyName.setAlignment(Align.center);
-        mainKirbyImage = new SpriteAsActor(main.getAssetManager().get("ui/bg/kirbyIdleBg.png", Texture.class));
+        mainKirbyImage = new Image(main.getAssetManager().get("ui/bg/kirbyIdleBg.png", Texture.class));
+        mainKirbyImage.setScaling(Scaling.fit);
+        mainKirbyImage.setAlign(Align.bottomLeft);
 
         playersTable = new Table();
         scrollPane = new ScrollPane(playersTable, skin);
@@ -112,24 +121,34 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         LayersManager layersManager = new LayersManager(stageUI, 9);
 
         layersManager.setZindex(0);
-        layersManager.getLayer().bottom().pad(10).padLeft(250).padBottom(50);
-        layersManager.getLayer().add(colorField).expandX().fill().right();
-        layersManager.getLayer().add(playButton).expandX().fill();
+        layersManager.getLayer().setDebug(true);
+        layersManager.getLayer().add().expand(0,8);
+        layersManager.getLayer().row();
+        layersManager.getLayer().bottom().padLeft(20);
+        layersManager.getLayer().add(mainKirbyName).left().growX().padBottom(10);
+        layersManager.getLayer().add().expand(18,0);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(mainKirbyImage).grow();
 
         layersManager.setZindex(1);
+        layersManager.getLayer().bottom();
+        layersManager.getLayer().add().expand(0,6);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(aroColorImage).grow();
+        layersManager.getLayer().add(colorField).grow().pad(10).padBottom(120).padTop(120);
+        layersManager.getLayer().add(playButton).grow().pad(10).padBottom(120).padTop(120);
+
+        layersManager.setZindex(2);
         layersManager.getLayer().top();
         layersManager.getLayer().add().expandX();
         layersManager.getLayer().add(backButton).size(64).pad(25);
 
-        layersManager.setZindex(2);
-        layersManager.getLayer().bottom().padLeft(10);
-        layersManager.getLayer().add(mainKirbyName).width(184).left().padBottom(10);
-        layersManager.getLayer().row();
-        layersManager.getLayer().add(mainKirbyImage).size(184, 166).expandX().left();
-
         layersManager.setZindex(3);
-        layersManager.getLayer().top().padTop(100);
-        layersManager.getLayer().add(scrollPane).expandX().fillX().height(400);
+        scrollPane.setForceScroll(true, false);
+        playersTable.bottom();
+        layersManager.getLayer().add(scrollPane).expand().fill();
+        layersManager.getLayer().row();
+        layersManager.getLayer().add().expand(0,2);
 
         layersManager.setZindex(4);
         layersManager.getLayer().top();
@@ -144,9 +163,6 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         layersManager.getLayer().top();
         layersManager.getLayer().add(lineImage).expandX().fillX().padTop(76);
 
-        layersManager.setZindex(7);
-        layersManager.getLayer().bottom();
-        layersManager.getLayer().add(aroColorImage).expandX().left();
     }
 
     @Override
@@ -166,11 +182,17 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     private void updatePlayersTable() {
         playersTable.clear();
         for (PlayerInfo player : main.client.getPlayersConnected().values()) {
-            Label nameLabel = new Label(player.getName(), main.getSkin());
-            nameLabel.setColor(player.getColor());
-            //System.out.println("Color a la hora de crear la label de "+ player.getName() + " " + player.getColor());
-            playersTable.add(nameLabel).pad(25);
-            playersTable.row();
+            Label nameLabel = new Label(player.getName(), new Label.LabelStyle(nameInterBorder, MyColors.PINK));
+            nameLabel.setAlignment(Align.center);
+            playersTable.add(nameLabel).pad(25).expandX().fillX().center();
+        }
+        playersTable.row();
+
+        for (PlayerInfo player : main.client.getPlayersConnected().values()) {
+            Image kirbyImage = new Image(main.getAssetManager().get("ui/bg/kirbyIdleBg.png", Texture.class));
+            kirbyImage.setColor(player.getColor());
+            kirbyImage.setScaling(Scaling.fit);
+            playersTable.add(kirbyImage).pad(10).expandX().fillX().center();
         }
     }
 
@@ -200,5 +222,6 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     public void dispose() {
         super.dispose();
         fontBriBorder.dispose();
+        nameInterBorder.dispose();
     }
 }
