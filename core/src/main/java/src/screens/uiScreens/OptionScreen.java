@@ -21,14 +21,6 @@ public class OptionScreen extends BlueCircleScreen {
         table.setFillParent(true);
         stageUI.addActor(table);
 
-        TextButton backButton = new TextButton("Volver", skin);
-        backButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                main.changeScreen(Main.Screens.MENU);
-            }
-        });
-
         Label volumeTitleLabel = new Label("VOLUMEN", skin);
         Label volumeLabel = new Label("General", skin);
 
@@ -81,7 +73,5 @@ public class OptionScreen extends BlueCircleScreen {
         table.row();
         table.add(volumenSoundSlider).width(200).height(50).pad(10);
         table.row();
-
-        table.add(backButton).width(200).height(50).pad(10);
     }
 }
