@@ -21,11 +21,11 @@ public class WalkStateFly extends StateEnemy<FlyEnemy> {
     public void update(Float delta) {
         Vector2 velocity = enemy.getBody().getLinearVelocity();
         if (Math.abs(velocity.x) < enemy.speed) {
-            enemy.getBody().applyForce(0, enemy.getSprite().isFlipX()? 15: -15,
+            enemy.getBody().applyForce(0, enemy.getSprite().isFlipX()? -7 : 7,
                 enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
         }
 
-        if (enemy.getActCrono() > 1) {
+        if (enemy.getActCrono() > 2) {
             enemy.setState(Enemy.StateType.IDLE);
         }
     }

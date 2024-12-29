@@ -1,25 +1,25 @@
-package src.world.entities.enemies.sword.states;
+package src.world.entities.enemies.bomb.states;
 
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.sword.SwordEnemy;
+import src.world.entities.enemies.bomb.BombEnemy;
 
-public class AttackStateSword extends StateEnemy<SwordEnemy>
-{
-    public AttackStateSword(SwordEnemy enemy) {
+public class AttackStateBomb extends StateEnemy<BombEnemy> {
+
+    public AttackStateBomb(BombEnemy enemy) {
         super(enemy);
     }
 
     @Override
     public void start() {
         super.start();
-        enemy.setAnimation(SwordEnemy.AnimationType.ATTACK);
+        enemy.setAnimation(BombEnemy.AnimationType.ATTACK);
     }
 
     @Override
     public void update(Float delta) {
-        enemy.throwEntity(Entity.Type.SWORDPROENEMY, 0f, 0f);
+        enemy.throwEntity(Entity.Type.BOMB, 4f,8f);
 
         if (enemy.getActCrono() > 1) {
             enemy.setState(Enemy.StateType.IDLE);
@@ -30,4 +30,5 @@ public class AttackStateSword extends StateEnemy<SwordEnemy>
     public void end() {
 
     }
+
 }

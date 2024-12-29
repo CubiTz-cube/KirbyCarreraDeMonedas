@@ -1,4 +1,4 @@
-package src.world.entities.enemies.sword;
+package src.world.entities.enemies.dragon;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,19 +6,22 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.enemies.sword.states.AttackStateSword;
-import src.world.entities.enemies.sword.states.DamageStateSword;
-import src.world.entities.enemies.sword.states.IdleStateSword;
-import src.world.entities.enemies.sword.states.WalkStateSword;
+import src.world.entities.enemies.dragon.states.AttackStateDragon;
+import src.world.entities.enemies.dragon.states.DamageStateDragon;
+import src.world.entities.enemies.dragon.states.IdleStateDragon;
+import src.world.entities.enemies.dragon.states.WalkStateDragon;
 import src.world.entities.player.powers.PowerUp;
 
-public class SwordEnemy extends Enemy
-{
+public class DragonEnemy extends Enemy {
+
     public enum AnimationType {
         IDLE,
         WALK,
@@ -31,10 +34,10 @@ public class SwordEnemy extends Enemy
     private final Animation<TextureRegion> damageAnimation;
     private final Animation<TextureRegion> attackAnimation;
 
-    public SwordEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
+    public DragonEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
     {
-        super(world, shape, assetManager, id, game, Type.SWORD, PowerUp.Type.SWORD, 15);
-        sprite.setTexture(assetManager.get("world/entities/sword/swordEnemyIdle.png", Texture.class));
+        super(world, shape, assetManager, id, game, Type.DRAGON, PowerUp.Type.NONE, 15);
+        sprite.setTexture(assetManager.get("world/entities/dragon/dragonIdle.png", Texture.class));
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
@@ -55,28 +58,28 @@ public class SwordEnemy extends Enemy
         filter.maskBits = (short)~CollisionFilters.ENEMY;
         fixture.setFilterData(filter);
 
-        idleState = new IdleStateSword(this);
-        walkState = new WalkStateSword(this);
-        attackState = new AttackStateSword(this);
-        damageState = new DamageStateSword(this);
+        idleState = new IdleStateDragon(this);
+        walkState = new WalkStateDragon(this);
+        attackState = new AttackStateDragon(this);
+        damageState = new DamageStateDragon(this);
         setState(StateType.IDLE);
 
-        idleAnimation = new Animation<>(0.2f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
+        idleAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/dragon/dragonIdle.png"), 5));
 
-        walkAnimation = new Animation<>(0.2f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
+        walkAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/dragon/dragonWalk.png"), 8));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         damageAnimation = new Animation<>(0.2f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyDamage.png"), 5));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/dragon/dragonDamage.png"), 5));
         damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         attackAnimation = new Animation<>(0.1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyAttack.png"), 6));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/dragon/dragonAttack.png"), 4));
     }
 
-    public void setAnimation(SwordEnemy.AnimationType type){
+    public void setAnimation(DragonEnemy.AnimationType type){
         switch (type){
             case IDLE -> setCurrentAnimation(idleAnimation);
             case WALK -> setCurrentAnimation(walkAnimation);
@@ -96,4 +99,5 @@ public class SwordEnemy extends Enemy
     {
         super.draw(batch, parentAlpha);
     }
+
 }

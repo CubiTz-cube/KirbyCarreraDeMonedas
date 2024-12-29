@@ -1,15 +1,13 @@
-package src.world.entities.enemies.sword.states;
+package src.world.entities.enemies.bomb.states;
 
 import com.badlogic.gdx.math.Vector2;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.sword.SwordEnemy;
+import src.world.entities.enemies.bomb.BombEnemy;
 
-public class WalkStateSword extends StateEnemy<SwordEnemy>
-{
+public class WalkStateBomb extends StateEnemy<BombEnemy> {
 
-    public WalkStateSword(SwordEnemy enemy)
-    {
+    public WalkStateBomb(BombEnemy enemy) {
         super(enemy);
     }
 
@@ -17,7 +15,7 @@ public class WalkStateSword extends StateEnemy<SwordEnemy>
     public void start()
     {
         super.start();
-        enemy.setAnimation(SwordEnemy.AnimationType.WALK);
+        enemy.setAnimation(BombEnemy.AnimationType.WALK);
     }
 
     @Override
@@ -29,7 +27,7 @@ public class WalkStateSword extends StateEnemy<SwordEnemy>
                 enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
         }
 
-        if (enemy.getActCrono() > 1.5f){
+        if (enemy.getActCrono() > 1f){
             enemy.setState(Enemy.StateType.ATTACK);
         }
     }

@@ -71,8 +71,6 @@ public class Main extends Game {
 
         assetManager = new AssetManager();
         assetManager.load("yoshi.jpg", Texture.class);
-        assetManager.load("yozhi.jpg", Texture.class);
-        assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyIdle.png", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyDamage.png", Texture.class);
         assetManager.load("world/entities/fly/flyIdle.png", Texture.class);
@@ -84,6 +82,14 @@ public class Main extends Game {
         assetManager.load("world/entities/wheel/wheelIdle.png", Texture.class);
         assetManager.load("world/entities/wheel/wheelWalk.png", Texture.class);
         assetManager.load("world/entities/wheel/wheelDamage.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonIdle.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonWalk.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonDamage.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonAttack.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombIdle.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombWalk.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombDamage.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombAttack.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
@@ -146,6 +152,8 @@ public class Main extends Game {
         assetManager.load("world/particles/dustParticle.png", Texture.class);
         assetManager.load("world/particles/starParticle.png", Texture.class);
         assetManager.load("world/particles/swordParticle.png", Texture.class);
+        assetManager.load("world/particles/iceParticle.png", Texture.class);
+        assetManager.load("world/particles/bombParticle.png", Texture.class);
         assetManager.load("world/particles/kirbySwordParticle.png", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);

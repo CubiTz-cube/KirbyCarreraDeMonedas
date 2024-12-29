@@ -40,7 +40,7 @@ public class SwordProyectil extends Projectil{
     @Override
     public void act(float delta) {
         timeDespawn += delta;
-        if (timeDespawn > 0.1f) {
+        if (timeDespawn > 0.01f) {
             despawn();
         }
     }

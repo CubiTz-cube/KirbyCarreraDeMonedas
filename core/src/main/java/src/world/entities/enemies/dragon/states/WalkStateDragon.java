@@ -1,23 +1,20 @@
-package src.world.entities.enemies.sword.states;
+package src.world.entities.enemies.dragon.states;
 
 import com.badlogic.gdx.math.Vector2;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.sword.SwordEnemy;
+import src.world.entities.enemies.dragon.DragonEnemy;
 
-public class WalkStateSword extends StateEnemy<SwordEnemy>
-{
+public class WalkStateDragon extends StateEnemy<DragonEnemy> {
 
-    public WalkStateSword(SwordEnemy enemy)
-    {
+    public WalkStateDragon(DragonEnemy enemy) {
         super(enemy);
     }
-
     @Override
     public void start()
     {
         super.start();
-        enemy.setAnimation(SwordEnemy.AnimationType.WALK);
+        enemy.setAnimation(DragonEnemy.AnimationType.WALK);
     }
 
     @Override
@@ -25,11 +22,11 @@ public class WalkStateSword extends StateEnemy<SwordEnemy>
     {
         Vector2 velocity = enemy.getBody().getLinearVelocity();
         if (Math.abs(velocity.x) < enemy.speed) {
-            enemy.getBody().applyForce(enemy.getSprite().isFlipX()? -5 : 5, 0,
+            enemy.getBody().applyForce(enemy.getSprite().isFlipX()? -10 : 10, 0,
                 enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
         }
 
-        if (enemy.getActCrono() > 1.5f){
+        if (enemy.getActCrono() > 0.5f){
             enemy.setState(Enemy.StateType.ATTACK);
         }
     }

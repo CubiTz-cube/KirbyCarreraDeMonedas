@@ -32,7 +32,7 @@ public class FlyEnemy extends Enemy
     private final Animation<TextureRegion> damageAnimation;
 
     public FlyEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager,id, game, Type.BASIC, PowerUp.Type.NONE,9);
+        super(world, shape, assetManager,id, game, Type.FLYBUG, PowerUp.Type.NONE,9);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -57,7 +57,8 @@ public class FlyEnemy extends Enemy
         idleState = new IdleStateFly(this);
         walkState = new WalkStateFly(this);
         damageState = new DamageStateFly(this);
-        setState(StateType.IDLE);
+
+        setState(StateType.WALK);
 
         idleAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyIdle.png"), 4));
@@ -66,8 +67,9 @@ public class FlyEnemy extends Enemy
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyIdle.png"), 4));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        damageAnimation = new Animation<>(0.25f,
+        damageAnimation = new Animation<>(0.3f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyDamage.png"), 4));
+        damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         setCurrentAnimation(walkAnimation);
     }

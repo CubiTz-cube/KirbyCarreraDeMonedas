@@ -1,7 +1,6 @@
 package src.world.entities.enemies.fly.states;
 
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.fly.FlyEnemy;
 
 public class DamageStateFly extends StateEnemy<FlyEnemy> {
@@ -18,7 +17,7 @@ public class DamageStateFly extends StateEnemy<FlyEnemy> {
 
     @Override
     public void update(Float delta) {
-        enemy.setState(BasicEnemy.StateType.IDLE);
+        enemy.setState(FlyEnemy.StateType.IDLE);
         if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
     }
 

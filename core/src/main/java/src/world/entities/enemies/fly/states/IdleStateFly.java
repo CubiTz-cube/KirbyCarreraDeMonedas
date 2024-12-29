@@ -25,7 +25,7 @@ public class IdleStateFly extends StateEnemy<FlyEnemy> {
             flip = true;
         }
 
-        if (enemy.getActCrono() > 0.1f) {
+        if (enemy.getActCrono() > 0.01f) {
             enemy.setState(Enemy.StateType.WALK);
         }
     }

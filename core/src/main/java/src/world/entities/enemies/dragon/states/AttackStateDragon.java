@@ -1,27 +1,27 @@
-package src.world.entities.enemies.sword.states;
+package src.world.entities.enemies.dragon.states;
 
 import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.sword.SwordEnemy;
+import src.world.entities.enemies.dragon.DragonEnemy;
 
-public class AttackStateSword extends StateEnemy<SwordEnemy>
-{
-    public AttackStateSword(SwordEnemy enemy) {
+public class AttackStateDragon extends StateEnemy<DragonEnemy> {
+
+    public AttackStateDragon(DragonEnemy enemy) {
         super(enemy);
     }
 
     @Override
     public void start() {
         super.start();
-        enemy.setAnimation(SwordEnemy.AnimationType.ATTACK);
+        enemy.setAnimation(DragonEnemy.AnimationType.ATTACK);
     }
 
     @Override
     public void update(Float delta) {
-        enemy.throwEntity(Entity.Type.SWORDPROENEMY, 0f, 0f);
+        enemy.throwEntity(Entity.Type.ICE, 8f,0f);
 
-        if (enemy.getActCrono() > 1) {
+        if (enemy.getActCrono() > 0.5f) {
             enemy.setState(Enemy.StateType.IDLE);
         }
     }

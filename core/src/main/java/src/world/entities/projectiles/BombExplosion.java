@@ -1,7 +1,6 @@
 package src.world.entities.projectiles;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
@@ -16,7 +15,7 @@ public class BombExplosion extends Projectil{
     public BombExplosion(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.BOMBEXPLOSION, game, 10);
         timeDespawn = 0f;
-        sprite.setTexture(assetManager.get("yoshi.jpg"));
+        sprite.setTexture(assetManager.get("world/particles/bombParticle.png"));
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);

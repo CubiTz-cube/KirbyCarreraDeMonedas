@@ -1,22 +1,20 @@
-package src.world.entities.enemies.sword.states;
+package src.world.entities.enemies.dragon.states;
 
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.sword.SwordEnemy;
+import src.world.entities.enemies.dragon.DragonEnemy;
 
-public class IdleStateSword  extends StateEnemy<SwordEnemy>
-{
-
+public class IdleStateDragon extends StateEnemy<DragonEnemy> {
     private boolean flip = false;
 
-    public IdleStateSword(SwordEnemy enemy) {
+    public IdleStateDragon(DragonEnemy enemy) {
         super(enemy);
     }
 
     @Override
     public void start() {
         super.start();
-        enemy.setAnimation(SwordEnemy.AnimationType.IDLE);
+        enemy.setAnimation(DragonEnemy.AnimationType.IDLE);
     }
 
     @Override
@@ -26,7 +24,7 @@ public class IdleStateSword  extends StateEnemy<SwordEnemy>
             flip = true;
         }
 
-        if (enemy.getActCrono() > 1) {
+        if (enemy.getActCrono() > 1.5f) {
             enemy.setState(Enemy.StateType.WALK);
         }
     }

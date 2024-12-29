@@ -2,6 +2,7 @@ package src.world.entities.enemies;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
@@ -80,6 +81,15 @@ public abstract class Enemy extends Entity {
             return true;
         }
         return false;
+    }
+
+    public void throwEntity(Entity.Type type, Float impulseX, Float impulseY){
+        float linearX = Math.abs(body.getLinearVelocity().x);
+        game.addEntity(type,
+            body.getPosition().add(isFlipX() ? -1.2f : 1.2f,0),
+            new Vector2((isFlipX() ? -impulseX - linearX : impulseX + linearX),impulseY),
+            isFlipX()
+        );
     }
 
     public void takeDamage(Integer damage) {
