@@ -26,7 +26,6 @@ public class WheelEnemy extends Enemy
         DAMAGE
     }
 
-
     private final Animation<TextureRegion> idleAnimation;
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> damageAnimation;

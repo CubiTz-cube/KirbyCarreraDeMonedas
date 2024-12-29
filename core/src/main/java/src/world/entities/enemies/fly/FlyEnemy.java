@@ -23,8 +23,7 @@ public class FlyEnemy extends Enemy
     public enum AnimationType {
         IDLE,
         WALK,
-        DAMAGE,
-        DEAD
+        DAMAGE
     }
 
     private final Animation<TextureRegion> idleAnimation;
