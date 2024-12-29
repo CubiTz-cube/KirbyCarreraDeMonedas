@@ -20,17 +20,19 @@ public class InfoScreen extends BlueCircleScreen {
         LayersManager layersManager = new LayersManager(stageUI, 3);
 
         Label infoLabel = new Label(
-            "Controles\n" +
+            "Controles:\n" +
             "W/A/S/D Moverse\n" +
             "Espacio Ejecutar accion\n" +
-            "Shift Correr\n",
-            new Label.LabelStyle(fontBri, MyColors.BLUE));
+            "Shift Correr\n\n" +
+            "Objetivo:\n" +
+            "Al entrar en un espejo podras hacer \nun minijuego que te puede dar de 1 a 3 monedas\n" +
+            "Obten la mayor cantidad de monedas \nantes de que se acabe el tiempo\n",
+            new Label.LabelStyle(fontInter, MyColors.BLUE));
 
         layersManager.setZindex(0);
-        layersManager.getLayer().center();
-        layersManager.getLayer().pad(40);
-        layersManager.getLayer().add(infoLabel).expandX().fill().padRight(10);
-
+        layersManager.getLayer().bottom();
+        layersManager.getLayer().padLeft(40);
+        layersManager.getLayer().add(infoLabel).expandX().fill();
     }
 
 }
