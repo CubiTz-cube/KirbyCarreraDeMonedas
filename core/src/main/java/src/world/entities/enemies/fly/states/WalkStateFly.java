@@ -23,7 +23,7 @@ public class WalkStateFly extends StateEnemy<FlyEnemy> {
         enemy.getBody().applyForce(0, enemy.flyDown? -1 : 1,
             enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
 
-        if (enemy.getActCrono() > 3) {
+        if (enemy.getActCrono() > 4) {
             enemy.setState(Enemy.StateType.IDLE);
         }
     }

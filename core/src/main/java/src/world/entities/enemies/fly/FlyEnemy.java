@@ -90,7 +90,6 @@ public class FlyEnemy extends Enemy
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         super.beginContactWith(actor, game);
-        flyDown = !flyDown;
-        setState(StateType.WALK);
+        setState(Enemy.StateType.IDLE);
     }
 }

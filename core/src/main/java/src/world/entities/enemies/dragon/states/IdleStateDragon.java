@@ -19,10 +19,10 @@ public class IdleStateDragon extends StateEnemy<DragonEnemy> {
 
     @Override
     public void update(Float delta) {
-        if (!flip) {
+        /*if (!flip) {
             enemy.setFlipX(!enemy.getSprite().isFlipX());
             flip = true;
-        }
+        }*/
 
         if (enemy.getActCrono() > 1.5f) {
             enemy.setState(Enemy.StateType.WALK);
