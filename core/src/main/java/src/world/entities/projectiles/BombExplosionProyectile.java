@@ -29,7 +29,7 @@ public class BombExplosionProyectile extends Projectil{
         box.dispose();
         body.setFixedRotation(true);
 
-        setSpritePosModification(0f, getHeight()/4);
+        setSpritePosModification(0f, getHeight()/16);
 
         Filter filter = new Filter();
         filter.maskBits = (short)(~CollisionFilters.ITEM & ~CollisionFilters.STATIC);

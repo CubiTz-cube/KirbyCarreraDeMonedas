@@ -65,7 +65,7 @@ public class WheelEnemy extends Enemy
             SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelWalk.png"), 3));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        damageAnimation = new Animation<>(0.2f,
+        damageAnimation = new Animation<>(0.3f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelDamage.png"), 4));
         damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
 

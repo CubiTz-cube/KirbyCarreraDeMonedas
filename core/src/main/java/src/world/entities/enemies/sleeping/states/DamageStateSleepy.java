@@ -17,8 +17,10 @@ public class DamageStateSleepy extends StateEnemy<SleepingEnemy> {
 
     @Override
     public void update(Float delta) {
-        enemy.setState(SleepingEnemy.StateType.IDLE);
-        if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
+        if (enemy.isAnimationFinish()) {
+            enemy.setState(SleepingEnemy.StateType.IDLE);
+            if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
+        }
     }
 
     @Override

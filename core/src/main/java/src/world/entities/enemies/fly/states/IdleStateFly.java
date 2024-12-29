@@ -15,7 +15,6 @@ public class IdleStateFly extends StateEnemy<FlyEnemy> {
     @Override
     public void start() {
         super.start();
-        enemy.setAnimation(FlyEnemy.AnimationType.IDLE);
         enemy.getBody().setLinearVelocity(0,0);
         enemy.flyDown = !enemy.flyDown;
         enemy.getBody().setGravityScale(0);

@@ -17,6 +17,7 @@ import src.world.entities.enemies.fly.states.DamageStateFly;
 import src.world.entities.enemies.fly.states.WalkStateFly;
 import src.world.entities.enemies.fly.states.IdleStateFly;
 import src.world.entities.player.powers.PowerUp;
+import src.world.entities.projectiles.Projectil;
 
 public class FlyEnemy extends Enemy
 {
@@ -68,7 +69,7 @@ public class FlyEnemy extends Enemy
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyIdle.png"), 4));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        damageAnimation = new Animation<>(0.3f,
+        damageAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyDamage.png"), 4));
         damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
@@ -90,6 +91,8 @@ public class FlyEnemy extends Enemy
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         super.beginContactWith(actor, game);
+        if (actor instanceof Projectil) return;
+        if (getCurrentStateType() == StateType.DAMAGE) return;
         setState(Enemy.StateType.IDLE);
     }
 }

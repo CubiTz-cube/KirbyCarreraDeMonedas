@@ -58,7 +58,7 @@ public class SleepingEnemy extends Enemy
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sleepy/sleepyIdle.png"), 6));
         idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        damageAnimation = new Animation<>(0.4f,
+        damageAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sleepy/sleepyDamage.png"), 6));
         damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
