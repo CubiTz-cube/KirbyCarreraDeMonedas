@@ -121,7 +121,6 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         LayersManager layersManager = new LayersManager(stageUI, 9);
 
         layersManager.setZindex(0);
-        layersManager.getLayer().setDebug(true);
         layersManager.getLayer().add().expand(0,8);
         layersManager.getLayer().row();
         layersManager.getLayer().bottom().padLeft(20);
