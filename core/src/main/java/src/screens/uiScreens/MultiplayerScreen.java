@@ -24,7 +24,6 @@ public class MultiplayerScreen extends BlueCircleScreen {
 
     public MultiplayerScreen(Main main) {
         super(main, "Multijugador", null, Main.Screens.MENU);
-        Skin skin = main.getSkin();
 
         LayersManager layersManager = new LayersManager(stageUI, 3);
 

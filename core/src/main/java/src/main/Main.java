@@ -227,7 +227,7 @@ public class Main extends Game {
         System.out.println("Assets loaded.");
 
         soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.1f);
+        soundManager.setVolumeMusic(0.0f);
         soundManager.addSoundTrack(soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
         soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());

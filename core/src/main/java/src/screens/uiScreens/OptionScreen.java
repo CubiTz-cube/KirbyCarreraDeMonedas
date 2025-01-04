@@ -1,11 +1,14 @@
 package src.screens.uiScreens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
+import src.screens.components.LayersManager;
+import src.utils.constants.MyColors;
 import src.utils.sound.SingleSoundManager;
 import src.utils.sound.SoundManager;
 
@@ -15,14 +18,12 @@ public class OptionScreen extends BlueCircleScreen {
         super(main, "Ajustes", null, Main.Screens.MENU);
         Skin skin = main.getSkin();
 
+        LayersManager layersManager = new LayersManager(stageUI, 3);
+
         SoundManager soundManager = SingleSoundManager.getInstance();
 
-        Table table = new Table();
-        table.setFillParent(true);
-        stageUI.addActor(table);
-
-        Label volumeTitleLabel = new Label("VOLUMEN", skin);
-        Label volumeLabel = new Label("General", skin);
+        Label volumeTitleLabel = new Label("VOLUMEN",  new Label.LabelStyle(fontBri, MyColors.BLUE));
+        Label volumeLabel = new Label("General", new Label.LabelStyle(fontBri, MyColors.BLUE));
 
         Slider volumeSlider = new Slider(0, 1, 0.01f, false, skin);
         volumeSlider.setValue(soundManager.getVolume());
@@ -33,7 +34,7 @@ public class OptionScreen extends BlueCircleScreen {
             }
         });
 
-        Label volumeMusicLabel = new Label("Musica", skin);
+        Label volumeMusicLabel = new Label("Musica", new Label.LabelStyle(fontBri, MyColors.BLUE));
 
         Slider volumenMusicSlider = new Slider(0, 1, 0.01f, false, skin);
         volumenMusicSlider.setValue(soundManager.getVolumeMusic());
@@ -44,7 +45,7 @@ public class OptionScreen extends BlueCircleScreen {
             }
         });
 
-        Label volumeSoundLabel = new Label("Sonidos", skin);
+        Label volumeSoundLabel = new Label("Sonidos", new Label.LabelStyle(fontBri, MyColors.BLUE));
 
         Slider volumenSoundSlider = new Slider(0, 1, 0.01f, false, skin);
         volumenSoundSlider.setValue(soundManager.getVolumeSound());
@@ -55,23 +56,25 @@ public class OptionScreen extends BlueCircleScreen {
             }
         });
 
-        volumeTitleLabel.setFontScale(2);
-        table.add(volumeTitleLabel).width(200).height(50).pad(10);
-        table.row();
+        layersManager.setZindex(0);
+        layersManager.getLayer().setDebug(true);
+        volumeTitleLabel.setFontScale(1.2f);
+        layersManager.getLayer().add(volumeTitleLabel).expandX().pad(10);
+        layersManager.getLayer().row();
 
-        table.add(volumeLabel).width(200).height(50).pad(10);
-        table.row();
-        table.add(volumeSlider).width(200).height(50).pad(10);
-        table.row();
+        layersManager.getLayer().add(volumeLabel).expandX().pad(10);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(volumeSlider).expandX().pad(10);
+        layersManager.getLayer().row();
 
-        table.add(volumeMusicLabel).width(200).height(50).pad(10);
-        table.row();
-        table.add(volumenMusicSlider).width(200).height(50).pad(10);
-        table.row();
+        layersManager.getLayer().add(volumeMusicLabel).expandX().pad(10);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(volumenMusicSlider).expandX().pad(10);
+        layersManager.getLayer().row();
 
-        table.add(volumeSoundLabel).width(200).height(50).pad(10);
-        table.row();
-        table.add(volumenSoundSlider).width(200).height(50).pad(10);
-        table.row();
+        layersManager.getLayer().add(volumeSoundLabel).expandX().pad(10);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(volumenSoundSlider).expandX().pad(10);
+        layersManager.getLayer().row();
     }
 }
