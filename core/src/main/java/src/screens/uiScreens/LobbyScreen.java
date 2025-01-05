@@ -3,8 +3,6 @@ package src.screens.uiScreens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -19,19 +17,13 @@ import src.net.PlayerInfo;
 import src.net.packets.Packet;
 import src.screens.components.ColorField;
 import src.screens.components.LayersManager;
-import src.screens.components.SpriteAsActor;
-import src.utils.FontCreator;
 import src.utils.constants.MyColors;
 
 public class LobbyScreen extends UIScreen implements PacketListener {
     private final Table playersTable;
 
-    private final ScrollPane scrollPane;
     private final ImageTextButton playButton;
     private final ColorField colorField;
-
-    private final BitmapFont fontBriBorder;
-    private final BitmapFont nameInterBorder;
 
     private final Image mainKirbyImage;
     private final Label mainKirbyName;
@@ -40,22 +32,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         super(main);
         Skin skin = main.getSkin();
 
-        FreeTypeFontGenerator generatorBri = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.borderWidth = 4;
-        parameter.borderColor = MyColors.BLUE;
-        parameter.shadowColor = MyColors.BLUE;
-        parameter.shadowOffsetX = -2;
-        parameter.shadowOffsetY = 2;
-        fontBriBorder = FontCreator.createFont(48, MyColors.YELLOW, generatorBri, parameter);
-
-        FreeTypeFontGenerator generatorInter = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.borderWidth = 3;
-        parameter.borderColor = Color.BLACK;
-        nameInterBorder = FontCreator.createFont(32, MyColors.PINK, generatorInter, parameter);
-
-        Label titleLabel = new Label("Partida", new Label.LabelStyle(fontBriBorder, Color.WHITE));
+        Label titleLabel = new Label("Partida", new Label.LabelStyle(main.getBriTitleFont(), Color.WHITE));
         titleLabel.setAlignment(Align.center);
 
         Texture pinkLineTexture = main.getAssetManager().get("ui/bg/pinkLineBg.png", Texture.class);
@@ -72,14 +49,14 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         aroColorImage.setScaling(Scaling.fit);
         aroColorImage.setAlign(Align.bottomLeft);
 
-        mainKirbyName = new Label("Sin nombre", new Label.LabelStyle(nameInterBorder, MyColors.PINK));
+        mainKirbyName = new Label("Sin nombre", new Label.LabelStyle(main.getInterNameFont(), MyColors.PINK));
         mainKirbyName.setAlignment(Align.center);
         mainKirbyImage = new Image(main.getAssetManager().get("ui/bg/kirbyIdleBg.png", Texture.class));
         mainKirbyImage.setScaling(Scaling.fit);
         mainKirbyImage.setAlign(Align.bottomLeft);
 
         playersTable = new Table();
-        scrollPane = new ScrollPane(playersTable, skin);
+        ScrollPane scrollPane = new ScrollPane(playersTable, skin);
         scrollPane.setFillParent(true);
 
         playButton = new ImageTextButton("Empezar", myImageTextbuttonStyle);
@@ -151,7 +128,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
 
         layersManager.setZindex(4);
         layersManager.getLayer().top();
-        layersManager.getLayer().add(titleLabel).padTop(25).width(398).center();
+        layersManager.getLayer().add(titleLabel).padTop(15).width(398).center();
         layersManager.getLayer().add().expandX();
 
         layersManager.setZindex(5);
@@ -181,7 +158,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     private void updatePlayersTable() {
         playersTable.clear();
         for (PlayerInfo player : main.client.getPlayersConnected().values()) {
-            Label nameLabel = new Label(player.getName(), new Label.LabelStyle(nameInterBorder, MyColors.PINK));
+            Label nameLabel = new Label(player.getName(), new Label.LabelStyle(main.getInterNameFont(), MyColors.PINK));
             nameLabel.setAlignment(Align.center);
             playersTable.add(nameLabel).pad(25).expandX().fillX().center();
         }
@@ -215,12 +192,5 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     public void closeClient() {
         if (main.client.gameStart) return;
         Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.MULTIPLAYER));
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        fontBriBorder.dispose();
-        nameInterBorder.dispose();
     }
 }

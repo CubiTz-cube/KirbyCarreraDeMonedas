@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -15,29 +13,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
 import src.screens.components.LayersManager;
-import src.utils.FontCreator;
-import src.utils.constants.MyColors;
 
 public class BlueCircleScreen extends UIScreen{
-    private BitmapFont fontBriBorder;
-
-    private Main.Screens backPage;
+    private final Main.Screens backPage;
 
     public BlueCircleScreen(Main main, String title, Image bgImage, Main.Screens backPage) {
         super(main);
         this.backPage = backPage;
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.borderWidth = 4;
-        parameter.borderColor = MyColors.BLUE;
-        parameter.shadowColor = MyColors.BLUE;
-        parameter.shadowOffsetX = -2;
-        parameter.shadowOffsetY = 2;
-        fontBriBorder = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
 
         LayersManager layersManager = new LayersManager(stageUI, 5);
 
-        Label titleLabel = new Label(title, new Label.LabelStyle(fontBriBorder, Color.WHITE));
+        Label titleLabel = new Label(title, new Label.LabelStyle(main.getBriTitleFont(), Color.WHITE));
         titleLabel.setAlignment(Align.center);
 
         Texture lineTexture = main.getAssetManager().get("ui/bg/lineBg.png", Texture.class);
@@ -103,11 +89,5 @@ public class BlueCircleScreen extends UIScreen{
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             main.changeScreen(backPage);
         }
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        fontBriBorder.dispose();
     }
 }

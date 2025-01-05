@@ -20,10 +20,10 @@ public class ServerScreen extends BlueCircleScreen {
         TextField portTextField = new TextField("1234", myTextFieldStyle);
         portTextField.setAlignment(Align.center);
 
-        Label ipLabel = new Label("Ip", new Label.LabelStyle(fontBri, MyColors.BLUE));
+        Label ipLabel = new Label("Ip", new Label.LabelStyle(main.getBriFont(), MyColors.BLUE));
         ipLabel.setAlignment(Align.center);
 
-        Label portLabel = new Label("Puerto", new Label.LabelStyle(fontBri, MyColors.BLUE));
+        Label portLabel = new Label("Puerto", new Label.LabelStyle(main.getBriFont(), MyColors.BLUE));
         portLabel.setAlignment(Align.center);
 
         ImageTextButton joinButton = new ImageTextButton("Crear", myImageTextbuttonStyle);

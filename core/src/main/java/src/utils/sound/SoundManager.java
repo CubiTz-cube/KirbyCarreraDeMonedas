@@ -3,6 +3,7 @@ package src.utils.sound;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import src.main.Main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +17,8 @@ public class SoundManager implements Music.OnCompletionListener {
     private Float volumeSound = 1f;
 
     private final Random random;
-    private final HashMap<String,ArrayList<Music>> soundTracks;
-    private String currentSoundTrack;
+    private final HashMap<Main.SoundTrackType,ArrayList<Music>> soundTracks;
+    private Main.SoundTrackType currentSoundTrack;
 
     private Music currentMusic;
     private final ExecutorService musicThread;
@@ -105,16 +106,16 @@ public class SoundManager implements Music.OnCompletionListener {
         currentMusic.stop();
     }
 
-    public void addSoundTrack(String name){
-        soundTracks.put(name,new ArrayList<>());
+    public void addSoundTrack(Main.SoundTrackType type){
+        soundTracks.put(type,new ArrayList<>());
     }
 
-    public void setSoundTracks(String name){
-        currentSoundTrack = name;
+    public void setSoundTracks(Main.SoundTrackType type){
+        currentSoundTrack = type;
         playSoundTrack();
     }
 
-    public void addMusicToSoundTrack(Music music, String soundTrack){
+    public void addMusicToSoundTrack(Music music, Main.SoundTrackType soundTrack){
         soundTracks.get(soundTrack).add(music);
     }
 

@@ -27,7 +27,7 @@ public class InfoScreen extends BlueCircleScreen {
             "Objetivo:\n" +
             "Al entrar en un espejo podras hacer \nun minijuego que te puede dar de 1 a 3 monedas\n" +
             "Obten la mayor cantidad de monedas \nantes de que se acabe el tiempo\n",
-            new Label.LabelStyle(fontInter, MyColors.BLUE));
+            new Label.LabelStyle(main.getInterFont(), MyColors.BLUE));
 
         layersManager.setZindex(0);
         layersManager.getLayer().bottom();

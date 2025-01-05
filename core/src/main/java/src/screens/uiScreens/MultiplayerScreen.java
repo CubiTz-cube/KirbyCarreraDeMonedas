@@ -30,7 +30,7 @@ public class MultiplayerScreen extends BlueCircleScreen {
         TextField nameTextField = new TextField("Sin nombre", myTextFieldStyle);
         nameTextField.setAlignment(Align.center);
 
-        Label nameLabel = new Label("Nombre", new Label.LabelStyle(fontBri, MyColors.BLUE));
+        Label nameLabel = new Label("Nombre", new Label.LabelStyle(main.getBriFont(), MyColors.BLUE));
         nameLabel.setAlignment(Align.center);
 
         ImageTextButton joinButton = new ImageTextButton("Unirse", myImageTextbuttonStyle);
