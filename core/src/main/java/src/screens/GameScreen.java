@@ -493,6 +493,9 @@ public class GameScreen extends BaseScreen {
         layersManager.setZindex(5);
         layersManager.getLayer().add(pauseBg).grow();
         layersManager.getLayer().setVisible(false);
+
+        layersManager.setZindex(1);
+        layersManager.getLayer().setVisible(true);
     }
 
     private void setMenuVisible(Boolean visible){

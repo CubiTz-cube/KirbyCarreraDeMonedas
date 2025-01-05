@@ -46,7 +46,7 @@ public class BombProyectile extends Projectil {
     @Override
     public void act(float delta) {
         if (isAnimationFinish()) {
-            game.addEntityNoPacket(Type.BOMBEXPLOSION, body.getPosition().add(-1.5f, -1.5f),new Vector2(0,0), false);
+            game.addEntityNoPacket(Type.BOMBEXPLOSION, body.getPosition().add(-5.5f, -5.5f),new Vector2(0,0), false);
             despawn();
         }
     }

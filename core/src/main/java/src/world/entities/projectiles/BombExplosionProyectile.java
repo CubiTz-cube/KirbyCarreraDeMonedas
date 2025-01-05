@@ -9,8 +9,13 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.utils.Box2dUtils;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
+import src.world.ActorBox2d;
+import src.world.entities.enemies.Enemy;
+import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
 
 public class BombExplosionProyectile extends Projectil{
     public BombExplosionProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
@@ -23,13 +28,13 @@ public class BombExplosionProyectile extends Projectil{
         body.setGravityScale(0);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.width / 4, shape.height / 4);
+        box.setAsBox(shape.width / 6, shape.height / 6);
         fixture = body.createFixture(box, 2);
         fixture.setUserData(this);
         box.dispose();
         body.setFixedRotation(true);
 
-        setSpritePosModification(0f, getHeight()/16);
+        //setSpritePosModification(0f, getHeight()/4);
 
         Filter filter = new Filter();
         filter.maskBits = (short)(~CollisionFilters.ITEM & ~CollisionFilters.STATIC);
@@ -43,5 +48,19 @@ public class BombExplosionProyectile extends Projectil{
     @Override
     public void act(float delta) {
         if (isAnimationFinish()) despawn();
+    }
+
+    @Override
+    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
+        if (actor instanceof Enemy enemy){
+            if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) {return;}
+            game.actDamageEnemy(enemy.getId(), body, getDamage(), getDamage().floatValue());
+        } else if (actor instanceof Player player) {
+            if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible()) {return;}
+            player.coinDrop = getDamage();
+            player.setCurrentState(Player.StateType.STUN);
+            player.playSound(Player.SoundType.NORMALDAMAGE);
+            Box2dUtils.knockbackBody(getBody(), body, getDamage());
+        }
     }
 }

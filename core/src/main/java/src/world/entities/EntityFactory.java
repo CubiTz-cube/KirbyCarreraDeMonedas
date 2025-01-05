@@ -44,7 +44,7 @@ public class EntityFactory {
             case STAR -> new StarProyectile(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case BOMB -> new BombProyectile(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case ICE -> new IceEnemyProyectile(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case BOMBEXPLOSION -> new BombExplosionProyectile(world, new Rectangle(position.x, position.y, 4f, 4f), assetManager, id, game);
+            case BOMBEXPLOSION -> new BombExplosionProyectile(world, new Rectangle(position.x, position.y, 12f, 12f), assetManager, id, game);
             case SWORDPROPLAYER -> new SwordProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
             case SWORDRUNPROPLAYER -> new SwordRunProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDRUNPROPLAYER, game);
             case SWORDPROENEMY -> new SwordEnemyProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROENEMY, game, assetManager.get("world/particles/swordParticle.png"));
