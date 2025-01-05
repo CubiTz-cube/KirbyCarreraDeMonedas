@@ -77,20 +77,21 @@
                 13
             ],
             "expandedObjectLayers": [
+                18,
                 4,
                 5,
                 7,
                 6
             ],
-            "scale": 3,
-            "selectedLayer": 1,
+            "scale": 0.25,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 2651.1666666666665,
-                "y": 2107.333333333333
+                "x": 2038,
+                "y": 1380
             }
         },
         "maps/garden.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
         "maps/kirbyPrueba.tmx": {
@@ -146,7 +147,7 @@
             "scaleInDock": 1
         },
         "maps/village.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         }
     },
@@ -159,18 +160,15 @@
     "map.tileWidth": 16,
     "map.width": 240,
     "openFiles": [
-        "maps/gameMap.tmx",
-        "maps/testMap.tmx",
-        "maps/backgroundMontaint.tsx",
-        "maps/backgroundMoon.tsx"
+        "maps/gameMap.tmx"
     ],
     "project": "",
     "property.type": "color",
     "recentFiles": [
+        "maps/gameMap.tmx",
         "maps/testMap.tmx",
         "maps/backgroundMoon.tsx",
         "maps/backgroundMontaint.tsx",
-        "maps/gameMap.tmx",
         "maps/backgroundSpace.tsx",
         "maps/fondo.tsx",
         "maps/TestMap.tmx",

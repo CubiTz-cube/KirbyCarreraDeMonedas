@@ -62,6 +62,7 @@ public class Main extends Game {
 
     private BitmapFont interFont;
     private BitmapFont interNameFont;
+    private BitmapFont interNameFontSmall;
     private BitmapFont briFont;
     private BitmapFont briTitleFont;
 
@@ -80,7 +81,7 @@ public class Main extends Game {
         initAssets();
 
         soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.1f);
+        soundManager.setVolumeMusic(0.0f);
         initSounds();
         initFonts();
         initScreens();
@@ -270,6 +271,8 @@ public class Main extends Game {
         parameter.borderWidth = 3;
         parameter.borderColor = Color.BLACK;
         interNameFont = FontCreator.createFont(32, MyColors.PINK, generator, parameter);
+        parameter.borderWidth = 2;
+        interNameFontSmall = FontCreator.createFont(14, MyColors.PINK, generator, parameter);
     }
 
     private void initSounds(){
@@ -314,6 +317,10 @@ public class Main extends Game {
 
     public BitmapFont getInterNameFont() {
         return interNameFont;
+    }
+
+    public BitmapFont getInterNameFontSmall() {
+        return interNameFontSmall;
     }
 
     public void setName(String name) {
@@ -411,6 +418,7 @@ public class Main extends Game {
         soundManager.dispose();
         interFont.dispose();
         interNameFont.dispose();
+        interNameFontSmall.dispose();
         briFont.dispose();
         briTitleFont.dispose();
     }
