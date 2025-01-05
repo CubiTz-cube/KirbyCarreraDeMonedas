@@ -22,7 +22,7 @@ public class InfoScreen extends BlueCircleScreen {
         Label infoLabel = new Label(
             "Controles:\n" +
             "W/A/S/D Moverse\n" +
-            "Espacio Ejecutar accion\n" +
+            "P Ejecutar accion\n" +
             "Shift Correr\n\n" +
             "Objetivo:\n" +
             "Al entrar en un espejo podras hacer \nun minijuego que te puede dar de 1 a 3 monedas\n" +
