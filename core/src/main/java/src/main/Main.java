@@ -133,6 +133,7 @@ public class Main extends Game {
         assetManager.load("ui/bg/kirbyIdleBg.png", Texture.class);
         assetManager.load("ui/bg/aroColorPlayerBg.png", Texture.class);
         assetManager.load("ui/bg/whiteBg.png", Texture.class);
+        assetManager.load("ui/bg/whiteContainerBg.png", Texture.class);
 
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);

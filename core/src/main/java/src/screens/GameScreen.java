@@ -12,15 +12,20 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.net.packets.Packet;
 import src.screens.components.*;
+import src.screens.uiScreens.UIScreen;
 import src.utils.*;
 import src.utils.constants.Constants;
 import src.utils.constants.PlayerControl;
@@ -51,10 +56,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
-public class GameScreen extends BaseScreen {
+public class GameScreen extends UIScreen {
     // Game
     private final Stage stage;
-    private final Stage stageUI;
     private final World world;
     public ThreadSecureWorld threadSecureWorld;
 
@@ -113,7 +117,6 @@ public class GameScreen extends BaseScreen {
         particleFactory = new ParticleFactory();
 
         stage = new Stage(new ScreenViewport());
-        stageUI = new Stage(new ScreenViewport());
         world = new World(new Vector2(0, -30f), true);
         threadSecureWorld = new ThreadSecureWorld(world);
 
@@ -451,13 +454,18 @@ public class GameScreen extends BaseScreen {
     private void initUI(){
         layersManager = new LayersManager(stageUI, 6);
 
-        odsPointsLabel = new Label("ODS POINTS\n"+0,main.getSkin());
-        odsPointsLabel.setAlignment(Align.topRight);
-        odsPointsLabel.setFontScale(2);
+        Image timeImage = new Image(main.getAssetManager().get("world/entities/coin.png", Texture.class));
 
-        gameTimeLabel = new Label("Game Time\n" + timeGame, main.getSkin());
-        gameTimeLabel.setAlignment(Align.topLeft);
-        gameTimeLabel.setFontScale(2);
+        gameTimeLabel = new Label(timeGame.toString(), new Label.LabelStyle(main.getBriFont(), null));
+        gameTimeLabel.setAlignment(Align.left);
+        gameTimeLabel.setFontScale(1);
+
+        Image coinImage = new Image(main.getAssetManager().get("world/entities/coin.png", Texture.class));
+        coinImage.setScaling(Scaling.fit);
+
+        odsPointsLabel = new Label("0", new Label.LabelStyle(main.getBriFont(), null));
+        odsPointsLabel.setAlignment(Align.left);
+        odsPointsLabel.setFontScale(0.8f);
 
         chatWidget = new ChatWidget(main.getSkin());
 
@@ -469,14 +477,26 @@ public class GameScreen extends BaseScreen {
 
         Image pauseBg = new Image(main.getAssetManager().get("ui/bg/whiteBg.png", Texture.class));
 
+        ImageTextButton exitButton = new ImageTextButton("Salir", myImageTextbuttonStyle);
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                endGame();
+            }
+        });
+
         stage.addActor(mirrorIndicators);
         stage.addActor(maxScoreIndicator);
 
         layersManager.setZindex(1);
+        layersManager.getLayer().setDebug(true);
         layersManager.getLayer().top();
+        layersManager.getLayer().add(timeImage).padRight(5);
         layersManager.getLayer().add(gameTimeLabel);
         layersManager.getLayer().add().expandX();
-        layersManager.getLayer().add(odsPointsLabel);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(coinImage).padRight(5).size(48);
+        layersManager.getLayer().add(odsPointsLabel).left();
 
         layersManager.setZindex(2);
         layersManager.getLayer().add(chatWidget).padTop(400).height(200).width(300).fill();
@@ -488,6 +508,7 @@ public class GameScreen extends BaseScreen {
 
         layersManager.setZindex(4);
         new OptionTable(main.getSkin(), layersManager.getLayer(), main.getBriFont());
+        layersManager.getLayer().add(exitButton).padTop(10);
         layersManager.getLayer().setVisible(false);
 
         layersManager.setZindex(5);
@@ -550,8 +571,8 @@ public class GameScreen extends BaseScreen {
         maxScoreIndicator.setCenterPosition(player.getBody().getPosition());
         mirrorIndicators.setCenterPositions(player.getBody().getPosition());
 
-        odsPointsLabel.setText("ODS POINTS\n"+getScore()+"\nx: "+(int)player.getX()+" y: "+(int)player.getY());
-        gameTimeLabel.setText("Game Time\n" + timeGame);
+        odsPointsLabel.setText(getScore());
+        gameTimeLabel.setText(timeGame.toString());
         imagePower.setPower(player.getCurrentpowerUptype());
     }
 
@@ -611,6 +632,8 @@ public class GameScreen extends BaseScreen {
 
                 stage.getViewport().update(width, height, false);
                 stageUI.getViewport().update(width, height, false);
+
+                if (player == null) return;
 
                 camera.position.x = player.getX() + (player.isFlipX() ? -32 : 32);
                 camera.position.y = player.getY();

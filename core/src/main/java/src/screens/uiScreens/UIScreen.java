@@ -21,8 +21,8 @@ import src.utils.constants.MyColors;
 public abstract class UIScreen extends BaseScreen {
     protected final Stage stageUI;
 
-    ImageTextButton.ImageTextButtonStyle myImageTextbuttonStyle;
-    TextField.TextFieldStyle myTextFieldStyle;
+    protected ImageTextButton.ImageTextButtonStyle myImageTextbuttonStyle;
+    protected TextField.TextFieldStyle myTextFieldStyle;
 
     public UIScreen(Main main) {
         super(main);
