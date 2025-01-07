@@ -65,6 +65,7 @@ public class Main extends Game {
     private BitmapFont interNameFontSmall;
     private BitmapFont briFont;
     private BitmapFont briTitleFont;
+    private BitmapFont briBorderFont;
 
     public SoundManager soundManager;
     public enum SoundTrackType {
@@ -117,6 +118,7 @@ public class Main extends Game {
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
         assetManager.load("ui/indicators/mirrorIndicator.png", Texture.class);
         assetManager.load("ui/icons/powerIcons.png", Texture.class);
+        assetManager.load("ui/icons/clock.png", Texture.class);
         assetManager.load("ui/buttons/info.png", Texture.class);
         assetManager.load("ui/buttons/infoHover.png", Texture.class);
         assetManager.load("ui/buttons/exit.png", Texture.class);
@@ -266,6 +268,11 @@ public class Main extends Game {
         parameter.shadowOffsetX = -2;
         parameter.shadowOffsetY = 2;
         briTitleFont = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
+        parameter.borderColor = Color.BLACK;
+        parameter.shadowColor = null;
+        parameter.shadowOffsetX = 0;
+        parameter.shadowOffsetY = 0;
+        briBorderFont = FontCreator.createFont(48, Color.WHITE, generator, parameter);
 
         generator= new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -322,6 +329,10 @@ public class Main extends Game {
 
     public BitmapFont getInterNameFontSmall() {
         return interNameFontSmall;
+    }
+
+    public BitmapFont getBriBorderFont() {
+        return briBorderFont;
     }
 
     public void setName(String name) {
@@ -422,5 +433,6 @@ public class Main extends Game {
         interNameFontSmall.dispose();
         briFont.dispose();
         briTitleFont.dispose();
+        briBorderFont.dispose();
     }
 }

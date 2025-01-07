@@ -12,6 +12,9 @@ import src.utils.sound.SingleSoundManager;
 import src.utils.sound.SoundManager;
 
 public class OptionTable {
+    private final Slider volumeSlider;
+    private final Slider volumenMusicSlider;
+    private final Slider volumenSoundSlider;
 
     public OptionTable(Skin skin, Table table, BitmapFont font) {
         SoundManager soundManager = SingleSoundManager.getInstance();
@@ -19,7 +22,7 @@ public class OptionTable {
         Label volumeTitleLabel = new Label("VOLUMEN",  new Label.LabelStyle(font, MyColors.BLUE));
         Label volumeLabel = new Label("General", new Label.LabelStyle(font, MyColors.BLUE));
 
-        Slider volumeSlider = new Slider(0, 1, 0.01f, false, skin);
+        volumeSlider = new Slider(0, 1, 0.01f, false, skin);
         volumeSlider.setValue(soundManager.getVolume());
         volumeSlider.addListener(new ChangeListener() {
             @Override
@@ -30,7 +33,7 @@ public class OptionTable {
 
         Label volumeMusicLabel = new Label("Musica", new Label.LabelStyle(font, MyColors.BLUE));
 
-        Slider volumenMusicSlider = new Slider(0, 1, 0.01f, false, skin);
+        volumenMusicSlider = new Slider(0, 1, 0.01f, false, skin);
         volumenMusicSlider.setValue(soundManager.getVolumeMusic());
         volumenMusicSlider.addListener(new ChangeListener() {
             @Override
@@ -41,7 +44,7 @@ public class OptionTable {
 
         Label volumeSoundLabel = new Label("Sonidos", new Label.LabelStyle(font, MyColors.BLUE));
 
-        Slider volumenSoundSlider = new Slider(0, 1, 0.01f, false, skin);
+        volumenSoundSlider = new Slider(0, 1, 0.01f, false, skin);
         volumenSoundSlider.setValue(soundManager.getVolumeSound());
         volumenSoundSlider.addListener(new ChangeListener() {
             @Override
@@ -68,5 +71,12 @@ public class OptionTable {
         table.row();
         table.add(volumenSoundSlider).expandX().pad(10);
         table.row();
+    }
+
+    public void update(){
+        SoundManager soundManager = SingleSoundManager.getInstance();
+        volumeSlider.setValue(soundManager.getVolume());
+        volumenMusicSlider.setValue(soundManager.getVolumeMusic());
+        volumenSoundSlider.setValue(soundManager.getVolumeSound());
     }
 }

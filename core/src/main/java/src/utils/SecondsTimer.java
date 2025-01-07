@@ -5,8 +5,8 @@ public class SecondsTimer {
     private Float timer;
     private Boolean finished;
 
-    public SecondsTimer(Integer hours, Integer minutes, Integer seconds){
-        float time = hours * 3600 + minutes * 60 + seconds;
+    public SecondsTimer(Integer minutes, Integer seconds){
+        float time = minutes * 60 + seconds;
         saveTime = time;
         timer = time;
         finished = false;
@@ -29,6 +29,6 @@ public class SecondsTimer {
 
     @Override
     public String toString() {
-        return (int)(timer / 3600)  + ":" + (int)(timer / 60) + ":" + timer.intValue() % 60;
+        return (int)(timer / 60) + ":" + timer.intValue() % 60;
     }
 }

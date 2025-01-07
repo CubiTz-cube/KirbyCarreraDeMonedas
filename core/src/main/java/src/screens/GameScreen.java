@@ -99,6 +99,7 @@ public class GameScreen extends UIScreen {
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
     private PowerView imagePower;
+    private OptionTable optionTable;
     private Boolean menuVisible;
 
     //Sounds
@@ -127,7 +128,7 @@ public class GameScreen extends UIScreen {
         lastPosition = new Vector2();
         sendTime = 0f;
         scorePlayers = new HashMap<>();
-        timeGame = new SecondsTimer(0,5,0);
+        timeGame = new SecondsTimer(5,0);
 
         random = new Random();
         spawnMirror = new SpawnManager();
@@ -408,6 +409,7 @@ public class GameScreen extends UIScreen {
         main.closeServer();
         threadSecureWorld.addModification(() -> {
             clearAll();
+            timeGame.resetTimer();
             main.changeScreen(Main.Screens.ENDGAME);
             isLoad = false;
         });
@@ -454,16 +456,16 @@ public class GameScreen extends UIScreen {
     private void initUI(){
         layersManager = new LayersManager(stageUI, 6);
 
-        Image timeImage = new Image(main.getAssetManager().get("world/entities/coin.png", Texture.class));
+        Image timeImage = new Image(main.getAssetManager().get("ui/icons/clock.png", Texture.class));
 
-        gameTimeLabel = new Label(timeGame.toString(), new Label.LabelStyle(main.getBriFont(), null));
+        gameTimeLabel = new Label(timeGame.toString(), new Label.LabelStyle(main.getBriBorderFont(), null));
         gameTimeLabel.setAlignment(Align.left);
         gameTimeLabel.setFontScale(1);
 
         Image coinImage = new Image(main.getAssetManager().get("world/entities/coin.png", Texture.class));
         coinImage.setScaling(Scaling.fit);
 
-        odsPointsLabel = new Label("0", new Label.LabelStyle(main.getBriFont(), null));
+        odsPointsLabel = new Label("0", new Label.LabelStyle(main.getBriBorderFont(), null));
         odsPointsLabel.setAlignment(Align.left);
         odsPointsLabel.setFontScale(0.8f);
 
@@ -488,42 +490,42 @@ public class GameScreen extends UIScreen {
         stage.addActor(mirrorIndicators);
         stage.addActor(maxScoreIndicator);
 
+        layersManager.setZindex(0);
+        optionTable = new OptionTable(main.getSkin(), layersManager.getLayer(), main.getBriFont());
+        layersManager.getLayer().add(exitButton).padTop(10);
+        layersManager.getLayer().setVisible(false);
+
         layersManager.setZindex(1);
-        layersManager.getLayer().setDebug(true);
-        layersManager.getLayer().top();
-        layersManager.getLayer().add(timeImage).padRight(5);
+        layersManager.getLayer().add(pauseBg).grow();
+        layersManager.getLayer().setVisible(false);
+
+        layersManager.setZindex(2);
+        layersManager.getLayer().top().pad(10);
+        layersManager.getLayer().add(timeImage).padRight(5).size(64);
         layersManager.getLayer().add(gameTimeLabel);
         layersManager.getLayer().add().expandX();
-        layersManager.getLayer().row();
+        layersManager.getLayer().row().padTop(5);
         layersManager.getLayer().add(coinImage).padRight(5).size(48);
         layersManager.getLayer().add(odsPointsLabel).left();
 
-        layersManager.setZindex(2);
+        layersManager.setZindex(3);
         layersManager.getLayer().add(chatWidget).padTop(400).height(200).width(300).fill();
 
-        layersManager.setZindex(3);
+        layersManager.setZindex(4);
         layersManager.getLayer().bottom();
         layersManager.getLayer().add().expandX();
         layersManager.getLayer().add(imagePower).width(182).height(50).row();
 
-        layersManager.setZindex(4);
-        new OptionTable(main.getSkin(), layersManager.getLayer(), main.getBriFont());
-        layersManager.getLayer().add(exitButton).padTop(10);
-        layersManager.getLayer().setVisible(false);
-
-        layersManager.setZindex(5);
-        layersManager.getLayer().add(pauseBg).grow();
-        layersManager.getLayer().setVisible(false);
-
-        layersManager.setZindex(1);
+        layersManager.setZindex(2);
         layersManager.getLayer().setVisible(true);
     }
 
     private void setMenuVisible(Boolean visible){
         menuVisible = visible;
-        layersManager.setZindex(4);
+        optionTable.update();
+        layersManager.setZindex(0);
         layersManager.getLayer().setVisible(visible);
-        layersManager.setZindex(5);
+        layersManager.setZindex(1);
         layersManager.getLayer().setVisible(visible);
     }
 
@@ -605,7 +607,6 @@ public class GameScreen extends UIScreen {
         //debugRenderer.render(world, camera.projection.scale(6,6,1));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) setMenuVisible(!menuVisible);
-            //endGame();
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {

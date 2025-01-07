@@ -45,12 +45,6 @@ public class TiledManager {
                 float[] vertices = polygon.getVertices();
                 float x = polygon.getX();
                 float y = polygon.getY();
-                float rotation = polygon.getRotation();
-
-                // Procesar los atributos según sea necesario
-                System.out.println("Polígono encontrado con vértices: " + Arrays.toString(vertices));
-                System.out.println("Posición: (" + x + ", " + y + ")");
-                System.out.println("Rotación: " + rotation);
 
                 Vector2[] verticesVector = new Vector2[vertices.length/2];
                 for (int i = 0; i < vertices.length; i+=2) {

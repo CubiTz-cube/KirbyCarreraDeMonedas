@@ -52,7 +52,13 @@ public class BombExplosionProyectile extends Projectil{
 
     @Override
     public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
+        if (actor instanceof Projectil projectil){
+            if (projectil.getType() == Type.BOMBEXPLOSION) return;
+            if (projectil.getType() == Type.BOMB) return;
+            projectil.despawn();
+        }
         if (actor instanceof Enemy enemy){
+            if (enemy.getType() == Type.BOMBER) return;
             if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) {return;}
             game.actDamageEnemy(enemy.getId(), body, getDamage(), getDamage().floatValue());
         } else if (actor instanceof Player player) {

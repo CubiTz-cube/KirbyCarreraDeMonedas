@@ -14,6 +14,7 @@ import src.utils.sound.SingleSoundManager;
 import src.utils.sound.SoundManager;
 
 public class OptionScreen extends BlueCircleScreen {
+    private final OptionTable optionTable;;
 
     public OptionScreen(Main main) {
         super(main, "Ajustes", null, Main.Screens.MENU);
@@ -22,6 +23,12 @@ public class OptionScreen extends BlueCircleScreen {
         LayersManager layersManager = new LayersManager(stageUI, 1);
 
         layersManager.setZindex(0);
-        new OptionTable(skin, layersManager.getLayer(), main.getBriFont());
+        optionTable = new OptionTable(skin, layersManager.getLayer(), main.getBriFont());
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        optionTable.update();
     }
 }

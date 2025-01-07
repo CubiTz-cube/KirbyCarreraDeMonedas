@@ -3,10 +3,10 @@ package src.net;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.packets.Packet;
 import src.screens.GameScreen;
 import src.utils.constants.ConsoleColor;
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.SocketException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -41,7 +41,7 @@ public class Client implements Runnable{
     private ObjectInputStream in;
     private Boolean running = false;
 
-    private final ArrayList<PacketListener> listeners;
+    private final HashSet<PacketListener> listeners;
     private final ExecutorService sendThread = Executors.newSingleThreadExecutor();
     private final ConcurrentLinkedQueue<Object[]> packetQueue = new ConcurrentLinkedQueue<>();
 
@@ -54,7 +54,7 @@ public class Client implements Runnable{
 
         playersConnected = new ConcurrentHashMap<>();
         playersConnected.put(-1, new PlayerInfo(this.name, game.main.playerColor));
-        listeners = new ArrayList<>();
+        listeners = new HashSet<>();
     }
 
     public ConcurrentHashMap<Integer, PlayerInfo> getPlayersConnected() {
@@ -77,8 +77,10 @@ public class Client implements Runnable{
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
             running = true;
-        } catch (IOException e){
+        } catch (IOException | GdxRuntimeException e ){
             System.out.println("Error al conectar cliente: " + e.getMessage());
+            notifyCloseClient();
+            return;
         }
 
         int packId;
