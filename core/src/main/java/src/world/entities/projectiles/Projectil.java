@@ -34,14 +34,15 @@ public class Projectil extends Entity {
         if (actor instanceof Enemy enemy){
             if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) {despawn(); return;}
             game.actDamageEnemy(enemy.getId(), body, damage, damage.floatValue());
+            despawn();
         } else if (actor instanceof Player player) {
             if (player.getCurrentStateType() == PlayerCommon.StateType.STUN || player.isInvencible()) {despawn(); return;}
             player.coinDrop = damage;
             player.setCurrentState(Player.StateType.STUN);
             player.playSound(Player.SoundType.NORMALDAMAGE);
             Box2dUtils.knockbackBody(getBody(), body, damage);
+            despawn();
         }
-        despawn();
     }
 
     public synchronized void despawn(){

@@ -13,7 +13,6 @@ import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.enemies.sword.SwordEnemy;
 import src.world.entities.enemies.wheel.states.DamageStateWheel;
 import src.world.entities.enemies.wheel.states.IdleStateWheel;
 import src.world.entities.enemies.wheel.states.WalkStateWheel;
@@ -61,10 +60,14 @@ public class WheelEnemy extends Enemy
 
         idleAnimation = new Animation<>(0.1f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelIdle.png"), 2));
-        walkAnimation = new Animation<>(0.1f,
+
+        walkAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelWalk.png"), 3));
-        damageAnimation = new Animation<>(0.01f,
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        damageAnimation = new Animation<>(0.3f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/wheel/wheelDamage.png"), 4));
+        damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         setState(StateType.IDLE);
     }

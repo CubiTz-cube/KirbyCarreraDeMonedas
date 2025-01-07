@@ -14,6 +14,12 @@ public class IdleStateSword  extends StateEnemy<SwordEnemy>
     }
 
     @Override
+    public void start() {
+        super.start();
+        enemy.setAnimation(SwordEnemy.AnimationType.IDLE);
+    }
+
+    @Override
     public void update(Float delta) {
         if (!flip) {
             enemy.setFlipX(!enemy.getSprite().isFlipX());

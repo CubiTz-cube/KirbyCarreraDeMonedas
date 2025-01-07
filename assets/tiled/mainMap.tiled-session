@@ -77,20 +77,21 @@
                 13
             ],
             "expandedObjectLayers": [
+                18,
                 4,
                 5,
-                6,
-                7
+                7,
+                6
             ],
-            "scale": 1.5,
+            "scale": 0.25,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 1687.6666666666665,
-                "y": 1344
+                "x": 2038,
+                "y": 1380
             }
         },
         "maps/garden.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
         "maps/kirbyPrueba.tmx": {
@@ -132,25 +133,26 @@
         "maps/testMap.tmx": {
             "expandedObjectLayers": [
                 2,
-                4,
-                3
+                3,
+                4
             ],
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 480,
-                "y": 319
+                "x": 479,
+                "y": 318
             }
         },
         "maps/testMap.tmx#forest": {
             "scaleInDock": 1
         },
         "maps/village.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/dacm/Documents/CODE/KB-92/assets/background",
+    "last.externalTilesetPath": "C:/Users/dacm/Documents/CODE/KB-92/assets/tiled/maps",
+    "last.imagePath": "C:/Users/dacm/Documents/CODE/KB-92/assets/tiled/tiledSets",
     "map.height": 160,
     "map.lastUsedFormat": "tmx",
     "map.renderOrder": "2",
@@ -158,18 +160,15 @@
     "map.tileWidth": 16,
     "map.width": 240,
     "openFiles": [
-        "maps/gameMap.tmx",
-        "maps/testMap.tmx",
-        "maps/backgroundMontaint.tsx",
-        "maps/backgroundMoon.tsx"
+        "maps/gameMap.tmx"
     ],
     "project": "",
     "property.type": "color",
     "recentFiles": [
+        "maps/gameMap.tmx",
+        "maps/testMap.tmx",
         "maps/backgroundMoon.tsx",
         "maps/backgroundMontaint.tsx",
-        "maps/testMap.tmx",
-        "maps/gameMap.tmx",
         "maps/backgroundSpace.tsx",
         "maps/fondo.tsx",
         "maps/TestMap.tmx",
@@ -179,6 +178,7 @@
         "maps/village.tsx",
         "maps/garden.tsx"
     ],
+    "tileset.lastUsedFilter": "Archivos de conjuntos de patrones Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,

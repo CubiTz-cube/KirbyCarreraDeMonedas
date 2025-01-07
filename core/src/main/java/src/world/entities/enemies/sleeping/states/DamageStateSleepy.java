@@ -1,7 +1,6 @@
 package src.world.entities.enemies.sleeping.states;
 
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.SleepingEnemy;
 
 public class DamageStateSleepy extends StateEnemy<SleepingEnemy> {
@@ -18,8 +17,10 @@ public class DamageStateSleepy extends StateEnemy<SleepingEnemy> {
 
     @Override
     public void update(Float delta) {
-        enemy.setState(BasicEnemy.StateType.IDLE);
-        if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
+        if (enemy.isAnimationFinish()) {
+            enemy.setState(SleepingEnemy.StateType.IDLE);
+            if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
+        }
     }
 
     @Override

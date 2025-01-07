@@ -2,6 +2,7 @@ package src.world.entities.enemies;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
@@ -80,6 +81,22 @@ public abstract class Enemy extends Entity {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Lanza hacia donde se mira desde la pocicion del enemigo una entidad con su velocidad en X mas
+     * la velocidad del enemigo en X y Y
+     * @param type Tipo de entidad a lanzar
+     * @param impulseX Velocidad en X, se le suma la velocidad del enemigo en X
+     * @param impulseY Velocidad en Y
+     */
+    public void throwEntity(Entity.Type type, Float impulseX, Float impulseY){
+        float linearX = Math.abs(body.getLinearVelocity().x);
+        game.addEntityNoPacket(type,
+            body.getPosition().add(isFlipX() ? -1.2f : 1.2f,0),
+            new Vector2((isFlipX() ? -impulseX - linearX : impulseX + linearX),impulseY),
+            isFlipX()
+        );
     }
 
     public void takeDamage(Integer damage) {

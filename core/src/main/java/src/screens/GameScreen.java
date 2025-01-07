@@ -13,16 +13,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.net.packets.Packet;
-import src.screens.components.ChatWidget;
-import src.screens.components.LayersManager;
-import src.screens.components.PowerView;
-import src.screens.components.SpriteAsActor;
+import src.screens.components.*;
 import src.utils.*;
 import src.utils.constants.Constants;
 import src.utils.constants.PlayerControl;
@@ -97,6 +95,7 @@ public class GameScreen extends BaseScreen {
     private Label gameTimeLabel;
     private ChatWidget chatWidget;
     private PowerView imagePower;
+    private Boolean menuVisible;
 
     //Sounds
     private Sound mirrorChangeSound;
@@ -136,47 +135,10 @@ public class GameScreen extends BaseScreen {
         initSounds();
 
         debugRenderer = new Box2DDebugRenderer();
+        menuVisible = false;
 
         cameraShakeManager = new CameraShakeManager((OrthographicCamera) stage.getCamera());
         isLoad = false;
-    }
-
-    private void initUI(){
-        layersManager = new LayersManager(stageUI, 5);
-
-        odsPointsLabel = new Label("ODS POINTS\n"+0,main.getSkin());
-        odsPointsLabel.setAlignment(Align.topRight);
-        odsPointsLabel.setFontScale(2);
-
-        gameTimeLabel = new Label("Game Time\n" + timeGame, main.getSkin());
-        gameTimeLabel.setAlignment(Align.topLeft);
-        gameTimeLabel.setFontScale(2);
-
-        chatWidget = new ChatWidget(main.getSkin());
-
-        mirrorIndicators = new IndicatorManager(main.getAssetManager().get("ui/indicators/mirrorIndicator.png", Texture.class));
-        maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
-        maxScoreIndicator.setVisible(false);
-
-        imagePower = new PowerView(main.getAssetManager());
-
-        stage.addActor(mirrorIndicators);
-        stage.addActor(maxScoreIndicator);
-
-        layersManager.setZindex(0);
-        layersManager.getLayer().top();
-        layersManager.getLayer().add(gameTimeLabel);
-        layersManager.getLayer().add().expandX();
-        layersManager.getLayer().add(odsPointsLabel);
-
-        layersManager.setZindex(1);
-        //layersManager.getLayer().bottom();
-        layersManager.getLayer().add(chatWidget).padTop(400).height(200).width(300).fill();
-
-        layersManager.setZindex(2);
-        layersManager.getLayer().bottom();
-        layersManager.getLayer().add().expandX();
-        layersManager.getLayer().add(imagePower).width(182).height(50).row();
     }
 
     private void initSounds(){
@@ -247,7 +209,7 @@ public class GameScreen extends BaseScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Creando Entidad " + id);
+        System.out.println("Creando Entidad " + id + " Tipo: " + type);
         threadSecureWorld.addModification(() -> {
             Entity newEntity = entityFactory.create(type, world, position, id);
             newEntity.setFlipX(flipX);
@@ -465,6 +427,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stageUI);
         if (player != null) {
             threadSecureWorld.addModification(() -> {
                 Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
@@ -483,6 +446,64 @@ public class GameScreen extends BaseScreen {
             }
             isLoad = true;
         }
+    }
+
+    private void initUI(){
+        layersManager = new LayersManager(stageUI, 6);
+
+        odsPointsLabel = new Label("ODS POINTS\n"+0,main.getSkin());
+        odsPointsLabel.setAlignment(Align.topRight);
+        odsPointsLabel.setFontScale(2);
+
+        gameTimeLabel = new Label("Game Time\n" + timeGame, main.getSkin());
+        gameTimeLabel.setAlignment(Align.topLeft);
+        gameTimeLabel.setFontScale(2);
+
+        chatWidget = new ChatWidget(main.getSkin());
+
+        mirrorIndicators = new IndicatorManager(main.getAssetManager().get("ui/indicators/mirrorIndicator.png", Texture.class));
+        maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
+        maxScoreIndicator.setVisible(false);
+
+        imagePower = new PowerView(main.getAssetManager());
+
+        Image pauseBg = new Image(main.getAssetManager().get("ui/bg/whiteBg.png", Texture.class));
+
+        stage.addActor(mirrorIndicators);
+        stage.addActor(maxScoreIndicator);
+
+        layersManager.setZindex(1);
+        layersManager.getLayer().top();
+        layersManager.getLayer().add(gameTimeLabel);
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(odsPointsLabel);
+
+        layersManager.setZindex(2);
+        layersManager.getLayer().add(chatWidget).padTop(400).height(200).width(300).fill();
+
+        layersManager.setZindex(3);
+        layersManager.getLayer().bottom();
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(imagePower).width(182).height(50).row();
+
+        layersManager.setZindex(4);
+        new OptionTable(main.getSkin(), layersManager.getLayer(), main.getBriFont());
+        layersManager.getLayer().setVisible(false);
+
+        layersManager.setZindex(5);
+        layersManager.getLayer().add(pauseBg).grow();
+        layersManager.getLayer().setVisible(false);
+
+        layersManager.setZindex(1);
+        layersManager.getLayer().setVisible(true);
+    }
+
+    private void setMenuVisible(Boolean visible){
+        menuVisible = visible;
+        layersManager.setZindex(4);
+        layersManager.getLayer().setVisible(visible);
+        layersManager.setZindex(5);
+        layersManager.getLayer().setVisible(visible);
     }
 
     /**
@@ -560,9 +581,10 @@ public class GameScreen extends BaseScreen {
         actUI();
         stage.draw();
         stageUI.draw();
-        //debugRenderer.render(world, camera.projection.scale(6,6,1).translate(-100,-100,0));
+        //debugRenderer.render(world, camera.projection.scale(6,6,1));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) endGame();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) setMenuVisible(!menuVisible);
+            //endGame();
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {

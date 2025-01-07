@@ -23,7 +23,7 @@ public class WalkStateWheel extends StateEnemy<WheelEnemy>
     public void update(Float delta) {
         Vector2 velocity = enemy.getBody().getLinearVelocity();
         if (Math.abs(velocity.x) < enemy.speed) {
-            enemy.getBody().applyForce(enemy.getSprite().isFlipX()? -15 : 15, 0,
+            enemy.getBody().applyForce(enemy.getSprite().isFlipX()? -25 : 25, 0,
                 enemy.getBody().getWorldCenter().x, enemy.getBody().getWorldCenter().y, true);
         }
 

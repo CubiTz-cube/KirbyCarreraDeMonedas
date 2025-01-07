@@ -1,7 +1,6 @@
 package src.world.entities.enemies.wheel.states;
 
 import src.world.entities.enemies.StateEnemy;
-import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.wheel.WheelEnemy;
 
 public class DamageStateWheel extends StateEnemy<WheelEnemy>
@@ -20,7 +19,7 @@ public class DamageStateWheel extends StateEnemy<WheelEnemy>
     @Override
     public void update(Float delta) {
         if (enemy.isAnimationFinish()) {
-            enemy.setState(BasicEnemy.StateType.IDLE);
+            enemy.setState(WheelEnemy.StateType.IDLE);
             if (enemy.isDead()) enemy.game.removeEntity(enemy.getId());
         }
     }

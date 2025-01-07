@@ -25,8 +25,8 @@ public class AbsorbState extends StatePlayer{
     public void update(Float delta) {
         ArrayList<Fixture> fixtures;
 
-        if (player.getSprite().isFlipX()) fixtures = player.detectFrontFixtures(-2.5f);
-        else fixtures = player.detectFrontFixtures(2.5f);
+        if (player.getSprite().isFlipX()) fixtures = player.detectFrontFixtures(-3.5f);
+        else fixtures = player.detectFrontFixtures(3.5f);
 
         for (Fixture fix : fixtures){
             if (fix == null) continue;

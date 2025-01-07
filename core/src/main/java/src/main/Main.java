@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.Client;
@@ -18,6 +19,8 @@ import src.screens.minigames.odsPlease.OdsPleaseScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
+import src.utils.FontCreator;
+import src.utils.constants.MyColors;
 import src.utils.sound.SingleSoundManager;
 import src.utils.sound.SoundManager;
 
@@ -57,8 +60,14 @@ public class Main extends Game {
     private String ip;
     private Integer port;
 
+    private BitmapFont interFont;
+    private BitmapFont interNameFont;
+    private BitmapFont interNameFontSmall;
+    private BitmapFont briFont;
+    private BitmapFont briTitleFont;
+
     public SoundManager soundManager;
-    public enum soundTrackType {
+    public enum SoundTrackType {
         MENU,
         GAME,
     }
@@ -69,10 +78,21 @@ public class Main extends Game {
         ids = new AtomicInteger(0);
         playerColor = new Color(Color.WHITE);
 
+        initAssets();
+
+        soundManager = SingleSoundManager.getInstance();
+        soundManager.setVolumeMusic(0.0f);
+        initSounds();
+        initFonts();
+        initScreens();
+
+        changeScreen(Screens.INTRO);
+        soundManager.setSoundTracks(SoundTrackType.MENU);
+    }
+
+    private void initAssets(){
         assetManager = new AssetManager();
         assetManager.load("yoshi.jpg", Texture.class);
-        assetManager.load("yozhi.jpg", Texture.class);
-        assetManager.load("poshi.jpg", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyIdle.png", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyDamage.png", Texture.class);
         assetManager.load("world/entities/fly/flyIdle.png", Texture.class);
@@ -84,6 +104,14 @@ public class Main extends Game {
         assetManager.load("world/entities/wheel/wheelIdle.png", Texture.class);
         assetManager.load("world/entities/wheel/wheelWalk.png", Texture.class);
         assetManager.load("world/entities/wheel/wheelDamage.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonIdle.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonWalk.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonDamage.png", Texture.class);
+        assetManager.load("world/entities/dragon/dragonAttack.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombIdle.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombWalk.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombDamage.png", Texture.class);
+        assetManager.load("world/entities/bomb/bombAttack.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
@@ -103,6 +131,8 @@ public class Main extends Game {
         assetManager.load("ui/bg/menuBg.png", Texture.class);
         assetManager.load("ui/bg/kirbyBg.png", Texture.class);
         assetManager.load("ui/bg/kirbyIdleBg.png", Texture.class);
+        assetManager.load("ui/bg/aroColorPlayerBg.png", Texture.class);
+        assetManager.load("ui/bg/whiteBg.png", Texture.class);
 
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
@@ -146,6 +176,8 @@ public class Main extends Game {
         assetManager.load("world/particles/dustParticle.png", Texture.class);
         assetManager.load("world/particles/starParticle.png", Texture.class);
         assetManager.load("world/particles/swordParticle.png", Texture.class);
+        assetManager.load("world/particles/iceParticle.png", Texture.class);
+        assetManager.load("world/particles/bombParticle.png", Texture.class);
         assetManager.load("world/particles/kirbySwordParticle.png", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
@@ -216,18 +248,45 @@ public class Main extends Game {
         System.out.println("Loading assets...");
         assetManager.finishLoading();
         System.out.println("Assets loaded.");
+    }
 
-        soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.1f);
-        soundManager.addSoundTrack(soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/coffee.mp3"), soundTrackType.MENU.toString());
-        soundManager.addMusicToSoundTrack(assetManager.get("music/waiting.mp3"), soundTrackType.MENU.toString());
+    private void initFonts(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
+        briFont = FontCreator.createFont(48, Color.WHITE, generator, new FreeTypeFontGenerator.FreeTypeFontParameter());
 
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
+        interFont = FontCreator.createFont(40, Color.WHITE, generator, new FreeTypeFontGenerator.FreeTypeFontParameter());
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.borderWidth = 4;
+        parameter.borderColor = MyColors.BLUE;
+        parameter.shadowColor = MyColors.BLUE;
+        parameter.shadowOffsetX = -2;
+        parameter.shadowOffsetY = 2;
+        briTitleFont = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
+
+        generator= new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.borderWidth = 3;
+        parameter.borderColor = Color.BLACK;
+        interNameFont = FontCreator.createFont(32, MyColors.PINK, generator, parameter);
+        parameter.borderWidth = 2;
+        interNameFontSmall = FontCreator.createFont(14, MyColors.PINK, generator, parameter);
+    }
+
+    private void initSounds(){
+        soundManager.addSoundTrack(SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/coffee.mp3"), SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/waiting.mp3"), SoundTrackType.MENU);
+    }
+
+    private void initScreens(){
         screensList  = new ArrayList<>();
         screensList.add(new IntroScreen(this));
         screensList.add(new MenuScreen(this));
@@ -242,14 +301,35 @@ public class Main extends Game {
         screensList.add(new EndGameScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
+    }
 
-        changeScreen(Screens.INTRO);
-        soundManager.setSoundTracks(soundTrackType.MENU.toString());
+    public BitmapFont getBriFont() {
+        return briFont;
+    }
+
+    public BitmapFont getInterFont() {
+        return interFont;
+    }
+
+    public BitmapFont getBriTitleFont() {
+        return briTitleFont;
+    }
+
+    public BitmapFont getInterNameFont() {
+        return interNameFont;
+    }
+
+    public BitmapFont getInterNameFontSmall() {
+        return interNameFontSmall;
     }
 
     public void setName(String name) {
         if (name.isEmpty()) this.name = "Sin nombre";
         else this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setIp(String ip) {
@@ -336,5 +416,10 @@ public class Main extends Game {
             screen.dispose();
         }
         soundManager.dispose();
+        interFont.dispose();
+        interNameFont.dispose();
+        interNameFontSmall.dispose();
+        briFont.dispose();
+        briTitleFont.dispose();
     }
 }

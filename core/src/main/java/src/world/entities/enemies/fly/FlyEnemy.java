@@ -11,20 +11,21 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
+import src.world.ActorBox2d;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.enemies.fly.states.DamageStateFly;
 import src.world.entities.enemies.fly.states.WalkStateFly;
 import src.world.entities.enemies.fly.states.IdleStateFly;
 import src.world.entities.player.powers.PowerUp;
+import src.world.entities.projectiles.Projectil;
 
 public class FlyEnemy extends Enemy
 {
-
+    public Boolean flyDown;
     public enum AnimationType {
         IDLE,
         WALK,
-        DAMAGE,
-        DEAD
+        DAMAGE
     }
 
     private final Animation<TextureRegion> idleAnimation;
@@ -32,7 +33,8 @@ public class FlyEnemy extends Enemy
     private final Animation<TextureRegion> damageAnimation;
 
     public FlyEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager,id, game, Type.BASIC, PowerUp.Type.NONE,9);
+        super(world, shape, assetManager,id, game, Type.FLYBUG, PowerUp.Type.NONE,9);
+        flyDown = false;
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -57,7 +59,8 @@ public class FlyEnemy extends Enemy
         idleState = new IdleStateFly(this);
         walkState = new WalkStateFly(this);
         damageState = new DamageStateFly(this);
-        setState(StateType.IDLE);
+
+        setState(StateType.WALK);
 
         idleAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyIdle.png"), 4));
@@ -66,8 +69,9 @@ public class FlyEnemy extends Enemy
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyIdle.png"), 4));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        damageAnimation = new Animation<>(0.25f,
+        damageAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/fly/flyDamage.png"), 4));
+        damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         setCurrentAnimation(walkAnimation);
     }
@@ -84,4 +88,11 @@ public class FlyEnemy extends Enemy
         super.act(delta);
     }
 
+    @Override
+    public void beginContactWith(ActorBox2d actor, GameScreen game) {
+        super.beginContactWith(actor, game);
+        if (actor instanceof Projectil) return;
+        if (getCurrentStateType() == StateType.DAMAGE) return;
+        setState(Enemy.StateType.IDLE);
+    }
 }

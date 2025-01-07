@@ -15,19 +15,14 @@ public class IdleStateFly extends StateEnemy<FlyEnemy> {
     @Override
     public void start() {
         super.start();
-        enemy.setAnimation(FlyEnemy.AnimationType.IDLE);
+        enemy.getBody().setLinearVelocity(0,0);
+        enemy.flyDown = !enemy.flyDown;
+        enemy.getBody().setGravityScale(0);
     }
 
     @Override
     public void update(Float delta) {
-        if (enemy.getActCrono() > 1 && !flip) {
-            enemy.setFlipX(!enemy.getSprite().isFlipX());
-            flip = true;
-        }
-
-        if (enemy.getActCrono() > 0.1f) {
-            enemy.setState(Enemy.StateType.WALK);
-        }
+        enemy.setState(Enemy.StateType.WALK);
     }
 
     @Override

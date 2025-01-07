@@ -11,7 +11,6 @@ import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sword.states.AttackStateSword;
 import src.world.entities.enemies.sword.states.DamageStateSword;
 import src.world.entities.enemies.sword.states.IdleStateSword;
@@ -62,12 +61,17 @@ public class SwordEnemy extends Enemy
         damageState = new DamageStateSword(this);
         setState(StateType.IDLE);
 
-        idleAnimation = new Animation<>(0.1f,
+        idleAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
-        walkAnimation = new Animation<>(0.1f,
+
+        walkAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyWalk.png"), 8));
-        damageAnimation = new Animation<>(0.01f,
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        damageAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyDamage.png"), 5));
+        damageAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
         attackAnimation = new Animation<>(0.1f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/sword/swordEnemyAttack.png"), 6));
     }

@@ -21,9 +21,6 @@ import src.utils.constants.MyColors;
 public abstract class UIScreen extends BaseScreen {
     protected final Stage stageUI;
 
-    protected final BitmapFont fontBri;
-    protected final BitmapFont fontInter;
-
     ImageTextButton.ImageTextButtonStyle myImageTextbuttonStyle;
     TextField.TextFieldStyle myTextFieldStyle;
 
@@ -32,25 +29,19 @@ public abstract class UIScreen extends BaseScreen {
         Skin skin = main.getSkin();
         stageUI = new Stage(new ScreenViewport());
 
-        FreeTypeFontGenerator generatorBri = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        fontBri = FontCreator.createFont(48, Color.WHITE, generatorBri, new FreeTypeFontGenerator.FreeTypeFontParameter());
-
-        FreeTypeFontGenerator generatorInter = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
-        fontInter = FontCreator.createFont(40, Color.WHITE, generatorInter, new FreeTypeFontGenerator.FreeTypeFontParameter());
-
         TextureRegionDrawable drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/button.png", Texture.class));
         TextureRegionDrawable drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/buttonHover.png", Texture.class));
 
         myImageTextbuttonStyle = new ImageTextButton.ImageTextButtonStyle();
         myImageTextbuttonStyle.up = drawableUp;
-        myImageTextbuttonStyle.font = fontBri;
+        myImageTextbuttonStyle.font = main.getBriFont();
         myImageTextbuttonStyle.over = drawableHover;
         myImageTextbuttonStyle.overFontColor = MyColors.BLUE;
 
         Drawable drawableBg = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/input.png", Texture.class));
 
         myTextFieldStyle = new TextField.TextFieldStyle();
-        myTextFieldStyle.font = fontInter;
+        myTextFieldStyle.font = main.getInterFont();
         myTextFieldStyle.fontColor = MyColors.BLUE;
         myTextFieldStyle.background = drawableBg;
         myTextFieldStyle.cursor = skin.getDrawable("textFieldCursor");
@@ -84,7 +75,5 @@ public abstract class UIScreen extends BaseScreen {
     @Override
     public void dispose() {
         stageUI.dispose();
-        fontBri.dispose();
-        fontInter.dispose();
     }
 }

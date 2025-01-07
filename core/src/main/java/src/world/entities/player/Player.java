@@ -281,6 +281,13 @@ public class Player extends PlayerCommon {
         else setCurrentState(Player.StateType.STAR);
     }
 
+    /**
+     * Lanza hacia donde se mira desde la pocicion del enemigo una entidad con su velocidad en X mas
+     * la velocidad del enemigo en X y Y
+     * @param type Tipo de entidad a lanzar
+     * @param impulseX Velocidad en X, se le suma la velocidad del enemigo en X
+     * @param impulseY Velocidad en Y
+     */
     public void throwEntity(Entity.Type type, Float impulseX, Float impulseY){
         float linearX = Math.abs(body.getLinearVelocity().x);
         game.addEntity(type,

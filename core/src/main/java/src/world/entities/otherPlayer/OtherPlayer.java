@@ -10,30 +10,28 @@ import src.world.entities.player.PlayerCommon;
 
 public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
     private final String name;
-    private final BitmapFont font;
     private final GlyphLayout layout;
+    private final BitmapFont font;
 
-    private final Fixture sensorFixture;
-
-    public OtherPlayer(World world, AssetManager assetManager, Float x, Float y, Integer id, String name){
+    public OtherPlayer(World world, AssetManager assetManager, Float x, Float y, Integer id, String name, BitmapFont font) {
         super(world, x,y, assetManager,id);
+        this.font = font;
         this.name = name;
-        this.font = assetManager.get("ui/default.fnt", BitmapFont.class);
         this.layout = new GlyphLayout();
 
         Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.OTHERPLAYER;
-        filter.maskBits = (short)~CollisionFilters.PLAYER;
+        filter.maskBits = (short)(~CollisionFilters.PLAYER & ~CollisionFilters.PROJECTIL);
         fixture.setFilterData(filter);
 
-        PolygonShape sensorShape = new PolygonShape();
+        CircleShape sensorShape = new CircleShape();
         sensorShape.setRadius(bodyWidth/6);
 
         FixtureDef sensorFixtureDef = new FixtureDef();
         sensorFixtureDef.shape = sensorShape;
         sensorFixtureDef.isSensor = true;
 
-        sensorFixture = body.createFixture(sensorFixtureDef);
+        Fixture sensorFixture = body.createFixture(sensorFixtureDef);
         sensorFixture.setUserData(this);
         sensorShape.dispose();
     }
@@ -56,8 +54,9 @@ public class OtherPlayer extends PlayerCommon implements NoAutoPacketEntity {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
         layout.setText(font, name);
-        font.draw(batch, layout, getX() - layout.width / 4, getY() + sprite.getHeight() + layout.height/4);
+        float textX = getX() + (sprite.getWidth() - layout.width) / 2;
+        float textY = getY() + sprite.getHeight()/2 + layout.height / 2;
+        font.draw(batch, layout, textX, textY);
     }
 }

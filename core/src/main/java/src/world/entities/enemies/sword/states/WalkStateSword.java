@@ -32,10 +32,6 @@ public class WalkStateSword extends StateEnemy<SwordEnemy>
         if (enemy.getActCrono() > 1.5f){
             enemy.setState(Enemy.StateType.ATTACK);
         }
-
-        if (enemy.getActCrono() > 3) {
-            enemy.setState(Enemy.StateType.IDLE);
-        }
     }
 
     @Override

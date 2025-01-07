@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -13,18 +14,15 @@ import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
 import src.world.ActorBox2d;
 
-public class Cloud extends Projectil {
-    private Float timeDespawn;
+public class BombProyectile extends Projectil {
 
-    public Cloud(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
-        super(world, shape, assetManager, id, Type.CLOUD, game, 3);
-        timeDespawn = 0f;
+    public BombProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+        super(world, shape, assetManager, id, Type.BOMB, game, 0);
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
-        body.setGravityScale(0);
 
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width / 4, shape.height / 4);
@@ -40,22 +38,21 @@ public class Cloud extends Projectil {
         filter.maskBits = (short)~CollisionFilters.ITEM;
         fixture.setFilterData(filter);
 
-        Animation<TextureRegion> cloudAnimation = new Animation<>(0.06f,
+        Animation<TextureRegion> bombAnimation = new Animation<>(0.2f,
             SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 8));
-        setCurrentAnimation(cloudAnimation);
-    }
-
-    @Override
-    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
-        super.beginContactWith(actor, game);
-        despawn();
+        setCurrentAnimation(bombAnimation);
     }
 
     @Override
     public void act(float delta) {
-        timeDespawn += delta;
-        if (timeDespawn > 0.5f) {
+        if (isAnimationFinish()) {
+            game.addEntityNoPacket(Type.BOMBEXPLOSION, body.getPosition().add(-5.5f, -5.5f),new Vector2(0,0), false);
             despawn();
         }
+    }
+
+    @Override
+    public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
+
     }
 }

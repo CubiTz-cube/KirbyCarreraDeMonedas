@@ -17,7 +17,7 @@ public class IdleStateSleepy extends StateEnemy<SleepingEnemy>
     }
     @Override
     public void update(Float delta) {
-
+        //Dormir
     }
 
     @Override

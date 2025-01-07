@@ -114,7 +114,7 @@ public class Client implements Runnable{
                         packId = (Integer) pack[1];
                         String name = (String) pack[2];
                         playersConnected.put(packId, new PlayerInfo(name, new Color(Color.WHITE)));
-                        game.addActor(new OtherPlayer(game.getWorld(), game.main.getAssetManager(), 0f, 10f, packId, name));
+                        game.addActor(new OtherPlayer(game.getWorld(), game.main.getAssetManager(), 0f, 10f, packId, name, game.main.getInterNameFontSmall()));
                         send(Packet.actEntityColor(-1, game.main.playerColor.r, game.main.playerColor.g, game.main.playerColor.b, game.main.playerColor.a));
                         break;
 

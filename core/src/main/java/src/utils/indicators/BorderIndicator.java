@@ -40,10 +40,18 @@ public class BorderIndicator extends Actor{
     @Override
     public void act(float delta) {
         Vector2 direction = new Vector2(targetPosition.scl(PIXELS_IN_METER)).sub(centerPosition).nor();
+        float distanceScreen = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 2f - getWidth() / 2f;
 
-        float distance = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()) / 2f - getWidth() / 2f;
-        setPosition(centerPosition.x + direction.x * distance - getWidth() / 2f,
-            centerPosition.y + direction.y * distance - getHeight() / 2f);
+        float distance = centerPosition.dst(targetPosition);
+        float scaleFactor = 0.6f + 1.2f * (1.0f - Math.min(distance / 4000, 1.0f));
+
+        sprite.setSize(PIXELS_IN_METER * scaleFactor, PIXELS_IN_METER * scaleFactor);
+
+        if (distance < distanceScreen) sprite.setAlpha(0);
+        else sprite.setAlpha(1.0f);
+
+        setPosition(centerPosition.x + direction.x * distanceScreen - getWidth() / 2f,
+            centerPosition.y + direction.y * distanceScreen - getHeight() / 2f);
     }
 
     @Override
