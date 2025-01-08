@@ -123,13 +123,13 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
         sendTime = 0f;
         scorePlayers = new HashMap<>();
-        timeGame = new SecondsTimer(5,0);
+        timeGame = new SecondsTimer(0,10);
 
         random = new Random();
         spawnMirror = new SpawnManager();
@@ -535,6 +535,7 @@ public class GameScreen extends UIScreen {
      * @param delta Tiempo en segundos desde el ultimo renderizado.
      */
     public void actLogic(float delta){
+        if (timeGame.isFinished()) endGame();
         if (main.client != null){
             sendTime += delta;
 
