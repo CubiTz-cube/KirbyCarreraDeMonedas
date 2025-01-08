@@ -119,6 +119,7 @@ public class Main extends Game {
         assetManager.load("ui/indicators/mirrorIndicator.png", Texture.class);
         assetManager.load("ui/icons/powerIcons.png", Texture.class);
         assetManager.load("ui/icons/clock.png", Texture.class);
+        assetManager.load("ui/icons/coinIcon.png", Texture.class);
         assetManager.load("ui/buttons/info.png", Texture.class);
         assetManager.load("ui/buttons/infoHover.png", Texture.class);
         assetManager.load("ui/buttons/exit.png", Texture.class);
