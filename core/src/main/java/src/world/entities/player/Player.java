@@ -57,6 +57,7 @@ public class Player extends PlayerCommon {
         ABSORB2,
         DASH,
         FIREDAMAGE,
+        ICEDAMAGE,
         NORMALDAMAGE,
         HEAVYFALL,
         ITEM,
@@ -73,6 +74,7 @@ public class Player extends PlayerCommon {
     private Sound absorb2Sound;
     private Sound dashSound;
     private Sound fireDamageSound;
+    private Sound iceDamageSound;
     private Sound normalDamageSound;
     private Sound heavyFallSound;
     private Sound itemSound;
@@ -129,6 +131,7 @@ public class Player extends PlayerCommon {
         absorb2Sound = assetManager.get("sound/kirby/kirbyAbsorb2.wav");
         dashSound = assetManager.get("sound/kirby/kirbyDash.wav");
         fireDamageSound = assetManager.get("sound/kirby/kirbyFireDamage.wav");
+        iceDamageSound = assetManager.get("sound/kirby/kirbyIceDamage.wav");
         normalDamageSound = assetManager.get("sound/kirby/kirbyNormalDamage.wav");
         heavyFallSound = assetManager.get("sound/kirby/kirbyHeavyFall.wav");
         itemSound = assetManager.get("sound/kirby/kirbyItem.wav");
@@ -171,6 +174,29 @@ public class Player extends PlayerCommon {
         super.setColor(color);
         if (game != null) game.sendPacket(Packet.actEntityColor(-1, getColor().r, getColor().g, getColor().b, getColor().a));
     }
+
+    public void playSound(SoundType type){
+        SoundManager soundManager = SingleSoundManager.getInstance();
+        switch (type){
+            case AIRSHOT -> soundManager.playSound(airShotSound, 0.9f);
+            case ABSORB1 -> soundManager.playSound(absorb1Sound, 1f);
+            case ABSORB2 -> soundManager.playSound(absorb2Sound, 1f);
+            case DASH -> soundManager.playSound(dashSound, 1f);
+            case FIREDAMAGE -> soundManager.playSound(fireDamageSound, 1f);
+            case ICEDAMAGE -> soundManager.playSound(iceDamageSound, 1f);
+            case NORMALDAMAGE -> soundManager.playSound(normalDamageSound, 1f);
+            case HEAVYFALL -> soundManager.playSound(heavyFallSound, 1f);
+            case ITEM -> soundManager.playSound(itemSound, 1f);
+            case JUMP -> soundManager.playSound(jumpSound, 1f);
+            case POWER -> soundManager.playSound(powerSound, 1f);
+            case SCORE1 -> soundManager.playSound(score1Sound, 1f);
+            case COIN -> soundManager.playSound(coinSound, 1f);
+            case SLEEP -> soundManager.playSound(sleepSound, 1f);
+            case STAR -> soundManager.playSound(starSound, 1f);
+            case REMOVESELECT -> soundManager.playSound(removeSelectSound, 1f);
+        }
+    }
+
 
     public void setInvencible(Float time) {
         invencible = true;
@@ -315,27 +341,6 @@ public class Player extends PlayerCommon {
             impulseVector,
             direction == ThrowDirection.LEFT
         );
-    }
-
-    public void playSound(SoundType type){
-        SoundManager soundManager = SingleSoundManager.getInstance();
-        switch (type){
-            case AIRSHOT -> soundManager.playSound(airShotSound, 0.9f);
-            case ABSORB1 -> soundManager.playSound(absorb1Sound, 1f);
-            case ABSORB2 -> soundManager.playSound(absorb2Sound, 1f);
-            case DASH -> soundManager.playSound(dashSound, 1f);
-            case FIREDAMAGE -> soundManager.playSound(fireDamageSound, 1f);
-            case NORMALDAMAGE -> soundManager.playSound(normalDamageSound, 1f);
-            case HEAVYFALL -> soundManager.playSound(heavyFallSound, 1f);
-            case ITEM -> soundManager.playSound(itemSound, 1f);
-            case JUMP -> soundManager.playSound(jumpSound, 1f);
-            case POWER -> soundManager.playSound(powerSound, 1f);
-            case SCORE1 -> soundManager.playSound(score1Sound, 1f);
-            case COIN -> soundManager.playSound(coinSound, 1f);
-            case SLEEP -> soundManager.playSound(sleepSound, 1f);
-            case STAR -> soundManager.playSound(starSound, 1f);
-            case REMOVESELECT -> soundManager.playSound(removeSelectSound, 1f);
-        }
     }
 
     @Override

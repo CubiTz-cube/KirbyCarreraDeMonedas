@@ -241,6 +241,7 @@ public class Main extends Game {
         assetManager.load("sound/kirby/kirbyAbsorb2.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyDash.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyFireDamage.wav", Sound.class);
+        assetManager.load("sound/kirby/kirbyIceDamage.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyHeavyFall.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyJump.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyNormalDamage.wav", Sound.class);
@@ -249,6 +250,10 @@ public class Main extends Game {
         assetManager.load("sound/kirby/kirbySleep.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyStar.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyRemovePower.wav", Sound.class);
+        assetManager.load("sound/ui/click.wav", Sound.class);
+        assetManager.load("sound/ui/hover.wav", Sound.class);
+        assetManager.load("sound/ui/pause.wav", Sound.class);
+        assetManager.load("sound/ui/pauseExit.wav", Sound.class);
         assetManager.load("sound/coin.wav", Sound.class);
         assetManager.load("sound/explosion.wav", Sound.class);
         assetManager.load("sound/introLogo.wav", Sound.class);
