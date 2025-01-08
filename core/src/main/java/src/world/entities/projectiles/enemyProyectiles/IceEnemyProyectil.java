@@ -20,10 +20,11 @@ import src.world.entities.projectiles.Projectil;
 
 public class IceEnemyProyectil extends Projectil {
     private Float time;
-    private Sound impactSound;
+    private final Sound impactSound;
 
     public IceEnemyProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.BOMB, game, 3);
+        sprite.setTexture(assetManager.get("world/entities/ice.png"));
         time = 0f;
 
         BodyDef def = new BodyDef();
@@ -44,10 +45,6 @@ public class IceEnemyProyectil extends Projectil {
         filter.categoryBits = CollisionFilters.PROJECTIL;
         filter.maskBits = (short)(~CollisionFilters.ITEM & ~CollisionFilters.ENEMY);
         fixture.setFilterData(filter);
-
-        Animation<TextureRegion> animation = new Animation<>(0.5f,
-            SheetCutter.cutHorizontal(assetManager.get("world/particles/iceParticle.png"), 6));
-        setCurrentAnimation(animation);
 
         impactSound = assetManager.get("sound/kirby/kirbyIceDamage.wav");
     }

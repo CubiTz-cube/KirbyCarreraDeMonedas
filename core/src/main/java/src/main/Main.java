@@ -142,6 +142,7 @@ public class Main extends Game {
         assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);
         assetManager.load("world/entities/bomb.png", Texture.class);
+        assetManager.load("world/entities/ice.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyIdle.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyJump.png", Texture.class);
