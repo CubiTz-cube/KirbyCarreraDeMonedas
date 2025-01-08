@@ -9,10 +9,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.constants.CollisionFilters;
 
-public class SwordRunProyectile extends Projectil{
+public class SwordRunProyectil extends Projectil{
     private Float timeDespawn;
 
-    public SwordRunProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game) {
+    public SwordRunProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game) {
         super(world, shape, assetManager, id, type, game, 3);
         timeDespawn = 0f;
         sprite.setTexture(assetManager.get("world/particles/kirbySwordParticle.png"));

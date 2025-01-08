@@ -17,8 +17,8 @@ import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
 
-public class BombExplosionProyectile extends Projectil{
-    public BombExplosionProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+public class BombExplosionProyectil extends Projectil{
+    public BombExplosionProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.BOMBEXPLOSION, game, 10);
 
         BodyDef def = new BodyDef();

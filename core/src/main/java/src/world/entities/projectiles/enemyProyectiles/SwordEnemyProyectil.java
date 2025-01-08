@@ -7,10 +7,10 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.constants.CollisionFilters;
-import src.world.entities.projectiles.SwordProyectile;
+import src.world.entities.projectiles.SwordProyectil;
 
-public class SwordEnemyProyectile extends SwordProyectile {
-    public SwordEnemyProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game, Texture texture) {
+public class SwordEnemyProyectil extends SwordProyectil {
+    public SwordEnemyProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game, Texture texture) {
         super(world, shape, assetManager, id, type, game, texture);
 
         Filter filter = new Filter();

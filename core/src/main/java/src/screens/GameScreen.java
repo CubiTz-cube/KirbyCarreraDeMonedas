@@ -123,7 +123,7 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
@@ -670,7 +670,6 @@ public class GameScreen extends UIScreen {
 
     public void playProximitySound(Sound sound, Vector2 soundPosition, float maxDistance) {
         float distance = soundPosition.dst(player.getBody().getPosition());
-        System.out.println("Distancia " + distance);
         float volume = Math.max(0, 1 - (distance / maxDistance));
         SingleSoundManager.getInstance().playSound(sound, 1f, volume);
     }

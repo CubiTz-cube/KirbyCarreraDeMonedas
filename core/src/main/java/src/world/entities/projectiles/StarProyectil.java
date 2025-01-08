@@ -13,8 +13,8 @@ import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
 import src.world.ActorBox2d;
 
-public class StarProyectile extends Projectil{
-    public StarProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+public class StarProyectil extends Projectil{
+    public StarProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.STAR, game, 6);
 
         BodyDef def = new BodyDef();
