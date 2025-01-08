@@ -12,7 +12,7 @@
             "scaleInDock": 1
         },
         "maps/Bosque.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1.5
         },
         "maps/TestMap.tmx": {
             "expandedObjectLayers": [
@@ -77,17 +77,17 @@
                 13
             ],
             "expandedObjectLayers": [
-                18,
-                4,
                 5,
+                4,
                 7,
-                6
+                6,
+                18
             ],
-            "scale": 0.25,
-            "selectedLayer": 6,
+            "scale": 0.33,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 2038,
-                "y": 1380
+                "x": 2053.030303030303,
+                "y": 1709.090909090909
             }
         },
         "maps/garden.tsx": {
@@ -147,7 +147,7 @@
             "scaleInDock": 1
         },
         "maps/village.tsx": {
-            "scaleInDock": 2,
+            "scaleInDock": 0.75,
             "scaleInEditor": 1
         }
     },

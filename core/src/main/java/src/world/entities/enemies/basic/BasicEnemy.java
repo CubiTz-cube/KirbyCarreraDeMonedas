@@ -55,8 +55,8 @@ public class BasicEnemy extends Enemy {
             SheetCutter.cutHorizontal(assetManager.get("world/entities/basic/basicWalk.png"), 8));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
-        damageAnimation = new Animation<>(0.25f,
-            SheetCutter.cutHorizontal(assetManager.get("yoshi.jpg"), 4));
+        damageAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/basic/basicDamage.png"), 4));
 
         setCurrentAnimation(idleAnimation);
     }

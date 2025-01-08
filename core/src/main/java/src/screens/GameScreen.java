@@ -492,7 +492,7 @@ public class GameScreen extends UIScreen {
 
         layersManager.setZindex(0);
         optionTable = new OptionTable(main.getSkin(), layersManager.getLayer(), main.getBriFont());
-        layersManager.getLayer().add(exitButton).padTop(10);
+        layersManager.getLayer().add(exitButton).width(200).padTop(10);
         layersManager.getLayer().setVisible(false);
 
         layersManager.setZindex(1);

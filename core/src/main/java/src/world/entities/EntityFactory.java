@@ -48,7 +48,7 @@ public class EntityFactory {
             case SWORDPROPLAYER -> new SwordProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
             case SWORDRUNPROPLAYER -> new SwordRunProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDRUNPROPLAYER, game);
             case SWORDPROENEMY -> new SwordEnemyProyectile(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROENEMY, game, assetManager.get("world/particles/swordParticle.png"));
-            case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 0.75f, 0.75f), assetManager, id, game);
             case POWERSWORD -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.SWORD);
             case POWERWHEEL -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.WHEEL);
             case POWERBOMB -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.BOMB);

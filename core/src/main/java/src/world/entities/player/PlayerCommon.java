@@ -166,7 +166,7 @@ public abstract class PlayerCommon extends Entity {
     }
 
     private void initAnimations(AssetManager assetManager){
-        walkAnimation = new Animation<>(0.12f,
+        walkAnimation = new Animation<>(0.11f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyWalk.png"), 10));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
