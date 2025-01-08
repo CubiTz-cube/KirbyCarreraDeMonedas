@@ -1,20 +1,18 @@
 package src.world.entities.items;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import src.screens.GameScreen;
+import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
-import src.world.ActorBox2d;
-import src.world.entities.Entity;
-import src.world.statics.Lava;
 
 public class CoinOdsPoint extends Item {
 
     public CoinOdsPoint(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.COIN, game);
-        sprite.setTexture(assetManager.get("world/entities/coin.png", Texture.class));
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
@@ -32,5 +30,11 @@ public class CoinOdsPoint extends Item {
         filter.categoryBits = CollisionFilters.ITEM;
         filter.maskBits = (short)~(CollisionFilters.ENEMY | CollisionFilters.ITEM);
         fixture.setFilterData(filter);
+
+        Animation<TextureRegion> loopAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/coin.png"), 8));
+        loopAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        setCurrentAnimation(loopAnimation);
     }
 }

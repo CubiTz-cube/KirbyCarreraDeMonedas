@@ -462,7 +462,7 @@ public class GameScreen extends UIScreen {
         gameTimeLabel.setAlignment(Align.left);
         gameTimeLabel.setFontScale(1);
 
-        Image coinImage = new Image(main.getAssetManager().get("world/entities/coin.png", Texture.class));
+        Image coinImage = new Image(main.getAssetManager().get("ui/icons/coinIcon.png", Texture.class));
         coinImage.setScaling(Scaling.fit);
 
         odsPointsLabel = new Label("0", new Label.LabelStyle(main.getBriBorderFont(), null));
