@@ -63,6 +63,10 @@ public class SoundManager implements Music.OnCompletionListener {
         sound.play(volume * volumeSound, pitch, 0);
     }
 
+    public void playSound(Sound sound, Float pitch, Float volumeSound){
+        sound.play(volumeSound * volume * volumeSound, pitch, 0);
+    }
+
     public void playMusic(Music music){
         music.setVolume(0);
         music.setOnCompletionListener(this);

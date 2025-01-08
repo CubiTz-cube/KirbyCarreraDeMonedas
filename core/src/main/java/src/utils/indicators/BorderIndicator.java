@@ -59,7 +59,6 @@ public class BorderIndicator extends Actor{
         float posY = centerPosition.y + direction.y * distanceScreen - getHeight() / 2f;
 
         setPosition(posX, posY);
-        System.out.println(distanceScreen + " posX: " + posX + " posY: " + posY);
     }
 
     @Override

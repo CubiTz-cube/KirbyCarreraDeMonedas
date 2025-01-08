@@ -1,6 +1,7 @@
 package src.world.entities.projectiles;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,9 +13,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
+import src.utils.sound.SingleSoundManager;
 import src.world.ActorBox2d;
 
 public class BombProyectile extends Projectil {
+    private final Sound explosionSound;
 
     public BombProyectile(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.BOMB, game, 0);
@@ -39,14 +42,18 @@ public class BombProyectile extends Projectil {
         fixture.setFilterData(filter);
 
         Animation<TextureRegion> bombAnimation = new Animation<>(0.2f,
-            SheetCutter.cutHorizontal(assetManager.get("world/particles/cloudParticle.png"), 8));
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/bomb.png"), 8));
         setCurrentAnimation(bombAnimation);
+
+        explosionSound = assetManager.get("sound/explosion.wav");
     }
 
     @Override
     public void act(float delta) {
         if (isAnimationFinish()) {
-            game.addEntityNoPacket(Type.BOMBEXPLOSION, body.getPosition().add(-5.5f, -5.5f),new Vector2(0,0), false);
+            game.addEntityNoPacket(Type.BOMBEXPLOSION, new Vector2(body.getPosition()).add(-5.5f, -5.5f),new Vector2(0,0), false);
+            game.playProximitySound(explosionSound, body.getPosition(), 50f);
+            game.addCameraShakeProximity(body.getPosition(), 50f, 0.5f, 10);
             despawn();
         }
     }

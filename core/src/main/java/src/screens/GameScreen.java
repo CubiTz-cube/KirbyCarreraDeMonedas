@@ -35,6 +35,7 @@ import src.utils.constants.ConsoleColor;
 import src.utils.managers.CameraShakeManager;
 import src.utils.managers.SpawnManager;
 import src.utils.managers.TiledManager;
+import src.utils.sound.SingleSoundManager;
 import src.world.ActorBox2d;
 import src.world.entities.Entity;
 import src.world.entities.EntityFactory;
@@ -122,7 +123,7 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
@@ -658,10 +659,6 @@ public class GameScreen extends UIScreen {
         if (main.client != null) main.client.send(packet);
     }
 
-    public void addCameraShake(Float time, Float force){
-        cameraShakeManager.addShake(time,force);
-    }
-
     public void respawnEnemy(){
         for (Entity e: entities.values()){
             if (e instanceof Enemy){
@@ -669,6 +666,23 @@ public class GameScreen extends UIScreen {
             }
         }
         tiledManager.makeEnemy();
+    }
+
+    public void playProximitySound(Sound sound, Vector2 soundPosition, float maxDistance) {
+        float distance = soundPosition.dst(player.getBody().getPosition());
+        System.out.println("Distancia " + distance);
+        float volume = Math.max(0, 1 - (distance / maxDistance));
+        SingleSoundManager.getInstance().playSound(sound, 1f, volume);
+    }
+
+    public void addCameraShake(Float time, Float force){
+        cameraShakeManager.addShake(time,force);
+    }
+
+    public void addCameraShakeProximity(Vector2 position, float maxDistance, float time, float maxForce) {
+        float distance = position.dst(player.getBody().getPosition());
+        float force = Math.max(0, 1 - (distance / maxDistance));
+        cameraShakeManager.addShake(time, maxForce * force);
     }
 
     @Override

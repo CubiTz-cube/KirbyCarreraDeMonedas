@@ -8,9 +8,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import src.screens.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
+import src.utils.sound.SingleSoundManager;
 
 public class CoinOdsPoint extends Item {
-
     public CoinOdsPoint(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.COIN, game);
 

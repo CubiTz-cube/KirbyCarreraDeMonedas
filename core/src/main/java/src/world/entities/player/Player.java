@@ -135,7 +135,7 @@ public class Player extends PlayerCommon {
         jumpSound = assetManager.get("sound/kirby/kirbyJump.wav");
         powerSound = assetManager.get("sound/kirby/kirbyPower.wav");
         score1Sound = assetManager.get("sound/kirby/kirbyScore1.wav");
-        coinSound = new SoundPicthUp(assetManager.get("sound/kirby/kirbyScore2.wav"), 0.1f, 2f);
+        coinSound = new SoundPicthUp(assetManager.get("sound/coin.wav"), 0.1f, 2f);
         sleepSound = assetManager.get("sound/kirby/kirbySleep.wav");
         starSound = assetManager.get("sound/kirby/kirbyStar.wav");
         removeSelectSound = assetManager.get("sound/kirby/kirbyRemovePower.wav");

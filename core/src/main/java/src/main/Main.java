@@ -141,6 +141,7 @@ public class Main extends Game {
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);
+        assetManager.load("world/entities/bomb.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyWalk.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyIdle.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyJump.png", Texture.class);
@@ -242,11 +243,11 @@ public class Main extends Game {
         assetManager.load("sound/kirby/kirbyNormalDamage.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyPower.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyScore1.wav", Sound.class);
-        assetManager.load("sound/kirby/kirbyScore2.wav", Sound.class);
         assetManager.load("sound/kirby/kirbySleep.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyStar.wav", Sound.class);
         assetManager.load("sound/kirby/kirbyRemovePower.wav", Sound.class);
-        assetManager.load("sound/bomb.wav", Sound.class);
+        assetManager.load("sound/coin.wav", Sound.class);
+        assetManager.load("sound/explosion.wav", Sound.class);
         assetManager.load("sound/introLogo.wav", Sound.class);
         assetManager.load("sound/portalChange.wav", Sound.class);
         assetManager.load("sound/enemy/enemyDamage.wav", Sound.class);
