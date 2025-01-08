@@ -428,7 +428,12 @@ public class Main extends Game {
 
     @Override
     public void render() {
-        super.render();
+        try{
+            super.render();
+        }catch (GdxRuntimeException e){
+            System.out.println(e.getMessage());
+            dispose();
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package src.world.entities.enemies;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Filter;
@@ -36,6 +37,9 @@ public abstract class Enemy extends Entity {
     public Float speed;
     private Integer live;
 
+    private Sound damageSound;
+    private Sound deadSound;
+
     public Enemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game, Type type, PowerUp.Type powerUp, Integer live) {
         super(world, shape, assetManager,id, type);
         this.game = game;
@@ -46,6 +50,9 @@ public abstract class Enemy extends Entity {
         speed = 3f;
         changeState = false;
         this.live = live;
+
+        damageSound = assetManager.get("sound/enemy/enemyDamage.wav");
+        deadSound = assetManager.get("sound/enemy/enemyDead.wav");
     }
 
     public void setActCrono(Float actCrono) {
@@ -101,6 +108,8 @@ public abstract class Enemy extends Entity {
 
     public void takeDamage(Integer damage) {
         live -= damage;
+        if (live > 0) game.playProximitySound(damageSound, body.getPosition(),30);
+        else game.playProximitySound(deadSound, body.getPosition(),30);
         setState(StateType.DAMAGE);
     }
 
