@@ -69,7 +69,7 @@ public abstract class MinigameScreen extends UIScreen {
         super.show();
         this.initialX = stageUI.getCamera().position.x;
         this.initialY = stageUI.getCamera().position.y;
-        timeStart = 3f;
+        timeStart = 5f;
         timeGame = 20f;
         gameStarted = false;
         frontTable.setVisible(true);

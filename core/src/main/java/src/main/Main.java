@@ -67,7 +67,7 @@ public class Main extends Game {
     private BitmapFont briTitleFont;
     private BitmapFont briBorderFont;
 
-    public SoundManager soundManager;
+    private SoundManager soundManager;
     public enum SoundTrackType {
         MENU,
         GAME,

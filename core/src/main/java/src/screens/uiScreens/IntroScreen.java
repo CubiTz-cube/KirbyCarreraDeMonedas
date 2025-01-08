@@ -9,15 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import src.main.Main;
+import src.utils.sound.SingleSoundManager;
+import src.utils.sound.SoundManager;
 
 public class IntroScreen extends UIScreen {
     private Float time, alpha;
     private final Image logo;
+    private Boolean soundPlayed;
 
     public IntroScreen(Main main) {
         super(main);
         time = 0f;
         alpha = -0.1f;
+        soundPlayed = false;
 
         Table table = new Table();
         table.setFillParent(true);
@@ -31,9 +35,16 @@ public class IntroScreen extends UIScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        SoundManager soundManager = SingleSoundManager.getInstance();
         time += delta;
-        alpha += delta / 6;
+        alpha += delta / 5;
+
         if (alpha > 1f) alpha = 1f;
+
+        if (alpha >= 1f && !soundPlayed){
+            soundManager.playSound(main.getAssetManager().get("sound/introLogo.wav"), 1f);
+            soundPlayed = true;
+        }
 
         logo.setColor(1f, 1f, 1f, alpha);
 
