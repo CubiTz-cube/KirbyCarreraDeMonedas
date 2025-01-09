@@ -12,6 +12,7 @@ import src.screens.components.LayersManager;
 import src.screens.uiScreens.UIScreen;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import src.utils.constants.PlayerControl;
 import src.utils.managers.CameraShakeManager;
 
 public abstract class MinigameScreen extends UIScreen {
@@ -46,7 +47,7 @@ public abstract class MinigameScreen extends UIScreen {
         timeStartlabel = new Label("Empieza en" + timeStart, new Label.LabelStyle(main.getBriFont(), null));
         timeStartlabel.setFontScale(1.2f);
 
-        Label descriptionlabel = new Label(description, new Label.LabelStyle(main.getInterFont(), null));
+        Label descriptionlabel = new Label("Pulsa P para saltar\n" + description, new Label.LabelStyle(main.getInterFont(), null));
 
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
@@ -103,6 +104,8 @@ public abstract class MinigameScreen extends UIScreen {
         stageUI.getCamera().position.y = initialY;
         cameraShake.update(delta);
         game.actLogic(delta);
+
+        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)) timeStart = 1f;
 
         if (timeStart >= 1){
             timeStartlabel.setText("Empieza en " + timeStart.intValue());

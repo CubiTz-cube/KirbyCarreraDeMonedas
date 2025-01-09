@@ -57,6 +57,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
+import static src.utils.constants.Constants.TIME_MINUTES_GAME;
+
 public class GameScreen extends UIScreen {
     // Game
     private final Stage stage;
@@ -123,13 +125,13 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
         sendTime = 0f;
         scorePlayers = new HashMap<>();
-        timeGame = new SecondsTimer(8, 0);
+        timeGame = new SecondsTimer(TIME_MINUTES_GAME, 0);
 
         random = new Random();
         spawnMirror = new SpawnManager();
