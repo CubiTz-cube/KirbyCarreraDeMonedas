@@ -53,8 +53,7 @@ public class Player extends PlayerCommon {
 
     public enum SoundType{
         AIRSHOT,
-        ABSORB1,
-        ABSORB2,
+        ABSORB,
         DASH,
         FIREDAMAGE,
         ICEDAMAGE,
@@ -70,8 +69,7 @@ public class Player extends PlayerCommon {
         REMOVESELECT,
     }
     private Sound airShotSound;
-    private Sound absorb1Sound;
-    private Sound absorb2Sound;
+    private Sound absorbSound;
     private Sound dashSound;
     private Sound fireDamageSound;
     private Sound iceDamageSound;
@@ -127,8 +125,7 @@ public class Player extends PlayerCommon {
 
     private void initSound(){
         airShotSound = assetManager.get("sound/kirby/kirbyAirShot.wav");
-        absorb1Sound = assetManager.get("sound/kirby/kirbyAbsorb1.wav");
-        absorb2Sound = assetManager.get("sound/kirby/kirbyAbsorb2.wav");
+        absorbSound = assetManager.get("sound/kirby/kirbyAbsorb.wav");
         dashSound = assetManager.get("sound/kirby/kirbyDash.wav");
         fireDamageSound = assetManager.get("sound/kirby/kirbyFireDamage.wav");
         iceDamageSound = assetManager.get("sound/kirby/kirbyIceDamage.wav");
@@ -179,8 +176,7 @@ public class Player extends PlayerCommon {
         SoundManager soundManager = SingleSoundManager.getInstance();
         switch (type){
             case AIRSHOT -> soundManager.playSound(airShotSound, 0.9f);
-            case ABSORB1 -> soundManager.playSound(absorb1Sound, 1f);
-            case ABSORB2 -> soundManager.playSound(absorb2Sound, 1f);
+            case ABSORB -> soundManager.playSound(absorbSound, 1f);
             case DASH -> soundManager.playSound(dashSound, 1f);
             case FIREDAMAGE -> soundManager.playSound(fireDamageSound, 1f);
             case ICEDAMAGE -> soundManager.playSound(iceDamageSound, 1f);
@@ -197,6 +193,26 @@ public class Player extends PlayerCommon {
         }
     }
 
+    public void stopSound(SoundType type){
+        SoundManager soundManager = SingleSoundManager.getInstance();
+        switch (type){
+            case AIRSHOT -> airShotSound.stop();
+            case ABSORB -> absorbSound.stop();
+            case DASH -> dashSound.stop();
+            case FIREDAMAGE -> fireDamageSound.stop();
+            case ICEDAMAGE -> iceDamageSound.stop();
+            case NORMALDAMAGE -> normalDamageSound.stop();
+            case HEAVYFALL -> heavyFallSound.stop();
+            case ITEM -> itemSound.stop();
+            case JUMP -> jumpSound.stop();
+            case POWER -> powerSound.stop();
+            case SCORE1 -> score1Sound.stop();
+            case COIN -> coinSound.stop();
+            case SLEEP -> sleepSound.stop();
+            case STAR -> starSound.stop();
+            case REMOVESELECT -> removeSelectSound.stop();
+        }
+    }
 
     public void setInvencible(Float time) {
         invencible = true;
@@ -373,7 +389,6 @@ public class Player extends PlayerCommon {
             });
         } else if (actor instanceof PowerItem power){
             if (getCurrentStateType() == StateType.STUN || invencible || getCurrentStateType() != StateType.ABSORB) return;
-            playSound(SoundType.POWER);
             powerAbsorded = power.getPowerType();
             setCurrentState(Player.StateType.IDLE);
             power.despawn();

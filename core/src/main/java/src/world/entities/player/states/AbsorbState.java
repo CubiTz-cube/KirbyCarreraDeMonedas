@@ -19,6 +19,7 @@ public class AbsorbState extends StatePlayer{
     @Override
     public void start() {
         player.setAnimation(Player.AnimationType.ABSORB);
+        player.playSound(Player.SoundType.ABSORB);
     }
 
     @Override
@@ -48,6 +49,6 @@ public class AbsorbState extends StatePlayer{
 
     @Override
     public void end() {
-
+        player.stopSound(Player.SoundType.ABSORB);
     }
 }
