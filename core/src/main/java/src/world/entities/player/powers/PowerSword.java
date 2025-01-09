@@ -1,5 +1,6 @@
 package src.world.entities.player.powers;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -103,5 +104,10 @@ public class PowerSword extends PowerUp {
             case WALK -> walkSwordAnimation;
             default -> null;
         };
+    }
+
+    @Override
+    public Sound getSound(Player.SoundType type) {
+        return null;
     }
 }

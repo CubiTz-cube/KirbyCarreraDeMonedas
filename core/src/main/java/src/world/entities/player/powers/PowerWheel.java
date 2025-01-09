@@ -1,5 +1,6 @@
 package src.world.entities.player.powers;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import src.utils.animation.SheetCutter;
@@ -10,6 +11,8 @@ public class PowerWheel extends PowerUp{
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> dashAnimation;
     private final Animation<TextureRegion> idleAnimation;
+
+    private final Sound dashSound;
 
     public PowerWheel(PlayerCommon player) {
         super(player);
@@ -25,6 +28,8 @@ public class PowerWheel extends PowerUp{
         idleAnimation  = new Animation<>(1f,
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/wheel/kirbyIdleWheel.png"), 1));
         idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        dashSound = player.assetManager.get("sound/kirby/powers/kirbyWheelDash.wav");
     }
 
     @Override
@@ -77,6 +82,14 @@ public class PowerWheel extends PowerUp{
     public Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type) {
         return switch (type){
             case IDLE -> idleAnimation;
+            default -> null;
+        };
+    }
+
+    @Override
+    public Sound getSound(Player.SoundType type) {
+        return switch (type){
+            case DASH -> dashSound;
             default -> null;
         };
     }

@@ -1,5 +1,6 @@
 package src.world.entities.player.powers;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import src.world.entities.Entity;
@@ -56,6 +57,11 @@ public class PowerBomb extends PowerUp{
 
     @Override
     public Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type) {
+        return null;
+    }
+
+    @Override
+    public Sound getSound(Player.SoundType type) {
         return null;
     }
 }

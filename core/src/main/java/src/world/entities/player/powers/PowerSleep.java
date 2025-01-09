@@ -1,5 +1,6 @@
 package src.world.entities.player.powers;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import src.utils.animation.SheetCutter;
@@ -53,6 +54,11 @@ public class PowerSleep extends PowerUp {
     @Override
     public Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type) {
         if (type == PlayerCommon.AnimationType.SLEEP) return powerSleepAnimation;
+        return null;
+    }
+
+    @Override
+    public Sound getSound(Player.SoundType type) {
         return null;
     }
 }

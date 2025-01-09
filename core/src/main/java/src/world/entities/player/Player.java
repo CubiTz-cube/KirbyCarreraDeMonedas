@@ -43,7 +43,7 @@ public class Player extends PlayerCommon {
     private Float invencibleTime;
     private Boolean invencible;
 
-    private Random random;
+    private final Random random;
     public enum ThrowDirection{
         LEFT,
         RIGHT,
@@ -172,46 +172,52 @@ public class Player extends PlayerCommon {
         if (game != null) game.sendPacket(Packet.actEntityColor(-1, getColor().r, getColor().g, getColor().b, getColor().a));
     }
 
+    private Sound getSound(SoundType type){
+        return switch (type){
+            case AIRSHOT -> airShotSound;
+            case ABSORB -> absorbSound;
+            case DASH -> dashSound;
+            case FIREDAMAGE -> fireDamageSound;
+            case ICEDAMAGE -> iceDamageSound;
+            case NORMALDAMAGE -> normalDamageSound;
+            case HEAVYFALL -> heavyFallSound;
+            case ITEM -> itemSound;
+            case JUMP -> jumpSound;
+            case POWER -> powerSound;
+            case SCORE1 -> score1Sound;
+            case COIN -> coinSound;
+            case SLEEP -> sleepSound;
+            case STAR -> starSound;
+            case REMOVESELECT -> removeSelectSound;
+        };
+    }
+
     public void playSound(SoundType type){
         SoundManager soundManager = SingleSoundManager.getInstance();
-        switch (type){
-            case AIRSHOT -> soundManager.playSound(airShotSound, 0.9f);
-            case ABSORB -> soundManager.playSound(absorbSound, 1f);
-            case DASH -> soundManager.playSound(dashSound, 1f);
-            case FIREDAMAGE -> soundManager.playSound(fireDamageSound, 1f);
-            case ICEDAMAGE -> soundManager.playSound(iceDamageSound, 1f);
-            case NORMALDAMAGE -> soundManager.playSound(normalDamageSound, 1f);
-            case HEAVYFALL -> soundManager.playSound(heavyFallSound, 1f);
-            case ITEM -> soundManager.playSound(itemSound, 1f);
-            case JUMP -> soundManager.playSound(jumpSound, 1f);
-            case POWER -> soundManager.playSound(powerSound, 1f);
-            case SCORE1 -> soundManager.playSound(score1Sound, 1f);
-            case COIN -> soundManager.playSound(coinSound, 1f);
-            case SLEEP -> soundManager.playSound(sleepSound, 1f);
-            case STAR -> soundManager.playSound(starSound, 1f);
-            case REMOVESELECT -> soundManager.playSound(removeSelectSound, 1f);
+
+        if (getCurrentPowerUp() != null) {
+            Sound sound = getCurrentPowerUp().getSound(type);
+            if (sound != null) {
+                soundManager.playSound(sound, 1f);
+                return;
+            }
         }
+
+        soundManager.playSound(getSound(type), 1f);
     }
 
     public void stopSound(SoundType type){
         SoundManager soundManager = SingleSoundManager.getInstance();
-        switch (type){
-            case AIRSHOT -> airShotSound.stop();
-            case ABSORB -> absorbSound.stop();
-            case DASH -> dashSound.stop();
-            case FIREDAMAGE -> fireDamageSound.stop();
-            case ICEDAMAGE -> iceDamageSound.stop();
-            case NORMALDAMAGE -> normalDamageSound.stop();
-            case HEAVYFALL -> heavyFallSound.stop();
-            case ITEM -> itemSound.stop();
-            case JUMP -> jumpSound.stop();
-            case POWER -> powerSound.stop();
-            case SCORE1 -> score1Sound.stop();
-            case COIN -> coinSound.stop();
-            case SLEEP -> sleepSound.stop();
-            case STAR -> starSound.stop();
-            case REMOVESELECT -> removeSelectSound.stop();
+
+        if (getCurrentPowerUp() != null) {
+            Sound sound = getCurrentPowerUp().getSound(type);
+            if (sound != null) {
+                sound.stop();
+                return;
+            }
         }
+
+        getSound(type).stop();
     }
 
     public void setInvencible(Float time) {

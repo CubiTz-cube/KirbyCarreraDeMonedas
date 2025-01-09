@@ -1,5 +1,6 @@
 package src.world.entities.player.powers;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import src.world.entities.player.Player;
@@ -34,4 +35,6 @@ public abstract class PowerUp
     public abstract Animation<TextureRegion> getAnimation(PlayerCommon.AnimationType type);
 
     public abstract Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type);
+
+    public abstract Sound getSound(Player.SoundType type);
 }
