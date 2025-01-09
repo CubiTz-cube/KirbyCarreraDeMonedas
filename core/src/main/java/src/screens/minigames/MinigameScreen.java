@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import src.main.Main;
 import src.screens.GameScreen;
+import src.screens.components.LayersManager;
 import src.screens.uiScreens.UIScreen;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -22,8 +23,7 @@ public abstract class MinigameScreen extends UIScreen {
     private Float timeGame;
     private boolean gameStarted;
 
-    private final Table backTable;
-    private final Table frontTable;
+    private final LayersManager layersManager;
     private final Image background;
     private final Label timeStartlabel;
     protected final Label timeMinigameLabel;
@@ -33,7 +33,7 @@ public abstract class MinigameScreen extends UIScreen {
      * @param main
      * @param game
      */
-    public MinigameScreen(Main main, GameScreen game) {
+    public MinigameScreen(Main main, GameScreen game, String description) {
         super(main);
         this.game = game;
         timeStart = 0f;
@@ -41,23 +41,27 @@ public abstract class MinigameScreen extends UIScreen {
         gameStarted = false;
         cameraShake = new CameraShakeManager((OrthographicCamera) stageUI.getCamera());
 
-        backTable = new Table();
-        backTable.setFillParent(true);
-        frontTable = new Table();
-        frontTable.setFillParent(true);
-        stageUI.addActor(backTable);
-        stageUI.addActor(frontTable);
+        layersManager = new LayersManager(stageUI, 2);
+
+        timeStartlabel = new Label("Empieza en" + timeStart, new Label.LabelStyle(main.getBriFont(), null));
+        timeStartlabel.setFontScale(1.2f);
+
+        Label descriptionlabel = new Label(description, new Label.LabelStyle(main.getInterFont(), null));
+
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
         background.setColor(1, 0, 1, 0.5f);
-        backTable.add(background).expand().fill();
 
-        timeStartlabel = new Label("Empieza en" + timeStart, main.getSkin());
-        timeStartlabel.setFontScale(3);
+        layersManager.setZindex(0);
+        layersManager.getLayer().center();
+        layersManager.getLayer().add(timeStartlabel).expandX();
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(descriptionlabel).expandX();
+
+        layersManager.setZindex(1);
+        layersManager.getLayer().add(background).expand().fill();
 
         timeMinigameLabel = new Label("Tiempo " + timeGame.intValue(), main.getSkin());
-
-        frontTable.center().add(timeStartlabel);
     }
 
     public boolean isGameStarted() {
@@ -69,11 +73,10 @@ public abstract class MinigameScreen extends UIScreen {
         super.show();
         this.initialX = stageUI.getCamera().position.x;
         this.initialY = stageUI.getCamera().position.y;
-        timeStart = 5f;
-        timeGame = 20f;
+        timeStart = 10f;
+        timeGame = 30f;
         gameStarted = false;
-        frontTable.setVisible(true);
-        backTable.setVisible(true);
+        layersManager.setVisible(true);
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
@@ -110,8 +113,7 @@ public abstract class MinigameScreen extends UIScreen {
         } else{
             if (!gameStarted){
                 gameStarted = true;
-                frontTable.setVisible(false);
-                backTable.setVisible(false);
+                layersManager.setVisible(false);
             }
             timeMinigameLabel.setText("Tiempo " + timeGame.intValue());
             timeGame -= delta;

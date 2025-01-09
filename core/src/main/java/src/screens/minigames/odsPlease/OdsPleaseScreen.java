@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import static src.utils.constants.Constants.COIN_PER_MINIGAME;
+
 public class OdsPleaseScreen extends MinigameScreen {
     private final Integer max = 9;
 
@@ -50,7 +52,8 @@ public class OdsPleaseScreen extends MinigameScreen {
     private SpriteAsActor personImage;
 
     public OdsPleaseScreen(Main main, GameScreen game) {
-        super(main, game);
+        super(main, game, "¡No dejes pasar a los que tengan un ODS equivocado!\n" +
+            "   - Pulsa A para denegar y D para permitir el paso.");
         layersManager = new LayersManager(stageUI, 5);
         random = new Random();
         odsTextures = new ArrayList<>();
@@ -181,11 +184,17 @@ public class OdsPleaseScreen extends MinigameScreen {
         changePersonImage();
     }
 
+    @Override
+    public void endMinigame() {
+        super.endMinigame();
+        int totalPoints = (int) ((countGood / (double) (countGood + countBad)) * COIN_PER_MINIGAME);
+        game.setScore(game.getScore() + totalPoints);
+    }
+
     private void changeOdsImage() {
         countLabel.setText((countBad+countGood)+"/"+max+" Amonestaciones: " +countBad);
 
         if (countGood + countBad == max) {
-            game.setScore(game.getScore() + countGood/(max/3));
             endMinigame();
             return;
         }
@@ -196,10 +205,7 @@ public class OdsPleaseScreen extends MinigameScreen {
 
         odsReal = select >= 2;
 
-        if (countBad >= 3) {
-            game.setScore(game.getScore() + countGood/(max/3));
-            endMinigame();
-        }
+        if (countBad >= 3) endMinigame();
     }
 
     private void changePersonImage() {

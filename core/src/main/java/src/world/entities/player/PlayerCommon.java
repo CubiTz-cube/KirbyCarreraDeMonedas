@@ -129,6 +129,8 @@ public abstract class PlayerCommon extends Entity {
 
     protected float bodyWidth, bodyHeight;
 
+    private Boolean paused = false;
+
     public PlayerCommon(World world, Float x, Float y, AssetManager assetManager, Integer id) {
         super(world, new Rectangle(x,y,2.25f,2.25f), assetManager, id, null);
         bodyHeight = bodyWidth = 2.25f;
@@ -336,6 +338,10 @@ public abstract class PlayerCommon extends Entity {
         return currentpowerUptype;
     }
 
+    public void setPaused(Boolean paused) {
+        this.paused = paused;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
@@ -350,6 +356,7 @@ public abstract class PlayerCommon extends Entity {
 
     @Override
     public void act(float delta) {
+        if (paused) return;
         stateMachine.update(delta);
         if (currentPowerUp != null) currentPowerUp.update(delta);
     }

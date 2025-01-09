@@ -129,7 +129,7 @@ public class GameScreen extends UIScreen {
         lastPosition = new Vector2();
         sendTime = 0f;
         scorePlayers = new HashMap<>();
-        timeGame = new SecondsTimer(0,10);
+        timeGame = new SecondsTimer(8, 0);
 
         random = new Random();
         spawnMirror = new SpawnManager();
@@ -419,6 +419,7 @@ public class GameScreen extends UIScreen {
     public void playMinigame(){
         getPlayer().getBody().setTransform(lobbyPlayer.x, lobbyPlayer.y, 0);
         main.changeScreen(Main.Screens.MINIODSPLEASE);
+        player.setPaused(true);
        /* int select = random.nextInt(2);
 
         switch (select){
@@ -435,6 +436,7 @@ public class GameScreen extends UIScreen {
     public void show() {
         Gdx.input.setInputProcessor(stageUI);
         if (player != null) {
+            player.setPaused(false);
             threadSecureWorld.addModification(() -> {
                 Vector2 position = spawnPlayer.get(random.nextInt(spawnPlayer.size()));
                 player.getBody().setTransform(position.x, position.y, 0);
