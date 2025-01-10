@@ -57,7 +57,7 @@ public class EndGameScreen extends UIScreen{
     public void show() {
         super.show();
         layersManager.setZindex(0);
-        layersManager.getLayer().bottom().pad(10);
+        layersManager.getLayer().bottom().pad(20);
         layersManager.getLayer().add().expand(5,0);
         layersManager.getLayer().add(backButton).growX();
 
