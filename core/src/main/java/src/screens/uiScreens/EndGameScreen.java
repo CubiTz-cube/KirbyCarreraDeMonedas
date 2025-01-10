@@ -85,7 +85,7 @@ public class EndGameScreen extends UIScreen{
     @Override
     public void hide() {
         super.hide();
-        layersManager.getLayer().clear();
+        layersManager.clear();
         game.getScorePlayers().clear();
     }
 

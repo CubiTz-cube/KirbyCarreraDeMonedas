@@ -44,6 +44,12 @@ public class LayersManager {
         }
     }
 
+    public void clear() {
+        for (Table layer : layers) {
+            layer.clear();
+        }
+    }
+
     public Boolean isVisible() {
         return layers.get(0).isVisible();
     }

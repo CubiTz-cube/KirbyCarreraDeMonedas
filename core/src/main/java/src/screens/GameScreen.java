@@ -334,6 +334,8 @@ public class GameScreen extends UIScreen {
             .max(Comparator.comparingInt(s -> s.score))
             .orElse(null);
 
+        if (!isLoad) return;
+
         if (maxScorePlayer != null && maxScorePlayer.id != -1) {
             idTargetMaxScore = maxScorePlayer.id;
             maxScoreIndicator.setVisible(true);

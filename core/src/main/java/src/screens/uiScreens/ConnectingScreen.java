@@ -75,7 +75,7 @@ public class ConnectingScreen extends UIScreen  implements PacketListener {
     public void receivedPacket(Packet.Types type) {
         if (main.client.gameStart) return;
         if (type.equals(Packet.Types.ACTENTITYCOLOR)) {
-            Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.GAME));
+            Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.LOBBY));
         }
     }
 

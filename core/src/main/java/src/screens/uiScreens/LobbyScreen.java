@@ -180,11 +180,11 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     @Override
     public void receivedPacket(Packet.Types type) {
         if (type.equals(Packet.Types.GAMESTART)) {
-            main.changeScreen(Main.Screens.GAME);
+            Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.GAME));
         }
         if (main.client.gameStart) return;
         if (type.equals(Packet.Types.NEWPLAYER) || type.equals(Packet.Types.DISCONNECTPLAYER) || type.equals(Packet.Types.ACTENTITYCOLOR)) {
-            updatePlayersTable();
+            Gdx.app.postRunnable(this::updatePlayersTable);
         }
     }
 

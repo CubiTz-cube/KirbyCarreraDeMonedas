@@ -6,12 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 
 public class ChatWidget extends Table {
+    private Integer numMessages;
 
     /**
      * Crea un chat dentro de una tabla
      * @param skin skin de la tabla
      */
     public ChatWidget(Skin skin){
+        numMessages = 0;
         setSkin(skin);
         setFillParent(true);
         bottom();
@@ -22,5 +24,11 @@ public class ChatWidget extends Table {
         newLabel.setAlignment(Align.topLeft);
         newLabel.setFontScale(2);
         add(newLabel).expandX().fillX().row();
+        numMessages++;
+
+        if (numMessages > 3){
+            removeActorAt(0, true);
+            numMessages = 3;
+        }
     }
 }
