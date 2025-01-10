@@ -23,7 +23,8 @@ public class InfoScreen extends BlueCircleScreen {
             "Controles:\n" +
             "W/A/S/D Moverse\n" +
             "P Ejecutar accion\n" +
-            "Shift Correr\n\n" +
+            "Shift Correr\n" +
+            "Control-Izquierdo Soltar poder\n\n" +
             "Objetivo:\n" +
             "Al entrar en un espejo podras hacer \nun minijuego que te puede dar de 1 a 3 monedas\n" +
             "Obten la mayor cantidad de monedas \nantes de que se acabe el tiempo\n",
