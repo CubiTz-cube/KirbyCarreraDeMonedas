@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import src.screens.GameScreen;
+import src.world.entities.blocks.SwordBreakBlock;
+import src.world.entities.blocks.BombBreakBlock;
 import src.world.entities.enemies.bomb.BombEnemy;
 import src.world.entities.enemies.dragon.DragonEnemy;
 import src.world.entities.enemies.fly.FlyEnemy;
@@ -53,6 +55,8 @@ public class EntityFactory {
             case POWERWHEEL -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.WHEEL, assetManager.get("world/entities/powers/wheelPowerItem.png"), 0.2f, 2);
             case POWERBOMB -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.BOMB, assetManager.get("world/entities/powers/bombPowerItem.png"), 0.15f, 4);
             case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
+            case SWORDBREAKBLOCK -> new SwordBreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.SWORDBREAKBLOCK, game);
+            case BOMBBREAKBLOCK -> new BombBreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.BOMBBREAKBLOCK, game);
             case FALLBLOCK -> new FallBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMXR, 1,0);
             case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMXL, -1,0);
