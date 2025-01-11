@@ -37,7 +37,7 @@ public class BombEnemy extends Enemy
         super(world, shape, assetManager, id, game, Type.BOMBER, PowerUp.Type.BOMB, 15);
         sprite.setTexture(assetManager.get("world/entities/bomb/bombIdle.png", Texture.class));
         BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
+        def.position.set(shape.x + shape.width / 2, shape.y + shape.height / 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 

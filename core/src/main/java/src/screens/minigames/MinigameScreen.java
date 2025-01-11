@@ -1,6 +1,7 @@
 package src.screens.minigames;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +24,7 @@ public abstract class MinigameScreen extends UIScreen {
     private Float timeStart;
     private Float timeGame;
     private boolean gameStarted;
+    private boolean skipStart;
 
     private final LayersManager layersManager;
     private final Image background;
@@ -40,6 +42,7 @@ public abstract class MinigameScreen extends UIScreen {
         timeStart = 0f;
         timeGame = 0f;
         gameStarted = false;
+        skipStart = false;
         cameraShake = new CameraShakeManager((OrthographicCamera) stageUI.getCamera());
 
         layersManager = new LayersManager(stageUI, 2);
@@ -47,7 +50,7 @@ public abstract class MinigameScreen extends UIScreen {
         timeStartlabel = new Label("Empieza en" + timeStart, new Label.LabelStyle(main.getBriFont(), null));
         timeStartlabel.setFontScale(1.2f);
 
-        Label descriptionlabel = new Label("Pulsa P para saltar\n" + description, new Label.LabelStyle(main.getInterFont(), null));
+        Label descriptionlabel = new Label("Pulsa cualquier tecla para omitir\n" + description, new Label.LabelStyle(main.getInterFont(), null));
 
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
@@ -77,6 +80,7 @@ public abstract class MinigameScreen extends UIScreen {
         timeStart = 10f;
         timeGame = 30f;
         gameStarted = false;
+        skipStart = false;
         layersManager.setVisible(true);
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
@@ -105,7 +109,7 @@ public abstract class MinigameScreen extends UIScreen {
         cameraShake.update(delta);
         game.actLogic(delta);
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.ACTION)) timeStart = 1f;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) && !skipStart) timeStart = 0.99f; skipStart = true;
 
         if (timeStart >= 1){
             timeStartlabel.setText("Empieza en " + timeStart.intValue());

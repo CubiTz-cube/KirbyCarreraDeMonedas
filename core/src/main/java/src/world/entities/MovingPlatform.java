@@ -9,22 +9,19 @@ import src.utils.constants.CollisionFilters;
 import src.world.ActorBox2d;
 import src.world.statics.MovingPlatfromLimiter;
 
-import static src.utils.constants.Constants.PIXELS_IN_METER;
-
 public class MovingPlatform extends Entity implements NoAutoPacketEntity {
 
-    private final Filter filter;
-    private float dirx;
-    private float diry;
+    private float dirX;
+    private float dirY;
 
-    public MovingPlatform(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, float dirx, float diry) {
+    public MovingPlatform(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, float dirX, float dirY) {
         super(world, shape, assetManager, id, type);
-        this.dirx = dirx;
-        this.diry = diry;
+        this.dirX = dirX;
+        this.dirY = dirY;
         sprite.setTexture(assetManager.get("world/entities/movingPlatform.png", Texture.class));
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
+        bodyDef.position.set(shape.x + shape.width / 2, shape.y + shape.height / 2);
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         body = world.createBody(bodyDef);
 
@@ -34,24 +31,21 @@ public class MovingPlatform extends Entity implements NoAutoPacketEntity {
         fixture.setUserData(this);
         box.dispose();
 
-        setSpritePosModification(-getHeight(), -getHeight());
-
-        filter = new Filter();
+        Filter filter = new Filter();
         filter.categoryBits = CollisionFilters.MVINGPLAT;
-        //filter.maskBits = (short) (CollisionFilters.PLAYER | CollisionFilters.STATIC | CollisionFilters.ENEMY | CollisionFilters.OTHERPLAYER);
         fixture.setFilterData(filter);
     }
 
     @Override
     public void act(float delta) {
-        body.setLinearVelocity(dirx, diry);
+        body.setLinearVelocity(dirX, dirY);
     }
 
     @Override
     public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof MovingPlatfromLimiter) {
-            dirx = -dirx;
-            diry = -diry;
+            dirX = -dirX;
+            dirY = -dirY;
         }
     }
 }

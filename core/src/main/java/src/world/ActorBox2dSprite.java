@@ -19,6 +19,7 @@ public abstract class ActorBox2dSprite extends ActorBox2d{
     private Animation<TextureRegion> currentAnimation;
     private Boolean flipX;
     private final Vector2 spritePosModification;
+    private final Vector2 realActorDimension;
 
     public ActorBox2dSprite(World world, Rectangle shape, AssetManager assetManager) {
         super(world, shape);
@@ -26,6 +27,7 @@ public abstract class ActorBox2dSprite extends ActorBox2d{
         flipX = false;
         spritePosModification = new Vector2(0, 0);
         sprite = new Sprite(assetManager.get("logo.png", Texture.class));
+        realActorDimension = new Vector2(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
     }
 
@@ -63,8 +65,8 @@ public abstract class ActorBox2dSprite extends ActorBox2d{
     public void draw(Batch batch, float parentAlpha) {
         if (body == null) return;
         setPosition(
-            body.getPosition().x * PIXELS_IN_METER - (getHeight()-PIXELS_IN_METER) / 2 + spritePosModification.x,
-            body.getPosition().y * PIXELS_IN_METER - (getWidth()-PIXELS_IN_METER) / 2 + spritePosModification.y
+            body.getPosition().x * PIXELS_IN_METER - getWidth() / 2 + spritePosModification.x,
+            body.getPosition().y * PIXELS_IN_METER - getHeight() / 2 + spritePosModification.y
         );
         if (currentAnimation != null) sprite.setRegion(currentAnimation.getKeyFrame(animateTime, false));
         sprite.setFlip(flipX, false);

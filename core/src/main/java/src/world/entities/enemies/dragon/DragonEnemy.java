@@ -40,7 +40,7 @@ public class DragonEnemy extends Enemy {
         sprite.setTexture(assetManager.get("world/entities/dragon/dragonIdle.png", Texture.class));
 
         BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
+        def.position.set(shape.x + shape.width / 2, shape.y + shape.height / 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 

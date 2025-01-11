@@ -53,6 +53,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
+import static src.utils.constants.Constants.PIXELS_IN_METER;
 import static src.utils.constants.Constants.TIME_MINUTES_GAME;
 
 public class GameScreen extends UIScreen {
@@ -542,7 +543,7 @@ public class GameScreen extends UIScreen {
             sendTime += delta;
 
             Vector2 currentPosition = player.getBody().getPosition();
-            if (!currentPosition.epsilonEquals(lastPosition, 0.05f)) { // Check for significant change
+            if (!currentPosition.epsilonEquals(lastPosition, 0.05f)) {
                 sendPacket(Packet.actEntityPosition(-1,currentPosition.x, currentPosition.y));
                 lastPosition.set(currentPosition);
             }
@@ -608,7 +609,7 @@ public class GameScreen extends UIScreen {
         actUI();
         stage.draw();
         stageUI.draw();
-        //debugRenderer.render(world, camera.projection.scale(6,6,1));
+        //debugRenderer.render(world, camera.combined.scale(PIXELS_IN_METER, PIXELS_IN_METER, 1));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) setMenuVisible(!menuVisible);
 

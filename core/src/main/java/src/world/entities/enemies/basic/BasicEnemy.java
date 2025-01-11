@@ -25,7 +25,7 @@ public class BasicEnemy extends Enemy {
         super(world, shape, assetManager,id, game, Type.BASIC, PowerUp.Type.NONE,9);
 
         BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
+        def.position.set(shape.x + shape.width / 2, shape.y + shape.height / 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 

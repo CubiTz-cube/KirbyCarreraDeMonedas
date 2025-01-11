@@ -138,7 +138,7 @@ public abstract class PlayerCommon extends Entity {
         stateMachine = new StateMachine();
 
         BodyDef def = new BodyDef();
-        def.position.set(x + (bodyWidth-1) / 2, y + (bodyHeight-1)/ 2);
+        def.position.set(x + bodyWidth / 2, y + bodyHeight/ 2);
         def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 

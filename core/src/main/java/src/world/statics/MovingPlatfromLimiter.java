@@ -18,8 +18,9 @@ public class MovingPlatfromLimiter extends ActorBox2d {
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + shape.width / 2, shape.y + shape.height/ 2);
-        def.type = BodyDef.BodyType.StaticBody;
+        def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
+        body.setGravityScale(0);
 
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width / 2, shape.height / 2);
@@ -32,14 +33,5 @@ public class MovingPlatfromLimiter extends ActorBox2d {
         filter.categoryBits = CollisionFilters.STATIC;
         filter.maskBits = CollisionFilters.MVINGPLAT;
         fixture.setFilterData(filter);
-    }
-
-
-   @Override
-    public void beginContactWith(ActorBox2d actor, GameScreen game){
-        System.out.println("MovingPlatfromLimiter");
-        if (actor instanceof MovingPlatform) {
-            System.out.println("MovingPlatfromLimiter - MovingPlatform");
-        }
     }
 }

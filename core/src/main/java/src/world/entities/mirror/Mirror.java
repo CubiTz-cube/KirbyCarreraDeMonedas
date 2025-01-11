@@ -17,7 +17,7 @@ public class Mirror extends Entity implements NoAutoPacketEntity {
         super(world, shape, assetManager,id, Type.MIRROR);
 
         BodyDef def = new BodyDef();
-        def.position.set(shape.x + (shape.width-1) / 2, shape.y + (shape.height-1)/ 2);
+        def.position.set(shape.x, shape.y);
         def.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(def);
 
@@ -33,4 +33,6 @@ public class Mirror extends Entity implements NoAutoPacketEntity {
 
         setCurrentAnimation(loopAnimation);
     }
+
+
 }
