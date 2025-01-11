@@ -22,6 +22,7 @@ public abstract class ActorBox2d extends Actor {
     public ActorBox2d(World world, Rectangle shape){
         this.world = world;
         setSize(PIXELS_IN_METER * shape.width, PIXELS_IN_METER * shape.height);
+        setPosition(shape.x * PIXELS_IN_METER, shape.y * PIXELS_IN_METER);
     }
 
     public Body getBody() {

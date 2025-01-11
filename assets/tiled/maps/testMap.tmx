@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="95">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="98">
  <tileset firstgid="1" source="temple.tsx"/>
  <tileset firstgid="193" source="Bosque.tsx"/>
  <tileset firstgid="818" source="backgroundMontaint.tsx"/>
@@ -39,6 +39,8 @@
   <object id="81" name="PLATAFORM" type="PLATAFORM" x="784" y="464" width="176" height="8"/>
   <object id="82" name="PLATAFORM" type="PLATAFORM" x="784" y="525.5" width="175" height="8"/>
   <object id="83" name="PLATAFORM" type="PLATAFORM" x="784" y="400" width="176" height="8"/>
+  <object id="96" name="Limiter" type="MOVINGPLATFORMLIMITER" x="0" y="544" width="16" height="16"/>
+  <object id="97" name="Limiter" type="MOVINGPLATFORMLIMITER" x="176" y="544" width="16" height="16"/>
  </objectgroup>
  <objectgroup color="#55ffff" id="6" name="spawn">
   <object id="62" name="Espejo" type="MIRROR" x="560" y="432" width="32" height="32"/>
@@ -55,6 +57,7 @@
   <object id="77" name="fallBlock" type="FALLBLOCK" x="304" y="464" width="16" height="16"/>
   <object id="78" name="fallBlock" type="FALLBLOCK" x="320" y="464" width="16" height="16"/>
   <object id="79" name="fallBlock" type="FALLBLOCK" x="336" y="464" width="16" height="16"/>
+  <object id="95" name="Plataforma Movil" type="PLATFORMXR" x="32" y="544" width="16" height="16"/>
  </objectgroup>
  <objectgroup color="#aaffff" id="8" name="enemy">
   <object id="87" name="Enemigo Durmiente" type="SLEEPY" x="720" y="528" width="16" height="16"/>

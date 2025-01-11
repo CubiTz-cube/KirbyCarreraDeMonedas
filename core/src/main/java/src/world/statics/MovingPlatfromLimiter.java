@@ -24,21 +24,14 @@ public class MovingPlatfromLimiter extends ActorBox2d {
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width / 2, shape.height / 2);
         fixture = body.createFixture(box, 1f);
+        fixture.setUserData(this);
+        fixture.setSensor(true);
+        box.dispose();
 
         filter = new Filter();
         filter.categoryBits = CollisionFilters.STATIC;
         filter.maskBits = CollisionFilters.MVINGPLAT;
         fixture.setFilterData(filter);
-        fixture.setSensor(true);
-
-        fixture.setUserData(this);
-
-
-        box.dispose();
-
-
-        setSize( shape.width,shape.height);
-        setPosition(shape.x, shape.y);
     }
 
 

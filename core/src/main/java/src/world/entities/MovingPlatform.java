@@ -9,6 +9,8 @@ import src.utils.constants.CollisionFilters;
 import src.world.ActorBox2d;
 import src.world.statics.MovingPlatfromLimiter;
 
+import static src.utils.constants.Constants.PIXELS_IN_METER;
+
 public class MovingPlatform extends Entity implements NoAutoPacketEntity {
 
     private final Filter filter;
@@ -24,25 +26,20 @@ public class MovingPlatform extends Entity implements NoAutoPacketEntity {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
         bodyDef.type = BodyDef.BodyType.KinematicBody;
-
         body = world.createBody(bodyDef);
 
         PolygonShape box = new PolygonShape();
         box.setAsBox(shape.width / 2, shape.height / 2 );
-        Fixture fixture = body.createFixture(box, 1f);
+        fixture = body.createFixture(box, 1f);
+        fixture.setUserData(this);
         box.dispose();
+
+        setSpritePosModification(-getHeight(), -getHeight());
 
         filter = new Filter();
         filter.categoryBits = CollisionFilters.MVINGPLAT;
-        filter.maskBits = (short) (CollisionFilters.PLAYER | CollisionFilters.STATIC | CollisionFilters.ENEMY | CollisionFilters.OTHERPLAYER);
+        //filter.maskBits = (short) (CollisionFilters.PLAYER | CollisionFilters.STATIC | CollisionFilters.ENEMY | CollisionFilters.OTHERPLAYER);
         fixture.setFilterData(filter);
-
-
-        fixture.setUserData(this);
-
-
-        setSize(shape.width,shape.height);
-        setPosition(shape.x, shape.y);
     }
 
     @Override
