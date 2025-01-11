@@ -140,6 +140,7 @@ public class Main extends Game {
 
         assetManager.load("background/backgroundBeach.png", Texture.class);
         assetManager.load("world/entities/breakBlock.png", Texture.class);
+        assetManager.load("world/entities/movingPlatform.png", Texture.class);
         assetManager.load("world/entities/coin.png", Texture.class);
         assetManager.load("world/entities/bomb.png", Texture.class);
         assetManager.load("world/entities/ice.png", Texture.class);
