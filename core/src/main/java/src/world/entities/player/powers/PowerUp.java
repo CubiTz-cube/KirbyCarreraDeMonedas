@@ -32,9 +32,24 @@ public abstract class PowerUp
 
     public abstract void update(Float delta);
 
+    /**
+     * Cambia la animacion por colocarse en la capa BASE por la que devuelvas. Si se devuelve NULL se mantiene la original
+     * @param type El tipo de animacion que se esta por colocar
+     * @return Animation<TextureRegion> Animacion sobrepuesta
+     */
     public abstract Animation<TextureRegion> getAnimation(PlayerCommon.AnimationType type);
 
+    /**
+     * Cambia la animacion por colocarse en la capa SUPERIOR por la que devuelvas. Si se devuelve NULL se mantiene la original
+     * @param type El tipo de animacion que se esta por colocar
+     * @return Animation<TextureRegion> Animacion sobrepuesta
+     */
     public abstract Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type);
 
+    /**
+     * Cambia el sonido que se esta por reproducir devuelvas. Si se devuelve NULL se mantiene el original
+     * @param type El tipo de sonido que se esta por colocar
+     * @return Sound Sonido sobrepuesto
+     */
     public abstract Sound getSound(Player.SoundType type);
 }
