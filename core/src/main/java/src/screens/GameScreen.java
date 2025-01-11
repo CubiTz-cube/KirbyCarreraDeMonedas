@@ -122,7 +122,7 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
@@ -609,7 +609,7 @@ public class GameScreen extends UIScreen {
         actUI();
         stage.draw();
         stageUI.draw();
-        debugRenderer.render(world, camera.combined.scale(PIXELS_IN_METER, PIXELS_IN_METER, 1));
+        //debugRenderer.render(world, camera.combined.scale(PIXELS_IN_METER, PIXELS_IN_METER, 1));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) setMenuVisible(!menuVisible);
 
