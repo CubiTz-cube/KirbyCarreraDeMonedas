@@ -3,43 +3,58 @@ package src.world.entities;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import src.screens.GameScreen;
+import src.utils.constants.CollisionFilters;
 import src.world.ActorBox2d;
 import src.world.statics.MovingPlatfromLimiter;
 
-import static src.utils.constants.Constants.PIXELS_IN_METER;
-
 public class MovingPlatform extends Entity implements NoAutoPacketEntity {
 
-    public MovingPlatform(World world, Rectangle shape, AssetManager assetManager, Integer id,Type type, Vector2 impulso) {
-        super(world, shape, assetManager,id, type);
-        sprite.setTexture(assetManager.get("world/entities/breakBlock.png", Texture.class));
+    private final Filter filter;
+    private float dirx;
+    private float diry;
+
+    public MovingPlatform(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, float dirx, float diry) {
+        super(world, shape, assetManager, id, type);
+        this.dirx = dirx;
+        this.diry = diry;
+        sprite.setTexture(assetManager.get("world/entities/movingPlatform.png", Texture.class));
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(shape.x, shape.y);
-        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(shape.x + (shape.width - 1) / 2, shape.y + (shape.height - 1) / 2);
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
 
         body = world.createBody(bodyDef);
 
         PolygonShape box = new PolygonShape();
-        box.setAsBox(shape.x / 2, shape.y / 2);
-
-        fixture = body.createFixture(box, 0.0f);
-        fixture.setUserData(this);
+        box.setAsBox(shape.width / 2, shape.height / 2 );
+        Fixture fixture = body.createFixture(box, 1f);
         box.dispose();
 
-        body.setLinearVelocity(impulso);
-        setPosition(shape.x * PIXELS_IN_METER, shape.y * PIXELS_IN_METER);
+        filter = new Filter();
+        filter.categoryBits = CollisionFilters.MVINGPLAT;
+        filter.maskBits = (short) (CollisionFilters.PLAYER | CollisionFilters.STATIC | CollisionFilters.ENEMY | CollisionFilters.OTHERPLAYER);
+        fixture.setFilterData(filter);
+
+
+        fixture.setUserData(this);
+
+
+        setSize(shape.width,shape.height);
+        setPosition(shape.x, shape.y);
     }
+
     @Override
-    public void beginContactWith(ActorBox2d actor, GameScreen game){
+    public void act(float delta) {
+        body.setLinearVelocity(dirx, diry);
+    }
+
+    @Override
+    public void beginContactWith(ActorBox2d actor, GameScreen game) {
         if (actor instanceof MovingPlatfromLimiter) {
-            Vector2 impulse = body.getLinearVelocity().scl(-1);
-            body.setLinearVelocity(impulse);
+            dirx = -dirx;
+            diry = -diry;
         }
     }
 }

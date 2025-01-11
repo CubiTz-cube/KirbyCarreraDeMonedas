@@ -54,13 +54,14 @@ public class EntityFactory {
             case POWERBOMB -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.BOMB, assetManager.get("world/entities/powers/bombPowerItem.png"), 0.15f, 4);
             case BREAKBLOCK -> new BreakBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case FALLBLOCK -> new FallBlock(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
-            case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXR, new Vector2(1,0));
-            case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMXL, new Vector2(-1,0));
-            case PLATFORMYU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMYU, new Vector2(0,1));
-            case PLATFORMRU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMRU, new Vector2(1,1).nor());
-            case PLATOFRMRD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATOFRMRD, new Vector2(1,-1).nor());
-            case PLATFORMLU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMLU, new Vector2(-1,1).nor());
-            case PLATFORMLD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.PLATFORMLD, new Vector2(-1,-1).nor());
+            case PLATFORMXR -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMXR, 1,0);
+            case PLATFORMXL -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMXL, -1,0);
+            case PLATFORMYU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMYU, 0,1);
+            case PLATFORMYD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMYU, 0,-1);
+            case PLATFORMRU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMRU, 1,1);
+            case PLATOFRMRD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATOFRMRD, 1,-1);
+            case PLATFORMLU -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMLU, -1,1);
+            case PLATFORMLD -> new MovingPlatform(world, new Rectangle(position.x, position.y, 3f, 0.5f), assetManager, id, Entity.Type.PLATFORMLD, -1,-1);
             default -> null;
         };
 
