@@ -19,7 +19,6 @@ public abstract class ActorBox2dSprite extends ActorBox2d{
     private Animation<TextureRegion> currentAnimation;
     private Boolean flipX;
     private final Vector2 spritePosModification;
-    private final Vector2 realActorDimension;
 
     public ActorBox2dSprite(World world, Rectangle shape, AssetManager assetManager) {
         super(world, shape);
@@ -27,7 +26,6 @@ public abstract class ActorBox2dSprite extends ActorBox2d{
         flipX = false;
         spritePosModification = new Vector2(0, 0);
         sprite = new Sprite(assetManager.get("logo.png", Texture.class));
-        realActorDimension = new Vector2(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
         sprite.setSize(shape.width * PIXELS_IN_METER, shape.height * PIXELS_IN_METER);
     }
 

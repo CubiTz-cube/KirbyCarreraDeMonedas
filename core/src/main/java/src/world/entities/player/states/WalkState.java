@@ -27,7 +27,7 @@ public class WalkState extends CanBasicMoveState{
             player.setCurrentState(Player.StateType.RUN);
         }
         Vector2 velocity = player.getBody().getLinearVelocity();
-        if (velocity.x == 0 && !Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
+        if (velocity.x == 0 || (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT))){
             player.setCurrentState(Player.StateType.IDLE);
         }
     }
