@@ -184,6 +184,8 @@ public class Main extends Game {
         assetManager.load("world/entities/basic/basicDamage.png", Texture.class);
         assetManager.load("world/entities/blocks/fallBlock.png", Texture.class);
         assetManager.load("world/entities/blocks/fallBlockBreak.png", Texture.class);
+        assetManager.load("world/entities/blocks/swordBreakBlock.png", Texture.class);
+        assetManager.load("world/entities/blocks/bombBreakBlock.png", Texture.class);
         assetManager.load("world/particles/cloudParticle.png", Texture.class);
         assetManager.load("world/particles/dustParticle.png", Texture.class);
         assetManager.load("world/particles/starParticle.png", Texture.class);

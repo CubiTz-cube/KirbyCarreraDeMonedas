@@ -744,9 +744,9 @@
   <object id="1051" name="Enemigo Durmiente" type="SLEEPY" x="2000" y="720" width="16" height="16"/>
   <object id="1052" name="Enemigo Durmiente" type="SLEEPY" x="1456" y="880" width="16" height="16"/>
   <object id="1053" name="Enemigo Basico" type="BASIC" x="1344" y="832" width="16" height="16"/>
-  <object id="1054" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1232" width="16" height="16"/>
-  <object id="1055" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1248" width="16" height="16"/>
-  <object id="1056" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1136" y="1264" width="16" height="16"/>
+  <object id="1054" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1152" y="1248" width="16" height="16"/>
+  <object id="1055" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1152" y="1264" width="16" height="16"/>
+  <object id="1056" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1152" y="1280" width="16" height="16"/>
   <object id="1067" name="Enemigo Basico" type="BASIC" x="1456" y="1296" width="16" height="16"/>
   <object id="1068" name="Enemigo Basico" type="BASIC" x="2608" y="1312" width="16" height="16"/>
   <object id="1069" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1696" width="16" height="16"/>
