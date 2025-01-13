@@ -122,7 +122,7 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();

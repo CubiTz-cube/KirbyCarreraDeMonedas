@@ -30,6 +30,14 @@ public class IntroScreen extends UIScreen {
     }
 
     @Override
+    public void show() {
+        super.show();
+        time = 0f;
+        alpha = -0.1f;
+        soundPlayed = false;
+    }
+
+    @Override
     public void render(float delta) {
         super.render(delta);
         SoundManager soundManager = SingleSoundManager.getInstance();
@@ -45,6 +53,9 @@ public class IntroScreen extends UIScreen {
 
         logo.setColor(1f, 1f, 1f, alpha);
 
-        if (time > 6 || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.justTouched()) main.changeScreen(Main.Screens.MENU);
+        if (time > 6 || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.justTouched()) {
+            main.changeScreen(Main.Screens.MENU);
+            if (!soundPlayed) soundManager.playSound(main.getAssetManager().get("sound/introLogo.wav"), 1f);
+        }
     }
 }
