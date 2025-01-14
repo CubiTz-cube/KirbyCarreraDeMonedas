@@ -213,7 +213,7 @@ public class GameScreen extends UIScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Creando Entidad " + id + " Tipo: " + type);
+        //System.out.println("Creando Entidad " + id + " Tipo: " + type);
         threadSecureWorld.addModification(() -> {
             Entity newEntity = entityFactory.create(type, world, position, id);
             newEntity.setFlipX(flipX);

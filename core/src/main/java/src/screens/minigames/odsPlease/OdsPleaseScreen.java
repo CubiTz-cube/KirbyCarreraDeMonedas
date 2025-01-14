@@ -2,6 +2,7 @@ package src.screens.minigames.odsPlease;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,6 +18,8 @@ import src.screens.minigames.MinigameScreen;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import src.screens.components.SpriteAsActor;
 import src.utils.animation.SheetCutter;
+import src.utils.sound.SingleSoundManager;
+import src.world.entities.player.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +54,9 @@ public class OdsPleaseScreen extends MinigameScreen {
     private SpriteAsActor odsImage;
     private SpriteAsActor personImage;
 
+    private Sound goodSound;
+    private Sound badSound;
+
     public OdsPleaseScreen(Main main, GameScreen game) {
         super(main, game, "¡No dejes pasar a los que tengan un ODS equivocado!\n" +
             "   - Pulsa A para denegar y D para permitir el paso.");
@@ -63,6 +69,7 @@ public class OdsPleaseScreen extends MinigameScreen {
         countBad = 0;
 
         initSprites();
+        initSounds();
         initUIComponents();
 
         layersManager.setZindex(4);
@@ -141,8 +148,12 @@ public class OdsPleaseScreen extends MinigameScreen {
         personsTextures.addAll(Arrays.asList(SheetCutter.cutSheet(main.getAssetManager().get("miniGames/odsPlease/persons/persons4.png", Texture.class), 2, 2)));
     }
 
-    private void initUIComponents(){
+    private void initSounds(){
+        goodSound = main.getAssetManager().get("sound/kirby/kirbyScore1.wav", Sound.class);
+        badSound = main.getAssetManager().get("sound/kirby/kirbyNormalDamage.wav", Sound.class);
+    }
 
+    private void initUIComponents(){
         odsImage = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
         personImage = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
         personImage.setSize(256,256);
@@ -171,15 +182,29 @@ public class OdsPleaseScreen extends MinigameScreen {
     }
 
     private void passButton() {
-        if (odsReal) countGood++;
-        else {countBad++; shakeCamera(0.3f,4);}
+        if (odsReal) {
+            countGood++;
+            SingleSoundManager.getInstance().playSound(goodSound, 1f);
+        }
+        else {
+            countBad++;
+            shakeCamera(0.3f,4);
+            SingleSoundManager.getInstance().playSound(badSound, 1f);
+        }
         changeOdsImage();
         changePersonImage();
     }
 
     private void denyButton() {
-        if (!odsReal) countGood++;
-        else {countBad++; shakeCamera(0.3f,4);}
+        if (!odsReal) {
+            countGood++;
+            SingleSoundManager.getInstance().playSound(goodSound, 1f);
+        }
+        else {
+            countBad++;
+            shakeCamera(0.3f,4);
+            SingleSoundManager.getInstance().playSound(badSound, 1f);
+        }
         changeOdsImage();
         changePersonImage();
     }

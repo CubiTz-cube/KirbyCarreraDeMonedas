@@ -62,7 +62,7 @@ public class Player extends PlayerCommon {
         ITEM,
         JUMP,
         POWER,
-        SCORE1,
+        SCORE,
         COIN,
         SLEEP,
         STAR,
@@ -78,7 +78,7 @@ public class Player extends PlayerCommon {
     private Sound itemSound;
     private Sound jumpSound;
     private Sound powerSound;
-    private Sound score1Sound;
+    private Sound scoreSound;
     private SoundPicthUp coinSound;
     private Sound sleepSound;
     private Sound starSound;
@@ -134,7 +134,7 @@ public class Player extends PlayerCommon {
         itemSound = assetManager.get("sound/kirby/kirbyItem.wav");
         jumpSound = assetManager.get("sound/kirby/kirbyJump.wav");
         powerSound = assetManager.get("sound/kirby/kirbyPower.wav");
-        score1Sound = assetManager.get("sound/kirby/kirbyScore1.wav");
+        scoreSound = assetManager.get("sound/kirby/kirbyScore1.wav");
         coinSound = new SoundPicthUp(assetManager.get("sound/coin.wav"), 0.1f, 2f);
         sleepSound = assetManager.get("sound/kirby/kirbySleep.wav");
         starSound = assetManager.get("sound/kirby/kirbyStar.wav");
@@ -188,7 +188,7 @@ public class Player extends PlayerCommon {
             case ITEM -> itemSound;
             case JUMP -> jumpSound;
             case POWER -> powerSound;
-            case SCORE1 -> score1Sound;
+            case SCORE -> scoreSound;
             case COIN -> coinSound;
             case SLEEP -> sleepSound;
             case STAR -> starSound;
