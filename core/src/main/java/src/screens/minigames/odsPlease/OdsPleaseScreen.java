@@ -88,8 +88,12 @@ public class OdsPleaseScreen extends MinigameScreen {
         backgroundImage.toBack();
 
         layersManager.setZindex(1);
-        layersManager.getLayer().top().add(timeMinigameLabel).colspan(2);
-        layersManager.getLayer().add(countLabel).colspan(2);
+        layersManager.getLayer().top().padTop(50);
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(timeMinigameLabel);
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(countLabel);
+        layersManager.getLayer().add().expandX();
 
         layersManager.setZindex(0);
         layersManager.getLayer().add(odsImage).width(512).height(310).colspan(2).padTop(250).padLeft(200);
@@ -139,9 +143,6 @@ public class OdsPleaseScreen extends MinigameScreen {
 
     private void initUIComponents(){
 
-        timeMinigameLabel.setFontScale(2);
-        timeMinigameLabel.setColor(Color.BLACK);
-
         odsImage = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
         personImage = new SpriteAsActor(main.getAssetManager().get("logo.png", Texture.class));
         personImage.setSize(256,256);
@@ -166,8 +167,7 @@ public class OdsPleaseScreen extends MinigameScreen {
             }
         });
 
-        countLabel = new Label((countBad+countGood)+"/"+max+" Amonestaciones: " +countBad , main.getSkin());
-        countLabel.setFontScale(2);
+        countLabel = new Label((countBad+countGood)+"/"+max , new Label.LabelStyle(main.getBriFont(), null));
     }
 
     private void passButton() {
@@ -192,7 +192,7 @@ public class OdsPleaseScreen extends MinigameScreen {
     }
 
     private void changeOdsImage() {
-        countLabel.setText((countBad+countGood)+"/"+max+" Amonestaciones: " +countBad);
+        countLabel.setText((countBad+countGood)+"/"+max);
 
         if (countGood + countBad == max) {
             endMinigame();

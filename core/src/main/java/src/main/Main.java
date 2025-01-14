@@ -87,7 +87,7 @@ public class Main extends Game {
         initFonts();
         initScreens();
 
-        changeScreen(Screens.INTRO);
+        changeScreen(Screens.MINIODSPLEASE);
         soundManager.setSoundTracks(SoundTrackType.MENU);
     }
 

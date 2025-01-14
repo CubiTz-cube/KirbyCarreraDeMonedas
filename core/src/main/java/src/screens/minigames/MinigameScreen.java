@@ -65,7 +65,7 @@ public abstract class MinigameScreen extends UIScreen {
         layersManager.setZindex(1);
         layersManager.getLayer().add(background).expand().fill();
 
-        timeMinigameLabel = new Label("Tiempo " + timeGame.intValue(), main.getSkin());
+        timeMinigameLabel = new Label("Tiempo " + timeGame.intValue(), new Label.LabelStyle(main.getBriFont(), null));
     }
 
     public boolean isGameStarted() {
@@ -109,7 +109,7 @@ public abstract class MinigameScreen extends UIScreen {
         cameraShake.update(delta);
         game.actLogic(delta);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) && !skipStart) timeStart = 0.99f; skipStart = true;
+        if ((Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) && !skipStart) timeStart = 0.99f; skipStart = true;
 
         if (timeStart >= 1){
             timeStartlabel.setText("Empieza en " + timeStart.intValue());
