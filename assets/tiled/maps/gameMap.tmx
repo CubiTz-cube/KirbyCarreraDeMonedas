@@ -715,7 +715,7 @@
   <object id="1182" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1408" y="832" width="16" height="16"/>
   <object id="1183" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="1488" y="816" width="16" height="16"/>
   <object id="1184" name="Break Block Bomba" type="BOMBBREAKBLOCK" x="1488" y="832" width="16" height="16"/>
-  <object id="1220" name="Plataforma Movil" type="PLATFORMXR" x="3056" y="1728" width="16" height="16"/>
+  <object id="1220" name="Plataforma Movil" type="PLATFORMXR" x="3056" y="1744" width="16" height="16"/>
   <object id="1221" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1152" y="1248" width="16" height="16"/>
   <object id="1222" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1152" y="1264" width="16" height="16"/>
   <object id="1223" name="Break Block Espada" type="SWORDBREAKBLOCK" x="1152" y="1280" width="16" height="16"/>
