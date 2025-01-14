@@ -145,6 +145,10 @@ public class Player extends PlayerCommon {
         return powerAbsorded != null;
     }
 
+    public PowerUp.Type getPowerAbsorded(){
+        return powerAbsorded;
+    }
+
     public void consumeEnemy() {
         if (powerAbsorded == null) return;
         PowerUp.Type powerType = powerAbsorded;

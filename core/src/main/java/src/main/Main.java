@@ -158,6 +158,7 @@ public class Main extends Game {
         assetManager.load("world/entities/kirby/kirbyAbsorb.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyDamage.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyConsume.png", Texture.class);
+        assetManager.load("world/entities/kirby/kirbyConsumePower.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbyChangeRun.png", Texture.class);
         assetManager.load("world/entities/kirby/kirbySleep.png", Texture.class);
         assetManager.load("world/entities/kirby/sleep/sleep.png", Texture.class);

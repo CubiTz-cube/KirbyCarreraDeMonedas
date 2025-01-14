@@ -84,6 +84,7 @@ public abstract class PlayerCommon extends Entity {
         ABSORB,
         DAMAGE,
         CONSUME,
+        CONSUMEPOWER,
         SLEEP,
         ABSORBIDLE,
         ABSORBWALK,
@@ -109,6 +110,7 @@ public abstract class PlayerCommon extends Entity {
     protected Animation<TextureRegion> damageAnimation;
     protected Animation<TextureRegion> sleepAnimation;
     protected Animation<TextureRegion> consumeAnimation;
+    protected Animation<TextureRegion> consumePowerAnimation;
 
     protected  Animation<TextureRegion> absorbIdleAnimation;
     protected  Animation<TextureRegion> absorbWalkAnimation;
@@ -221,6 +223,9 @@ public abstract class PlayerCommon extends Entity {
         consumeAnimation = new Animation<>(0.08f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyConsume.png"), 6));
 
+        consumePowerAnimation = new Animation<>(0.08f,
+            SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbyConsumePower.png"), 9));
+
         sleepAnimation = new Animation<>(0.15f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/kirby/kirbySleep.png"), 33));
 
@@ -272,6 +277,7 @@ public abstract class PlayerCommon extends Entity {
             case ABSORB -> setCurrentAnimation(absorbAnimation);
             case DAMAGE -> setCurrentAnimation(damageAnimation);
             case CONSUME -> setCurrentAnimation(consumeAnimation);
+            case CONSUMEPOWER -> setCurrentAnimation(consumePowerAnimation);
             case SLEEP -> setCurrentAnimation(sleepAnimation);
             case ABSORBIDLE -> setCurrentAnimation(absorbIdleAnimation);
             case ABSORBWALK -> setCurrentAnimation(absorbWalkAnimation);

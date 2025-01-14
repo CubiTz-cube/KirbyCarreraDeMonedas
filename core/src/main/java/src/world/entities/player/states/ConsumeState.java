@@ -1,6 +1,8 @@
 package src.world.entities.player.states;
 
 import src.world.entities.player.Player;
+import src.world.entities.player.PlayerCommon;
+import src.world.entities.player.powers.PowerUp;
 
 public class ConsumeState extends StatePlayer{
 
@@ -10,7 +12,8 @@ public class ConsumeState extends StatePlayer{
 
     @Override
     public void start() {
-        player.setAnimation(Player.AnimationType.CONSUME);
+        if (player.getPowerAbsorded() == PowerUp.Type.NONE) player.setAnimation(Player.AnimationType.CONSUME);
+        else player.setAnimation(Player.AnimationType.CONSUMEPOWER);
     }
 
     @Override
