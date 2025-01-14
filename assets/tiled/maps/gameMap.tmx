@@ -724,7 +724,7 @@
   <object id="1226" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2800" y="736" width="16" height="16"/>
   <object id="1231" name="Plataforma Movil" type="PLATFORMXR" x="1568" y="880" width="16" height="16"/>
  </objectgroup>
- <objectgroup color="#ffc9c9" id="18" name="enemy" visible="0">
+ <objectgroup color="#ffc9c9" id="18" name="enemy">
   <object id="1026" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2800" y="736" width="16" height="16"/>
   <object id="1027" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2816" y="736" width="16" height="16"/>
   <object id="1028" name="Break Block Espada" type="SWORDBREAKBLOCK" x="2832" y="736" width="16" height="16"/>
@@ -763,14 +763,14 @@
   <object id="1073" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1888" width="16" height="16"/>
   <object id="1074" name="Enemigo Mosca" type="FLYBUG" x="1920" y="1984" width="16" height="16"/>
   <object id="1075" name="Enemigo Mosca" type="FLYBUG" x="1920" y="2080" width="16" height="16"/>
-  <object id="1076" name="Enemigo Mosca" type="FLYBUG" x="2112" y="2112" width="16" height="16"/>
-  <object id="1078" name="Enemigo Mosca" type="FLYBUG" x="2144" y="2096" width="16" height="16"/>
-  <object id="1080" name="Enemigo Mosca" type="FLYBUG" x="2176" y="2080" width="16" height="16"/>
-  <object id="1082" name="Enemigo Mosca" type="FLYBUG" x="2208" y="2064" width="16" height="16"/>
-  <object id="1084" name="Enemigo Mosca" type="FLYBUG" x="2240" y="2048" width="16" height="16"/>
-  <object id="1086" name="Enemigo Mosca" type="FLYBUG" x="2272" y="2032" width="16" height="16"/>
-  <object id="1088" name="Enemigo Mosca" type="FLYBUG" x="2304" y="2016" width="16" height="16"/>
-  <object id="1090" name="Enemigo Mosca" type="FLYBUG" x="2336" y="2000" width="16" height="16"/>
+  <object id="1076" name="Enemigo Mosca" type="FLYBUG" x="2112" y="2096" width="16" height="16"/>
+  <object id="1078" name="Enemigo Mosca" type="FLYBUG" x="2144" y="2080" width="16" height="16"/>
+  <object id="1080" name="Enemigo Mosca" type="FLYBUG" x="2176" y="2064" width="16" height="16"/>
+  <object id="1082" name="Enemigo Mosca" type="FLYBUG" x="2208" y="2048" width="16" height="16"/>
+  <object id="1084" name="Enemigo Mosca" type="FLYBUG" x="2240" y="2032" width="16" height="16"/>
+  <object id="1086" name="Enemigo Mosca" type="FLYBUG" x="2272" y="2016" width="16" height="16"/>
+  <object id="1088" name="Enemigo Mosca" type="FLYBUG" x="2304" y="2000" width="16" height="16"/>
+  <object id="1090" name="Enemigo Mosca" type="FLYBUG" x="2336" y="1984" width="16" height="16"/>
   <object id="1092" name="Enemigo Rueda" type="WHEEL" x="1472" y="2256" width="16" height="16"/>
   <object id="1093" name="Enemigo Espada" type="SWORD" x="976" y="1792" width="16" height="16"/>
   <object id="1094" name="Enemigo Espada" type="SWORD" x="2176" y="1808" width="16" height="16"/>
