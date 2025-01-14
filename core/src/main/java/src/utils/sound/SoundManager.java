@@ -117,6 +117,7 @@ public class SoundManager implements Music.OnCompletionListener {
     }
 
     public void setSoundTracks(Main.SoundTrackType type){
+        if (type == currentSoundTrack) return;
         currentSoundTrack = type;
         playSoundTrack();
     }
