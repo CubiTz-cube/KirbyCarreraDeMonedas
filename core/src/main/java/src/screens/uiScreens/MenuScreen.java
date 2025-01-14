@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import src.main.Main;
 import src.screens.components.LayersManager;
+import src.utils.sound.SingleSoundManager;
 
 public class MenuScreen extends UIScreen {
     public MenuScreen(Main main) {
@@ -127,5 +128,11 @@ public class MenuScreen extends UIScreen {
 
         layersManager.setZindex(6);
         layersManager.getLayer().add(bgImage).grow();
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        SingleSoundManager.getInstance().setSoundTracks(Main.SoundTrackType.MENU);
     }
 }

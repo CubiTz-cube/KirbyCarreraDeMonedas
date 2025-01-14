@@ -87,8 +87,7 @@ public class Main extends Game {
         initFonts();
         initScreens();
 
-        changeScreen(Screens.MINIODSPLEASE);
-        soundManager.setSoundTracks(SoundTrackType.MENU);
+        changeScreen(Screens.INTRO);
     }
 
     private void initAssets(){
@@ -301,13 +300,14 @@ public class Main extends Game {
 
     private void initSounds(){
         soundManager.addSoundTrack(SoundTrackType.MENU);
+        soundManager.addSoundTrack(SoundTrackType.GAME);
         soundManager.addMusicToSoundTrack(assetManager.get("music/meow.mp3"), SoundTrackType.MENU);
-        soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), SoundTrackType.MENU);
-        soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), SoundTrackType.MENU);
-        soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), SoundTrackType.MENU);
-        soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), SoundTrackType.MENU);
         soundManager.addMusicToSoundTrack(assetManager.get("music/coffee.mp3"), SoundTrackType.MENU);
         soundManager.addMusicToSoundTrack(assetManager.get("music/waiting.mp3"), SoundTrackType.MENU);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/anomalocaris.mp3"), SoundTrackType.GAME);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/arthropluera.mp3"), SoundTrackType.GAME);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/caterpillar.mp3"), SoundTrackType.GAME);
+        soundManager.addMusicToSoundTrack(assetManager.get("music/crocodile.mp3"), SoundTrackType.GAME);
     }
 
     private void initScreens(){

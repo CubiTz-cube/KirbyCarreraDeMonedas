@@ -122,7 +122,7 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
@@ -436,6 +436,7 @@ public class GameScreen extends UIScreen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stageUI);
+        SingleSoundManager.getInstance().setSoundTracks(Main.SoundTrackType.GAME);
         if (player != null) {
             player.setPaused(false);
             threadSecureWorld.addModification(() -> {

@@ -92,6 +92,7 @@ public class EndGameScreen extends UIScreen{
     public void hide() {
         super.hide();
         layersManager.clear();
+        scoresTable.clear();
         game.getScorePlayers().clear();
     }
 
