@@ -105,6 +105,7 @@ public class GameScreen extends UIScreen {
     //Sounds
     private Sound mirrorChangeSound;
     private Sound pauseSound;
+    private Sound pauseExitSound;
 
     private final Box2DDebugRenderer debugRenderer;
     private Boolean isLoad;
@@ -148,6 +149,7 @@ public class GameScreen extends UIScreen {
 
     private void initSounds(){
         mirrorChangeSound = main.getAssetManager().get("sound/portalChange.wav", Sound.class);
+        pauseExitSound = main.getAssetManager().get("sound/ui/pauseExit.wav", Sound.class);
         pauseSound = main.getAssetManager().get("sound/ui/pause.wav", Sound.class);
     }
 
@@ -531,12 +533,16 @@ public class GameScreen extends UIScreen {
 
     private void setMenuVisible(Boolean visible){
         menuVisible = visible;
-        if (visible) SingleSoundManager.getInstance().playSound(pauseSound);
         optionTable.update();
         layersManager.setZindex(0);
         layersManager.getLayer().setVisible(visible);
         layersManager.setZindex(1);
         layersManager.getLayer().setVisible(visible);
+    }
+    private void setMenuVisibleSound(Boolean visible){
+        setMenuVisible(visible);
+        if (visible) SingleSoundManager.getInstance().playSound(pauseSound);
+        else SingleSoundManager.getInstance().playSound(pauseExitSound);
     }
 
     /**
@@ -617,7 +623,7 @@ public class GameScreen extends UIScreen {
         stageUI.draw();
         //debugRenderer.render(world, camera.combined.scale(PIXELS_IN_METER, PIXELS_IN_METER, 1));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) setMenuVisible(!menuVisible);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) setMenuVisibleSound(!menuVisible);
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {
