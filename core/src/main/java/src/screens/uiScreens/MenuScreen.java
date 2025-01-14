@@ -46,6 +46,7 @@ public class MenuScreen extends UIScreen {
                 main.changeScreen(Main.Screens.INFO);
             }
         });
+        infoButton.addListener(hoverListener);
 
         drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/exit.png", Texture.class));
         drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/exitHover.png", Texture.class));
@@ -62,6 +63,7 @@ public class MenuScreen extends UIScreen {
                 Gdx.app.exit();
             }
         });
+        exitButton.addListener(hoverListener);
 
         ImageTextButton playButton = new ImageTextButton("Jugar", myImageTextbuttonStyle);
         playButton.addListener(new ClickListener() {
@@ -70,6 +72,7 @@ public class MenuScreen extends UIScreen {
                 main.changeScreen(Main.Screens.GAME);
             }
         });
+        playButton.addListener(hoverListener);
 
         ImageTextButton multiplayerButton = new ImageTextButton("Multijugador", myImageTextbuttonStyle);
         multiplayerButton.addListener(new ClickListener() {
@@ -78,6 +81,7 @@ public class MenuScreen extends UIScreen {
                 main.changeScreen(Main.Screens.MULTIPLAYER);
             }
         });
+        multiplayerButton.addListener(hoverListener);
 
         ImageTextButton optionButton = new ImageTextButton("Ajustes", myImageTextbuttonStyle);
         optionButton.addListener(new ClickListener() {
@@ -86,6 +90,7 @@ public class MenuScreen extends UIScreen {
                 main.changeScreen(Main.Screens.OPTION);
             }
         });
+        optionButton.addListener(hoverListener);
 
         LayersManager layersManager = new LayersManager(stageUI, 7);
 

@@ -53,7 +53,7 @@ public class BorderIndicator extends Actor{
         float cameraZoom = 1280.0f / Gdx.graphics.getWidth();
         if (cameraZoom > 1.3f) cameraZoom = 1.3f;
 
-        distanceScreen *= cameraZoom;
+        distanceScreen *= cameraZoom * 0.9f;
 
         float posX = centerPosition.x + direction.x * distanceScreen - getWidth() / 2f;
         float posY = centerPosition.y + direction.y * distanceScreen - getHeight() / 2f;

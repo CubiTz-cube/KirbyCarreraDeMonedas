@@ -66,6 +66,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
                 main.client.send(Packet.gameStart());
             }
         });
+        playButton.addListener(hoverListener);
 
         TextureRegionDrawable drawableUp = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/exit.png", Texture.class));
         TextureRegionDrawable drawableHover = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/exitHover.png", Texture.class));
@@ -84,6 +85,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
                 main.changeScreen(Main.Screens.MULTIPLAYER);
             }
         });
+        backButton.addListener(hoverListener);
 
         colorField = new ColorField(skin);
         colorField.addListener(new ChangeListener() {

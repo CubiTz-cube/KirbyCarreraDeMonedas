@@ -38,7 +38,7 @@ public class MovingPlatform extends Entity implements NoAutoPacketEntity {
 
     @Override
     public void act(float delta) {
-        body.setLinearVelocity(dirX*2, dirY*2);
+        body.setLinearVelocity(dirX*3, dirY*3);
     }
 
     @Override

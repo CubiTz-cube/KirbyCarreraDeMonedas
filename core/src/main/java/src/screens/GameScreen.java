@@ -104,6 +104,7 @@ public class GameScreen extends UIScreen {
 
     //Sounds
     private Sound mirrorChangeSound;
+    private Sound pauseSound;
 
     private final Box2DDebugRenderer debugRenderer;
     private Boolean isLoad;
@@ -147,6 +148,7 @@ public class GameScreen extends UIScreen {
 
     private void initSounds(){
         mirrorChangeSound = main.getAssetManager().get("sound/portalChange.wav", Sound.class);
+        pauseSound = main.getAssetManager().get("sound/ui/pause.wav", Sound.class);
     }
 
     public void setScore(Integer score) {
@@ -450,6 +452,7 @@ public class GameScreen extends UIScreen {
             addMainPlayer();
             initUI();
             setScore(3);
+            setMenuVisible(false);
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
                 addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
@@ -491,6 +494,7 @@ public class GameScreen extends UIScreen {
                 endGame();
             }
         });
+        exitButton.addListener(hoverListener);
 
         stage.addActor(mirrorIndicators);
         stage.addActor(maxScoreIndicator);
@@ -527,6 +531,7 @@ public class GameScreen extends UIScreen {
 
     private void setMenuVisible(Boolean visible){
         menuVisible = visible;
+        if (visible) SingleSoundManager.getInstance().playSound(pauseSound);
         optionTable.update();
         layersManager.setZindex(0);
         layersManager.getLayer().setVisible(visible);

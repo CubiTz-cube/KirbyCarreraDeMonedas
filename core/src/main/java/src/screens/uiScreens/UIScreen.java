@@ -1,8 +1,12 @@
 package src.screens.uiScreens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -13,12 +17,17 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.main.Main;
 import src.screens.BaseScreen;
 import src.utils.constants.MyColors;
+import src.utils.sound.SingleSoundManager;
 
 public abstract class UIScreen extends BaseScreen {
     protected final Stage stageUI;
 
     protected ImageTextButton.ImageTextButtonStyle myImageTextbuttonStyle;
     protected TextField.TextFieldStyle myTextFieldStyle;
+
+    private final Sound clickSound;
+    //private final Sound hoverSound;
+    protected InputListener hoverListener;
 
     public UIScreen(Main main) {
         super(main);
@@ -42,6 +51,20 @@ public abstract class UIScreen extends BaseScreen {
         myTextFieldStyle.background = drawableBg;
         myTextFieldStyle.cursor = skin.getDrawable("textFieldCursor");
         myTextFieldStyle.selection = skin.getDrawable("selection");
+
+        clickSound = main.getAssetManager().get("sound/ui/click.wav", Sound.class);
+
+        hoverListener = new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                if (pointer != -1) SingleSoundManager.getInstance().playSound(clickSound, 1f, 0.7f);
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+
+            }
+        };
     }
 
     @Override

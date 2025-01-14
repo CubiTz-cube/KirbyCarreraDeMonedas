@@ -49,6 +49,7 @@ public class EndGameScreen extends UIScreen{
                 main.changeScreen(Main.Screens.MENU);
             }
         });
+        backButton.addListener(hoverListener);
 
         scoresTable = new Table();
         scrollPane = new ScrollPane(scoresTable, main.getSkin());

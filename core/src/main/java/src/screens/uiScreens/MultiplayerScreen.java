@@ -32,6 +32,7 @@ public class MultiplayerScreen extends BlueCircleScreen {
                 main.changeScreen(Main.Screens.JOIN);
             }
         });
+        joinButton.addListener(hoverListener);
 
         ImageTextButton createButton = new ImageTextButton("Crear", myImageTextbuttonStyle);
         createButton.addListener(new ClickListener() {
@@ -41,6 +42,7 @@ public class MultiplayerScreen extends BlueCircleScreen {
                 main.changeScreen(Main.Screens.SERVER);
             }
         });
+        createButton.addListener(hoverListener);
 
         kirbyImage = new SpriteAsActor(main.getAssetManager().get("ui/bg/kirbyIdleBg.png", Texture.class));
 

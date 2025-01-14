@@ -59,10 +59,12 @@ public class SoundManager implements Music.OnCompletionListener {
         musicThread = Executors.newSingleThreadExecutor();
     }
 
+    public void playSound(Sound sound){
+        sound.play(volume * volumeSound, 1f, 0);
+    }
     public void playSound(Sound sound, Float pitch){
         sound.play(volume * volumeSound, pitch, 0);
     }
-
     public void playSound(Sound sound, Float pitch, Float volumeSound){
         sound.play(volumeSound * volume * volumeSound, pitch, 0);
     }

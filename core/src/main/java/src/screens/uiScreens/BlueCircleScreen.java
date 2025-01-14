@@ -53,6 +53,7 @@ public class BlueCircleScreen extends UIScreen{
                 main.changeScreen(backPage);
             }
         });
+        exitButton.addListener(hoverListener);
 
         layersManager.setZindex(0);
         layersManager.getLayer().top();

@@ -36,6 +36,7 @@ public class JoinScreen extends BlueCircleScreen {
                 main.changeScreen(Main.Screens.CONNECTING);
             }
         });
+        joinButton.addListener(hoverListener);
 
         layersManager.setZindex(0);
         layersManager.getLayer().center();

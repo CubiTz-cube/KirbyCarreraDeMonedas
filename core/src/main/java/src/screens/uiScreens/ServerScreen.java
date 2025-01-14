@@ -37,6 +37,7 @@ public class ServerScreen extends BlueCircleScreen {
                 main.changeScreen(Main.Screens.LOBBY);
             }
         });
+        joinButton.addListener(hoverListener);
 
         layersManager.setZindex(0);
         layersManager.getLayer().center();
