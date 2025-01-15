@@ -310,6 +310,7 @@ public class GameScreen extends UIScreen {
             return;
         }
         Enemy enemy = (Enemy) entities.get(id);
+        if (enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) return;
         threadSecureWorld.addModification(() -> {
             enemy.takeDamage(damage);
             enemy.getBody().setLinearVelocity(0,0);
