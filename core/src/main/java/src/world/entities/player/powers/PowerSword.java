@@ -44,7 +44,7 @@ public class PowerSword extends PowerUp {
         idleSwordAnimation = new Animation<>(1,
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyIdleSword.png"), 1));
 
-        walkSwordAnimation = new Animation<>(0.11f,
+        walkSwordAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyWalkSword.png"), 10));
         walkSwordAnimation.setPlayMode(Animation.PlayMode.LOOP);
     }
