@@ -10,8 +10,6 @@ import src.world.entities.Entity;
 import src.world.entities.enemies.Enemy;
 import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;
-import src.world.statics.Floor;
-import src.world.statics.FloorPoly;
 
 public class Projectil extends Entity {
     protected GameScreen game;

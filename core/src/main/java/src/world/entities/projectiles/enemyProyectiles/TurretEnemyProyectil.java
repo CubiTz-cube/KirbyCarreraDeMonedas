@@ -1,7 +1,7 @@
 package src.world.entities.projectiles.enemyProyectiles;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
@@ -11,16 +11,16 @@ import src.screens.GameScreen;
 import src.utils.constants.CollisionFilters;
 import src.world.ActorBox2d;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.player.Player;
 import src.world.entities.projectiles.Projectil;
 
-public class IceEnemyProyectil extends Projectil {
-    private Float time;
-    private final Sound impactSound;
+public class TurretEnemyProyectil extends Projectil {
 
-    public IceEnemyProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
+    private Float time;
+
+    public TurretEnemyProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, Type type, GameScreen game, Texture texture)
+    {
         super(world, shape, assetManager, id, Type.BOMB, game, 3);
-        sprite.setTexture(assetManager.get("world/entities/ice.png"));
+        sprite.setTexture(assetManager.get("world/particles/turretParticle.png"));
         time = 0f;
 
         BodyDef def = new BodyDef();
@@ -42,7 +42,6 @@ public class IceEnemyProyectil extends Projectil {
         filter.maskBits = (short)(~CollisionFilters.ITEM & ~CollisionFilters.ENEMY);
         fixture.setFilterData(filter);
 
-        impactSound = assetManager.get("sound/kirby/kirbyIceDamage.wav");
     }
 
     @Override
@@ -57,10 +56,10 @@ public class IceEnemyProyectil extends Projectil {
     public synchronized void beginContactWith(ActorBox2d actor, GameScreen game) {
         super.beginContactWith(actor, game);
         if (actor instanceof Enemy enemy) {
-            if (enemy.getCurrentStateType() != Enemy.StateType.DAMAGE) game.playProximitySound(impactSound, body.getPosition(), 25);
-        }
-        if (actor instanceof Player player) {
-            if (!player.isInvencible()) game.playProximitySound(impactSound, body.getPosition(), 25);
+            if (enemy.getCurrentStateType() != Enemy.StateType.DAMAGE) {
+                enemy.takeDamage(1);
+                despawn();
+            }
         }
     }
 }

@@ -112,6 +112,7 @@ public class Main extends Game {
         assetManager.load("world/entities/bomb/bombWalk.png", Texture.class);
         assetManager.load("world/entities/bomb/bombDamage.png", Texture.class);
         assetManager.load("world/entities/bomb/bombAttack.png", Texture.class);
+        assetManager.load("world/entities/turret/turretEnemy.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/default.fnt", BitmapFont.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
@@ -192,6 +193,7 @@ public class Main extends Game {
         assetManager.load("world/particles/swordParticle.png", Texture.class);
         assetManager.load("world/particles/iceParticle.png", Texture.class);
         assetManager.load("world/particles/bombParticle.png", Texture.class);
+        assetManager.load("world/particles/turretParticle.png", Texture.class);
         assetManager.load("world/particles/kirbySwordParticle.png", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
