@@ -290,6 +290,7 @@ public abstract class PlayerCommon extends Entity {
 
     public void setSecondCurrentAnimation(Animation<TextureRegion> secondCurrentAnimation) {
         this.secondCurrentAnimation = secondCurrentAnimation;
+        resetAnimateTime();
     }
 
     public AnimationType getCurrentAnimationType() {
