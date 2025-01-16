@@ -19,14 +19,26 @@ public class InfoScreen extends BlueCircleScreen {
             "Shift Correr\n" +
             "Control-Izquierdo Soltar poder\n\n" +
             "Objetivo:\n" +
-            "Al entrar en un espejo podras hacer \nun minijuego que te puede dar de 1 a 3 monedas\n" +
-            "Obten la mayor cantidad de monedas \nantes de que se acabe el tiempo\n",
+            "Al entrar en un espejo podras hacer un minijuego que te puede dar de 1 a 3 monedas" +
+            ". Obten la mayor cantidad de monedas antes de que se acabe el tiempo\n",
             new Label.LabelStyle(main.getInterFont(), MyColors.BLUE));
+        infoLabel.setFontScale(0.7f);
+        infoLabel.setWrap(true);
+
+        Label infoTechLabel = new Label(
+            "Librerias utilizadas: LibGDX\n" +
+                "Lenguaje de programacion: Java\n" +
+                "Version: 0.8v\n" +
+                "Desarrolladora: CubiTz\n" +
+                "Desarrolladores: Daniel Carreño, Jose Pereira, Cesar Ostos\n",
+            new Label.LabelStyle(main.getInterFont(), MyColors.BLUE));
+        infoTechLabel.setFontScale(0.7f);
 
         layersManager.setZindex(0);
         layersManager.getLayer().bottom();
         layersManager.getLayer().padLeft(40);
-        layersManager.getLayer().add(infoLabel).expandX().fill();
+        layersManager.getLayer().add(infoLabel).expandX().fill().row();
+        layersManager.getLayer().add(infoTechLabel).expandX().fill();
     }
 
 }
