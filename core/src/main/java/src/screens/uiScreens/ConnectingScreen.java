@@ -13,12 +13,17 @@ import src.screens.components.LayersManager;
 import src.utils.constants.MyColors;
 
 public class ConnectingScreen extends UIScreen  implements PacketListener {
+    private Float timeDisconnectMessage;
+    private Boolean disconnectMessage;
+
     private Float timeLabel;
     private Integer pointLabel;
     private final Label connectLabel;
 
     public ConnectingScreen(Main main) {
         super(main);
+        timeDisconnectMessage = 3f;
+        disconnectMessage = false;
         timeLabel = 0f;
         pointLabel = 0;
         LayersManager layersManager = new LayersManager(stageUI, 3);
@@ -30,7 +35,7 @@ public class ConnectingScreen extends UIScreen  implements PacketListener {
         connectLabel.setFontScale(2.5f);
 
         layersManager.setZindex(0);
-        layersManager.getLayer().setDebug(true);
+        layersManager.getLayer();
         layersManager.getLayer().bottom();
         layersManager.getLayer().padBottom(70);
         layersManager.getLayer().padRight(60);
@@ -54,6 +59,16 @@ public class ConnectingScreen extends UIScreen  implements PacketListener {
     public void render(float delta) {
         Gdx.gl.glClearColor(MyColors.BLUE.r, MyColors.BLUE.g, MyColors.BLUE.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stageUI.act(delta);
+        stageUI.draw();
+
+        if (disconnectMessage) {
+            timeDisconnectMessage -= delta;
+            if (timeDisconnectMessage <= 0f) {
+                main.changeScreen(Main.Screens.MULTIPLAYER);
+            }
+            return;
+        }
 
         timeLabel += delta;
         if (timeLabel >= 0.5f ) {
@@ -66,9 +81,6 @@ public class ConnectingScreen extends UIScreen  implements PacketListener {
             }
             timeLabel = 0f;
         }
-
-        stageUI.act(delta);
-        stageUI.draw();
     }
 
     @Override
@@ -83,6 +95,7 @@ public class ConnectingScreen extends UIScreen  implements PacketListener {
     public void closeClient() {
         if (main.client.gameStart) return;
         main.closeClient();
-        Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.MULTIPLAYER));
+        connectLabel.setText("Error");
+        disconnectMessage = true;
     }
 }
