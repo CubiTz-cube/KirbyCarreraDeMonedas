@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.Client;
 import src.net.Server;
 import src.screens.GameScreen;
+import src.screens.minigames.fireFighter.FireFighterScreen;
 import src.screens.minigames.odsPlease.OdsPleaseScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
@@ -48,6 +49,7 @@ public class Main extends Game {
         GAME,
         ENDGAME,
         MINIDUCK,
+        MINIFIRE,
         MINIODSPLEASE,
     }
 
@@ -87,7 +89,7 @@ public class Main extends Game {
         initFonts();
         initScreens();
 
-        changeScreen(Screens.INTRO);
+        changeScreen(Screens.MINIFIRE);
     }
 
     private void initAssets(){
@@ -195,6 +197,10 @@ public class Main extends Game {
         assetManager.load("world/particles/bombParticle.png", Texture.class);
         assetManager.load("world/particles/turretParticle.png", Texture.class);
         assetManager.load("world/particles/kirbySwordParticle.png", Texture.class);
+
+        assetManager.load("minigames/FireFighter/plane.png", Texture.class);
+        assetManager.load("minigames/FireFighter/fire.png", Texture.class);
+        assetManager.load("minigames/FireFighter/forest.png", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (1).png", Texture.class);
@@ -327,6 +333,7 @@ public class Main extends Game {
         screensList.add(new GameScreen(this));
         screensList.add(new EndGameScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
+        screensList.add(new FireFighterScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
     }
 

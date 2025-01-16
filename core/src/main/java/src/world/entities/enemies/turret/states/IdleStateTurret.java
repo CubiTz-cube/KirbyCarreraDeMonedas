@@ -18,7 +18,7 @@ public class IdleStateTurret extends StateEnemy<TurretEnemy>
 
     @Override
     public void update(Float delta) {
-        if (enemy.getActCrono() > 1) {
+        if (enemy.getActCrono() > 5) {
             enemy.setState(Enemy.StateType.ATTACK);
         }
     }
