@@ -112,7 +112,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         layersManager.getLayer().add(mainKirbyImage).grow();
 
         layersManager.setZindex(1);
-        layersManager.getLayer().bottom().setDebug(true);
+        layersManager.getLayer().bottom();
         layersManager.getLayer().add(aroColorImage).expand(8,0).fill();
         layersManager.getLayer().add(colorWheel).expand(1,0).fill().pad(30).padBottom(20);
         layersManager.getLayer().add(playButton).expand(2,0).fill().pad(10).padBottom(120).padTop(100);

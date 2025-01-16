@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.net.packets.Packet;
 import src.screens.components.*;
+import src.screens.components.chat.Chat;
 import src.screens.uiScreens.UIScreen;
 import src.utils.*;
 import src.utils.indicators.BorderIndicator;
@@ -53,7 +54,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
-import static src.utils.constants.Constants.PIXELS_IN_METER;
 import static src.utils.constants.Constants.TIME_MINUTES_GAME;
 
 public class GameScreen extends UIScreen {
@@ -97,7 +97,7 @@ public class GameScreen extends UIScreen {
     private LayersManager layersManager;
     private Label odsPointsLabel;
     private Label gameTimeLabel;
-    private ChatWidget chatWidget;
+    private Chat chat;
     private PowerView imagePower;
     private OptionTable optionTable;
     private Boolean menuVisible;
@@ -124,7 +124,7 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
@@ -181,7 +181,7 @@ public class GameScreen extends UIScreen {
     }
 
     public void addMessage(String name, String message){
-        chatWidget.addMessage(name + ": " + message);
+        chat.addMessage(name + ": " + message);
     }
 
     public void addMainPlayer(){
@@ -217,7 +217,7 @@ public class GameScreen extends UIScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        //System.out.println("Creando Entidad " + id + " Tipo: " + type);
+        System.out.println("Creando Entidad " + id + " Tipo: " + type);
         threadSecureWorld.addModification(() -> {
             Entity newEntity = entityFactory.create(type, world, position, id);
             newEntity.setFlipX(flipX);
@@ -286,6 +286,7 @@ public class GameScreen extends UIScreen {
             System.out.println("Entity " + id + " no encontrada en la lista");
             return;
         }
+        if (enemy.getCurrentStateType() == Enemy.StateType.ATTACK) return;
         enemy.setState(state);
         enemy.setFlipX(flipX);
         enemy.setActCrono(cronno);
@@ -480,7 +481,7 @@ public class GameScreen extends UIScreen {
         odsPointsLabel.setAlignment(Align.left);
         odsPointsLabel.setFontScale(0.8f);
 
-        chatWidget = new ChatWidget(main.getSkin());
+        chat = new Chat(new Label.LabelStyle(main.getInterFont(), null));
 
         mirrorIndicators = new IndicatorManager(main.getAssetManager().get("ui/indicators/mirrorIndicator.png", Texture.class));
         maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
@@ -521,7 +522,7 @@ public class GameScreen extends UIScreen {
         layersManager.getLayer().add(odsPointsLabel).left();
 
         layersManager.setZindex(3);
-        layersManager.getLayer().add(chatWidget).padTop(400).height(200).width(300).fill();
+        layersManager.getLayer().add(chat).padTop(400).height(200).width(300).fill();
 
         layersManager.setZindex(4);
         layersManager.getLayer().bottom();
@@ -572,7 +573,7 @@ public class GameScreen extends UIScreen {
                         sendPacket(Packet.actEntityPosition(e.getId(), body.getPosition().x, body.getPosition().y,
                             body.getLinearVelocity().x , body.getLinearVelocity().y));
                         if (!(e instanceof Enemy enemy)) continue;
-                        if (enemy.getCurrentStateType() == Enemy.StateType.IDLE) continue;
+                        if (enemy.getCurrentStateType() == Enemy.StateType.IDLE || enemy.getCurrentStateType() == Enemy.StateType.DAMAGE) continue;
                         if (enemy.checkChangeState()) sendPacket(Packet.actEnemy(e.getId(), enemy.getCurrentStateType(), enemy.getActCrono(), enemy.isFlipX()));
                     }
                     sendTime = 0f;

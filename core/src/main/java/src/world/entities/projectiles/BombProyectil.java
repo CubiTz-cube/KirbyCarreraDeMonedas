@@ -17,9 +17,11 @@ import src.world.ActorBox2d;
 
 public class BombProyectil extends Projectil {
     private final Sound explosionSound;
+    private Boolean isExploding;
 
     public BombProyectil(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game) {
         super(world, shape, assetManager, id, Type.BOMB, game, 0);
+        isExploding = false;
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + shape.width / 2, shape.y + shape.height / 2);
@@ -49,11 +51,12 @@ public class BombProyectil extends Projectil {
 
     @Override
     public void act(float delta) {
-        if (isAnimationFinish()) {
+        if (isAnimationFinish() && !isExploding) {
             game.addEntityNoPacket(Type.BOMBEXPLOSION, new Vector2(body.getPosition()).add(-5.5f, -5.5f),new Vector2(0,0), false);
             game.playProximitySound(explosionSound, body.getPosition(), 40f);
             game.addCameraShakeProximity(body.getPosition(), 40f, 0.5f, 10);
             despawn();
+            isExploding = true;
         }
     }
 
