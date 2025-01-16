@@ -75,7 +75,6 @@ public class MultiplayerScreen extends BlueCircleScreen {
     @Override
     public void show() {
         super.show();
-        System.out.println("Color " + main.playerColor);
         kirbyImage.setColor(main.playerColor);
     }
 }

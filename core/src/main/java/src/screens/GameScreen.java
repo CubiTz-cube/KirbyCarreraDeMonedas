@@ -217,7 +217,7 @@ public class GameScreen extends UIScreen {
             System.out.println(ConsoleColor.RED + "Entity " + type + ":" + id + " ya existe en la lista" + ConsoleColor.RESET);
             return;
         }
-        System.out.println("Creando Entidad " + id + " Tipo: " + type);
+        //System.out.println("Creando Entidad " + id + " Tipo: " + type);
         threadSecureWorld.addModification(() -> {
             Entity newEntity = entityFactory.create(type, world, position, id);
             newEntity.setFlipX(flipX);
@@ -522,7 +522,7 @@ public class GameScreen extends UIScreen {
         layersManager.getLayer().add(odsPointsLabel).left();
 
         layersManager.setZindex(3);
-        layersManager.getLayer().add(chat).padTop(400).height(200).width(300).fill();
+        layersManager.getLayer().add(chat).grow();
 
         layersManager.setZindex(4);
         layersManager.getLayer().bottom();
