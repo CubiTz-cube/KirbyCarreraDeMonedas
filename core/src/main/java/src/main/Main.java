@@ -114,7 +114,7 @@ public class Main extends Game {
         assetManager.load("world/entities/bomb/bombAttack.png", Texture.class);
         assetManager.load("world/entities/turret/turretEnemy.png", Texture.class);
         assetManager.load("logo.png", Texture.class);
-        assetManager.load("ui/default.fnt", BitmapFont.class);
+        assetManager.load("ui/colorWheel.png", Texture.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
         assetManager.load("ui/indicators/mirrorIndicator.png", Texture.class);
         assetManager.load("ui/icons/powerIcons.png", Texture.class);

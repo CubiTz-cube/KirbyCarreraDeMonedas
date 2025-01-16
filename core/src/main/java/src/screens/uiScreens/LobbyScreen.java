@@ -16,6 +16,7 @@ import src.net.PacketListener;
 import src.net.PlayerInfo;
 import src.net.packets.Packet;
 import src.screens.components.ColorField;
+import src.screens.components.ColorPickerImage;
 import src.screens.components.LayersManager;
 import src.utils.constants.MyColors;
 
@@ -23,7 +24,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     private final Table playersTable;
 
     private final ImageTextButton playButton;
-    private final ColorField colorField;
+    private final ColorPickerImage colorWheel;
 
     private final Image mainKirbyImage;
     private final Label mainKirbyName;
@@ -87,15 +88,17 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         });
         backButton.addListener(hoverListener);
 
-        colorField = new ColorField(skin);
-        colorField.addListener(new ChangeListener() {
+        colorWheel = new ColorPickerImage(main.getAssetManager().get("ui/colorWheel.png", Texture.class));
+        colorWheel.setScaling(Scaling.fit);
+        colorWheel.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                main.playerColor.set(colorField.getColor());
-                mainKirbyImage.setColor(colorField.getColor());
+            public void clicked(InputEvent event, float x, float y) {
+                main.playerColor.set(colorWheel.getSelectColor());
+                mainKirbyImage.setColor(colorWheel.getSelectColor());
                 main.client.send(Packet.actEntityColor(-1, main.playerColor.r, main.playerColor.g, main.playerColor.b, main.playerColor.a));
             }
         });
+        colorWheel.addListener(hoverListener);
 
         LayersManager layersManager = new LayersManager(stageUI, 9);
 
@@ -109,12 +112,10 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         layersManager.getLayer().add(mainKirbyImage).grow();
 
         layersManager.setZindex(1);
-        layersManager.getLayer().bottom();
-        layersManager.getLayer().add().expand(0,6);
-        layersManager.getLayer().row();
-        layersManager.getLayer().add(aroColorImage).grow();
-        layersManager.getLayer().add(colorField).grow().pad(10).padBottom(120).padTop(120);
-        layersManager.getLayer().add(playButton).grow().pad(10).padBottom(120).padTop(120);
+        layersManager.getLayer().bottom().setDebug(true);
+        layersManager.getLayer().add(aroColorImage).expand(8,0).fill();
+        layersManager.getLayer().add(colorWheel).expand(1,0).fill().pad(30).padBottom(20);
+        layersManager.getLayer().add(playButton).expand(2,0).fill().pad(10).padBottom(120).padTop(100);
 
         layersManager.setZindex(2);
         layersManager.getLayer().top();
@@ -194,5 +195,11 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     public void closeClient() {
         if (main.client.gameStart) return;
         Gdx.app.postRunnable(() -> main.changeScreen(Main.Screens.MULTIPLAYER));
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        colorWheel.dispose();
     }
 }
