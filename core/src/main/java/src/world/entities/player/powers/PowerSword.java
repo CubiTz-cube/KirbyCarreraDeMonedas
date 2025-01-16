@@ -17,6 +17,17 @@ public class PowerSword extends PowerUp {
 
     private Animation<TextureRegion> idleSwordAnimation;
     private Animation<TextureRegion> walkSwordAnimation;
+    protected Animation<TextureRegion> jumpSwordAnimation;
+    protected Animation<TextureRegion> fallSwordAnimation;
+    protected Animation<TextureRegion> fallSimpleSwordAnimation;
+    protected Animation<TextureRegion> downSwordAnimation;
+    protected Animation<TextureRegion> runSwordAnimation;
+    protected Animation<TextureRegion> changeRunSwordAnimation;
+    protected Animation<TextureRegion> dashSwordAnimation;
+    protected Animation<TextureRegion> flySwordAnimation;
+    protected Animation<TextureRegion> flyInSwordAnimation;
+    protected Animation<TextureRegion> upFlySwordAnimation;
+    protected Animation<TextureRegion> flyEndSwordAnimation;
 
     private Float cooldown = 0f;
 
@@ -41,12 +52,49 @@ public class PowerSword extends PowerUp {
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/hold/kirbyWalkHold.png"), 10));
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
+        //Sword
+
         idleSwordAnimation = new Animation<>(1,
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyIdleSword.png"), 1));
 
         walkSwordAnimation = new Animation<>(0.12f,
             SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyWalkSword.png"), 10));
         walkSwordAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        downSwordAnimation = new Animation<>(1,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyDownSword.png"), 1));
+
+        jumpSwordAnimation = new Animation<>(1,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyJumpSword.png"), 1));
+
+        fallSwordAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyFallSword.png"), 26));
+
+        fallSimpleSwordAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyFallSimpleSword.png"), 20));
+
+        runSwordAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyRunSword.png"), 8));
+        runSwordAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        changeRunSwordAnimation = new Animation<>(1f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyChangeRunSword.png"), 1));
+
+        dashSwordAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyDashSword.png"), 2));
+
+        flySwordAnimation = new Animation<>(0.04f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyFlySword.png"), 5));
+
+        flyInSwordAnimation = new Animation<>(0.1f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyInFlySword.png"), 2));
+        flyInSwordAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        upFlySwordAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyUpFlySword.png"), 6));
+
+        flyEndSwordAnimation = new Animation<>(0.06f,
+            SheetCutter.cutHorizontal(player.assetManager.get("world/entities/kirby/sword/kirbyFlyEndSword.png"), 2));
     }
 
     @Override
@@ -99,9 +147,18 @@ public class PowerSword extends PowerUp {
     public Animation<TextureRegion> getSecondAnimation(PlayerCommon.AnimationType type) {
         return switch (type){
             case IDLE -> idleSwordAnimation;
-            case DOWN -> null;
-            case FLYUP -> null;
+            case DOWN -> downSwordAnimation;
+            case FLYUP -> upFlySwordAnimation;
             case WALK -> walkSwordAnimation;
+            case JUMP -> jumpSwordAnimation;
+            case FALL -> fallSwordAnimation;
+            case FALLSIMPLE -> fallSimpleSwordAnimation;
+            case RUN -> runSwordAnimation;
+            case CHANGERUN -> changeRunSwordAnimation;
+            case DASH -> dashSwordAnimation;
+            case FLY -> flySwordAnimation;
+            case FLYIN -> flyInSwordAnimation;
+            case FLYEND -> flyEndSwordAnimation;
             default -> null;
         };
     }
