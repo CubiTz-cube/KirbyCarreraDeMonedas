@@ -426,7 +426,8 @@ public class GameScreen extends UIScreen {
     public void playMinigame(){
         getPlayer().getBody().setTransform(lobbyPlayer.x, lobbyPlayer.y, 0);
         player.setPaused(true);
-        int select = random.nextInt(3);
+        main.changeScreen(Main.Screens.MINIODSPLEASE);
+        /*int select = random.nextInt(3);
 
         switch (select){
             case 0:
@@ -438,7 +439,7 @@ public class GameScreen extends UIScreen {
             case 2:
                 main.changeScreen(Main.Screens.MINIFIRE);
                 break;
-        }
+        }*/
     }
 
     @Override
