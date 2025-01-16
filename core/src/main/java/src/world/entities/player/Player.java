@@ -270,10 +270,6 @@ public class Player extends PlayerCommon {
         float distance = playerPosition.dst(fixturePosition);
         Vector2 force = direction.scl(forceMagnitude * distance);
         fixture.getBody().applyForceToCenter(force, true);
-
-        if (fixture.getUserData() instanceof Enemy enemy){
-            game.sendPacket(Packet.actDamageEnemy(enemy.getId(), 0, force.x, force.y, 1));
-        }
     }
 
     @Override

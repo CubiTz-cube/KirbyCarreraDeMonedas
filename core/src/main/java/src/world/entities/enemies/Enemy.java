@@ -107,6 +107,7 @@ public abstract class Enemy extends Entity {
     }
 
     public void takeDamage(Integer damage) {
+        if (damage <= 0) return;
         live -= damage;
         if (live > 0) game.playProximitySound(damageSound, body.getPosition(),30);
         else game.playProximitySound(deadSound, body.getPosition(),30);
