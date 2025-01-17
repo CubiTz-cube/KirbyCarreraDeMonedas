@@ -9,7 +9,7 @@ public class StateMachine {
     public void setState(State newState) {
         if (currentState != null) currentState.end();
         currentState = newState;
-        currentState.start();
+        if (currentState != null) currentState.start();
     }
 
     public State getState(){
