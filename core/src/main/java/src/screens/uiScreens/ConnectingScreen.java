@@ -51,6 +51,7 @@ public class ConnectingScreen extends UIScreen  implements PacketListener {
     public void show() {
         super.show();
         timeLabel = 0f;
+        timeDisconnectMessage = 3f;
         main.client.addListener(this);
         connectLabel.setText("Conectando");
     }
