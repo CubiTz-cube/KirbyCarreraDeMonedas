@@ -18,7 +18,7 @@ public class Plane extends Actor {
     private final Rectangle shape;
 
     public Plane(AssetManager assetManager, Rectangle shape) {
-        this.sprite = new Sprite(assetManager.get("minigames/FireFighter/plane.png", Texture.class));
+        this.sprite = new Sprite(assetManager.get("miniGames/fireFighter/plane.png", Texture.class));
         this.shape = shape;
         setBounds(shape.x, shape.y, shape.width, shape.height);
         setOrigin(getWidth() / 2, getHeight() / 2);

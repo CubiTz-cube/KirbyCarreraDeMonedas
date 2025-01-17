@@ -24,7 +24,7 @@ public class Fire extends Actor {
         animateTime = 0f;
 
         animation = new Animation<>(0.1f,SheetCutter.cutHorizontal(
-            assetManager.get("minigames/FireFighter/fire.png", Texture.class), 7));
+            assetManager.get("miniGames/fireFighter/fire.png", Texture.class), 7));
         animation.setPlayMode(Animation.PlayMode.LOOP);
 
         this.shape = shape;

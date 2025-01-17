@@ -44,7 +44,7 @@ public class FireFighterScreen extends MinigameScreen
         random = new Random();
         countGood = 0;
 
-        background = new Image(main.getAssetManager().get("minigames/FireFighter/forest.jpg", Texture.class));
+        background = new Image(main.getAssetManager().get("miniGames/fireFighter/forest.jpg", Texture.class));
         countLabel = new Label(countGood+"/"+totalFires , new Label.LabelStyle(main.getBriFont(), null));
 
         initSounds();

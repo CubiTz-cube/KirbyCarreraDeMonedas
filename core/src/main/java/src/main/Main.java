@@ -232,9 +232,9 @@ public class Main extends Game {
         assetManager.load("world/particles/turretParticle.png", Texture.class);
         assetManager.load("world/particles/kirbySwordParticle.png", Texture.class);
 
-        assetManager.load("minigames/FireFighter/plane.png", Texture.class);
-        assetManager.load("minigames/FireFighter/fire.png", Texture.class);
-        assetManager.load("minigames/FireFighter/forest.jpg", Texture.class);
+        assetManager.load("miniGames/fireFighter/plane.png", Texture.class);
+        assetManager.load("miniGames/fireFighter/fire.png", Texture.class);
+        assetManager.load("miniGames/fireFighter/forest.jpg", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (1).png", Texture.class);
