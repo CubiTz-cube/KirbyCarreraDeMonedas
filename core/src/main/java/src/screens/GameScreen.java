@@ -493,7 +493,7 @@ public class GameScreen extends UIScreen {
 
         Image pauseBg = new Image(main.getAssetManager().get("ui/bg/whiteBg.png", Texture.class));
 
-        ImageTextButton exitButton = new ImageTextButton("Salir", myImageTextbuttonStyle);
+        ImageTextButton exitButton = new ImageTextButton("Desconectarse", myImageTextbuttonStyle);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -507,7 +507,7 @@ public class GameScreen extends UIScreen {
 
         layersManager.setZindex(0);
         optionTable = new OptionTable(main.getSkin(), layersManager.getLayer(), main.getBriFont());
-        layersManager.getLayer().add(exitButton).width(200).padTop(10);
+        layersManager.getLayer().add(exitButton).width(400).padTop(10);
         layersManager.getLayer().setVisible(false);
 
         layersManager.setZindex(1);
