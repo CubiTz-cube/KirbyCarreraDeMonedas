@@ -55,7 +55,7 @@ public class OdsPleaseScreen extends MinigameScreen {
     private Sound badSound;
 
     public OdsPleaseScreen(Main main, GameScreen game) {
-        super(main, game, "¡No dejes pasar a los que tengan un ODS equivocado!\n" +
+        super(main, game,"ODS Please", "¡No dejes pasar a los que tengan un ODS equivocado!\n" +
             "   - Pulsa A para denegar y D para permitir el paso.");
         layersManager = new LayersManager(stageUI, 5);
         random = new Random();

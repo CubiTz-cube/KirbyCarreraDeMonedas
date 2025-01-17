@@ -228,7 +228,7 @@ public class Main extends Game {
 
         assetManager.load("minigames/FireFighter/plane.png", Texture.class);
         assetManager.load("minigames/FireFighter/fire.png", Texture.class);
-        assetManager.load("minigames/FireFighter/forest.png", Texture.class);
+        assetManager.load("minigames/FireFighter/forest.jpg", Texture.class);
         assetManager.load("miniGames/odsPlease/Desk.png", Texture.class);
         assetManager.load("miniGames/odsPlease/CheckpointBack.png", Texture.class);
         assetManager.load("miniGames/odsPlease/odsPng/ods (1).png", Texture.class);

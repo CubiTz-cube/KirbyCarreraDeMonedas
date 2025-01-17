@@ -124,7 +124,7 @@ public class GameScreen extends UIScreen {
         threadSecureWorld = new ThreadSecureWorld(world);
 
         tiledManager = new TiledManager(this);
-        tiledRenderer = tiledManager.setupMap("tiled/maps/testMap.tmx");
+        tiledRenderer = tiledManager.setupMap("tiled/maps/gameMap.tmx");
 
         world.setContactListener(new GameContactListener(this));
         lastPosition = new Vector2();
@@ -426,20 +426,19 @@ public class GameScreen extends UIScreen {
     public void playMinigame(){
         getPlayer().getBody().setTransform(lobbyPlayer.x, lobbyPlayer.y, 0);
         player.setPaused(true);
-        main.changeScreen(Main.Screens.MINIODSPLEASE);
-        /*int select = random.nextInt(3);
+        int select = random.nextInt(2);
 
         switch (select){
             case 0:
-                main.changeScreen(Main.Screens.MINIDUCK);
+                main.changeScreen(Main.Screens.MINIFIRE);
                 break;
             case 1:
                 main.changeScreen(Main.Screens.MINIODSPLEASE);
                 break;
-            case 2:
-                main.changeScreen(Main.Screens.MINIFIRE);
-                break;
-        }*/
+            /*case 2:
+                main.changeScreen(Main.Screens.MINIDUCK);
+                break;*/
+        }
     }
 
     @Override

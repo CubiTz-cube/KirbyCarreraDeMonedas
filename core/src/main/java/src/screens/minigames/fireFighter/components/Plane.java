@@ -4,56 +4,60 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import src.utils.constants.PlayerControl;
 
 public class Plane extends Actor {
-    private final float speed = 12f;
-    private final float rotationSpeed = 90f;
-    private final Texture texture;
-    private final Vector2 position;
-    private float rotationDegrees;
+    private final float speed = 230f;
+    private final float rotationSpeed = 120f;
 
-    public Plane(AssetManager assetManager, Vector2 initialPosition) {
-        this.texture = assetManager.get("minigames/FireFighter/plane.png", Texture.class);
-        this.position = initialPosition;
-        this.rotationDegrees = 0f;
+    private final Sprite sprite;
+    private final Rectangle shape;
+
+    public Plane(AssetManager assetManager, Rectangle shape) {
+        this.sprite = new Sprite(assetManager.get("minigames/FireFighter/plane.png", Texture.class));
+        this.shape = shape;
+        setBounds(shape.x, shape.y, shape.width, shape.height);
+        setOrigin(getWidth() / 2, getHeight() / 2);
     }
 
-    public Texture getTexture() {
-        return texture;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public float getRotationDegrees() {
-        return rotationDegrees;
-    }
-
-    public Rectangle getBody() {
-        return new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
+    public Rectangle getShape() {
+        return shape;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+        sprite.setOriginCenter();
+        sprite.setRotation(getRotation());
+        sprite.setBounds(getX(), getY(), getWidth(), getHeight());
+        shape.set(getX(), getY(), getWidth(), getHeight());
+        sprite.draw(batch);
     }
 
     @Override
     public void act(float delta) {
         if (Gdx.input.isKeyPressed(PlayerControl.LEFT)) {
-            rotationDegrees += rotationSpeed * delta;
+            setRotation(getRotation() + rotationSpeed * delta);
         }
         if (Gdx.input.isKeyPressed(PlayerControl.RIGHT)) {
-            rotationDegrees -= rotationSpeed * delta;
+            setRotation(getRotation() - rotationSpeed * delta);
         }
 
-        float radians = (float) Math.toRadians(rotationDegrees);
-        position.x += (float) (speed * delta * Math.cos(radians));
-        position.y += (float) (speed * delta * Math.sin(radians));
+        float radians = (float) Math.toRadians(getRotation());
+        float x = (float) (speed * delta * Math.cos(radians));
+        float y = (float) (speed * delta * Math.sin(radians));
+
+        float newPosCenterX = getX() + x + getWidth()/2;
+        float newPosCenterY = getY() + y + getHeight()/2;
+
+        if (newPosCenterX < 0 || newPosCenterX > 1280
+            || newPosCenterY < 0 || newPosCenterY > 720) {
+            return;
+        }
+
+        moveBy(x,y);
     }
 }

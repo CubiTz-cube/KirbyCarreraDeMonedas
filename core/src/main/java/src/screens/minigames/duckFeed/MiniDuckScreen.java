@@ -14,7 +14,7 @@ public class MiniDuckScreen extends MinigameScreen {
     private float x = 0;
 
     public MiniDuckScreen(Main main, GameScreen game) {
-        super(main, game, "En contruccion");
+        super(main, game, "Patos!", "En contruccion");
 
         Skin skin = main.getSkin();
 

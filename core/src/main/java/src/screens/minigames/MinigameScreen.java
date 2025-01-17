@@ -36,7 +36,7 @@ public abstract class MinigameScreen extends UIScreen {
      * @param main
      * @param game
      */
-    public MinigameScreen(Main main, GameScreen game, String description) {
+    public MinigameScreen(Main main, GameScreen game, String title, String description) {
         super(main);
         this.game = game;
         timeStart = 0f;
@@ -50,7 +50,10 @@ public abstract class MinigameScreen extends UIScreen {
         timeStartlabel = new Label("Empieza en" + timeStart, new Label.LabelStyle(main.getBriFont(), null));
         timeStartlabel.setFontScale(1.2f);
 
-        Label descriptionlabel = new Label("Pulsa cualquier tecla para omitir\n" + description, new Label.LabelStyle(main.getInterFont(), null));
+        Label titleLabel = new Label(title, new Label.LabelStyle(main.getBriFont(), null));
+        Label infoLabel = new Label("Pulsa cualquier tecla para omitir", new Label.LabelStyle(main.getInterFont(), null));
+        Label descriptionlabel = new Label( description, new Label.LabelStyle(main.getInterFont(), null));
+        descriptionlabel.setFontScale(0.9f);
 
 
         background = new Image(main.getAssetManager().get("background/backgroundBeach.png", Texture.class));
@@ -58,7 +61,11 @@ public abstract class MinigameScreen extends UIScreen {
 
         layersManager.setZindex(0);
         layersManager.getLayer().center();
+        layersManager.getLayer().add(titleLabel).expandX();
+        layersManager.getLayer().row();
         layersManager.getLayer().add(timeStartlabel).expandX();
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(infoLabel).expandX();
         layersManager.getLayer().row();
         layersManager.getLayer().add(descriptionlabel).expandX();
 

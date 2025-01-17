@@ -1,9 +1,10 @@
 package src.screens.minigames.fireFighter;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import src.main.Main;
 import src.screens.GameScreen;
 import src.screens.components.LayersManager;
@@ -11,41 +12,72 @@ import src.screens.minigames.MinigameScreen;
 import src.screens.minigames.fireFighter.components.Fire;
 import src.screens.minigames.fireFighter.components.Plane;
 import com.badlogic.gdx.math.Rectangle;
-import java.util.ArrayList;
+
+import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import static src.utils.constants.Constants.COIN_PER_MINIGAME;
 
 public class FireFighterScreen extends MinigameScreen
 {
-    private final Integer max = 9;
+    private final Integer max = 4;
+    private final Integer totalFires = 10;
 
     private final LayersManager layersManager;
 
-    private final ArrayList<Fire> fires;
+    private final CopyOnWriteArrayList<Fire> fires;
+    private final Random random;
     private Plane plane;
+    private Integer countGood;
+
+    private Label countLabel;
 
     private Sound goodSound;
 
     private final Image background;
 
     public FireFighterScreen(Main main, GameScreen game) {
-        super(main, game, "Muevete con D y A y vuela sobre los incendios para apagarlos.");
+        super(main, game, "Apaga Incendios!","Muevete con D y A y vuela sobre los incendios para apagarlos.");
 
-        layersManager = new LayersManager(stageUI, 4);
-        fires = new ArrayList<>();
+        layersManager = new LayersManager(stageUI, 2);
+        fires = new CopyOnWriteArrayList<>();
+        random = new Random();
+        countGood = 0;
 
-        background = new Image(main.getAssetManager().get("minigames/FireFighter/forest.png", Texture.class));
+        background = new Image(main.getAssetManager().get("minigames/FireFighter/forest.jpg", Texture.class));
+        countLabel = new Label(countGood+"/"+totalFires , new Label.LabelStyle(main.getBriFont(), null));
 
-        layersManager.setZindex(3);
+        initSounds();
+
+        layersManager.setZindex(0);
+        layersManager.getLayer().top().padTop(50);
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(timeMinigameLabel);
+        layersManager.getLayer().add().expandX();
+        layersManager.getLayer().add(countLabel);
+        layersManager.getLayer().add().expandX();
+
+        layersManager.setZindex(1);
         layersManager.getLayer().add(background).grow();
-        
     }
 
-    private void initSprites() {
-        main.getAssetManager().get("minigames/FireFighter/fire.png", Texture.class);
+    private void initActors(){
+        plane = new Plane(main.getAssetManager(), new Rectangle(20,20,64,64));
+        stageUI.addActor(plane);
 
-        plane = new Plane(main.getAssetManager(), new Vector2(0, 0));
         for (int i = 0; i < max; i++) {
-            fires.add(new Fire(main.getAssetManager(), new Vector2((float) Math.random() * 10, (float) Math.random() * 10)));
+            addFire();
         }
+    }
+
+    private void addFire(){
+        float x = random.nextFloat(100, Gdx.graphics.getHeight() - 100);
+        float y = random.nextFloat(100, Gdx.graphics.getHeight() - 100);
+
+        Fire newFire = new Fire(main.getAssetManager(), new Rectangle(x,y,48,48));
+
+        stageUI.addActor(newFire);
+        fires.add(newFire);
     }
 
     private void initSounds(){
@@ -53,25 +85,48 @@ public class FireFighterScreen extends MinigameScreen
     }
 
     private void checkCollisions() {
-        Rectangle planeBounds = plane.getBody();
+        Rectangle planeBounds = plane.getShape();
 
         for (Fire fire : fires) {
-            Rectangle fireBounds = fire.getBody();
+            Rectangle fireBounds = fire.getShape();
 
             if (planeBounds.overlaps(fireBounds)) {
-                fires.remove(fire);
-                goodSound.play();
-                break;
+                removeFireAddPoint(fire);
             }
         }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        if (plane == null) return;
+
+        float scaleX = 1280f / width;
+        float scaleY = 720f / height;
+
+        plane.setScale(scaleX, scaleY);
+        for (Fire fire : fires) fire.setScale(scaleX, scaleY);
+    }
+
+    private void removeFireAddPoint(Fire fire){
+        fire.remove();
+        fires.remove(fire);
+        addFire();
+
+        goodSound.play();
+
+        countGood += 1;
+        countLabel.setText((countGood+"/"+totalFires));
+        if (countGood >= totalFires) endMinigame();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         if (!isGameStarted()) return;
-        if (!layersManager.isVisible()) layersManager.setVisible(true);
-
+        if (!layersManager.isVisible()) {
+            layersManager.setVisible(true);
+            initActors();
+        }
         checkCollisions();
     }
 
@@ -79,7 +134,17 @@ public class FireFighterScreen extends MinigameScreen
     public void show() {
         super.show();
         layersManager.setVisible(false);
-        initSprites();
-        initSounds();
+        countGood = 0;
+        countLabel.setText((countGood+"/"+totalFires));
+    }
+
+    @Override
+    public void endMinigame() {
+        super.endMinigame();
+        int totalPoints = (countGood / totalFires) * COIN_PER_MINIGAME;
+        game.setScore(game.getScore() + totalPoints);
+
+        plane.remove();
+        for (Fire fire : fires) fire.remove();
     }
 }
