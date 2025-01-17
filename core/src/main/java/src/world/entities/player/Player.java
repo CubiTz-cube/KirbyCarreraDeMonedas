@@ -84,6 +84,7 @@ public class Player extends PlayerCommon {
     private Sound starSound;
     private Sound removeSelectSound;
 
+
     public Player(World world, Float x, Float y, AssetManager assetManager, GameScreen game, Color color) {
         super(world, x,y, assetManager, -1);
         this.game = game;
@@ -288,6 +289,7 @@ public class Player extends PlayerCommon {
         if (!Gdx.input.isKeyPressed(PlayerControl.LEFT) && !Gdx.input.isKeyPressed(PlayerControl.RIGHT)){
             body.applyForce(-velocity.x * brakeForce * delta, 0, body.getWorldCenter().x, body.getWorldCenter().y, true);
         }
+
     }
 
     public void lossPoints(Integer amount){
@@ -421,4 +423,5 @@ public class Player extends PlayerCommon {
             Box2dUtils.knockbackBody(body, other.getBody(), 10f);
         }
     }
+
 }

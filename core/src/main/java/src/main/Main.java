@@ -213,6 +213,9 @@ public class Main extends Game {
         assetManager.load("world/entities/basic/basicIdle.png", Texture.class);
         assetManager.load("world/entities/basic/basicWalk.png", Texture.class);
         assetManager.load("world/entities/basic/basicDamage.png", Texture.class);
+        assetManager.load("world/entities/water/waterBlockX.png", Texture.class);
+        assetManager.load("world/entities/water/waterBlockY.png", Texture.class);
+        assetManager.load("world/entities/water/waterBlockXL.png", Texture.class);
         assetManager.load("world/entities/blocks/fallBlock.png", Texture.class);
         assetManager.load("world/entities/blocks/fallBlockBreak.png", Texture.class);
         assetManager.load("world/entities/blocks/swordBreakBlock.png", Texture.class);

@@ -31,6 +31,8 @@ public abstract class ActorBox2d extends Actor {
 
     public void beginContactWith(ActorBox2d actor, GameScreen game){}
 
+    public void endContactWith(ActorBox2d actor, GameScreen game){}
+
     public void detach(){
         body.destroyFixture(fixture);
         for (int i = 0; i< body.getFixtureList().size; i++){

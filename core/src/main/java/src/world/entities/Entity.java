@@ -40,7 +40,9 @@ public abstract class Entity extends ActorBox2dSprite {
         FALLBLOCK,
         BREAKBLOCK,
         SWORDBREAKBLOCK,
-        //WATERIMPULSE,
+        WATERBLOCKR,
+        WATERBLOCKL,
+        WATERBLOCKD,
         BOMBBREAKBLOCK,
     }
     protected Type type;

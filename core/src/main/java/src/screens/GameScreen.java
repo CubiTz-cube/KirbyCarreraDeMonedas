@@ -426,19 +426,20 @@ public class GameScreen extends UIScreen {
     public void playMinigame(){
         getPlayer().getBody().setTransform(lobbyPlayer.x, lobbyPlayer.y, 0);
         player.setPaused(true);
-        int select = random.nextInt(2);
+        main.changeScreen(Main.Screens.MINIODSPLEASE);
+        /*int select = random.nextInt(3);
 
         switch (select){
             case 0:
-                main.changeScreen(Main.Screens.MINIFIRE);
+                main.changeScreen(Main.Screens.MINIDUCK);
                 break;
             case 1:
                 main.changeScreen(Main.Screens.MINIODSPLEASE);
                 break;
-            /*case 2:
-                main.changeScreen(Main.Screens.MINIDUCK);
-                break;*/
-        }
+            case 2:
+                main.changeScreen(Main.Screens.MINIFIRE);
+                break;
+        }*/
     }
 
     @Override
