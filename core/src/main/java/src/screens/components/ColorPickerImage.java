@@ -34,7 +34,7 @@ public class ColorPickerImage extends Image implements Disposable {
     private boolean isInsideCircle(float x, float y) {
         float centerX = getWidth() / 2;
         float centerY = getHeight() / 2;
-        float radius = pixmap.getWidth() / 2f;
+        float radius = pixmap.getWidth() / 2f - 1;
 
         float dx = x - centerX;
         float dy = y - centerY;
