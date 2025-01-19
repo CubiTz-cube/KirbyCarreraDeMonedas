@@ -73,7 +73,7 @@ Creado para la materia Programación Orientada a Objetos en el tercer semestre d
 3. Ejecuta el .exe.
 
 > [!IMPORTANT]
-> Necesita terner instalado Java 17 o superior para ejecutar el programa.
+> Necesita tener instalado Java 17 o superior para ejecutar el programa.
 
 ### Más imágenes
 
