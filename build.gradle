@@ -52,8 +52,8 @@ configure(subprojects) {
 }
 
 subprojects {
-  version = '0.7.0'
-  ext.appName = 'Kirby CubiTz'
+  version = '1.0.0'
+  ext.appName = 'Kirby Carrera de Monedas'
   repositories {
     mavenCentral()
     maven { url 'https://s01.oss.sonatype.org' }
