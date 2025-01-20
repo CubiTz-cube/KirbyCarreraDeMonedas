@@ -4,7 +4,7 @@
 
 # ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white) Kirby Carrera de Monedas
 ¡Consigue la mayor cantidad de OdsCoins antes de que termine el tiempo! Juega solo o con hasta 24 jugadores vía LAN en una batalla de velocidad por ver quién
-Obtiene más monedas completando los minijuegos dentro de los espejos que aparecen en el mapa. Obtén poderes de los enemigos en tu camino y úsalos para ganar.
+acumula más monedas completando los minijuegos dentro de los espejos que aparecen en el mapa. Obtén poderes de los enemigos en tu camino y úsalos para ganar.
 Creado para la materia Programación Orientada a Objetos en el tercer semestre de la [UCAB](https://www.ucab.edu.ve/).
 
 > Agradecimiento especial a [JackWithAburger](https://youtube.com/@jackwithaburger?si=55igK-AIyhREg5DJ) y [Solaris](https://youtube.com/@solardtm?si=aBxRperL4muak9kC) por la música 🎵
