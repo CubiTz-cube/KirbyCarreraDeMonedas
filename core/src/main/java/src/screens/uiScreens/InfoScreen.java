@@ -21,7 +21,7 @@ public class InfoScreen extends BlueCircleScreen {
             "Objetivo:\n" +
             "Al entrar en un espejo podras hacer un minijuego que te puede dar de 1 a 3 monedas" +
             ". Obten la mayor cantidad de monedas antes de que se acabe el tiempo\n",
-            new Label.LabelStyle(main.getInterFont(), MyColors.BLUE));
+            new Label.LabelStyle(main.fonts.interFont, MyColors.BLUE));
         infoLabel.setFontScale(0.7f);
         infoLabel.setWrap(true);
 
@@ -31,7 +31,7 @@ public class InfoScreen extends BlueCircleScreen {
                 "Version: 0.8v\n" +
                 "Desarrolladora: CubiTz\n" +
                 "Desarrolladores: Daniel Carreño, Jose Pereira, Cesar Ostos\n",
-            new Label.LabelStyle(main.getInterFont(), MyColors.BLUE));
+            new Label.LabelStyle(main.fonts.interFont, MyColors.BLUE));
         infoTechLabel.setFontScale(0.7f);
 
         layersManager.setZindex(0);

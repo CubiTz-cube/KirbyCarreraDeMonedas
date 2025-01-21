@@ -25,6 +25,7 @@ public class ColorPickerImage extends Image implements Disposable {
                 int pixelX = (int) x;
                 int pixelY = (int) (getHeight() - y);
                 int colorInt = pixmap.getPixel(pixelX, pixelY);
+                if (colorInt == 0x00000000) return;
 
                 selectColor.set(colorInt);
             }

@@ -15,7 +15,7 @@ public class OptionScreen extends BlueCircleScreen {
         LayersManager layersManager = new LayersManager(stageUI, 1);
 
         layersManager.setZindex(0);
-        optionTable = new OptionTable(skin, layersManager.getLayer(), main.getBriFont());
+        optionTable = new OptionTable(skin, layersManager.getLayer(), main.fonts.briFont);
     }
 
     @Override

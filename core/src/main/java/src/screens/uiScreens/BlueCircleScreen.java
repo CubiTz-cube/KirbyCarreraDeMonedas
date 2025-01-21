@@ -23,7 +23,7 @@ public class BlueCircleScreen extends UIScreen{
 
         LayersManager layersManager = new LayersManager(stageUI, 5);
 
-        Label titleLabel = new Label(title, new Label.LabelStyle(main.getBriTitleFont(), Color.WHITE));
+        Label titleLabel = new Label(title, new Label.LabelStyle(main.fonts.briTitleFont, Color.WHITE));
         titleLabel.setAlignment(Align.center);
 
         Texture lineTexture = main.getAssetManager().get("ui/bg/lineBg.png", Texture.class);

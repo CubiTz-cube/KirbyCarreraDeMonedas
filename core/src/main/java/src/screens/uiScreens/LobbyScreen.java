@@ -3,10 +3,8 @@ package src.screens.uiScreens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -15,7 +13,6 @@ import src.main.Main;
 import src.net.PacketListener;
 import src.net.PlayerInfo;
 import src.net.packets.Packet;
-import src.screens.components.ColorField;
 import src.screens.components.ColorPickerImage;
 import src.screens.components.LayersManager;
 import src.utils.constants.MyColors;
@@ -33,7 +30,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         super(main);
         Skin skin = main.getSkin();
 
-        Label titleLabel = new Label("Partida", new Label.LabelStyle(main.getBriTitleFont(), Color.WHITE));
+        Label titleLabel = new Label("Partida", new Label.LabelStyle(main.fonts.briTitleFont, Color.WHITE));
         titleLabel.setAlignment(Align.center);
 
         Texture pinkLineTexture = main.getAssetManager().get("ui/bg/pinkLineBg.png", Texture.class);
@@ -50,7 +47,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         aroColorImage.setScaling(Scaling.fit);
         aroColorImage.setAlign(Align.bottomLeft);
 
-        mainKirbyName = new Label("Sin nombre", new Label.LabelStyle(main.getInterNameFont(), MyColors.PINK));
+        mainKirbyName = new Label("Sin nombre", new Label.LabelStyle(main.fonts.interNameFont, MyColors.PINK));
         mainKirbyName.setAlignment(Align.center);
         mainKirbyImage = new Image(main.getAssetManager().get("ui/bg/kirbyIdleBg.png", Texture.class));
         mainKirbyImage.setScaling(Scaling.fit);
@@ -93,6 +90,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
         colorWheel.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (main.playerColor.equals(colorWheel.getSelectColor())) return;
                 main.playerColor.set(colorWheel.getSelectColor());
                 mainKirbyImage.setColor(colorWheel.getSelectColor());
                 main.client.send(Packet.actEntityColor(-1, main.playerColor.r, main.playerColor.g, main.playerColor.b, main.playerColor.a));
@@ -148,7 +146,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     public void show() {
         super.show();
         playButton.setVisible(main.server != null);
-        mainKirbyName.setText(main.getName());
+        mainKirbyName.setText(main.getPlayerName());
         main.client.addListener(this);
         updatePlayersTable();
     }
@@ -161,7 +159,7 @@ public class LobbyScreen extends UIScreen implements PacketListener {
     private void updatePlayersTable() {
         playersTable.clear();
         for (PlayerInfo player : main.client.getPlayersConnected().values()) {
-            Label nameLabel = new Label(player.getName(), new Label.LabelStyle(main.getInterNameFont(), MyColors.PINK));
+            Label nameLabel = new Label(player.getName(), new Label.LabelStyle(main.fonts.interNameFont, MyColors.PINK));
             nameLabel.setAlignment(Align.center);
             playersTable.add(nameLabel).pad(25).expandX().fillX().center();
         }

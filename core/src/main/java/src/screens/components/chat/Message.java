@@ -6,12 +6,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 
 public class Message extends Label {
+    private Integer maxTime;
+    private Integer opaqueTime;
+
     private Float timeDespawn;
 
-    public Message(String text, Label.LabelStyle style) {
+    public Message(String text, Label.LabelStyle style, Integer maxTime, Integer opaqueTime) {
         super(text, style);
+        this.maxTime = maxTime;
+        this.opaqueTime = opaqueTime;
         timeDespawn = 0f;
         setAlignment(Align.topLeft);
+    }
+
+    public Message(String text, Label.LabelStyle style) {
+        this(text, style, 10, 7);
     }
 
     @Override

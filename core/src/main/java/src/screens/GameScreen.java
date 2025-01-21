@@ -61,6 +61,7 @@ public class GameScreen extends UIScreen {
     private final Stage stage;
     private final World world;
     public ThreadSecureWorld threadSecureWorld;
+    private Boolean isLoad;
 
     // Tiled
     private final OrthogonalTiledMapRenderer tiledRenderer;
@@ -107,8 +108,8 @@ public class GameScreen extends UIScreen {
     private Sound pauseSound;
     private Sound pauseExitSound;
 
+    // Debug
     private final Box2DDebugRenderer debugRenderer;
-    private Boolean isLoad;
 
     public GameScreen(Main main){
         super(main);
@@ -472,18 +473,18 @@ public class GameScreen extends UIScreen {
 
         Image timeImage = new Image(main.getAssetManager().get("ui/icons/clock.png", Texture.class));
 
-        gameTimeLabel = new Label(timeGame.toString(), new Label.LabelStyle(main.getBriBorderFont(), null));
+        gameTimeLabel = new Label(timeGame.toString(), new Label.LabelStyle(main.fonts.briBorderFont, null));
         gameTimeLabel.setAlignment(Align.left);
         gameTimeLabel.setFontScale(1);
 
         Image coinImage = new Image(main.getAssetManager().get("ui/icons/coinIcon.png", Texture.class));
         coinImage.setScaling(Scaling.fit);
 
-        odsPointsLabel = new Label("0", new Label.LabelStyle(main.getBriBorderFont(), null));
+        odsPointsLabel = new Label("0", new Label.LabelStyle(main.fonts.briBorderFont, null));
         odsPointsLabel.setAlignment(Align.left);
         odsPointsLabel.setFontScale(0.8f);
 
-        chat = new Chat(new Label.LabelStyle(main.getInterFont(), null));
+        chat = new Chat(new Label.LabelStyle(main.fonts.interFont, null));
 
         mirrorIndicators = new IndicatorManager(main.getAssetManager().get("ui/indicators/mirrorIndicator.png", Texture.class));
         maxScoreIndicator = new BorderIndicator(main.getAssetManager().get("ui/indicators/maxScoreIndicator.png", Texture.class), new Vector2(0,0));
@@ -506,7 +507,7 @@ public class GameScreen extends UIScreen {
         stage.addActor(maxScoreIndicator);
 
         layersManager.setZindex(0);
-        optionTable = new OptionTable(main.getSkin(), layersManager.getLayer(), main.getBriFont());
+        optionTable = new OptionTable(main.getSkin(), layersManager.getLayer(), main.fonts.briFont);
         layersManager.getLayer().add(exitButton).width(400).padTop(10);
         layersManager.getLayer().setVisible(false);
 

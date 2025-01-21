@@ -21,6 +21,7 @@ import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
 import src.utils.FontCreator;
+import src.utils.Fonts;
 import src.utils.constants.MyColors;
 import src.utils.sound.SingleSoundManager;
 import src.utils.sound.SoundManager;
@@ -34,8 +35,6 @@ public class Main extends Game {
     private AssetManager assetManager;
     private ArrayList<Screen> screensList;
     private Skin skin;
-    private AtomicInteger ids;
-    public Color playerColor;
     public enum Screens {
         INTRO,
         MENU,
@@ -53,21 +52,18 @@ public class Main extends Game {
         MINIODSPLEASE,
     }
 
+    private AtomicInteger ids;
+    public Color playerColor;
+    private String playerName;
+    private String ip;
+    private Integer port;
+
     public Server server;
     public Client client;
     private ExecutorService serverThread = Executors.newSingleThreadExecutor();
     private ExecutorService clientThread = Executors.newSingleThreadExecutor();
 
-    private String name;
-    private String ip;
-    private Integer port;
-
-    private BitmapFont interFont;
-    private BitmapFont interNameFont;
-    private BitmapFont interNameFontSmall;
-    private BitmapFont briFont;
-    private BitmapFont briTitleFont;
-    private BitmapFont briBorderFont;
+    public Fonts fonts;
 
     private SoundManager soundManager;
     public enum SoundTrackType {
@@ -84,9 +80,9 @@ public class Main extends Game {
         initAssets();
 
         soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.1f);
+        soundManager.setVolumeMusic(0.0f);
         initSounds();
-        initFonts();
+        fonts = new Fonts();
         initScreens();
 
         changeScreen(Screens.INTRO);
@@ -311,36 +307,6 @@ public class Main extends Game {
         System.out.println("Assets loaded.");
     }
 
-    private void initFonts(){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        briFont = FontCreator.createFont(48, Color.WHITE, generator, new FreeTypeFontGenerator.FreeTypeFontParameter());
-
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
-        interFont = FontCreator.createFont(40, Color.WHITE, generator, new FreeTypeFontGenerator.FreeTypeFontParameter());
-
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Bricolage_Grotesque/BricolageGrotesque_48pt-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.borderWidth = 4;
-        parameter.borderColor = MyColors.BLUE;
-        parameter.shadowColor = MyColors.BLUE;
-        parameter.shadowOffsetX = -2;
-        parameter.shadowOffsetY = 2;
-        briTitleFont = FontCreator.createFont(48, MyColors.YELLOW, generator, parameter);
-        parameter.borderColor = Color.BLACK;
-        parameter.shadowColor = null;
-        parameter.shadowOffsetX = 0;
-        parameter.shadowOffsetY = 0;
-        briBorderFont = FontCreator.createFont(48, Color.WHITE, generator, parameter);
-
-        generator= new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Inter/Inter_28pt-Regular.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.borderWidth = 3;
-        parameter.borderColor = Color.BLACK;
-        interNameFont = FontCreator.createFont(32, MyColors.PINK, generator, parameter);
-        parameter.borderWidth = 2;
-        interNameFontSmall = FontCreator.createFont(14, MyColors.PINK, generator, parameter);
-    }
-
     private void initSounds(){
         soundManager.addSoundTrack(SoundTrackType.MENU);
         soundManager.addSoundTrack(SoundTrackType.GAME);
@@ -371,44 +337,18 @@ public class Main extends Game {
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
     }
 
-    public BitmapFont getBriFont() {
-        return briFont;
+    public void setPlayerName(String name) {
+        if (name.isEmpty()) this.playerName = "Sin nombre";
+        else this.playerName = name;
     }
-
-    public BitmapFont getInterFont() {
-        return interFont;
-    }
-
-    public BitmapFont getBriTitleFont() {
-        return briTitleFont;
-    }
-
-    public BitmapFont getInterNameFont() {
-        return interNameFont;
-    }
-
-    public BitmapFont getInterNameFontSmall() {
-        return interNameFontSmall;
-    }
-
-    public BitmapFont getBriBorderFont() {
-        return briBorderFont;
-    }
-
-    public void setName(String name) {
-        if (name.isEmpty()) this.name = "Sin nombre";
-        else this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    public String getPlayerName() {
+        return playerName;
     }
 
     public void setIp(String ip) {
         if (ip.isEmpty()) this.ip = "localhost";
         else this.ip = ip;
     }
-
     public String getIp() {
         return ip;
     }
@@ -416,7 +356,6 @@ public class Main extends Game {
     public void setIds(int ids) {
         this.ids.set(ids);
     }
-
     public Integer getIds() {
         return ids.incrementAndGet();
     }
@@ -424,7 +363,6 @@ public class Main extends Game {
     public void setPort(Integer port) {
         this.port = port;
     }
-
     public Integer getPort() {
         return port;
     }
@@ -461,7 +399,7 @@ public class Main extends Game {
 
     public void startClient(String ip, int port){
         if (client != null) closeClient();
-        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port, name);
+        client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port, playerName);
         clientThread.execute(client);
     }
 
@@ -493,11 +431,6 @@ public class Main extends Game {
             screen.dispose();
         }
         soundManager.dispose();
-        interFont.dispose();
-        interNameFont.dispose();
-        interNameFontSmall.dispose();
-        briFont.dispose();
-        briTitleFont.dispose();
-        briBorderFont.dispose();
+        fonts.dispose();
     }
 }

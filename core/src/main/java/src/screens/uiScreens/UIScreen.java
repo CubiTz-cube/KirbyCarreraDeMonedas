@@ -39,14 +39,14 @@ public abstract class UIScreen extends BaseScreen {
 
         myImageTextbuttonStyle = new ImageTextButton.ImageTextButtonStyle();
         myImageTextbuttonStyle.up = drawableUp;
-        myImageTextbuttonStyle.font = main.getBriFont();
+        myImageTextbuttonStyle.font = main.fonts.briFont;
         myImageTextbuttonStyle.over = drawableHover;
         myImageTextbuttonStyle.overFontColor = MyColors.BLUE;
 
         Drawable drawableBg = new TextureRegionDrawable(main.getAssetManager().get("ui/buttons/input.png", Texture.class));
 
         myTextFieldStyle = new TextField.TextFieldStyle();
-        myTextFieldStyle.font = main.getInterFont();
+        myTextFieldStyle.font = main.fonts.interFont;
         myTextFieldStyle.fontColor = MyColors.BLUE;
         myTextFieldStyle.background = drawableBg;
         myTextFieldStyle.cursor = skin.getDrawable("textFieldCursor");

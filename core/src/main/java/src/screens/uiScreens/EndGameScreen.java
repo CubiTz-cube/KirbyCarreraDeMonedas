@@ -32,10 +32,10 @@ public class EndGameScreen extends UIScreen{
         super(main);
         this.game = game;
 
-        labelTitleStyle = new Label.LabelStyle(main.getBriBorderFont(), Color.WHITE);
-        labelStyle = new Label.LabelStyle(main.getInterFont(), Color.WHITE);
+        labelTitleStyle = new Label.LabelStyle(main.fonts.briBorderFont, Color.WHITE);
+        labelStyle = new Label.LabelStyle(main.fonts.interFont, Color.WHITE);
 
-        titleLabel = new Label("Puntuación", new Label.LabelStyle(main.getBriTitleFont(), Color.WHITE));
+        titleLabel = new Label("Puntuación", new Label.LabelStyle(main.fonts.briTitleFont, Color.WHITE));
         titleLabel.setAlignment(Align.center);
 
         Texture pinkLineTexture = main.getAssetManager().get("ui/bg/pinkLineBg.png", Texture.class);

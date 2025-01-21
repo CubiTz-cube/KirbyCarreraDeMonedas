@@ -30,7 +30,7 @@ public class ConnectingScreen extends UIScreen  implements PacketListener {
 
         Image whiteContainerImage = new Image(main.getAssetManager().get("ui/bg/whiteContainerBg.png", Texture.class));
 
-        connectLabel = new Label("Conectando", new Label.LabelStyle(main.getInterFont(), MyColors.BLUE));
+        connectLabel = new Label("Conectando", new Label.LabelStyle(main.fonts.interFont, MyColors.BLUE));
         connectLabel.setAlignment(Align.left);
         connectLabel.setFontScale(2.5f);
 

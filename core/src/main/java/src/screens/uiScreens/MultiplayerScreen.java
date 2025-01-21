@@ -21,14 +21,14 @@ public class MultiplayerScreen extends BlueCircleScreen {
         TextField nameTextField = new TextField("Sin nombre", myTextFieldStyle);
         nameTextField.setAlignment(Align.center);
 
-        Label nameLabel = new Label("Nombre", new Label.LabelStyle(main.getBriFont(), MyColors.BLUE));
+        Label nameLabel = new Label("Nombre", new Label.LabelStyle(main.fonts.briFont, MyColors.BLUE));
         nameLabel.setAlignment(Align.center);
 
         ImageTextButton joinButton = new ImageTextButton("Unirse", myImageTextbuttonStyle);
         joinButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setName(nameTextField.getText());
+                main.setPlayerName(nameTextField.getText());
                 main.changeScreen(Main.Screens.JOIN);
             }
         });
@@ -38,7 +38,7 @@ public class MultiplayerScreen extends BlueCircleScreen {
         createButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setName(nameTextField.getText());
+                main.setPlayerName(nameTextField.getText());
                 main.changeScreen(Main.Screens.SERVER);
             }
         });

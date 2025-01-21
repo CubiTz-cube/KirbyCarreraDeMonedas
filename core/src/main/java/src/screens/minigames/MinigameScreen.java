@@ -47,12 +47,12 @@ public abstract class MinigameScreen extends UIScreen {
 
         layersManager = new LayersManager(stageUI, 2);
 
-        timeStartlabel = new Label("Empieza en" + timeStart, new Label.LabelStyle(main.getBriFont(), null));
+        timeStartlabel = new Label("Empieza en" + timeStart, new Label.LabelStyle(main.fonts.briFont, null));
         timeStartlabel.setFontScale(1.2f);
 
-        Label titleLabel = new Label(title, new Label.LabelStyle(main.getBriFont(), null));
-        Label infoLabel = new Label("Pulsa cualquier tecla para omitir", new Label.LabelStyle(main.getInterFont(), null));
-        Label descriptionlabel = new Label( description, new Label.LabelStyle(main.getInterFont(), null));
+        Label titleLabel = new Label(title, new Label.LabelStyle(main.fonts.briFont, null));
+        Label infoLabel = new Label("Pulsa cualquier tecla para omitir", new Label.LabelStyle(main.fonts.interFont, null));
+        Label descriptionlabel = new Label( description, new Label.LabelStyle(main.fonts.interFont, null));
         descriptionlabel.setFontScale(0.9f);
 
 
@@ -72,7 +72,7 @@ public abstract class MinigameScreen extends UIScreen {
         layersManager.setZindex(1);
         layersManager.getLayer().add(background).expand().fill();
 
-        timeMinigameLabel = new Label("Tiempo " + timeGame.intValue(), new Label.LabelStyle(main.getBriFont(), null));
+        timeMinigameLabel = new Label("Tiempo " + timeGame.intValue(), new Label.LabelStyle(main.fonts.briFont, null));
     }
 
     public boolean isGameStarted() {
