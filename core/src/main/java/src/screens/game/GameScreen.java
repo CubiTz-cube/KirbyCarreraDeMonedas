@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.net.packets.Packet;
 import src.screens.components.*;
 import src.screens.components.chat.Chat;
-import src.screens.game.gameLayers.MenuGameLayer;
+import src.screens.game.gameLayers.GameLayerManager;
 import src.screens.uiScreens.UIScreen;
 import src.utils.*;
 import src.utils.indicators.BorderIndicator;
@@ -98,8 +98,8 @@ public class GameScreen extends UIScreen {
     private Label gameTimeLabel;
     private Chat chat;
     private PowerView imagePower;
-    
-    private MenuGameLayer menuGameLayer;
+
+    private GameLayerManager gameLayerManager;
 
     //Sounds
     private Sound mirrorChangeSound;
@@ -452,7 +452,7 @@ public class GameScreen extends UIScreen {
             addMainPlayer();
             initUI();
             setScore(3);
-            menuGameLayer.setVisible(false);
+            gameLayerManager.setVisible(false);
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
                 addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
@@ -509,7 +509,7 @@ public class GameScreen extends UIScreen {
         layersManager.getLayer().add().expandX();
         layersManager.getLayer().add(imagePower).width(182).height(50).row();
 
-        menuGameLayer = new MenuGameLayer(stageUI, this);
+        gameLayerManager = new GameLayerManager(this, stageUI);
     }
 
     /**
@@ -582,7 +582,7 @@ public class GameScreen extends UIScreen {
         cameraUI.update();
 
         layersManager.setCenterPosition(camera.position.x, camera.position.y);
-        menuGameLayer.setCenterPosition(cameraUI.position.x, cameraUI.position.y);
+        gameLayerManager.setCenterPosition(cameraUI.position.x, cameraUI.position.y);
         tiledRenderer.setView(camera);
 
         tiledRenderer.render();
@@ -591,7 +591,7 @@ public class GameScreen extends UIScreen {
         stageUI.draw();
         //debugRenderer.render(world, camera.combined.scale(PIXELS_IN_METER, PIXELS_IN_METER, 1));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) menuGameLayer.setVisibleWithSound(!menuGameLayer.isVisible());;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) gameLayerManager.setVisibleWithSound(!gameLayerManager.isVisible());;
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {

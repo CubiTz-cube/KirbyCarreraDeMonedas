@@ -1,36 +1,39 @@
 package src.screens.game.gameLayers;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.screens.components.OptionTable;
-import src.screens.game.GameScreen;
 
 public class MenuGameLayer extends GameLayer {
     private final OptionTable optionTable;
 
-    private Sound pauseSound;
-    private Sound pauseExitSound;
+    public MenuGameLayer(GameLayerManager gameLayerManager, Stage stage){
+        super(gameLayerManager, stage, 2);
 
-    public MenuGameLayer(Stage stage, GameScreen game){
-        super(game, stage, 2);
-        initSounds();
+        ImageTextButton debugButton = new ImageTextButton("Modificar", manager.game.myImageTextbuttonStyle);
+        debugButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                manager.changeLayer(GameLayerManager.LayerType.DEBUG);
+            }
+        });
+        debugButton.addListener(manager.game.hoverListener);
 
-        ImageTextButton exitButton = new ImageTextButton(game.main.isClient() ? "Desconectarse": "Volver al Menu", game.myImageTextbuttonStyle);
+        ImageTextButton exitButton = new ImageTextButton(manager.game.main.isClient() ? "Desconectarse": "Volver al Menu", manager.game.myImageTextbuttonStyle);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.endGame();
+                manager.game.endGame();
             }
         });
-        exitButton.addListener(game.hoverListener);
+        exitButton.addListener(manager.game.hoverListener);
 
         setZindex(0);
-        optionTable = new OptionTable(game.main.getSkin(), getLayer(), game.main.fonts.briFont);
+        optionTable = new OptionTable(manager.game.main.getSkin(), getLayer(), manager.game.main.fonts.briFont);
+        getLayer().add(debugButton).width(400).padTop(10);
+        getLayer().row();
         getLayer().add(exitButton).width(400).padTop(10);
 
         setZindex(1);
@@ -39,20 +42,15 @@ public class MenuGameLayer extends GameLayer {
         setVisible(false);
     }
 
-    private void initSounds(){
-        pauseExitSound = game.main.getAssetManager().get("sound/ui/pauseExit.wav", Sound.class);
-        pauseSound = game.main.getAssetManager().get("sound/ui/pause.wav", Sound.class);
-    }
+
 
     @Override
     public void setVisible(Boolean visible) {
         super.setVisible(visible);
-        if (visible) optionTable.update();
     }
 
-    public void setVisibleWithSound(boolean visible){
-        setVisible(visible);
-        if (visible) pauseSound.play();
-        else pauseExitSound.play();
+    @Override
+    public void update() {
+        optionTable.update();
     }
 }

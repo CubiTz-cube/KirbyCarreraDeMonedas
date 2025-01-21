@@ -4,18 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import src.screens.components.LayersManager;
-import src.screens.game.GameScreen;
 
-public class GameLayer extends LayersManager {
-    protected final GameScreen game;
+public abstract class GameLayer extends LayersManager {
+    protected final GameLayerManager manager;
 
     protected Image pauseBg;
 
-    public GameLayer(GameScreen game, Stage stage, Integer numLayers) {
+    public GameLayer(GameLayerManager manager, Stage stage, Integer numLayers) {
         super(stage, numLayers);
-        this.game = game;
+        this.manager = manager;
 
-        pauseBg = new Image(game.main.getAssetManager().get("ui/bg/whiteBg.png", Texture.class));
+        pauseBg = new Image(manager.game.main.getAssetManager().get("ui/bg/whiteBg.png", Texture.class));
     }
+
+    public abstract void update();
 
 }
