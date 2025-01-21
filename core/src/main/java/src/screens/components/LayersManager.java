@@ -54,9 +54,15 @@ public class LayersManager {
         return layers.get(0).isVisible();
     }
 
-    public void setPosition(float x, float y) {
+    public void setPosition(Float x, Float y) {
         for (Table layer : layers) {
             layer.setPosition(x, y);
+        }
+    }
+
+    public void setCenterPosition(Float x, Float y) {
+        for (Table layer : layers) {
+            layer.setPosition(x - layer.getWidth() / 2, y - layer.getHeight() / 2);
         }
     }
 }

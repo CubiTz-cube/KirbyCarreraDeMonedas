@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.animation.SheetCutter;
 
 public class DustParticle extends Particle{

@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import src.main.Main;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.screens.components.LayersManager;
 import src.screens.uiScreens.UIScreen;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import src.utils.constants.PlayerControl;
 import src.utils.managers.CameraShakeManager;
 
 public abstract class MinigameScreen extends UIScreen {

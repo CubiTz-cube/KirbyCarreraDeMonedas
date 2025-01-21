@@ -1,21 +1,16 @@
 package src.world.entities.enemies.sleeping;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;
 import src.world.entities.enemies.Enemy;
-import src.world.entities.enemies.basic.BasicEnemy;
 import src.world.entities.enemies.sleeping.states.*;
 import src.world.entities.player.powers.PowerUp;
-
-import static src.utils.constants.Constants.PIXELS_IN_METER;
 
 public class SleepingEnemy extends Enemy
 {

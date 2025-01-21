@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.Box2dUtils;
 import src.utils.animation.SheetCutter;
 import src.utils.constants.CollisionFilters;

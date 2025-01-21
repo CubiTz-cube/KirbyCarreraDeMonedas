@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import src.net.packets.Packet;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.Box2dUtils;
 import src.utils.FrontRayCastCallback;
 import src.utils.SoundPicthUp;

@@ -1,13 +1,11 @@
 package src.world.entities.blocks;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
-import src.net.packets.Packet;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.animation.SheetCutter;
 import src.world.ActorBox2d;
 import src.world.entities.player.Player;

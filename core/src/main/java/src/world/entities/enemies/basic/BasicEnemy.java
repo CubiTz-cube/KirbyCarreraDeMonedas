@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.constants.CollisionFilters;
 import src.utils.animation.SheetCutter;
 import src.world.entities.enemies.Enemy;

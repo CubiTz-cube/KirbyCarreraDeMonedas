@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import src.main.Main;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.screens.components.LayersManager;
 import src.screens.minigames.MinigameScreen;
 import src.screens.minigames.fireFighter.components.Fire;

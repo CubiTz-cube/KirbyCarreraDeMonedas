@@ -9,14 +9,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.constants.ConsoleColor;
 import src.world.entities.Entity;
 import src.world.statics.FloorPoly;
 import src.world.statics.StaticFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static src.utils.constants.Constants.PIXELS_IN_METER;
 

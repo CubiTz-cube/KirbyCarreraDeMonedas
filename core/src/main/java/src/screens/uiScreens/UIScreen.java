@@ -22,12 +22,12 @@ import src.utils.sound.SingleSoundManager;
 public abstract class UIScreen extends BaseScreen {
     protected final Stage stageUI;
 
-    protected ImageTextButton.ImageTextButtonStyle myImageTextbuttonStyle;
-    protected TextField.TextFieldStyle myTextFieldStyle;
+    public final ImageTextButton.ImageTextButtonStyle myImageTextbuttonStyle;
+    public final TextField.TextFieldStyle myTextFieldStyle;
 
     private final Sound clickSound;
     //private final Sound hoverSound;
-    protected InputListener hoverListener;
+    public final InputListener hoverListener;
 
     public UIScreen(Main main) {
         super(main);

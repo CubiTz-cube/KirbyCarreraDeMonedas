@@ -8,21 +8,17 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.Client;
 import src.net.Server;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.screens.minigames.fireFighter.FireFighterScreen;
 import src.screens.minigames.odsPlease.OdsPleaseScreen;
 import src.screens.uiScreens.IntroScreen;
 import src.screens.minigames.duckFeed.MiniDuckScreen;
 import src.screens.uiScreens.*;
-import src.utils.FontCreator;
 import src.utils.Fonts;
-import src.utils.constants.MyColors;
 import src.utils.sound.SingleSoundManager;
 import src.utils.sound.SoundManager;
 
@@ -397,10 +393,18 @@ public class Main extends Game {
         server = null;
     }
 
+    public Boolean isServer(){
+        return server != null;
+    }
+
     public void startClient(String ip, int port){
         if (client != null) closeClient();
         client = new Client((GameScreen) screensList.get(Screens.GAME.ordinal()), ip, port, playerName);
         clientThread.execute(client);
+    }
+
+    public Boolean isClient(){
+        return client != null;
     }
 
     public void closeClient(){

@@ -1,4 +1,4 @@
-package src.screens;
+package src.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -12,18 +12,16 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import src.net.packets.Packet;
 import src.screens.components.*;
 import src.screens.components.chat.Chat;
+import src.screens.game.gameLayers.MenuGameLayer;
 import src.screens.uiScreens.UIScreen;
 import src.utils.*;
 import src.utils.indicators.BorderIndicator;
@@ -100,13 +98,11 @@ public class GameScreen extends UIScreen {
     private Label gameTimeLabel;
     private Chat chat;
     private PowerView imagePower;
-    private OptionTable optionTable;
-    private Boolean menuVisible;
+    
+    private MenuGameLayer menuGameLayer;
 
     //Sounds
     private Sound mirrorChangeSound;
-    private Sound pauseSound;
-    private Sound pauseExitSound;
 
     // Debug
     private final Box2DDebugRenderer debugRenderer;
@@ -142,7 +138,6 @@ public class GameScreen extends UIScreen {
         initSounds();
 
         debugRenderer = new Box2DDebugRenderer();
-        menuVisible = false;
 
         cameraShakeManager = new CameraShakeManager((OrthographicCamera) stage.getCamera());
         isLoad = false;
@@ -150,8 +145,6 @@ public class GameScreen extends UIScreen {
 
     private void initSounds(){
         mirrorChangeSound = main.getAssetManager().get("sound/portalChange.wav", Sound.class);
-        pauseExitSound = main.getAssetManager().get("sound/ui/pauseExit.wav", Sound.class);
-        pauseSound = main.getAssetManager().get("sound/ui/pause.wav", Sound.class);
     }
 
     public void setScore(Integer score) {
@@ -181,8 +174,8 @@ public class GameScreen extends UIScreen {
         return entities;
     }
 
-    public void addMessage(String name, String message){
-        chat.addMessage(name + ": " + message);
+    public Chat getChat() {
+        return chat;
     }
 
     public void addMainPlayer(){
@@ -459,7 +452,7 @@ public class GameScreen extends UIScreen {
             addMainPlayer();
             initUI();
             setScore(3);
-            setMenuVisible(false);
+            menuGameLayer.setVisible(false);
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
                 addEntitySpawn(Entity.Type.MIRROR, new Vector2(0,0), spawnMirror);
@@ -492,28 +485,12 @@ public class GameScreen extends UIScreen {
 
         imagePower = new PowerView(main.getAssetManager());
 
-        Image pauseBg = new Image(main.getAssetManager().get("ui/bg/whiteBg.png", Texture.class));
-
-        ImageTextButton exitButton = new ImageTextButton("Desconectarse", myImageTextbuttonStyle);
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                endGame();
-            }
-        });
-        exitButton.addListener(hoverListener);
-
         stage.addActor(mirrorIndicators);
         stage.addActor(maxScoreIndicator);
 
         layersManager.setZindex(0);
-        optionTable = new OptionTable(main.getSkin(), layersManager.getLayer(), main.fonts.briFont);
-        layersManager.getLayer().add(exitButton).width(400).padTop(10);
-        layersManager.getLayer().setVisible(false);
 
         layersManager.setZindex(1);
-        layersManager.getLayer().add(pauseBg).grow();
-        layersManager.getLayer().setVisible(false);
 
         layersManager.setZindex(2);
         layersManager.getLayer().top().pad(10);
@@ -532,22 +509,7 @@ public class GameScreen extends UIScreen {
         layersManager.getLayer().add().expandX();
         layersManager.getLayer().add(imagePower).width(182).height(50).row();
 
-        layersManager.setZindex(2);
-        layersManager.getLayer().setVisible(true);
-    }
-
-    private void setMenuVisible(Boolean visible){
-        menuVisible = visible;
-        optionTable.update();
-        layersManager.setZindex(0);
-        layersManager.getLayer().setVisible(visible);
-        layersManager.setZindex(1);
-        layersManager.getLayer().setVisible(visible);
-    }
-    private void setMenuVisibleSound(Boolean visible){
-        setMenuVisible(visible);
-        if (visible) SingleSoundManager.getInstance().playSound(pauseSound);
-        else SingleSoundManager.getInstance().playSound(pauseExitSound);
+        menuGameLayer = new MenuGameLayer(stageUI, this);
     }
 
     /**
@@ -619,7 +581,8 @@ public class GameScreen extends UIScreen {
         camera.update();
         cameraUI.update();
 
-        layersManager.setPosition(cameraUI.position.x - layersManager.getLayer().getWidth()/2, cameraUI.position.y - layersManager.getLayer().getHeight()/2);
+        layersManager.setCenterPosition(camera.position.x, camera.position.y);
+        menuGameLayer.setCenterPosition(cameraUI.position.x, cameraUI.position.y);
         tiledRenderer.setView(camera);
 
         tiledRenderer.render();
@@ -628,7 +591,7 @@ public class GameScreen extends UIScreen {
         stageUI.draw();
         //debugRenderer.render(world, camera.combined.scale(PIXELS_IN_METER, PIXELS_IN_METER, 1));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) setMenuVisibleSound(!menuVisible);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) menuGameLayer.setVisibleWithSound(!menuGameLayer.isVisible());;
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {

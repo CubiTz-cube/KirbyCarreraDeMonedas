@@ -3,7 +3,7 @@ package src.world.particles;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 
 public class ParticleFactory {
     public enum Type{

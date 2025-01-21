@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 
 import static src.utils.constants.Constants.PIXELS_IN_METER;
 

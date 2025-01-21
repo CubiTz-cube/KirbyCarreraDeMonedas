@@ -2,7 +2,7 @@ package src.world.statics;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.constants.CollisionFilters;
 import src.world.entities.player.Player;
 import src.world.entities.player.PlayerCommon;

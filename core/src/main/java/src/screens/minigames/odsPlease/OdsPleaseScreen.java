@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.screens.components.LayersManager;
 import src.screens.minigames.MinigameScreen;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;

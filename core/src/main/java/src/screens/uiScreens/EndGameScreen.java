@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import src.main.Main;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.screens.components.LayersManager;
 import src.utils.ScorePlayer;
 import java.util.ArrayList;

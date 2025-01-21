@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.Socket;
 import src.utils.constants.ConsoleColor;

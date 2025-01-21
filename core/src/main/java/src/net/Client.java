@@ -8,7 +8,7 @@ import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import src.net.packets.Packet;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.utils.constants.ConsoleColor;
 import src.world.entities.Entity;
 import src.world.entities.blocks.BreakBlock;
@@ -208,7 +208,7 @@ public class Client implements Runnable{
                         if (!gameStart) break;
                         String packName = (String) pack[1];
                         String message = (String) pack[2];
-                        game.addMessage(packName, message);
+                        game.getChat().addMessage(packName + ": " + message);
                         break;
                 }
                 notifyListenersPacket(type);

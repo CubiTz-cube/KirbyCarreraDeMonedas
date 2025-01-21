@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import src.main.Main;
-import src.screens.GameScreen;
+import src.screens.game.GameScreen;
 import src.screens.minigames.MinigameScreen;
 
 public class MiniDuckScreen extends MinigameScreen {
