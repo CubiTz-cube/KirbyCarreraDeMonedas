@@ -52,6 +52,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
+import static src.utils.constants.Constants.PIXELS_IN_METER;
 import static src.utils.constants.Constants.TIME_MINUTES_GAME;
 
 public class GameScreen extends UIScreen {
