@@ -12,9 +12,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -451,8 +454,8 @@ public class GameScreen extends UIScreen {
         }else{
             tiledManager.makeMap();
             addMainPlayer();
-            initUI();
             setScore(3);
+            initUI();
             gameLayerManager.setVisible(false);
             if (main.server != null || main.client == null){
                 tiledManager.makeEntities();
@@ -490,10 +493,6 @@ public class GameScreen extends UIScreen {
         stage.addActor(maxScoreIndicator);
 
         layersManager.setZindex(0);
-
-        layersManager.setZindex(1);
-
-        layersManager.setZindex(2);
         layersManager.getLayer().top().pad(10);
         layersManager.getLayer().add(timeImage).padRight(5).size(64);
         layersManager.getLayer().add(gameTimeLabel);
@@ -502,10 +501,10 @@ public class GameScreen extends UIScreen {
         layersManager.getLayer().add(coinImage).padRight(5).size(48);
         layersManager.getLayer().add(odsPointsLabel).left();
 
-        layersManager.setZindex(3);
+        layersManager.setZindex(1);
         layersManager.getLayer().add(chat).grow();
 
-        layersManager.setZindex(4);
+        layersManager.setZindex(2);
         layersManager.getLayer().bottom();
         layersManager.getLayer().add().expandX();
         layersManager.getLayer().add(imagePower).width(182).height(50).row();
@@ -592,7 +591,9 @@ public class GameScreen extends UIScreen {
         stageUI.draw();
         //debugRenderer.render(world, camera.combined.scale(PIXELS_IN_METER, PIXELS_IN_METER, 1));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) gameLayerManager.setVisibleWithSound(!gameLayerManager.isVisible());;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            gameLayerManager.setVisibleWithSound(!gameLayerManager.isVisible());
+        }
 
         for (ActorBox2d actor : actors) {
             if (actor instanceof BreakBlock breakBlock) {
