@@ -12,12 +12,11 @@ public class GameLayerManager {
     public final GameScreen game;
 
     public enum LayerType {
-        MENU, DEBUG
+        MENU
     }
     private Boolean visible;
     private GameLayer currentLayer;
     private MenuGameLayer menuGameLayer;
-    private DebugGameLayer debugGameLayer;
 
     public GameLayerManager(GameScreen game, Stage stage){
         this.stage = stage;
@@ -37,14 +36,12 @@ public class GameLayerManager {
 
     private void initLayers(){
         menuGameLayer = new MenuGameLayer(this, stage);
-        debugGameLayer = new DebugGameLayer(this, stage);
     }
 
     public void changeLayer(LayerType type){
         if (currentLayer != null) currentLayer.setVisible(false);
         currentLayer = switch (type){
             case MENU -> menuGameLayer;
-            case DEBUG -> debugGameLayer;
         };
         currentLayer.setVisible(visible);
         currentLayer.update();

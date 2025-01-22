@@ -15,6 +15,7 @@ public abstract class GameLayer extends LayersManager {
         this.manager = manager;
 
         pauseBg = new Image(manager.game.main.getAssetManager().get("ui/bg/whiteBg.png", Texture.class));
+        setVisible(false);
     }
 
     public abstract void update();

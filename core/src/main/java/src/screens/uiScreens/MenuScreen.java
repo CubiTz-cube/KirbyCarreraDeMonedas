@@ -120,8 +120,8 @@ public class MenuScreen extends UIScreen {
         layersManager.getLayer().padTop(130);
         layersManager.getLayer().add(playButton).expandX().fill().left().pad(10);
         layersManager.getLayer().add().width(460);
-        layersManager.getLayer().row();
-        layersManager.getLayer().add(multiplayerButton).expandX().fill().left().pad(10);
+        //layersManager.getLayer().row();
+        //layersManager.getLayer().add(multiplayerButton).expandX().fill().left().pad(10);
         layersManager.getLayer().row();
         layersManager.getLayer().add(optionButton).expandX().fillX().left().pad(10);
 

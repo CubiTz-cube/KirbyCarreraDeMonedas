@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
+import src.main.Modificable;
 import src.utils.animation.SheetCutter;
 import src.utils.stateMachine.StateMachine;
 import src.world.entities.Entity;
@@ -22,18 +23,18 @@ public abstract class PlayerCommon extends Entity {
     public float brakeForce = DEFAULT_BRAKE_FORCE;
     public int dashDamage = DEFAULT_DASH_DAMAGE;
 
-    public static int DEFAULT_DASH_DAMAGE = 1;
+    public static final int DEFAULT_DASH_DAMAGE = Modificable.DANO_DASH;
     public static final float DEFAULT_STUNT_TIME = 1f;
-    public static float WALK_SPEED = 14f;
-    public static float WALK_MAX_SPEED = 5f;
-    public static float RUN_SPEED = 18f;
-    public static float RUN_MAX_SPEED = 6.5f;
-    public static float MAX_JUMP_TIME = 0.3f;
-    public static float JUMP_IMPULSE = 8f;
-    public static float JUMP_INAIR = 25f; // Se multiplica por deltaTime
+    public static final float WALK_SPEED = Modificable.ACELERACION_CAMINAR;
+    public static final float WALK_MAX_SPEED = Modificable.VELOCIDAD_MAXIMA_CAMINAR;
+    public static final float RUN_SPEED = Modificable.ACELERACION_CORRER;
+    public static final float RUN_MAX_SPEED = Modificable.VELOCIDAD_MAXIMA_CORRER;
+    public static final float MAX_JUMP_TIME = Modificable.TIEMPO_MAXIMO_SALTO_MANTENIDO;
+    public static final float JUMP_IMPULSE = Modificable.FUERZA_SALTO;
+    public static final float JUMP_INAIR = Modificable.FUERZA_SALTO_SOSTENIDO; // Se multiplica por deltaTime
     public static final float FLY_IMPULSE = 6f;
-    public static float DASH_IMPULSE = 15f;
-    public static float ABSORB_FORCE = 12f;
+    public static final float DASH_IMPULSE = Modificable.FUERZA_IMPULSO_DASH;
+    public static final float ABSORB_FORCE = Modificable.FUERZA_ABSORBER;
     public static final float DEFAULT_BRAKE_FORCE = 280f;
 
     public AssetManager assetManager;

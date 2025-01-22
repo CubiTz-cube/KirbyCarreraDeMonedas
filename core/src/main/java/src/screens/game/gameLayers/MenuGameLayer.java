@@ -12,15 +12,6 @@ public class MenuGameLayer extends GameLayer {
     public MenuGameLayer(GameLayerManager gameLayerManager, Stage stage){
         super(gameLayerManager, stage, 2);
 
-        ImageTextButton debugButton = new ImageTextButton("Modificar", manager.game.myImageTextbuttonStyle);
-        debugButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                manager.changeLayer(GameLayerManager.LayerType.DEBUG);
-            }
-        });
-        debugButton.addListener(manager.game.hoverListener);
-
         ImageTextButton exitButton = new ImageTextButton(manager.game.main.isClient() ? "Desconectarse": "Volver al Menu", manager.game.myImageTextbuttonStyle);
         exitButton.addListener(new ClickListener() {
             @Override
@@ -32,8 +23,6 @@ public class MenuGameLayer extends GameLayer {
 
         setZindex(0);
         optionTable = new OptionTable(manager.game.main.getSkin(), getLayer(), manager.game.main.fonts.briFont);
-        getLayer().add(debugButton).width(400).padTop(10);
-        getLayer().row();
         getLayer().add(exitButton).width(400).padTop(10);
 
         setZindex(1);
