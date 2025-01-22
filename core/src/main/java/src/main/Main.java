@@ -71,7 +71,7 @@ public class Main extends Game {
     public void create() {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         ids = new AtomicInteger(0);
-        playerColor = new Color(Color.WHITE);
+        playerColor = Modificable.COLOR_JUGADOR;
 
         initAssets();
 
