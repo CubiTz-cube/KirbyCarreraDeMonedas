@@ -46,10 +46,10 @@ public class RunState extends CanBasicMoveState{
             timeActivateParticle -= delta;
             timeParticle += delta;
             if (timeParticle > 0.1f){
-                float X;
-                if (player.getCurrentAnimationType() == Player.AnimationType.CHANGERUN) X = player.getBody().getPosition().x + (isLeft ? -0.8f : 0.8f);
-                else X = player.getBody().getPosition().x + (isLeft ? 0.8f : -0.8f);
-                player.game.addParticle(ParticleFactory.Type.CLOUD, new Vector2(X, player.getBody().getPosition().y-0.1f));
+                float X = player.getBody().getPosition().x;
+                if (player.getCurrentAnimationType() == Player.AnimationType.CHANGERUN) X += (!isLeft ? 0.2f : -1.2f);
+                else X += (isLeft ? 0.2f : -1.2f);
+                player.game.addParticle(ParticleFactory.Type.CLOUD, new Vector2(X, player.getBody().getPosition().y-0.5f));
                 timeParticle = 0f;
             }
         }
@@ -60,13 +60,13 @@ public class RunState extends CanBasicMoveState{
             timeInverse = 0f;
         }
 
-        if (!player.isEnemyAbsorb()) return;
+        if (player.isEnemyAbsorb()) return;
 
-        if (Gdx.input.isKeyJustPressed(PlayerControl.LEFT) && !isLeft){
+        if (Gdx.input.isKeyPressed(PlayerControl.LEFT) && !isLeft){
             player.setAnimation(Player.AnimationType.CHANGERUN);
             timeActivateParticle = 0.3f;
             isLeft = true;
-        }else if (Gdx.input.isKeyJustPressed(PlayerControl.RIGHT) && isLeft){
+        }else if (Gdx.input.isKeyPressed(PlayerControl.RIGHT) && isLeft){
             player.setAnimation(Player.AnimationType.CHANGERUN);
             timeActivateParticle = 0.3f;
             isLeft = false;
