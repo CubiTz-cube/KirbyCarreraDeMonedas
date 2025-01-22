@@ -1,18 +1,14 @@
 package src.screens.game.gameLayers;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import src.screens.components.LayersManager;
 import src.screens.components.SliderText;
-import src.screens.game.GameScreen;
 import src.world.entities.player.PlayerCommon;
 
 import java.util.ArrayList;
@@ -24,7 +20,7 @@ public class DebugGameLayer extends GameLayer{
         super(gameLayerManager, stage, 2);
         debugSliderList = new ArrayList<>();
 
-        ImageTextButton backButton = new ImageTextButton(manager.game.main.isClient() ? "Desconectarse": "Volver al Menu", manager.game.myImageTextbuttonStyle);
+        ImageTextButton backButton = new ImageTextButton("Volver", manager.game.myImageTextbuttonStyle);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -32,6 +28,8 @@ public class DebugGameLayer extends GameLayer{
             }
         });
         backButton.addListener(manager.game.hoverListener);
+
+        initSliders();
 
         setZindex(0);
         for (SliderText slider : debugSliderList){
