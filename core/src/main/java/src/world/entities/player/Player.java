@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import src.main.Modificable;
 import src.net.packets.Packet;
 import src.screens.game.GameScreen;
 import src.utils.Box2dUtils;
@@ -105,7 +106,7 @@ public class Player extends PlayerCommon {
         invencible = false;
 
         random = new Random();
-        //setCurrentPowerUp(PowerUp.Type.BOMB);
+        setCurrentPowerUp(Modificable.PODER_INICIAL);
     }
 
     private void initStates(){

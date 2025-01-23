@@ -2,6 +2,7 @@ package src.main;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import src.world.entities.player.powers.PowerUp;
 
 public class Modificable {
     //Variables del juego
@@ -22,7 +23,8 @@ public class Modificable {
     public static final float FUERZA_SALTO_SOSTENIDO = 25f;
     public static final float FUERZA_ABSORBER = 12f;
 
-    public static final Color COLOR_JUGADOR = new Color(0.0f, 0.0f, 0.0f, 1.0f); // Formato RBG donde:
+    public static final PowerUp.Type PODER_INICIAL = PowerUp.Type.NONE; // Poder inicial del jugador
+    public static final Color COLOR_JUGADOR = new Color(1.0f, 1.0f, 1.0f, 1.0f); // Formato RBG donde:
     // Todos deben estar entre 0 y 1 (en decimales);
     // r: rojo | g: verde | b: azul
     // a: opacidad

@@ -13,9 +13,11 @@ public class IntroScreen extends UIScreen {
     private Float time, alpha;
     private final Image logo;
     private Boolean soundPlayed;
+    private final Main.Screens nextScreen;
 
-    public IntroScreen(Main main) {
+    public IntroScreen(Main main, Texture logoTexture, Main.Screens nextScreen) {
         super(main);
+        this.nextScreen = nextScreen;
         time = 0f;
         alpha = -0.1f;
         soundPlayed = false;
@@ -24,8 +26,8 @@ public class IntroScreen extends UIScreen {
         table.setFillParent(true);
         stageUI.addActor(table);
 
-        logo = new Image(main.getAssetManager().get("logo.png", Texture.class));
-        table.add(logo).width(logo.getWidth()/2).height(logo.getHeight()/2);
+        logo = new Image(logoTexture);
+        table.add(logo).width(Gdx.graphics.getHeight()/1.5f).height(Gdx.graphics.getHeight()/1.5f);
         logo.setColor(1f, 1f, 1f, alpha);
     }
 
@@ -40,22 +42,22 @@ public class IntroScreen extends UIScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        SoundManager soundManager = SingleSoundManager.getInstance();
+        //SoundManager soundManager = SingleSoundManager.getInstance();
         time += delta;
         alpha += delta / 5;
 
         if (alpha > 1f) alpha = 1f;
 
         if (alpha >= 1f && !soundPlayed){
-            soundManager.playSound(main.getAssetManager().get("sound/introLogo.wav"), 1f);
+            //soundManager.playSound(main.getAssetManager().get("sound/introLogo.wav"), 1f);
             soundPlayed = true;
         }
 
         logo.setColor(1f, 1f, 1f, alpha);
 
         if (time > 6 || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.justTouched()) {
-            main.changeScreen(Main.Screens.MENU);
-            if (!soundPlayed) soundManager.playSound(main.getAssetManager().get("sound/introLogo.wav"), 1f);
+            main.changeScreen(nextScreen);
+            //if (!soundPlayed) soundManager.playSound(main.getAssetManager().get("sound/introLogo.wav"), 1f);
         }
     }
 }

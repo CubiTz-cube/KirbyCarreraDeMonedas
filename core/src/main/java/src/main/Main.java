@@ -33,6 +33,7 @@ public class Main extends Game {
     private Skin skin;
     public enum Screens {
         INTRO,
+        INTRO2,
         MENU,
         MULTIPLAYER,
         JOIN,
@@ -87,6 +88,8 @@ public class Main extends Game {
     private void initAssets(){
         assetManager = new AssetManager();
         assetManager.load("yoshi.jpg", Texture.class);
+        assetManager.load("logo.png", Texture.class);
+        assetManager.load("ucab.png", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyIdle.png", Texture.class);
         assetManager.load("world/entities/sleepy/sleepyDamage.png", Texture.class);
         assetManager.load("world/entities/fly/flyIdle.png", Texture.class);
@@ -107,7 +110,6 @@ public class Main extends Game {
         assetManager.load("world/entities/bomb/bombDamage.png", Texture.class);
         assetManager.load("world/entities/bomb/bombAttack.png", Texture.class);
         assetManager.load("world/entities/turret/turretEnemy.png", Texture.class);
-        assetManager.load("logo.png", Texture.class);
         assetManager.load("ui/colorWheel.png", Texture.class);
         assetManager.load("ui/indicators/maxScoreIndicator.png", Texture.class);
         assetManager.load("ui/indicators/mirrorIndicator.png", Texture.class);
@@ -317,7 +319,8 @@ public class Main extends Game {
 
     private void initScreens(){
         screensList  = new ArrayList<>();
-        screensList.add(new IntroScreen(this));
+        screensList.add(new IntroScreen(this, assetManager.get("logo.png", Texture.class), Screens.INTRO2));
+        screensList.add(new IntroScreen(this, assetManager.get("ucab.png", Texture.class), Screens.MENU));
         screensList.add(new MenuScreen(this));
         screensList.add(new MultiplayerScreen(this));
         screensList.add(new JoinScreen(this));
