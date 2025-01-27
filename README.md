@@ -74,9 +74,6 @@ Creado para la materia Programación Orientada a Objetos en el tercer semestre d
 2. Descomprimelo.
 3. Ejecuta el .exe.
 
-> [!IMPORTANT]
-> Necesita tener instalado Java 17 o superior para ejecutar el programa.
-
 ### Más imágenes
 ![image (1)](https://github.com/user-attachments/assets/5c8cbaee-a77e-452d-a093-df8a535c3501)
 ![image (2)](https://github.com/user-attachments/assets/0795406a-0db0-43c6-a3eb-d4dd065c1672)
