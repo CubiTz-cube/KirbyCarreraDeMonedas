@@ -2,7 +2,11 @@
     <img src="https://github.com/CubiTz-cube/Juego-de-la-vida/assets/144462396/f4fda149-fd6a-4add-87db-b429fc97121c" alt="CubiTz logo" title="CubiTz" align="right" height="60" />
 </a>
 
-# ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white) Kirby Carrera de Monedas
+# ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white) Kirby Carrera de Monedas (Versión XPR-UCAB)
+
+> [!IMPORTANT]
+> Esta versión está modificada para que sus variables sean fácil de modificar. La función de multijugador esta desactivada.
+
 ¡Consigue la mayor cantidad de OdsCoins antes de que termine el tiempo! Juega solo o con hasta 24 jugadores vía LAN en una batalla de velocidad por ver quién
 acumula más monedas completando los minijuegos dentro de los espejos que aparecen en el mapa. Obtén poderes de los enemigos en tu camino y úsalos para ganar.
 Creado para la materia Programación Orientada a Objetos en el tercer semestre de la [UCAB](https://www.ucab.edu.ve/).
@@ -73,9 +77,6 @@ Creado para la materia Programación Orientada a Objetos en el tercer semestre d
 1. Instala el *Kirby Carrera de Monedas v1.0.0.zip* que está en *releases*.
 2. Descomprimelo.
 3. Ejecuta el .exe.
-
-> [!IMPORTANT]
-> Necesita tener instalado Java 17 o superior para ejecutar el programa.
 
 ### Más imágenes
 ![image (1)](https://github.com/user-attachments/assets/5c8cbaee-a77e-452d-a093-df8a535c3501)
