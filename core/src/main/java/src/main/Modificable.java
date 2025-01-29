@@ -25,7 +25,6 @@ public class Modificable {
     public static final float FUERZA_ABSORBER = 12f;
 
     public static final PowerUp.Type PODER_INICIAL = PowerUp.Type.NONE; // Poder inicial del jugador
-    public static final Color COLOR_JUGADOR =  Color.WHITE; // Color del kirby, quita y pon el . en Color. para tener la lista de colores
     
     // Controles
 
