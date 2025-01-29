@@ -190,7 +190,7 @@ public class GameScreen extends UIScreen {
         player = new Player(world, position.x, position.y, main.getAssetManager(), this, main.playerColor);
         stage.addActor(player);
 
-        if (main.client == null) scorePlayers.put(-1, new ScorePlayer(-1,"TU"));
+        if (main.client == null) scorePlayers.put(-1, new ScorePlayer(-1,main.getPlayerName()));
         else scorePlayers.put(-1, new ScorePlayer(-1,main.client.getName()));
     }
 
