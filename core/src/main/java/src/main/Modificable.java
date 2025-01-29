@@ -11,6 +11,7 @@ public class Modificable {
     public static final int TIEMPO_MINUTOS_JUEGO = 8; // Duración de la partida en minutos
 
     // Variables del jugador
+    public static final String NOMBRE_JUGADOR = "NOMBRE";
 
     public static final int DANO_DASH = 1; // Daño que ocaciona el dash del jugador
     public static final float FUERZA_IMPULSO_DASH = 15f; // Impulso al hacer el dash
