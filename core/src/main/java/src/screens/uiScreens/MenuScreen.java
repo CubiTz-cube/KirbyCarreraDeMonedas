@@ -92,6 +92,15 @@ public class MenuScreen extends UIScreen {
         });
         optionButton.addListener(hoverListener);
 
+        ImageTextButton xprOptionButton = new ImageTextButton("Modificaciones", myImageTextbuttonStyle);
+        xprOptionButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                main.changeScreen(Main.Screens.XPROPTION);
+            }
+        });
+        xprOptionButton.addListener(hoverListener);
+
         LayersManager layersManager = new LayersManager(stageUI, 7);
 
         layersManager.setZindex(0);
@@ -124,6 +133,8 @@ public class MenuScreen extends UIScreen {
         //layersManager.getLayer().add(multiplayerButton).expandX().fill().left().pad(10);
         layersManager.getLayer().row();
         layersManager.getLayer().add(optionButton).expandX().fillX().left().pad(10);
+        layersManager.getLayer().row();
+        layersManager.getLayer().add(xprOptionButton).expandX().fillX().left().pad(10);
 
         layersManager.setZindex(5);
         layersManager.getLayer().right();

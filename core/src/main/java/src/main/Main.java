@@ -47,6 +47,7 @@ public class Main extends Game {
         MINIDUCK,
         MINIFIRE,
         MINIODSPLEASE,
+        XPROPTION,
     }
 
     public Boolean skipIntro;
@@ -339,6 +340,7 @@ public class Main extends Game {
         screensList.add(new MiniDuckScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new FireFighterScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
         screensList.add(new OdsPleaseScreen(this, (GameScreen) screensList.get(Screens.GAME.ordinal())));
+        screensList.add(new XprOptionScreen(this));
     }
 
     public void setPlayerName(String name) {
