@@ -2,10 +2,10 @@
     <img src="https://github.com/CubiTz-cube/Juego-de-la-vida/assets/144462396/f4fda149-fd6a-4add-87db-b429fc97121c" alt="CubiTz logo" title="CubiTz" align="right" height="60" />
 </a>
 
-# ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white) Kirby Carrera de Monedas (Versión XPR-UCAB)
+# ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white) Kirby Carrera de Monedas (Versión XPR-UCAB con UI)
 
 > [!IMPORTANT]
-> Esta versión está modificada para que sus variables sean fácil de modificar. La función de multijugador esta desactivada.
+> Esta versión está modificada para que sus variables se puedan modificar desde el menu. La función de multijugador esta desactivada.
 
 ¡Consigue la mayor cantidad de OdsCoins antes de que termine el tiempo! Juega solo o con hasta 24 jugadores vía LAN en una batalla de velocidad por ver quién
 acumula más monedas completando los minijuegos dentro de los espejos que aparecen en el mapa. Obtén poderes de los enemigos en tu camino y úsalos para ganar.
