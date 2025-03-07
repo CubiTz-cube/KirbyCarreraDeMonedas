@@ -43,7 +43,7 @@ public class EntityFactory {
             case WHEEL -> new WheelEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case BOMBER -> new BombEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
             case DRAGON -> new DragonEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
-            case TURRET -> new TurretEnemy(world, new Rectangle(position.x, position.y, 1.5f, 1.5f), assetManager, id, game);
+            case TURRET -> new TurretEnemy(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id, game);
             case MIRROR -> new Mirror(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id);
             case CLOUD -> new CloudProyectil(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
             case STAR -> new StarProyectil(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game);
@@ -53,7 +53,7 @@ public class EntityFactory {
             case SWORDPROPLAYER -> new SwordProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROPLAYER, game, assetManager.get("world/particles/kirbySwordParticle.png"));
             case SWORDRUNPROPLAYER -> new SwordRunProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDRUNPROPLAYER, game);
             case SWORDPROENEMY -> new SwordEnemyProyectil(world, new Rectangle(position.x, position.y, 1f, 1.2f), assetManager, id, Entity.Type.SWORDPROENEMY, game, assetManager.get("world/particles/swordParticle.png"));
-            case TURRETPROENEMY -> new TurretEnemyProyectil(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, Entity.Type.TURRETPROENEMY, game, assetManager.get("world/particles/turretParticle.png"));
+            case TURRETPROENEMY -> new TurretEnemyProyectil(world, new Rectangle(position.x, position.y, 2f, 2f), assetManager, id, Entity.Type.TURRETPROENEMY, game, assetManager.get("world/particles/turretParticle.png"));
             case COIN -> new CoinOdsPoint(world, new Rectangle(position.x, position.y, 0.75f, 0.75f), assetManager, id, game);
             case POWERSWORD -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.SWORD, assetManager.get("world/entities/powers/swordPowerItem.png"), 0.1f, 8);
             case POWERWHEEL -> new PowerItem(world, new Rectangle(position.x, position.y, 1f, 1f), assetManager, id, game, PowerUp.Type.WHEEL, assetManager.get("world/entities/powers/wheelPowerItem.png"), 0.2f, 2);

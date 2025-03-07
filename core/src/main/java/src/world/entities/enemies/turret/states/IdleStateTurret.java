@@ -12,13 +12,12 @@ public class IdleStateTurret extends StateEnemy<TurretEnemy>
 
     @Override
     public void start() {
-        enemy.setAnimation(TurretEnemy.AnimationType.IDLE);
-
+        super.start();
     }
 
     @Override
     public void update(Float delta) {
-        if (enemy.getActCrono() > 5) {
+        if (enemy.getActCrono() > 3) {
             enemy.setState(Enemy.StateType.ATTACK);
         }
     }

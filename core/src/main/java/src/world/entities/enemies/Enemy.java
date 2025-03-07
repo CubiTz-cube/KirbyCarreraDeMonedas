@@ -98,7 +98,7 @@ public abstract class Enemy extends Entity {
     public void throwEntity(Entity.Type type, Float impulseX, Float impulseY){
         float linearX = Math.abs(body.getLinearVelocity().x);
         game.addEntityNoPacket(type,
-            body.getPosition().add(isFlipX() ? -1.2f : 1.2f,0),
+            body.getPosition().add(isFlipX() ? -2.2f : 1.2f,-0.5f),
             new Vector2((isFlipX() ? -impulseX - linearX : impulseX + linearX),impulseY),
             isFlipX()
         );
