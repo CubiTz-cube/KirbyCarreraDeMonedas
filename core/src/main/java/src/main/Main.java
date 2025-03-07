@@ -82,7 +82,7 @@ public class Main extends Game {
         initAssets();
 
         soundManager = SingleSoundManager.getInstance();
-        soundManager.setVolumeMusic(0.1f);
+        soundManager.setVolumeMusic(0.0f);
         initSounds();
         fonts = new Fonts();
         initScreens();
