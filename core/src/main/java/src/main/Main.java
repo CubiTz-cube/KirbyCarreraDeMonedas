@@ -49,6 +49,8 @@ public class Main extends Game {
         MINIODSPLEASE,
     }
 
+    public Boolean skipIntro;
+
     private AtomicInteger ids;
     public Color playerColor;
     private String playerName;
@@ -70,6 +72,8 @@ public class Main extends Game {
 
     @Override
     public void create() {
+        skipIntro = false;
+
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         ids = new AtomicInteger(0);
         playerColor = Color.WHITE;
