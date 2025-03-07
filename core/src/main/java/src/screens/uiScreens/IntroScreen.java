@@ -42,6 +42,7 @@ public class IntroScreen extends UIScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        if (main.skipIntro) main.changeScreen(nextScreen);
         //SoundManager soundManager = SingleSoundManager.getInstance();
         time += delta;
         alpha += delta / 5;
@@ -56,6 +57,7 @@ public class IntroScreen extends UIScreen {
         logo.setColor(1f, 1f, 1f, alpha);
 
         if (time > 6 || Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.justTouched()) {
+            main.skipIntro = true;
             main.changeScreen(nextScreen);
             //if (!soundPlayed) soundManager.playSound(main.getAssetManager().get("sound/introLogo.wav"), 1f);
         }
