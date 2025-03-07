@@ -28,7 +28,7 @@ public class InfoScreen extends BlueCircleScreen {
         Label infoTechLabel = new Label(
             "Librerias utilizadas: LibGDX\n" +
                 "Lenguaje de programacion: Java\n" +
-                "Version: 0.8v\n" +
+                "Version: v1.0.1\n" +
                 "Desarrolladora: CubiTz\n" +
                 "Desarrolladores: Daniel Carreño, Jose Pereira, Cesar Ostos\n",
             new Label.LabelStyle(main.fonts.interFont, MyColors.BLUE));

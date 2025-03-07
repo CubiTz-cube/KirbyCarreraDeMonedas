@@ -26,7 +26,6 @@ public class TurretEnemy extends Enemy
     }
 
     private final Animation<TextureRegion> idleAnimation;
-    private final Animation<TextureRegion> attackAnimation;
 
     public TurretEnemy(World world, Rectangle shape, AssetManager assetManager, Integer id, GameScreen game)
     {
@@ -35,7 +34,7 @@ public class TurretEnemy extends Enemy
 
         BodyDef def = new BodyDef();
         def.position.set(shape.x + shape.width / 2, shape.y + shape.height / 2);
-        def.type = BodyDef.BodyType.DynamicBody;
+        def.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
@@ -58,16 +57,7 @@ public class TurretEnemy extends Enemy
 
         idleAnimation = new Animation<>(1f,
             SheetCutter.cutHorizontal(assetManager.get("world/entities/turret/turretEnemy.png"), 2));
-
-        attackAnimation = new Animation<>(1f,
-            SheetCutter.cutHorizontal(assetManager.get("world/entities/turret/turretEnemy.png"), 2));
-    }
-
-    public void setAnimation(TurretEnemy.AnimationType type){
-        switch (type){
-            case IDLE -> setCurrentAnimation(idleAnimation);
-            case ATTACK -> setCurrentAnimation(attackAnimation);
-        }
+        setCurrentAnimation(idleAnimation);
     }
 
     @Override

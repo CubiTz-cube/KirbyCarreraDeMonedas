@@ -14,8 +14,8 @@ public class AttackStateTurret extends StateEnemy<TurretEnemy>
 
     @Override
     public void start() {
-        enemy.setAnimation(TurretEnemy.AnimationType.ATTACK);
-        //enemy.throwEntity(Entity.Type.TURRETPROENEMY, 8f, 0f);
+        super.start();
+        enemy.throwEntity(Entity.Type.TURRETPROENEMY, 8f, 0f);
     }
 
     @Override
