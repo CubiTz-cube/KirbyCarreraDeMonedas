@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -85,8 +88,16 @@ public class Player extends PlayerCommon {
     private Sound starSound;
     private Sound removeSelectSound;
 
+    private final String name;
+    private final GlyphLayout layout;
+    private final BitmapFont font;
+
     public Player(World world, Float x, Float y, AssetManager assetManager, GameScreen game, Color color) {
         super(world, x,y, assetManager, -1);
+        name = game.main.getPlayerName();
+        layout = new GlyphLayout();
+        font = game.main.fonts.interNameFontSmall;
+
         this.game = game;
         this.color = color;
 
@@ -271,6 +282,15 @@ public class Player extends PlayerCommon {
         float distance = playerPosition.dst(fixturePosition);
         Vector2 force = direction.scl(forceMagnitude * distance);
         fixture.getBody().applyForceToCenter(force, true);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        layout.setText(font, name);
+        float textX = getX() + (sprite.getWidth() - layout.width) / 2;
+        float textY = getY() + sprite.getHeight()/2 + layout.height / 2;
+        font.draw(batch, layout, textX, textY);
     }
 
     @Override
