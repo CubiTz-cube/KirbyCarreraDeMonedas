@@ -9,7 +9,7 @@ Creado para la materia Programación Orientada a Objetos en el tercer semestre d
 
 > Agradecimiento especial a [JackWithAburger](https://youtube.com/@jackwithaburger?si=55igK-AIyhREg5DJ) y [Solaris](https://youtube.com/@solardtm?si=aBxRperL4muak9kC) por la música 🎵
 
->***💻 Usado en las experiencias XPR-UCAB 2025.***
+>***💻 Usado en las experiencias XPR-UCAB 2025 y como ejemplo para ferias de carreras en la UCAB.***
 
 ![Menu](https://github.com/user-attachments/assets/645ee899-2e71-47a1-b436-e01640a761c9)
 
